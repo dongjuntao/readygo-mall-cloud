@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mall</groupId>
+  <artifactId>grand-mall-cloud</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!--父级项目-->
+  <name>grand-mall-cloud</name>
+
+  <!--springboot相关依赖引入-->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.0.RELEASE</version>
+    <relativePath/>
+  </parent>
+
+  <modules>
+    <module>mall-common</module>
+    <module>mall-admin</module>
+      <module>mall-generator</module>
+  </modules>
+
+  <!--配置-->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <java.version>1.8</java.version>
+    <mybatis.version>3.5.5</mybatis.version>
+    <mybatis-generator.version>1.4.0</mybatis-generator.version>
+    <redis.version>2.3.0.RELEASE</redis.version>
+    <lombok.verison>1.18.20</lombok.verison>
+    <slf4j.version>1.7.30</slf4j.version>
+    <swagger.version>3.0.0</swagger.version>
+  </properties>
+
+  <!--依赖-->
+  <dependencies>
+    <!--junit-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <!--springboot-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!--slf4j-->
+<!--    <dependency>-->
+<!--      <groupId>org.slf4j</groupId>-->
+<!--      <artifactId>slf4j-api</artifactId>-->
+<!--      <version>${slf4j.version}</version>-->
+<!--    </dependency>-->
+  </dependencies>
+
+  <!--依赖管理-->
+  <dependencyManagement>
+    <dependencies>
+      <!--redis-->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+        <version>${redis.version}</version>
+      </dependency>
+      <!--lombok-->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.verison}</version>
+      </dependency>
+      <!--mybatis-->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+      </dependency>
+      <!--swagger-->
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-boot-starter</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+    </pluginManagement>
+  </build>
+</project>

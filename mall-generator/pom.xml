@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mall</groupId>
+  <artifactId>mall-generator</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <!--mybatis代码生成-->
+  <name>mall-generator</name>
+
+  <parent>
+    <artifactId>grand-mall-cloud</artifactId>
+    <groupId>com.mall</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <common.version>1.0-SNAPSHOT</common.version>
+  </properties>
+
+  <dependencies>
+    <!--mall-common/mall-common-mysql-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-mysql</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--springfox(swagger)-->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+  </build>
+</project>

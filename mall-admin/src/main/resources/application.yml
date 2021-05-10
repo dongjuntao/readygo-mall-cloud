@@ -5,7 +5,7 @@ spring:
   profiles:
     active: dev
 server:
-  port: 8000
+  port: 8100
 
 #### 验证码相关配置
 aj:
@@ -24,3 +24,10 @@ aj:
     req-get-lock-seconds: 60 # 验证失败后，锁定时间间隔
     req-get-minute-limit: 30 # get接口一分钟内请求数限制
     req-check-minute-limit: 30 # check接口一分钟内请求数限制
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+#      - /user/login
+      - /captcha/get
+      - /captcha/check

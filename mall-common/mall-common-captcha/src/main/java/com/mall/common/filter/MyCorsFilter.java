@@ -11,6 +11,8 @@ package com.mall.common.filter;
  * Created by raodeming on 2020/3/17.
  */
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -18,9 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "CorsFilter ")
+@WebFilter(filterName = "MyCorsFilter")
 @Configuration
-public class CorsFilter implements Filter {
+//避免spring security中配置cors()产生冲突
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class MyCorsFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 

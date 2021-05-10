@@ -1,0 +1,8 @@
+#### spring相关配置
+spring:
+  application:
+    name: mall-admin #应用名称
+  profiles:
+    active: dev
+server:
+  port: 8000

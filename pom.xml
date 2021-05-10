@@ -23,7 +23,8 @@
   <modules>
     <module>mall-common</module>
     <module>mall-admin</module>
-      <module>mall-generator</module>
+    <module>mall-generator</module>
+    <module>mall-auth</module>
   </modules>
 
   <!--配置-->
@@ -38,6 +39,8 @@
     <lombok.verison>1.18.20</lombok.verison>
     <slf4j.version>1.7.30</slf4j.version>
     <swagger.version>3.0.0</swagger.version>
+    <spring-cloud.version>Hoxton.SR11</spring-cloud.version><!--spring cloud-->
+    <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
   </properties>
 
   <!--依赖-->
@@ -54,12 +57,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <!--slf4j-->
-<!--    <dependency>-->
-<!--      <groupId>org.slf4j</groupId>-->
-<!--      <artifactId>slf4j-api</artifactId>-->
-<!--      <version>${slf4j.version}</version>-->
-<!--    </dependency>-->
   </dependencies>
 
   <!--依赖管理-->
@@ -88,7 +85,22 @@
         <artifactId>springfox-boot-starter</artifactId>
         <version>${swagger.version}</version>
       </dependency>
-
+      <!-- 引入Spring Cloud -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--spring cloud alibaba-->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

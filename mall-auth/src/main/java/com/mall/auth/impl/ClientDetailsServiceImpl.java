@@ -1,4 +1,4 @@
-package com.mall.auth.service;
+package com.mall.auth.impl;
 
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;

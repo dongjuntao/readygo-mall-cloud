@@ -1,8 +1,8 @@
 package com.mall.auth.config;
 
-import com.mall.auth.service.ClientDetailsServiceImpl;
-import com.mall.auth.service.UserDetailImpl;
-import com.mall.auth.service.UserDetailsServiceImpl;
+import com.mall.auth.impl.ClientDetailsServiceImpl;
+import com.mall.auth.domain.SecurityUser;
+import com.mall.auth.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +35,8 @@ import java.util.concurrent.TimeUnit;
  * @Date 2021/4/29 17:20
  * @Version 1.0
  */
-@Configuration
-@EnableAuthorizationServer
+//@Configuration
+//@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -127,7 +127,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(2);
             additionalInfo.put("license", "grand-mall-cloud-key");
-            UserDetailImpl user = (UserDetailImpl) authentication.getUserAuthentication().getPrincipal();
+            SecurityUser user = (SecurityUser) authentication.getUserAuthentication().getPrincipal();
             if (user != null) {
                 additionalInfo.put("username", user.getUsername());
             }

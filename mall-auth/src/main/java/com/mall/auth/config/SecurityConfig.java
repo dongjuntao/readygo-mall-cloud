@@ -1,7 +1,12 @@
 package com.mall.auth.config;
 
-import com.mall.auth.service.UserDetailsServiceImpl;
+import com.mall.auth.handler.CustomizeAuthenticationEntryPoint;
+import com.mall.auth.handler.CustomizeAuthenticationFailureHandler;
+import com.mall.auth.handler.CustomizeAuthenticationSuccessHandler;
+import com.mall.auth.impl.UserDetailsServiceImpl;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,10 +32,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Qualifier(value = "userDetailsServiceImpl")
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
+
+    @Autowired
+    private CustomizeAuthenticationEntryPoint customizeAuthenticationEntryPoint;
+
+    @Autowired
+    private CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+
+    @Autowired
+    private CustomizeAuthenticationFailureHandler customizeAuthenticationFailureHandler;
 
     /**
      * 配置认证管理器
@@ -81,29 +96,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
-                .authorizeRequests();
-        //不需要保护的资源路径允许访问
-        for (String url : ignoreUrlsConfig.getUrls()) {
-            registry.antMatchers(url).permitAll();
-        }
-        //允许跨域请求的OPTIONS请求
-        registry.antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
-        // 任何请求需要身份认证
-        registry.and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                // 关闭跨站请求防护及不使用session
+
+        http.authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
-                .csrf()
-                .disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                // 自定义权限拒绝处理类
+                .logout().permitAll()
                 .and()
-                .exceptionHandling().and().cors();
+                .formLogin()
+                    .usernameParameter("userName")
+                    .permitAll()
+                    .loginProcessingUrl("/oauth2/auth")
+                    .successHandler(customizeAuthenticationSuccessHandler)
+                    .failureHandler(customizeAuthenticationFailureHandler);
+        http.csrf().disable().cors();
+        http.exceptionHandling().authenticationEntryPoint(customizeAuthenticationEntryPoint);//未登录时返回值
     }
 
 }

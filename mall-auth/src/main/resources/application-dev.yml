@@ -1,4 +1,5 @@
 spring:
+  ###数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://localhost:3306/grand-mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
@@ -14,6 +15,17 @@ spring:
       stat-view-servlet: #访问监控网页的登录用户名和密码
         login-username: druid
         login-password: druid
+  #####nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #配置nacos地址
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+  #####redis配置
   redis:
     host: localhost
     port: 6379
@@ -24,4 +36,9 @@ mybatis:
   mapper-locations: classpath:com/mall/generator/mappers/*.xml
   type-aliases-package: com.mall.generator.model
 
-
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000

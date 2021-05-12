@@ -9,9 +9,18 @@ package com.mall.base.enums;
 public enum ResultCodeEnum {
     SUCCESS("200","操作成功"),
     FAIL("500","系统异常"),
-    VALIDATE_FAILED("404", "参数检验失败"),
+    UNAUTHORIZED("401", "未登录或token已过期"),
     FORBIDDEN("403","没有访问权限"),
-    UNAUTHORIZED("401", "未登录或token已过期");
+    VALIDATE_FAILED("404", "参数检验失败"),
+
+    USER_ACCOUNT_EXPIRED("450", "账号已过期"),
+    USER_CREDENTIALS_ERROR("451", "用户名或密码错误"),
+    USER_CREDENTIALS_EXPIRED("452", "密码已过期"),
+    USER_ACCOUNT_DISABLE("453", "账号不可用"),
+    USER_ACCOUNT_LOCKED("454", "账号被锁定"),
+    USER_ACCOUNT_NOT_EXIST("455", "账号不存在"),
+
+    COMMON_FAIL("10000", "其他错误");
 
     private String code;
     private String message;

@@ -1,8 +1,21 @@
 #### spring相关配置
 spring:
   application:
-    name: mall-admin #应用名称
+    name: mall-auth #应用名称
   profiles:
     active: dev
+#  security:
+#    user:
+#      name: tom
+#      password: 123@abcd
 server:
   port: 8000
+
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /user/login
+      - /captcha/get
+      - /captcha/check
+      - /oauth2/auth

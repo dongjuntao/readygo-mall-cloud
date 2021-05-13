@@ -24,7 +24,8 @@
     <module>mall-common</module>
     <module>mall-admin</module>
     <module>mall-generator</module>
-    <module>mall-auth</module>
+    <module>mall-oauth2</module>
+    <module>mall-services-api</module>
   </modules>
 
   <!--配置-->

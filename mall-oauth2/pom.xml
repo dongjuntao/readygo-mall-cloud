@@ -5,13 +5,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.mall</groupId>
-  <artifactId>mall-admin</artifactId>
+  <artifactId>mall-oauth2</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
-  <!--商城后端系统接口-->
-  <name>mall-admin</name>
+  <!--认证服务-->
+  <name>mall-oauth2</name>
 
+  <!--父级-->
   <parent>
     <groupId>com.mall</groupId>
     <artifactId>grand-mall-cloud</artifactId>
@@ -23,23 +23,21 @@
   </properties>
 
   <dependencies>
-    <!--验证码组件-->
+    <!--spring cloud oauth2，其中包含spring cloud security和spring-security-oauth2-autoconfigure-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-oauth2</artifactId>
+    </dependency>
+    <!--mall-common-redis-->
     <dependency>
       <groupId>com.mall.common</groupId>
-      <artifactId>mall-common-captcha</artifactId>
+      <artifactId>mall-common-redis</artifactId>
       <version>${common.version}</version>
     </dependency>
-    <!--mall-common-base-->
+    <!--lombok-->
     <dependency>
-      <groupId>com.mall.common</groupId>
-      <artifactId>mall-common-base</artifactId>
-      <version>${common.version}</version>
-    </dependency>
-    <!--mall-common-mysql-->
-    <dependency>
-      <groupId>com.mall.common</groupId>
-      <artifactId>mall-common-mysql</artifactId>
-      <version>${common.version}</version>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
     <!--mall-generator-->
     <dependency>
@@ -47,10 +45,11 @@
       <artifactId>mall-generator</artifactId>
       <version>${common.version}</version>
     </dependency>
-    <!--springfox(swagger)-->
+    <!--mall-common-base-->
     <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-boot-starter</artifactId>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-base</artifactId>
+      <version>${common.version}</version>
     </dependency>
     <!--服务注册发现-->
     <dependency>
@@ -62,21 +61,19 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-    <!--mall-oauth2接口-->
+    <!-- spring mvc servlet web 必须 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!--mall-admin接口-->
     <dependency>
       <groupId>com.mall.service.api</groupId>
-      <artifactId>mall-oauth2-api</artifactId>
+      <artifactId>mall-admin-api</artifactId>
       <version>${common.version}</version>
     </dependency>
   </dependencies>
 
   <build>
-    <plugins>
-      <!--maven编译插件-->
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
   </build>
 </project>

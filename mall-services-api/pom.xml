@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mall</groupId>
+  <artifactId>mall-services-api</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>mall-admin-api</module>
+    <module>mall-oauth2-api</module>
+  </modules>
+
+  <!--微服务接口-->
+  <name>mall-services-api</name>
+
+  <!--父级工程-->
+  <parent>
+    <groupId>com.mall</groupId>
+    <artifactId>grand-mall-cloud</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <common.version>1.0-SNAPSHOT</common.version>
+  </properties>
+
+  <dependencies>
+    <!-- spring cloud openfeign-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-base</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+  </build>
+</project>

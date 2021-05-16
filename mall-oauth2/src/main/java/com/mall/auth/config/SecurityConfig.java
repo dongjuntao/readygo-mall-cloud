@@ -4,7 +4,6 @@ import com.mall.auth.handler.CustomizeAuthenticationEntryPoint;
 import com.mall.auth.handler.CustomizeAuthenticationFailureHandler;
 import com.mall.auth.handler.CustomizeAuthenticationSuccessHandler;
 import com.mall.auth.impl.UserDetailsServiceImpl;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -96,19 +93,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.csrf().disable().cors();
+        http.requestMatchers()
+                .antMatchers("/oauth/**")
+                .antMatchers("/auth/**");
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+//                .anyRequest().authenticated()
                 .and()
                 .logout().permitAll()
                 .and()
                 .formLogin()
                     .usernameParameter("userName")
-                    .permitAll()
-                    .loginProcessingUrl("/oauth2/auth")
+                    .passwordParameter("password")
+                    .loginProcessingUrl("/auth/login")
                     .successHandler(customizeAuthenticationSuccessHandler)
-                    .failureHandler(customizeAuthenticationFailureHandler);
-        http.csrf().disable().cors();
+                    .failureHandler(customizeAuthenticationFailureHandler)
+                    .permitAll();
         http.exceptionHandling().authenticationEntryPoint(customizeAuthenticationEntryPoint);//未登录时返回值
     }
 

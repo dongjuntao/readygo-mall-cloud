@@ -33,7 +33,7 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
             result = CommonResult.fail(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage());
         }
         //处理编码方式，防止中文乱码的情况
-        httpServletResponse.setContentType("text/json;charset=utf-8");
+        httpServletResponse.setContentType("application/json;charset=utf-8");
         //塞到HttpServletResponse中返回给前台
         httpServletResponse.getWriter().write(JSON.toJSONString(result));
     }

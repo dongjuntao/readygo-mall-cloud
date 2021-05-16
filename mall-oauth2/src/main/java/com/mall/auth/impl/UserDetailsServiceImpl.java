@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
         List list = new ArrayList<>();
-        list.add(new SimpleGrantedAuthority("ADMIN"));
+        list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
         SecurityUser securityUser = new SecurityUser(userDTO.getUserName(),userDTO.getPassword(),
                 true,

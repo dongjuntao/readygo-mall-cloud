@@ -4,10 +4,8 @@ spring:
     name: mall-oauth2 #应用名称
   profiles:
     active: dev
-#  security:
-#    user:
-#      name: tom
-#      password: 123@abcd
+  main: #允许bean重名
+    allow-bean-definition-overriding: true
 server:
   port: 8000
 

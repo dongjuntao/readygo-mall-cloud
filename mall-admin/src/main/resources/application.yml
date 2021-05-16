@@ -4,6 +4,8 @@ spring:
     name: mall-admin #应用名称
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 8100
 

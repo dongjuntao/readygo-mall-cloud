@@ -1,6 +1,7 @@
 package com.mall.base;
 
 import com.mall.base.enums.ResultCodeEnum;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author DongJunTao
@@ -22,7 +23,7 @@ public class CommonResult<T> {
      */
     private T data;
 
-    protected CommonResult() {}
+    public CommonResult() {}
 
     protected CommonResult(String code, String message, T data) {
         this.code = code;

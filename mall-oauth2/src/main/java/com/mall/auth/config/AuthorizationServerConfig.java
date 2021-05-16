@@ -1,13 +1,15 @@
 package com.mall.auth.config;
 
-import com.mall.auth.impl.ClientDetailsServiceImpl;
 import com.mall.auth.domain.SecurityUser;
 import com.mall.auth.impl.UserDetailsServiceImpl;
+import com.mall.base.constant.OAuth2Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -25,6 +27,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -42,13 +45,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    @Qualifier(value = "userDetailsServiceImpl")
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private ClientDetailsServiceImpl clientDetailsService;
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 配置token存储，这个配置token存到redis中,还有一种常用的是JwkTokenStore
@@ -68,7 +72,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(clientDetailsService);
+        clients.inMemory()
+                .withClient(OAuth2Constant.ADMIN_CLIENT_ID)//客户端得ID,比如我们在QQ互联中心申请得。可以写多个。配置 循环
+                .secret(passwordEncoder.encode(OAuth2Constant.ADMIN_CLIENT_SECRET)) // 客户端密钥，需要进行加密
+                .accessTokenValiditySeconds(7200)//两小时 token 有效时常  0 永久有效
+                .refreshTokenValiditySeconds(9999)
+                .resourceIds(OAuth2Constant.RESOURCE_ID)
+                .authorizedGrantTypes("password", "refresh_token")// 支持得授权类型
+                .scopes("all", "read", "write");//拥有的 scope  可选
     }
 
     @Override
@@ -139,7 +150,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients().tokenKeyAccess("isAuthenticated()").checkTokenAccess("permitAll()");
+        security
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("permitAll()")
+                .allowFormAuthenticationForClients();
     }
 
     /**

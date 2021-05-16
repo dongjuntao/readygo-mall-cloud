@@ -1,6 +1,7 @@
 package com.mall.base.vo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author DongJunTao
@@ -9,6 +10,7 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
+@NoArgsConstructor
 public class LoginVO {
 
     private String userName;

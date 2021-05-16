@@ -6,14 +6,17 @@ import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
 import com.mall.admin.service.AdminUserService;
-import com.mall.auth.api.feign.OAuthService;
+import com.mall.auth.api.feign.FeignLoginService;
+import com.mall.auth.api.feign.FeignOAuthService;
 import com.mall.base.CommonResult;
+import com.mall.base.constant.OAuth2Constant;
 import com.mall.base.dto.UserDTO;
 import com.mall.base.vo.LoginVO;
 import com.mall.generator.model.AdminUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +27,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @RestController
-@RequestMapping(value = "user")
+@RequestMapping(value = "/user")
 public class AdminUserController {
 
     @Autowired
@@ -32,11 +35,18 @@ public class AdminUserController {
     @Autowired
     private AdminUserService adminUserService;
     @Autowired
-    private OAuthService oAuthService;
+    private FeignOAuthService feignOAuthService;
+    @Autowired
+    private FeignLoginService feignLoginService;
 
-
+    /**
+     * 登录后从认证中心获取token
+     * @param loginVO
+     * @param captchaVerification
+     * @return
+     */
     @PostMapping("/login")
-    public CommonResult get(@RequestBody LoginVO loginVO,
+    public CommonResult postAccessToken(@RequestBody LoginVO loginVO,
                              @RequestParam("captchaVerification") String captchaVerification) {
         CaptchaVO captchaVO = new CaptchaVO();
         captchaVO.setCaptchaVerification(captchaVerification);
@@ -46,13 +56,25 @@ public class AdminUserController {
             //校验失败，返回到前端
             return CommonResult.fail(response.getRepCode(), response.getRepMsg());
         }
-        String result = oAuthService.get(loginVO.getUserName(),loginVO.getPassword());
+        //先认证
+        String result = feignLoginService.login(loginVO.getUserName(),loginVO.getPassword());
         JSONObject jsonResult = JSON.parseObject(result);
         if (!"200".equals(jsonResult.get("code"))) {
             //校验失败，返回到前端
             return CommonResult.fail(String.valueOf(jsonResult.get("code")), String.valueOf(jsonResult.get("message")));
         }
-        return CommonResult.success(String.valueOf(jsonResult.get("code")), String.valueOf(jsonResult.get("message")), null);
+        //获取token
+        Map<String, String> params = new HashMap<>();
+        params.put("username", loginVO.getUserName());
+        params.put("password", loginVO.getPassword());
+        params.put("grant_type", OAuth2Constant.GRANT_TYPE_PASSWORD);
+        params.put("scope", "all");
+        params.put("client_id", OAuth2Constant.ADMIN_CLIENT_ID);
+        params.put("client_secret", OAuth2Constant.ADMIN_CLIENT_SECRET);
+
+        CommonResult commonResult = feignOAuthService.postAccessToken(params);
+
+        return commonResult;
     }
 
     @GetMapping("/getAdminUserById")

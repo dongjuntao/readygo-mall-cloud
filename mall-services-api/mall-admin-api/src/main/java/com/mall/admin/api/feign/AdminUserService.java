@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value = ServiceNameConstant.MALL_ADMIN,configuration = FeignConfig.class)
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/admin")
 public interface AdminUserService {
 
-    @GetMapping("/getAdminUserById")
+    @GetMapping("/getUserById")
     UserDTO getAdminUserById(@RequestParam long id);
 
-    @GetMapping("/getAdminUserByUserName")
+    @GetMapping("/getUserByUserName")
     UserDTO getAdminUserByUserName(@RequestParam String userName);
 }

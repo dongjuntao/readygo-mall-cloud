@@ -10,5 +10,5 @@ public class ServiceNameConstant {
 
     public static final String MALL_ADMIN = "mall-admin"; //后端管理微服务
 
-    public static final String MALL_OAUTH2 = "mall-oauth2"; //认证中心微服务
+    public static final String MALL_SECURITY_OAUTH2 = "mall-security-oauth2"; //认证中心微服务
 }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
+import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.service.AdminUserService;
 import com.mall.auth.api.feign.FeignLoginService;
 import com.mall.auth.api.feign.FeignOAuthService;
@@ -12,7 +13,7 @@ import com.mall.base.CommonResult;
 import com.mall.base.constant.OAuth2Constant;
 import com.mall.base.dto.UserDTO;
 import com.mall.base.vo.LoginVO;
-import com.mall.generator.model.AdminUser;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,12 @@ import java.util.Map;
 
 /**
  * @Author DongJunTao
- * @Description
+ * @Description 管理员用户后端控制器
  * @Date 2021/4/26 14:29
  * @Version 1.0
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/admin")
 public class AdminUserController {
 
     @Autowired
@@ -72,29 +73,37 @@ public class AdminUserController {
         params.put("client_id", OAuth2Constant.ADMIN_CLIENT_ID);
         params.put("client_secret", OAuth2Constant.ADMIN_CLIENT_SECRET);
 
-        CommonResult commonResult = feignOAuthService.postAccessToken(params);
-
-        return commonResult;
+        return feignOAuthService.postAccessToken(params);
     }
 
-    @GetMapping("/getAdminUserById")
+    /**
+     * 根据主键id获取用户实体
+     * @param id
+     * @return
+     */
+    @GetMapping("/getUserById")
     public UserDTO getAdminUserById(@RequestParam long id) {
-        AdminUser adminUser = adminUserService.getAdminUserById(id);
+        AdminUserEntity adminUser = adminUserService.getAdminUserById(id);
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName(adminUser.getUserName());
         userDTO.setPassword(adminUser.getPassword());
         return userDTO;
     }
 
-    @GetMapping("/getAdminUserByUserName")
+    /**
+     * 根据用户名查看用户信息
+     * @param userName
+     * @return
+     */
+    @GetMapping("/getUserByUserName")
     public UserDTO getAdminUserByUserName(@RequestParam String userName) {
-        List<AdminUser> adminUserList = adminUserService.getAdminUserByUserName(userName);
-        if (adminUserList == null || adminUserList.size() == 0) {
+        AdminUserEntity adminUser = adminUserService.getAdminUserByUserName(userName);
+        if (adminUser == null ) {
             return null;
         }
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserName(adminUserList.get(0).getUserName());
-        userDTO.setPassword(adminUserList.get(0).getPassword());
+        userDTO.setUserName(adminUser.getUserName());
+        userDTO.setPassword(adminUser.getPassword());
         return userDTO;
     }
 }

@@ -23,8 +23,7 @@
   <modules>
     <module>mall-common</module>
     <module>mall-admin</module>
-    <module>mall-generator</module>
-    <module>mall-oauth2</module>
+    <module>mall-security-oauth2</module>
     <module>mall-services-api</module>
   </modules>
 
@@ -35,6 +34,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <java.version>1.8</java.version>
     <mybatis.version>3.5.5</mybatis.version>
+    <mybatisplus.version>3.3.1</mybatisplus.version>
     <mybatis-generator.version>1.4.0</mybatis-generator.version>
     <redis.version>2.3.0.RELEASE</redis.version>
     <lombok.verison>1.18.20</lombok.verison>
@@ -85,6 +85,12 @@
         <groupId>io.springfox</groupId>
         <artifactId>springfox-boot-starter</artifactId>
         <version>${swagger.version}</version>
+      </dependency>
+      <!--mybatis-plus-->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatisplus.version}</version>
       </dependency>
       <!-- 引入Spring Cloud -->
       <dependency>

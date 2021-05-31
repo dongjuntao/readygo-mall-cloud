@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.admin.mapper.MenuMapper">
+
+    <!--根据父id查询菜单-->
+    <select id="queryListParentId" resultType="com.mall.admin.entity.MenuEntity">
+        SELECT * FROM menu WHERE parent_id = #{parentId} ORDER BY order_num;
+    </select>
+    <!--获取不包含按钮的菜单列表-->
+    <select id="queryNotButtonList" resultType="com.mall.admin.entity.MenuEntity">
+        SELECT * FROM menu WHERE type != 2 ORDER BY order_num;
+    </select>
+
+</mapper>

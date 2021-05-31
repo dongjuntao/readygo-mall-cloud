@@ -10,7 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>mall-admin-api</module>
-    <module>mall-oauth2-api</module>
+    <module>mall-security-oauth2-api</module>
   </modules>
 
   <!--微服务接口-->

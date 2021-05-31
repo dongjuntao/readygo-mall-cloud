@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Version 1.0
  */
 @SpringBootApplication
-@MapperScan("com.mall.generator")
+@MapperScan("com.mall.admin.mapper")
 @EnableFeignClients
 @EnableDiscoveryClient
 public class MallAdminApplication {

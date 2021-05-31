@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.admin.mapper.RoleMenuMapper">
+
+    <!--根据角色ID，获取菜单ID列表-->
+    <select id="queryMenuIdList" resultType="Long">
+        SELECT menu_id FROM role_menu WHERE role_id = #{roleId};
+    </select>
+    <!--根据角色ID数组，批量删除-->
+    <delete id="deleteBatch">
+        DELETE * FROM menu WHERE role_id IN
+        <foreach item="roleId" collection="array" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
+
+</mapper>

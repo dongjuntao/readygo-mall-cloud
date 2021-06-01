@@ -42,6 +42,7 @@
     <swagger.version>3.0.0</swagger.version>
     <spring-cloud.version>Hoxton.SR11</spring-cloud.version><!--spring cloud-->
     <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+    <fastjson.version>1.2.76</fastjson.version>
   </properties>
 
   <!--依赖-->
@@ -107,6 +108,12 @@
         <version>${spring-cloud-alibaba.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!--fastjson-->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

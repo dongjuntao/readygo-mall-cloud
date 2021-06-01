@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.admin.entity.RoleMenuEntity;
 import com.mall.admin.mapper.RoleMenuMapper;
 import com.mall.admin.service.RoleMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,11 +32,11 @@ public class RoleMenuServiceImpl extends
 
 		//保存角色与菜单关系
 		for(Long menuId : menuIdList){
-			RoleMenuEntity sysRoleMenuEntity = new RoleMenuEntity();
-			sysRoleMenuEntity.setMenuId(menuId);
-			sysRoleMenuEntity.setRoleId(roleId);
+			RoleMenuEntity roleMenuEntity = new RoleMenuEntity();
+			roleMenuEntity.setMenuId(menuId);
+			roleMenuEntity.setRoleId(roleId);
 
-			this.save(sysRoleMenuEntity);
+			this.save(roleMenuEntity);
 		}
 	}
 

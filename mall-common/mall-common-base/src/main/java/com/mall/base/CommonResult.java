@@ -31,6 +31,11 @@ public class CommonResult<T> {
         this.data = data;
     }
 
+    protected CommonResult(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
     /**
      * 成功返回结果
      * @param data 获取的数据
@@ -47,6 +52,14 @@ public class CommonResult<T> {
      */
     public static <T> CommonResult<T> success(String code, String message, T data) {
         return new CommonResult<T>(code, message, data);
+    }
+
+    /**
+     * 成功返回结果
+     * @param  code 返回码
+     */
+    public static <T> CommonResult<T> success(String code, String message) {
+        return new CommonResult<T>(code, message);
     }
 
 

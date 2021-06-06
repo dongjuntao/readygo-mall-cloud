@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @Author DongJunTao
- * @Description 后台用户表实体
+ * @Description 后台用户表
  * @Date 2021/5/28 9:38
  * @Version 1.0
  */

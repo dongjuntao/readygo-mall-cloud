@@ -1,9 +1,8 @@
 package com.mall.auth.config;
 
-import com.mall.auth.handler.CustomizeAuthenticationEntryPoint;
-import com.mall.auth.handler.CustomizeAuthenticationFailureHandler;
-import com.mall.auth.handler.CustomizeAuthenticationSuccessHandler;
+import com.mall.auth.handler.*;
 import com.mall.auth.impl.UserDetailsServiceImpl;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomizeAuthenticationFailureHandler customizeAuthenticationFailureHandler;
+
+    @Autowired
+    private CustomizeLogoutHandler customizeLogoutHandler;
+
+    @Autowired
+    private CustomizeLogoutSuccessHandler customizeLogoutSuccessHandler;
 
     /**
      * 配置认证管理器
@@ -101,9 +106,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/oauth/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-//                .anyRequest().authenticated()
                 .and()
-                .logout().permitAll()
+                .logout()
+                    .logoutUrl("/auth/logout")
+                    .addLogoutHandler(customizeLogoutHandler)
+                    .logoutSuccessHandler(customizeLogoutSuccessHandler)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("Admin-TokenKey")
+                    .clearAuthentication(true)
+                .permitAll()
                 .and()
                 .formLogin()
                     .usernameParameter("userName")

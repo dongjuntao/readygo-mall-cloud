@@ -8,13 +8,13 @@ import java.io.Serializable;
 
 /**
  * @Author DongJunTao
- * @Description 角色-菜单关系表
- * @Date 2021/5/28 13:45
+ * @Description 用户-角色关系表
+ * @Date 2021/6/3 14:14
  * @Version 1.0
  */
 @Data
-@TableName("role_menu")
-public class RoleMenuEntity implements Serializable {
+@TableName("user_role")
+public class UserRoleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,12 +22,12 @@ public class RoleMenuEntity implements Serializable {
     private Long id;
 
     /**
+     * 用户ID
+     */
+    private Long userId;
+
+    /**
      * 角色ID
      */
     private Long roleId;
-
-    /**
-     * 菜单ID
-     */
-    private Long menuId;
 }

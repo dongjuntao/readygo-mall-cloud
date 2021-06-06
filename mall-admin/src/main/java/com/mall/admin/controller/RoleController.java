@@ -20,7 +20,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("system/role")
 public class RoleController {
 
     @Autowired
@@ -67,7 +67,6 @@ public class RoleController {
      */
     @PostMapping("/save")
     public CommonResult save(@RequestBody RoleEntity role){
-        //TODO 需要修改成当前登录用户的id
         role.setCreateUserId(1L);
         roleService.saveRole(role);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage());
@@ -78,7 +77,6 @@ public class RoleController {
      */
     @PostMapping("/update")
     public CommonResult update(@RequestBody RoleEntity role){
-        //TODO 需要修改成当前登录用户的id
         role.setCreateUserId(1L);
         roleService.update(role);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage());

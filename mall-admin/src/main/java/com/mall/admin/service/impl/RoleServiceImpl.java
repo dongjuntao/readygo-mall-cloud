@@ -28,9 +28,6 @@ import java.util.Map;
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> implements RoleService {
 
     @Autowired
-    private RoleMapper roleMapper;
-
-    @Autowired
     private RoleMenuService roleMenuService;
 
 
@@ -98,6 +95,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
      */
     @Override
     public List<Long> queryRoleIdList(Long createUserId) {
-        return roleMapper.queryRoleIdList(createUserId);
+        return baseMapper.queryRoleIdList(createUserId);
     }
 }

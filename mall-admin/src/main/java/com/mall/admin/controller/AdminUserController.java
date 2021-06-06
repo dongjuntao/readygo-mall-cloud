@@ -6,17 +6,22 @@ import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
 import com.mall.admin.entity.AdminUserEntity;
+import com.mall.admin.entity.RoleEntity;
 import com.mall.admin.service.AdminUserService;
+import com.mall.admin.service.UserRoleService;
 import com.mall.auth.api.feign.FeignLoginService;
 import com.mall.auth.api.feign.FeignOAuthService;
 import com.mall.base.CommonResult;
 import com.mall.base.constant.OAuth2Constant;
-import com.mall.base.dto.UserDTO;
+import com.mall.base.enums.ResultCodeEnum;
 import com.mall.base.vo.LoginVO;
-import org.apache.catalina.security.SecurityUtil;
+import com.mall.common.util.PageUtil;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +33,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "system/admin")
 public class AdminUserController {
 
     @Autowired
@@ -39,6 +44,8 @@ public class AdminUserController {
     private FeignOAuthService feignOAuthService;
     @Autowired
     private FeignLoginService feignLoginService;
+    @Autowired
+    private UserRoleService userRoleService;
 
     /**
      * 登录后从认证中心获取token
@@ -76,18 +83,60 @@ public class AdminUserController {
         return feignOAuthService.postAccessToken(params);
     }
 
+    @DeleteMapping("/logout")
+    public CommonResult logout(HttpServletRequest request) {
+        String result = feignLoginService.loginOut(request.getHeader("token"));
+        JSONObject jsonResult = JSON.parseObject(result);
+        if (!"200".equals(jsonResult.get("code"))) {
+            //校验失败，返回到前端
+            return CommonResult.fail(String.valueOf(jsonResult.get("code")), String.valueOf(jsonResult.get("message")));
+        }
+        return CommonResult.success();
+    }
+
+    /**
+     * 保存用户
+     */
+    @PostMapping("/save")
+    public CommonResult save(@RequestBody AdminUserEntity adminUserEntity){
+        adminUserEntity.setCreateUserId(1L);//默认管理员创建
+        adminUserEntity.setCreateTime(new Date());
+        adminUserService.saveAdmin(adminUserEntity);
+        return CommonResult.success();
+    }
+
+    /**
+     * 修改用户
+     */
+    @PutMapping("/update")
+    public CommonResult update(@RequestBody AdminUserEntity adminUserEntity){
+        adminUserEntity.setCreateUserId(1L);
+        adminUserEntity.setUpdateTime(new Date());
+        adminUserService.update(adminUserEntity);
+        return CommonResult.success();
+    }
+
+    /**
+     * 所有用户列表
+     */
+    @GetMapping("/list")
+    public CommonResult list(@RequestParam Map<String, Object> params){
+        PageUtil page = adminUserService.queryPage(params);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
+    }
+
     /**
      * 根据主键id获取用户实体
      * @param id
      * @return
      */
     @GetMapping("/getUserById")
-    public UserDTO getAdminUserById(@RequestParam long id) {
+    public CommonResult getAdminUserById(@RequestParam long id) {
         AdminUserEntity adminUser = adminUserService.getAdminUserById(id);
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserName(adminUser.getUserName());
-        userDTO.setPassword(adminUser.getPassword());
-        return userDTO;
+        //获取用户所属的角色列表
+        List<Long> roleIdList = userRoleService.queryRoleIdList(id);
+        adminUser.setRoleIdList(roleIdList);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), adminUser);
     }
 
     /**
@@ -96,14 +145,24 @@ public class AdminUserController {
      * @return
      */
     @GetMapping("/getUserByUserName")
-    public UserDTO getAdminUserByUserName(@RequestParam String userName) {
+    public CommonResult getAdminUserByUserName(@RequestParam String userName) {
         AdminUserEntity adminUser = adminUserService.getAdminUserByUserName(userName);
-        if (adminUser == null ) {
+        if (adminUser == null) {
             return null;
         }
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserName(adminUser.getUserName());
-        userDTO.setPassword(adminUser.getPassword());
-        return userDTO;
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), adminUser);
+    }
+
+    /**
+     * 删除用户
+     */
+    @DeleteMapping("/delete")
+    public CommonResult delete(@RequestBody Long[] userIds){
+        //管理员账号禁止删除
+        if(ArrayUtils.contains(userIds, 1)){
+            return CommonResult.fail(ResultCodeEnum.ADMIN_COUNT_NOT_DELETED.getCode(),ResultCodeEnum.ADMIN_COUNT_NOT_DELETED.getMessage());
+        }
+        adminUserService.deleteBatch(userIds);
+        return CommonResult.success();
     }
 }

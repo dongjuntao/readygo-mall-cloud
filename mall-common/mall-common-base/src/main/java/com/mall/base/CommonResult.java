@@ -38,6 +38,12 @@ public class CommonResult<T> {
 
     /**
      * 成功返回结果
+     */
+    public static <T> CommonResult<T> success() {
+        return new CommonResult<T>(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMessage());
+    }
+    /**
+     * 成功返回结果
      * @param data 获取的数据
      */
     public static <T> CommonResult<T> success(T data) {
@@ -67,14 +73,21 @@ public class CommonResult<T> {
      * 失败返回结果
      */
     public static <T> CommonResult<T> fail() {
-        return new CommonResult<T>(ResultCodeEnum.FAIL.getCode(), ResultCodeEnum.FAIL.getMessage(), null);
+        return new CommonResult<T>(ResultCodeEnum.FAIL.getCode(), ResultCodeEnum.FAIL.getMessage());
     }
 
     /**
      * 失败返回结果
      */
     public static <T> CommonResult<T> fail(String code, String message) {
-        return new CommonResult<T>(code, message, null);
+        return new CommonResult<T>(code, message);
+    }
+
+    /**
+     * 失败返回结果
+     */
+    public static <T> CommonResult<T> fail(String code, String message, T data) {
+        return new CommonResult<T>(code, message, data);
     }
 
     public String getCode() {

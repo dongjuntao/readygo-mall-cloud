@@ -1,10 +1,15 @@
 package com.mall.auth.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.mall.admin.api.feign.AdminUserService;
 import com.mall.auth.domain.SecurityUser;
+import com.mall.base.CommonResult;
 import com.mall.base.constant.MessageConstant;
-import com.mall.base.dto.UserDTO;
+import com.mall.base.dto.AdminUserDTO;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,21 +36,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserDTO userDTO = adminUserService.getAdminUserByUserName(userName);
-        if (userDTO== null) {
+        CommonResult result = adminUserService.getAdminUserByUserName(userName);
+        if (result == null || !"200".equals(result.getCode())) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
-        List list = new ArrayList<>();
-        list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        SecurityUser securityUser = new SecurityUser(userDTO.getUserName(),userDTO.getPassword(),
+        AdminUserDTO adminUserDTO = JSON.parseObject(JSON.toJSONString(result.getData()), AdminUserDTO.class);
+        SecurityUser securityUser = new SecurityUser(
+                adminUserDTO.getUserName(),
+                adminUserDTO.getPassword(),
                 true,
                 true,
                 true,
-                true, list);
-        securityUser.setAge(userDTO.getAge());
-        securityUser.setEmail(userDTO.getEmail());
-        securityUser.setMobile(userDTO.getMobile());
+                true,
+                AuthorityUtils.commaSeparatedStringToAuthorityList(null));
+        securityUser.setEmail(adminUserDTO.getEmail());
+        securityUser.setMobile(adminUserDTO.getMobile());
         return securityUser;
     }
 }

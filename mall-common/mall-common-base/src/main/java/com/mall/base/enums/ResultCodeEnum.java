@@ -19,6 +19,7 @@ public enum ResultCodeEnum {
     USER_ACCOUNT_DISABLE("453", "账号不可用"),
     USER_ACCOUNT_LOCKED("454", "账号被锁定"),
     USER_ACCOUNT_NOT_EXIST("455", "账号不存在"),
+    ADMIN_COUNT_NOT_DELETED("456","管理员账号无法删除"),
 
     COMMON_FAIL("10000", "其他错误");
 

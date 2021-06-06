@@ -24,8 +24,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 	private AdminUserService adminUserService;
 	@Autowired
 	private RoleMenuService roleMenuService;
-	@Autowired
-	private MenuMapper menuMapper;
 
 	@Override
 	public List<MenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {

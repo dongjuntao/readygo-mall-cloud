@@ -24,7 +24,7 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("menu")
+@RequestMapping("system/menu")
 public class MenuController {
 
 	@Autowired

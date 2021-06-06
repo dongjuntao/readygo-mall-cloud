@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mall.admin.mapper.AdminUserMapper">
+<mapper namespace="com.mall.admin.mapper.RoleMapper">
 
     <!--根据用户主键id查询用户信息-->
     <select id="queryRoleIdList" resultType="Long">

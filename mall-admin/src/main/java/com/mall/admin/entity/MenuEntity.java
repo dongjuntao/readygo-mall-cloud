@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @Author DongJunTao
- * @Description 菜单表实体
+ * @Description 菜单表
  * @Date 2021/5/28 13:20
  * @Version 1.0
  */

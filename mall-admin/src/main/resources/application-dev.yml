@@ -46,18 +46,16 @@ mybatis-plus:
   mapper-locations: classpath:**/*Mapper.xml
   # 以下配置均有默认值,可以不设置
   global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 0
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: false
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
   configuration:
-    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true
     cache-enabled: false
-    # 解决oracle更新数据为null时无法转换报错，mysql不会出现此情况
+    call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
 

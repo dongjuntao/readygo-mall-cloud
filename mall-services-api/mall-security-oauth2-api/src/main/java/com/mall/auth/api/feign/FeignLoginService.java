@@ -3,6 +3,7 @@ package com.mall.auth.api.feign;
 import com.mall.base.config.FeignConfig;
 import com.mall.base.constant.ServiceNameConstant;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,5 +25,8 @@ public interface FeignLoginService {
      */
     @PostMapping("/login")
     String login(@RequestParam("userName") String userName, @RequestParam("password") String password);
+
+    @DeleteMapping("/logout")
+    String loginOut(@RequestParam("token") String token);
 
 }

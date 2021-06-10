@@ -2,7 +2,6 @@ package com.mall.auth.config;
 
 import com.mall.auth.handler.*;
 import com.mall.auth.impl.UserDetailsServiceImpl;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -35,19 +34,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private IgnoreUrlsConfig ignoreUrlsConfig;
 
     @Autowired
-    private CustomizeAuthenticationEntryPoint customizeAuthenticationEntryPoint;
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
-    private CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    private CustomizeAuthenticationFailureHandler customizeAuthenticationFailureHandler;
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
-    private CustomizeLogoutHandler customizeLogoutHandler;
+    private CustomLogoutHandler customLogoutHandler;
 
     @Autowired
-    private CustomizeLogoutSuccessHandler customizeLogoutSuccessHandler;
+    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
     /**
      * 配置认证管理器
@@ -109,8 +108,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                     .logoutUrl("/auth/logout")
-                    .addLogoutHandler(customizeLogoutHandler)
-                    .logoutSuccessHandler(customizeLogoutSuccessHandler)
+                    .addLogoutHandler(customLogoutHandler)
+                    .logoutSuccessHandler(customLogoutSuccessHandler)
                     .invalidateHttpSession(true)
                     .deleteCookies("Admin-TokenKey")
                     .clearAuthentication(true)
@@ -120,10 +119,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("userName")
                     .passwordParameter("password")
                     .loginProcessingUrl("/auth/login")
-                    .successHandler(customizeAuthenticationSuccessHandler)
-                    .failureHandler(customizeAuthenticationFailureHandler)
+                    .successHandler(customAuthenticationSuccessHandler)
+                    .failureHandler(customAuthenticationFailureHandler)
                     .permitAll();
-        http.exceptionHandling().authenticationEntryPoint(customizeAuthenticationEntryPoint);//未登录时返回值
+        http.exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);//未登录时返回值
     }
 
 }

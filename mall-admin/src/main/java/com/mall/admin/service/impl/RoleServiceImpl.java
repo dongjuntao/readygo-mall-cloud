@@ -7,6 +7,7 @@ import com.mall.admin.entity.RoleEntity;
 import com.mall.admin.mapper.RoleMapper;
 import com.mall.admin.service.RoleMenuService;
 import com.mall.admin.service.RoleService;
+import com.mall.admin.service.UserRoleService;
 import com.mall.common.util.PageBuilder;
 import com.mall.common.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
 
     @Autowired
     private RoleMenuService roleMenuService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
 
     /**
@@ -81,11 +86,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
     @Override
     public void deleteBatch(Long[] roleIds) {
         //删除角色
-        this.deleteBatch(roleIds);
+        this.removeByIds(Arrays.asList(roleIds));
         //删除角色-菜单关联关系
         roleMenuService.deleteBatch(roleIds);
         //删除用户-角色关联关系
-        //TODO 删除
+        userRoleService.deleteBatch(roleIds);
     }
 
     /**

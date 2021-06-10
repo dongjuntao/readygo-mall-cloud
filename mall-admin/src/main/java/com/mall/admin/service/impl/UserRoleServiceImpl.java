@@ -30,11 +30,10 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRoleEnt
             return ;
         }
         //保存用户与角色关系
-        for(Long roleId : roleIdList){
+        for(Long roleId : roleIdList) {
             UserRoleEntity userRoleEntity = new UserRoleEntity();
             userRoleEntity.setUserId(userId);
             userRoleEntity.setRoleId(roleId);
-
             this.save(userRoleEntity);
         }
     }

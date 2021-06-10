@@ -20,10 +20,11 @@ import java.io.IOException;
  * @Version 1.0
  */
 @Component
-public class CustomizeAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        System.out.println("strings =onAuthenticationFailure= " + httpServletRequest.getQueryString());
         //返回json数据
         CommonResult result = null;
         if (e instanceof AccountExpiredException) {

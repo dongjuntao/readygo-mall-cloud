@@ -13,6 +13,8 @@ import com.mall.admin.service.MenuService;
 import com.mall.admin.service.PermissionService;
 import com.mall.base.CommonResult;
 import com.mall.base.enums.MenuEnum;
+import com.mall.base.enums.ResultCodeEnum;
+import com.mall.base.exception.CommonException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -98,62 +100,56 @@ public class MenuController {
 	@PostMapping("/save")
 	public CommonResult save(@RequestBody MenuEntity menu){
 		//数据校验
-		verifyForm(menu);
-		
+		CommonResult result = verifyForm(menu);
+		if (result != null) return result;
 		menuService.save(menu);
-		
-		return CommonResult.success("200", "成功", null);
+		return CommonResult.success();
 	}
 	
 	/**
 	 * 修改
 	 */
-	@PostMapping("/update")
+	@PutMapping("/update")
 	public CommonResult update(@RequestBody MenuEntity menu){
 		//数据校验
-		verifyForm(menu);
-				
+		CommonResult result = verifyForm(menu);
+		if (result != null) return result;
 		menuService.updateById(menu);
-
-		return CommonResult.success("200", "成功", null);
+		return CommonResult.success();
 	}
 	
 	/**
 	 * 删除
 	 */
-	@PostMapping("/delete/{menuId}")
+	@DeleteMapping("/delete/{menuId}")
 	public CommonResult delete(@PathVariable("menuId") long menuId){
-		if(menuId <= 31){
-//			return R.error("系统菜单，不能删除");
-		}
-
 		//判断是否有子菜单或按钮
 		List<MenuEntity> menuList = menuService.queryListParentId(menuId);
 		if(menuList.size() > 0){
-//			return R.error("请先删除子菜单或按钮");
+			return CommonResult.fail(ResultCodeEnum.PLEASE_DELETE_CHILD_MENU_BUTTON.getCode(),
+					ResultCodeEnum.PLEASE_DELETE_CHILD_MENU_BUTTON.getMessage());
 		}
-
 		menuService.delete(menuId);
-
-		return CommonResult.success("200", "成功", null);
+		return CommonResult.success();
 	}
 	
 	/**
 	 * 验证参数是否正确
 	 */
-	private void verifyForm(MenuEntity menu){
+	private CommonResult verifyForm(MenuEntity menu) {
 		if(StringUtils.isBlank(menu.getName())){
-			//throw new RRException("菜单名称不能为空");
+			return CommonResult.fail(ResultCodeEnum.MENU_NAME_NOT_BE_EMPTY.getCode(),
+					ResultCodeEnum.MENU_NAME_NOT_BE_EMPTY.getMessage());
 		}
-		
 		if(menu.getParentId() == null){
-			//throw new RRException("上级菜单不能为空");
+			return CommonResult.fail(ResultCodeEnum.PARENT_MENU_NOT_BE_EMPTY.getCode(),
+					ResultCodeEnum.PARENT_MENU_NOT_BE_EMPTY.getMessage());
 		}
-		
 		//菜单
 		if(menu.getType() == MenuEnum.MENU.getValue()){
 			if(StringUtils.isBlank(menu.getUrl())){
-				//throw new RRException("菜单URL不能为空");
+				return CommonResult.fail(ResultCodeEnum.MENU_URL_NOT_BE_EMPTY.getCode(),
+						ResultCodeEnum.MENU_URL_NOT_BE_EMPTY.getMessage());
 			}
 		}
 		
@@ -163,22 +159,21 @@ public class MenuController {
 			MenuEntity parentMenu = menuService.getById(menu.getParentId());
 			parentType = parentMenu.getType();
 		}
-		
 		//目录、菜单
 		if(menu.getType() == MenuEnum.CATALOG.getValue() ||
 				menu.getType() == MenuEnum.MENU.getValue()){
 			if(parentType != MenuEnum.CATALOG.getValue()){
-//				throw new RRException("上级菜单只能为目录类型");
+				return CommonResult.fail(ResultCodeEnum.PARENT_MENU_IS_ONLY_CATALOG.getCode(),
+						ResultCodeEnum.PARENT_MENU_IS_ONLY_CATALOG.getMessage());
 			}
-			return ;
 		}
-		
 		//按钮
 		if(menu.getType() == MenuEnum.BUTTON.getValue()){
 			if(parentType != MenuEnum.MENU.getValue()){
-//				throw new RRException("上级菜单只能为菜单类型");
+				return CommonResult.fail(ResultCodeEnum.PARENT_MENU_IS_ONLY_MENU.getCode(),
+						ResultCodeEnum.PARENT_MENU_IS_ONLY_MENU.getMessage());
 			}
-			return ;
 		}
+		return null;
 	}
 }

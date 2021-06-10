@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 @FrameworkEndpoint
-public class CustomizeLogoutHandler implements LogoutHandler {
+public class CustomLogoutHandler implements LogoutHandler {
 
     ConsumerTokenServices consumerTokenServices = null;
 

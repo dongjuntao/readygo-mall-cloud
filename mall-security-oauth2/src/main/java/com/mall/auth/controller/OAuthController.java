@@ -1,6 +1,9 @@
 package com.mall.auth.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mall.base.CommonResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
@@ -26,6 +29,7 @@ public class OAuthController {
     @PostMapping(value = "/token")
     public CommonResult postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
+        System.out.println(CommonResult.success(oAuth2AccessToken));
         return CommonResult.success(oAuth2AccessToken);
     }
 }

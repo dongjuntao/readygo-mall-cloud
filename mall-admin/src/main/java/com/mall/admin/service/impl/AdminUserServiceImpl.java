@@ -16,10 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author DongJunTao
@@ -91,6 +88,12 @@ public class AdminUserServiceImpl extends
     @Override
     public void deleteBatch(Long[] userIds) {
         this.removeByIds(Arrays.asList(userIds));
+        //删除用户与角色关系
+        for (Long userId : userIds) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("user_id", userId);
+            userRoleService.removeByMap(map);
+        }
     }
 
     /**

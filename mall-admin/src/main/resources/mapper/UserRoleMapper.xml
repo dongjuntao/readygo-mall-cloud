@@ -7,11 +7,11 @@
         SELECT role_id FROM user_role WHERE user_id = #{userId};
     </select>
 
-    <select id="deleteBatch" resultType="String">
-        DELETE * FROM user_role WHERE role_id IN
+    <delete id="deleteBatch">
+        DELETE FROM user_role WHERE role_id IN
         <foreach item="roleId" collection="array" open="(" separator="," close=")">
             #{roleId}
         </foreach>
-    </select>
+    </delete>
 
 </mapper>

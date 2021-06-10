@@ -39,7 +39,7 @@ public class RoleController {
     }
 
     /**
-     * 角色列表
+     * 角色选择
      */
     @GetMapping("/select")
     public CommonResult select(){
@@ -52,7 +52,7 @@ public class RoleController {
      * 角色信息
      */
     @GetMapping("/info/{roleId}")
-    public CommonResult info(@PathVariable("roleId") Long roleId){
+    public CommonResult info(@PathVariable("roleId") Long roleId) {
         RoleEntity role = roleService.getById(roleId);
 
         //查询角色对应的菜单
@@ -85,7 +85,7 @@ public class RoleController {
     /**
      * 删除角色
      */
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public CommonResult delete(@RequestBody Long[] roleIds){
         roleService.deleteBatch(roleIds);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage());

@@ -7,7 +7,7 @@ import com.mall.admin.mapper.MenuMapper;
 import com.mall.admin.service.AdminUserService;
 import com.mall.admin.service.MenuService;
 import com.mall.admin.service.RoleMenuService;
-import com.mall.base.enums.MenuEnum;
+import com.mall.common.base.enums.MenuEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -9,10 +9,10 @@ import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.service.AdminUserService;
 import com.mall.admin.service.UserRoleService;
 import com.mall.auth.api.feign.FeignLoginService;
-import com.mall.base.CommonResult;
-import com.mall.base.constant.OAuth2Constant;
-import com.mall.base.enums.ResultCodeEnum;
-import com.mall.base.vo.LoginVO;
+import com.mall.common.base.CommonResult;
+import com.mall.common.base.constant.OAuth2Constant;
+import com.mall.common.base.enums.ResultCodeEnum;
+import com.mall.common.base.vo.LoginVO;
 import com.mall.common.util.PageUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +71,11 @@ public class AdminUserController {
 
     @DeleteMapping("/logout")
     public CommonResult logout(HttpServletRequest request) {
-        String result = feignLoginService.loginOut(request.getHeader("token"));
+        String token = request.getHeader("Authorization");
+        if (StringUtils.isEmpty(token)) {
+            return CommonResult.fail();
+        }
+        String result = feignLoginService.loginOut(token.replace("Bearer ", ""));
         JSONObject jsonResult = JSON.parseObject(result);
         if (!"200".equals(jsonResult.get("code"))) {
             //校验失败，返回到前端

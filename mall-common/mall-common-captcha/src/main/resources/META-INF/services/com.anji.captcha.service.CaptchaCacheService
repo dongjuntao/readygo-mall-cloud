@@ -1,1 +1,1 @@
-com.mall.common.service.CaptchaCacheServiceRedisImpl
+com.mall.common.captcha.CaptchaCacheServiceRedisImpl

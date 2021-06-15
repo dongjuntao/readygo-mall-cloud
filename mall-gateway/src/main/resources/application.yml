@@ -1,0 +1,33 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: mall-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #nacos服务注册
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true #使用小写service-id
+      routes:
+        - id: mall-admin
+          uri: lb://mall-admin #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-admin/**         # 断言，路径相匹配的进行路由
+        - id: mall-auth
+          uri: lb://mall-auth #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-auth/**         # 断言，路径相匹配的进行路由
+#白名单
+white:
+  list:
+    urls: #安全路径白名单
+      - /mall-admin/captcha/get #验证码接口
+      - /mall-admin/captcha/check
+      - /mall-admin/system/admin/login

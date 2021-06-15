@@ -2,7 +2,7 @@ package com.mall.auth.config;
 
 import com.mall.auth.domain.SecurityUser;
 import com.mall.auth.impl.UserDetailsServiceImpl;
-import com.mall.base.constant.OAuth2Constant;
+import com.mall.common.base.constant.OAuth2Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

@@ -25,6 +25,7 @@
     <module>mall-admin</module>
     <module>mall-security-oauth2</module>
     <module>mall-services-api</module>
+    <module>mall-gateway</module>
   </modules>
 
   <!--配置-->
@@ -40,7 +41,7 @@
     <lombok.verison>1.18.20</lombok.verison>
     <slf4j.version>1.7.30</slf4j.version>
     <swagger.version>3.0.0</swagger.version>
-    <spring-cloud.version>Hoxton.SR11</spring-cloud.version><!--spring cloud-->
+    <spring-cloud.version>Hoxton.SR5</spring-cloud.version><!--spring cloud-->
     <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
     <fastjson.version>1.2.76</fastjson.version>
     <commons-collections4.version>4.4</commons-collections4.version>
@@ -56,10 +57,10 @@
       <scope>test</scope>
     </dependency>
     <!--springboot-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-web</artifactId>-->
+<!--    </dependency>-->
   </dependencies>
 
   <!--依赖管理-->

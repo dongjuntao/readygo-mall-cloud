@@ -1,8 +1,8 @@
 package com.mall.admin.api.feign;
 
-import com.mall.base.CommonResult;
-import com.mall.base.config.FeignConfig;
-import com.mall.base.constant.ServiceNameConstant;
+import com.mall.common.base.CommonResult;
+import com.mall.common.base.config.FeignConfig;
+import com.mall.common.base.constant.ServiceNameConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

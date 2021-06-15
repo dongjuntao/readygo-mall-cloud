@@ -1,8 +1,8 @@
 package com.mall.auth.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.mall.base.CommonResult;
-import com.mall.base.enums.ResultCodeEnum;
+import com.mall.common.base.CommonResult;
+import com.mall.common.base.enums.ResultCodeEnum;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

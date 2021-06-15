@@ -1,6 +1,6 @@
 package com.mall.auth.config;
 
-import com.mall.base.constant.OAuth2Constant;
+import com.mall.common.base.constant.OAuth2Constant;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

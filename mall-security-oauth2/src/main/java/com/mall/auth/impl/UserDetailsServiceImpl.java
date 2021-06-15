@@ -3,22 +3,16 @@ package com.mall.auth.impl;
 import com.alibaba.fastjson.JSON;
 import com.mall.admin.api.feign.AdminUserService;
 import com.mall.auth.domain.SecurityUser;
-import com.mall.base.CommonResult;
-import com.mall.base.constant.MessageConstant;
-import com.mall.base.dto.AdminUserDTO;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
+import com.mall.common.base.CommonResult;
+import com.mall.common.base.constant.MessageConstant;
+import com.mall.common.base.dto.AdminUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author DongJunTao

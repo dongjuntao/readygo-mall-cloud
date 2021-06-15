@@ -1,11 +1,9 @@
 package com.mall.auth.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.mall.base.CommonResult;
-import com.mall.base.enums.ResultCodeEnum;
+import com.mall.common.base.CommonResult;
+import com.mall.common.base.enums.ResultCodeEnum;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 

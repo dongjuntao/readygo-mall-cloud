@@ -7,13 +7,4 @@ spring:
   main: #允许bean重名
     allow-bean-definition-overriding: true
 server:
-  port: 8000
-
-
-secure:
-  ignored:
-    urls: #安全路径白名单
-      - /user/login
-      - /captcha/get
-      - /captcha/check
-      - /oauth2/auth
+  port: 8001

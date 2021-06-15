@@ -23,6 +23,10 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
     <!--spring cloud oauth2，其中包含spring cloud security和spring-security-oauth2-autoconfigure-->
     <dependency>
       <groupId>org.springframework.cloud</groupId>

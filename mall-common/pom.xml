@@ -25,6 +25,7 @@
     <module>mall-common-captcha</module>
     <module>mall-common-redis</module>
     <module>mall-common-mysql</module>
+      <module>mall-common-file</module>
   </modules>
 
   <dependencies>

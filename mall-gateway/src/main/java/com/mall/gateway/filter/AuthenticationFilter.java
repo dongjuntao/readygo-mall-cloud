@@ -37,7 +37,6 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
-        System.out.println("token === " + token);
         if (StringUtils.isEmpty(token)) {
             try {
                 CommonResult commonResult = CommonResult.fail(ResultCodeEnum.UNAUTHORIZED.getCode(),

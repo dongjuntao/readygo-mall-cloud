@@ -24,6 +24,10 @@ spring:
           uri: lb://mall-auth #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-auth/**         # 断言，路径相匹配的进行路由
+        - id: mall-brand
+          uri: lb://mall-brand #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-brand/**         # 断言，路径相匹配的进行路由
 #白名单
 white:
   list:

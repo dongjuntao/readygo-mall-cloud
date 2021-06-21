@@ -1,4 +1,4 @@
-package com.mall.common.util;
+package com.mall.common.redis.util;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.Data;

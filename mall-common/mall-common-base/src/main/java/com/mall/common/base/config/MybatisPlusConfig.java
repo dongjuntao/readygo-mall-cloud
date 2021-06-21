@@ -3,6 +3,7 @@ package com.mall.common.base.config;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Author DongJunTao
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
  * @Date 2021/6/1 14:34
  * @Version 1.0
  */
+@Configuration
 public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {

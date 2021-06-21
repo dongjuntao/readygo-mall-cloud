@@ -13,7 +13,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.OAuth2Constant;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.vo.LoginVO;
-import com.mall.common.util.PageUtil;
+import com.mall.common.redis.util.PageUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

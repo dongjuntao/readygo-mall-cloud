@@ -2,6 +2,7 @@ package com.mall.auth.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.auth.domain.AccessToken;
+import com.mall.common.base.CommonResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.*;
@@ -47,15 +48,15 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         OAuth2AccessToken accessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
         //构造accessToken
-        AccessToken token = null;
+        AccessToken tokenInfo = null;
         if (accessToken != null) {
-            token = new AccessToken(accessToken.getValue(),accessToken.getTokenType(),accessToken.getRefreshToken().getValue(),
+            tokenInfo = new AccessToken(accessToken.getValue(),accessToken.getTokenType(),accessToken.getRefreshToken().getValue(),
                     accessToken.getExpiresIn(),accessToken.getScope(),accessToken.getAdditionalInformation());
         }
         //处理编码方式，防止中文乱码的情况
         httpServletResponse.setContentType("application/json;charset=utf-8");
         //塞到HttpServletResponse中返回给前台
-        httpServletResponse.getWriter().write(JSON.toJSONString(token));
+        httpServletResponse.getWriter().write(JSON.toJSONString(CommonResult.success(tokenInfo)));
     }
 
 }

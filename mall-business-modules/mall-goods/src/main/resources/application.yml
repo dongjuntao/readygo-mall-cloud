@@ -1,0 +1,22 @@
+#### spring相关配置
+spring:
+  application:
+    name: mall-goods #应用名称
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+    #腾讯云对象存储
+  qcloud:
+    secretId: AKIDrwgBSUIsDKEtLYWGl36uUpwnQoxqUu53
+    secretKey: nLfkbEcmhNo0xgAQSFpCKEtKWVFk15vW
+    region: ap-shanghai
+    bucketName: dongjuntao-1303976517
+    url: https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com
+    prefix: /goods/images/
+server:
+  port: 8004

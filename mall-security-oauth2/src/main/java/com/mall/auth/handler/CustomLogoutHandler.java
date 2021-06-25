@@ -31,7 +31,6 @@ public class CustomLogoutHandler implements LogoutHandler {
                 .getWebApplicationContext(httpServletRequest.getServletContext());
         consumerTokenServices = (ConsumerTokenServices) applicationContext.getBean("consumerTokenServices");
         //删除redis中的token
-        System.out.println("to == " + httpServletRequest.getParameter("token"));
         consumerTokenServices.revokeToken(httpServletRequest.getParameter("token"));
     }
 }

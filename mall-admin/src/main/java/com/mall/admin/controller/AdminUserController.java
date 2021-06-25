@@ -52,7 +52,6 @@ public class AdminUserController {
     @PostMapping("/login")
     public CommonResult postAccessToken(@RequestBody LoginVO loginVO,
                              @RequestParam("captchaVerification") String captchaVerification) {
-        long start = System.currentTimeMillis();
         CaptchaVO captchaVO = new CaptchaVO();
         captchaVO.setCaptchaVerification(captchaVerification);
         //登录时滑动验证码二次验证
@@ -62,11 +61,12 @@ public class AdminUserController {
             return CommonResult.fail(response.getRepCode(), response.getRepMsg());
         }
         //认证，获取token
-        String resultTokenMap = feignLoginService.login(loginVO.getUserName(),loginVO.getPassword(), OAuth2Constant.ADMIN_CLIENT_ID);
-        if (StringUtils.isEmpty(resultTokenMap)) {
+        String resultMap = feignLoginService.login(loginVO.getUserName(),loginVO.getPassword(), OAuth2Constant.ADMIN_CLIENT_ID);
+        CommonResult result = JSON.parseObject(resultMap, CommonResult.class);
+        if (StringUtils.isEmpty(resultMap) || result == null) {
             return CommonResult.fail();
         }
-        return CommonResult.success(JSON.parseObject(resultTokenMap));
+        return result;
     }
 
     @DeleteMapping("/logout")

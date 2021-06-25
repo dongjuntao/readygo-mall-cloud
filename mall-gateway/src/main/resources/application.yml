@@ -19,15 +19,19 @@ spring:
         - id: mall-admin
           uri: lb://mall-admin #匹配后提供服务的路由地址
           predicates:
-            - Path=/mall-admin/**         # 断言，路径相匹配的进行路由
+            - Path=/mall-admin/**
         - id: mall-auth
           uri: lb://mall-auth #匹配后提供服务的路由地址
           predicates:
-            - Path=/mall-auth/**         # 断言，路径相匹配的进行路由
+            - Path=/mall-auth/**
         - id: mall-brand
           uri: lb://mall-brand #匹配后提供服务的路由地址
           predicates:
-            - Path=/mall-brand/**         # 断言，路径相匹配的进行路由
+            - Path=/mall-brand/**
+        - id: mall-goods
+          uri: lb://mall-goods #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-goods/**
 #白名单
 white:
   list:

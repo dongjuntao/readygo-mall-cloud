@@ -11,6 +11,7 @@
   <modules>
     <module>mall-brand</module>
     <module>mall-user</module>
+      <module>mall-goods</module>
   </modules>
 
   <name>mall-business-modules</name>

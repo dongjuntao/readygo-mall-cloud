@@ -24,7 +24,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        System.out.println("strings =onAuthenticationFailure= " + httpServletRequest.getQueryString());
         //返回json数据
         CommonResult result = null;
         if (e instanceof AccountExpiredException) {

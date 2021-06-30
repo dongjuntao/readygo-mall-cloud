@@ -27,6 +27,10 @@ public class AdminUserEntity implements Serializable {
     @TableId
     private Long id;
     /**
+     * 后台用户名称
+     */
+    private String name;
+    /**
      * 用户名
      */
     private String userName;
@@ -51,10 +55,6 @@ public class AdminUserEntity implements Serializable {
      */
     @TableField(exist=false)
     private List<Long> roleIdList;
-    /**
-     * 创建者ID
-     */
-    private Long createUserId;
     /**
      * 创建时间
      */

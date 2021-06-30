@@ -75,13 +75,16 @@ public class BrandController {
 
     /**
      * 删除品牌
+     * @param ids 品牌id集合
+     * @param folderName 品牌logo所在文件夹名称
+     * @return
      */
     @DeleteMapping("/delete")
-    public CommonResult delete(@RequestBody Long[] ids){
+    public CommonResult delete(@RequestBody Long[] ids, @RequestParam("folderName") String folderName){
         //删除文件服务器中的图片
         for (Long id : ids) {
             BrandEntity entity = brandService.getById(id);
-            qCloudCosUtils.delete(entity.getLogo());
+            qCloudCosUtils.delete(entity.getLogo(), folderName);
         }
         brandService.removeByIds(Arrays.asList(ids));
         return CommonResult.success();

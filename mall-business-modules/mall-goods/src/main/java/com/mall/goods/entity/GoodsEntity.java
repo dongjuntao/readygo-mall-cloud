@@ -1,11 +1,14 @@
 package com.mall.goods.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.mall.goods.enums.FreightEnum;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Author DongJunTao
@@ -73,4 +76,17 @@ public class GoodsEntity implements Serializable {
      * 商品参数
      */
     private String params;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+    /**
+     * sku列表
+     */
+    @TableField(exist = false)
+    private List<GoodsSkuEntity> goodsSkuList;
 }

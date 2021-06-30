@@ -137,10 +137,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
-            final Map<String, Object> additionalInfo = new HashMap<>(2);
+            final Map<String, Object> additionalInfo = new HashMap<>(10);
             SecurityUser user = (SecurityUser) authentication.getUserAuthentication().getPrincipal();
             if (user != null) {
-                additionalInfo.put("username", user.getUsername());
+                additionalInfo.put("userId", user.getId());
+                additionalInfo.put("userName", user.getUsername());
+                additionalInfo.put("name", user.getName());
             }
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;

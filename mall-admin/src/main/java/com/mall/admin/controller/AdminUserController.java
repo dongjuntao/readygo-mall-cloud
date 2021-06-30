@@ -89,7 +89,6 @@ public class AdminUserController {
      */
     @PostMapping("/save")
     public CommonResult save(@RequestBody AdminUserEntity adminUserEntity){
-        adminUserEntity.setCreateUserId(1L);//默认管理员创建
         adminUserEntity.setCreateTime(new Date());
         adminUserService.saveAdmin(adminUserEntity);
         return CommonResult.success();
@@ -100,7 +99,6 @@ public class AdminUserController {
      */
     @PutMapping("/update")
     public CommonResult update(@RequestBody AdminUserEntity adminUserEntity){
-        adminUserEntity.setCreateUserId(1L);
         adminUserEntity.setUpdateTime(new Date());
         adminUserService.update(adminUserEntity);
         return CommonResult.success();

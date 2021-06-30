@@ -24,6 +24,4 @@ public class QCloudCosProperty {
     private String bucketName;
     //存储桶访问域名
     private String url;
-    //上传文件前缀路径(eg:/images/)
-    private String prefix;
 }

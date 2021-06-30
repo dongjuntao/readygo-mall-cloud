@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Author DongJunTao
+ * @Description 商品分类管理
+ * @Date 2021/6/25 16:27
+ * @Version 1.0
+ */
 @RestController
 @RequestMapping("goods/category")
 public class GoodsCategoryController {
@@ -25,7 +31,9 @@ public class GoodsCategoryController {
      */
     @GetMapping("/getGoodsCategoryTree")
     public CommonResult getGoodsCategoryTree() {
+        long start = System.currentTimeMillis();
         List<GoodsCategoryEntity> goodsCategoryTree  = goodsCategoryService.queryGoodsCategoryTree(0L);
+        System.out.println("==" + (System.currentTimeMillis()-start));
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryTree);
     }
 

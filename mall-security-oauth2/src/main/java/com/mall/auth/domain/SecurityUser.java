@@ -14,11 +14,13 @@ import java.util.Collection;
  */
 public class SecurityUser extends User {
 
+    private Long id;
+
+    private String name;
+
     private String email;
 
     private String mobile;
-
-    private int age;
 
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -26,6 +28,14 @@ public class SecurityUser extends User {
 
     public SecurityUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -44,12 +54,11 @@ public class SecurityUser extends User {
         this.mobile = mobile;
     }
 
-    public int getAge() {
-        return age;
+    public String getName() {
+        return name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setName(String name) {
+        this.name = name;
     }
-
 }

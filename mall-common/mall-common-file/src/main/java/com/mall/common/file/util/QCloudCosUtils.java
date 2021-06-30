@@ -25,72 +25,44 @@ public class QCloudCosUtils {
 
     @Autowired
     private QCloudCosProperty property;
-    /**
-     * 上传File类型的文件
-     * @param file
-     * @return 上传文件在存储桶的链接
-     */
-    public String upload(File file) {
-        //生成唯一文件名
-        String newFileName = generateUniqueName(file.getName());
-        //文件在存储桶中的key
-        String key = property.getPrefix()+newFileName;
-        //声明客户端
-        COSClient cosClient=null;
-        try {
-            //初始化用户身份信息(secretId,secretKey)
-            COSCredentials cosCredentials = new BasicCOSCredentials(property.getSecretId(), property.getSecretKey());
-            //设置bucket的区域
-            ClientConfig clientConfig = new ClientConfig(new Region(property.getRegion()));
-            //生成cos客户端
-            cosClient = new COSClient(cosCredentials, clientConfig);
-            //创建存储对象的请求
-            PutObjectRequest putObjectRequest = new PutObjectRequest(property.getBucketName(), key, file);
-            //执行上传并返回结果信息
-            cosClient.putObject(putObjectRequest);
-            return property.getUrl()+key;
-        } catch (CosClientException e) {
-            e.printStackTrace();
-        } finally {
-            cosClient.shutdown();
-        }
-        return null;
-    }
 
     /**
      * upload()重载方法
-     * @param multipartFile
+     * @param multipartFiles 文件数组
+     * @param folderName 上传的文件夹名称
      * @return 上传文件在存储桶的链接
      */
-    public String upload(MultipartFile multipartFile) {
-        //生成唯一文件名
-        String newFileName = generateUniqueName(multipartFile.getOriginalFilename());
-        //文件在存储桶中的key
-        String key = property.getPrefix()+newFileName;
-        //声明客户端
-        COSClient cosClient = null;
-        //准备将MultipartFile类型转为File类型
-        File file = null;
-        try {
-            //生成临时文件
-            file = File.createTempFile("temp",null);
-            //将MultipartFile类型转为File类型
-            multipartFile.transferTo(file);
-            //初始化用户身份信息(secretId,secretKey)
-            COSCredentials cosCredentials = new BasicCOSCredentials(property.getSecretId(), property.getSecretKey());
-            //设置bucket的区域
-            ClientConfig clientConfig = new ClientConfig(new Region(property.getRegion()));
-            //生成cos客户端
-            cosClient = new COSClient(cosCredentials, clientConfig);
-            //创建存储对象的请求
-            PutObjectRequest putObjectRequest = new PutObjectRequest(property.getBucketName(), key, file);
-            //执行上传并返回结果信息
-            cosClient.putObject(putObjectRequest);
-            return property.getUrl()+key;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            cosClient.shutdown();
+    public String upload(MultipartFile[] multipartFiles, String folderName) {
+        for (MultipartFile multipartFile : multipartFiles)  {
+            //生成唯一文件名
+            String newFileName = generateUniqueName(multipartFile.getOriginalFilename());
+            //文件在存储桶中的key
+            String key = folderName + newFileName;
+            //声明客户端
+            COSClient cosClient = null;
+            //准备将MultipartFile类型转为File类型
+            File file = null;
+            try {
+                //生成临时文件
+                file = File.createTempFile("temp",null);
+                //将MultipartFile类型转为File类型
+                multipartFile.transferTo(file);
+                //初始化用户身份信息(secretId,secretKey)
+                COSCredentials cosCredentials = new BasicCOSCredentials(property.getSecretId(), property.getSecretKey());
+                //设置bucket的区域
+                ClientConfig clientConfig = new ClientConfig(new Region(property.getRegion()));
+                //生成cos客户端
+                cosClient = new COSClient(cosCredentials, clientConfig);
+                //创建存储对象的请求
+                PutObjectRequest putObjectRequest = new PutObjectRequest(property.getBucketName(), key, file);
+                //执行上传并返回结果信息
+                cosClient.putObject(putObjectRequest);
+                return property.getUrl()+key;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                cosClient.shutdown();
+            }
         }
         return null;
     }
@@ -98,10 +70,11 @@ public class QCloudCosUtils {
     /**
      * 删除文件
      * @param filePath
+     * @param folderName
      */
-    public void delete(String filePath) {
+    public void delete(String filePath, String folderName) {
         //文件在存储桶中的key
-        String key = filePath.substring(filePath.indexOf(property.getPrefix()));
+        String key = filePath.substring(filePath.indexOf(folderName));
         //声明客户端
         COSClient cosClient=null;
         try {

@@ -17,6 +17,5 @@ spring:
     region: ap-shanghai
     bucketName: dongjuntao-1303976517
     url: https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com
-    prefix: /brand/logo/images/
 server:
   port: 8003

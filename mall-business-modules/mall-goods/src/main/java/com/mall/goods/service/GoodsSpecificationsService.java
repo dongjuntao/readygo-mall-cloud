@@ -17,6 +17,6 @@ public interface GoodsSpecificationsService extends IService<GoodsSpecifications
 
     PageUtil queryPage(Map<String, Object> params);
 
-    GoodsSpecificationsEntity getGoodSpecificationsAndDetail(Long id);
+    GoodsSpecificationsEntity getGoodsSpecificationsAndDetail(Long id);
 
 }

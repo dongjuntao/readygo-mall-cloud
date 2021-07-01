@@ -31,9 +31,7 @@ public class GoodsCategoryController {
      */
     @GetMapping("/getGoodsCategoryTree")
     public CommonResult getGoodsCategoryTree() {
-        long start = System.currentTimeMillis();
         List<GoodsCategoryEntity> goodsCategoryTree  = goodsCategoryService.queryGoodsCategoryTree(0L);
-        System.out.println("==" + (System.currentTimeMillis()-start));
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryTree);
     }
 

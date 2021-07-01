@@ -30,15 +30,14 @@ public class GoodsSpecificationsServiceImpl extends ServiceImpl<GoodsSpecificati
     public PageUtil queryPage(Map<String, Object> params) {
         Page<GoodsSpecificationsEntity> page = (Page<GoodsSpecificationsEntity>)new PageBuilder<GoodsSpecificationsEntity>().getPage(params);
         QueryWrapper<GoodsSpecificationsEntity> wrapper = new QueryWrapper<>();
-        String name = String.valueOf(params.get("name"));//品牌名称
+        String name = String.valueOf(params.get("name"));//商品规格名称
         wrapper.like(StringUtils.isNotBlank(name), "name", name);
-        IPage<GoodsSpecificationsEntity> iPage = baseMapper
-                .queryPage(page, wrapper);
+        IPage<GoodsSpecificationsEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }
 
     @Override
-    public GoodsSpecificationsEntity getGoodSpecificationsAndDetail(Long id) {
-        return this.baseMapper.getGoodSpecificationsAndDetail(id);
+    public GoodsSpecificationsEntity getGoodsSpecificationsAndDetail(Long id) {
+        return baseMapper.getGoodsSpecificationsAndDetail(id);
     }
 }

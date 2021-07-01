@@ -59,7 +59,7 @@ public class GoodsSpecificationsController {
     public CommonResult update(@RequestBody GoodsSpecificationsEntity goodsSpecificationsEntity) {
         goodsSpecificationsEntity.setUpdateTime(new Date());
         //查找原来的商品规格详细信息
-        GoodsSpecificationsEntity old = goodsSpecificationsService.getGoodSpecificationsAndDetail(goodsSpecificationsEntity.getId());
+        GoodsSpecificationsEntity old = goodsSpecificationsService.getGoodsSpecificationsAndDetail(goodsSpecificationsEntity.getId());
         List<GoodsSpecificationsDetailEntity> oldDetailList = old.getGoodsSpecificationsDetailEntityList();
         List<Long> detailIdList = new ArrayList<>();
         if (oldDetailList != null && oldDetailList.size()>0) {
@@ -84,7 +84,7 @@ public class GoodsSpecificationsController {
      */
     @GetMapping("getGoodsSpecificationsById")
     public CommonResult info(@RequestParam("id") Long id){
-        GoodsSpecificationsEntity goodsSpecificationsEntity = goodsSpecificationsService.getGoodSpecificationsAndDetail(id);
+        GoodsSpecificationsEntity goodsSpecificationsEntity = goodsSpecificationsService.getGoodsSpecificationsAndDetail(id);
         return CommonResult.success(goodsSpecificationsEntity);
     }
 
@@ -92,7 +92,7 @@ public class GoodsSpecificationsController {
      * 规格列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
+    public CommonResult list(@RequestParam Map<String, Object> params) {
         PageUtil pageResult = goodsSpecificationsService.queryPage(params);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
     }

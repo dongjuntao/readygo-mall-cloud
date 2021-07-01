@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.goods.mapper.GoodsSpecificationsMapper">
-
-    <resultMap id="goodsSpecifications" type="com.mall.goods.entity.GoodsSpecificationsEntity">
+    <!--商品规格-->
+    <resultMap id="baseGoodsSpecificationsMap" type="com.mall.goods.entity.GoodsSpecificationsEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
@@ -10,20 +10,68 @@
         <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--商品规格详细信息-->
+    <resultMap id="baseGoodsSpecificationsDetailMap"  type="com.mall.goods.entity.GoodsSpecificationsDetailEntity">
+        <id column="detail_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
+        <result column="goods_specifications_id" property="goodsSpecificationsId" jdbcType="BIGINT"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="bind_image" property="bindImage" jdbcType="VARCHAR"/>
+        <result column="enable" property="enable" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <!--goodsSpecificationsMap和goodsSpecificationsDetailMap组合为分页查询实体结果-->
+    <resultMap id="goodsSpecificationsMap"
+               type="com.mall.goods.entity.GoodsSpecificationsEntity"
+               extends="baseGoodsSpecificationsMap">
         <collection
                 property="goodsSpecificationsDetailEntityList"
                 ofType="com.mall.goods.entity.GoodsSpecificationsDetailEntity"
-                column="id">
-            <id column="detail_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
-            <result column="goods_specifications_id" property="goodsSpecificationsId" jdbcType="BIGINT"/>
-            <result column="value" property="value" jdbcType="VARCHAR"/>
-            <result column="bind_image" property="bindImage" jdbcType="VARCHAR"/>
-            <result column="enable" property="enable" jdbcType="TINYINT"/>
+                column="id"
+                select="querySpecificationsDetail">
+            <result property="baseGoodsSpecificationsDetailMap"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="goodsSpecificationsDetailMap"
+               type="com.mall.goods.entity.GoodsSpecificationsDetailEntity"
+               extends="baseGoodsSpecificationsDetailMap">
+    </resultMap>
+
+    <!--单条查询结果-->
+    <resultMap id="goodsSpecificationsAndDetailMap"
+               type="com.mall.goods.entity.GoodsSpecificationsEntity"
+               extends="baseGoodsSpecificationsMap">
+        <collection
+                property="goodsSpecificationsDetailEntityList"
+                ofType="com.mall.goods.entity.GoodsSpecificationsDetailEntity"
+                column="id"
+                resultMap="goodsSpecificationsDetailMap">
         </collection>
     </resultMap>
 
-    <!--分页查询商品规格列表（包括商品规格详细信息）-->
-    <select id="queryPage" resultMap="goodsSpecifications">
+    <!--分页查询商品规格列表（包括商品规格详细信息） queryPage和querySpecificationsDetail联合查询-->
+    <select id="queryPage" resultMap="goodsSpecificationsMap">
+        SELECT id,
+               name,
+               description,
+               creator_id,
+               creator_name,
+               create_time,
+               update_time
+        FROM goods_specifications
+        ${ew.customSqlSegment}
+    </select>
+    <select id="querySpecificationsDetail" resultMap="goodsSpecificationsDetailMap">
+        SELECT id AS detail_id,
+               goods_specifications_id,
+               value,
+               bind_image,
+               enable
+        FROM goods_specifications_detail
+        WHERE goods_specifications_id = #{id}
+    </select>
+
+    <select id="getGoodsSpecificationsAndDetail" resultMap="goodsSpecificationsAndDetailMap">
         SELECT gs.id,
                gs.name,
                gs.description,
@@ -39,26 +87,7 @@
         FROM goods_specifications gs
                  LEFT JOIN goods_specifications_detail gsd
                            ON gs.id = gsd.goods_specifications_id
+        WHERE gs.id = #{id}
     </select>
-
-    <select id="getGoodSpecificationsAndDetail" resultMap="goodsSpecifications">
-        SELECT gs.id,
-               gs.name,
-               gs.description,
-               gs.creator_id,
-               gs.creator_name,
-               gs.create_time,
-               gs.update_time,
-               gsd.id AS detail_id,
-               gsd.goods_specifications_id,
-               gsd.value,
-               gsd.bind_image,
-               gsd.enable
-        FROM goods_specifications gs
-                 LEFT JOIN goods_specifications_detail gsd
-                           ON gs.id = gsd.goods_specifications_id
-        WHERE gs.id=#{id}
-    </select>
-
 
 </mapper>

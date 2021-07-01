@@ -6,6 +6,8 @@ import com.mall.goods.mapper.GoodsSkuMapper;
 import com.mall.goods.service.GoodsSkuService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author DongJunTao
  * @Description
@@ -15,4 +17,9 @@ import org.springframework.stereotype.Service;
 @Service("goodsSkuService")
 public class GoodsSkuServiceImpl extends ServiceImpl<GoodsSkuMapper, GoodsSkuEntity>
         implements GoodsSkuService {
+
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        baseMapper.deleteBatchIds(ids);
+    }
 }

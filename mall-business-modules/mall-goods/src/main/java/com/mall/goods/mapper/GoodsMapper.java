@@ -1,8 +1,13 @@
 package com.mall.goods.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.goods.entity.GoodsEntity;
+import com.mall.goods.entity.GoodsSpecificationsEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @Author DongJunTao
@@ -12,4 +17,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface GoodsMapper extends BaseMapper<GoodsEntity> {
+
+    IPage<GoodsEntity> queryPage(
+            @Param("page") Page<GoodsEntity> page,
+            @Param("ew") QueryWrapper<GoodsEntity> wrapper);
+
+
+    GoodsEntity getGoodsAndSku(Long id);
 }

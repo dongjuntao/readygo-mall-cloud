@@ -3,7 +3,6 @@ package com.mall.goods.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.mall.goods.enums.FreightEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -47,7 +46,7 @@ public class GoodsEntity implements Serializable {
     /**
      * 运费设置
      */
-    private FreightEnum freightSetting;
+    private int freightSetting;
     /**
      * 商品编码
      */

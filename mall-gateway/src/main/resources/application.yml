@@ -32,6 +32,20 @@ spring:
           uri: lb://mall-goods #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-goods/**
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients: mall-gateway
+
 #白名单
 white:
   list:

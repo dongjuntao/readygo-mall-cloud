@@ -29,7 +29,6 @@
                 ofType="com.mall.goods.entity.GoodsSpecificationsDetailEntity"
                 column="id"
                 select="querySpecificationsDetail">
-            <result property="baseGoodsSpecificationsDetailMap"></result>
         </collection>
     </resultMap>
     <resultMap id="goodsSpecificationsDetailMap"

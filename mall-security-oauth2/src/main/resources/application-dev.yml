@@ -23,3 +23,9 @@ feign:
       default:
         connectTimeout: 5000
         readTimeout: 5000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients: mall-security-oauth2

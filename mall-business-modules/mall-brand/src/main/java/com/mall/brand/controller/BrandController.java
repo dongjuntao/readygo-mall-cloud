@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,12 +55,21 @@ public class BrandController {
     }
 
     /**
-     * 品牌列表
+     * 品牌列表（分页）
      */
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params){
         PageUtil page = brandService.queryPage(params);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
+    }
+
+    /**
+     * 品牌列表（不分页）
+     */
+    @GetMapping("/listAll")
+    public CommonResult listAll(){
+        List<BrandEntity> brandList = brandService.list();
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), brandList);
     }
 
     /**

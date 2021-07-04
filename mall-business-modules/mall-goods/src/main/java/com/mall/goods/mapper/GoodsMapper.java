@@ -3,6 +3,7 @@ package com.mall.goods.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.entity.GoodsSpecificationsEntity;
@@ -20,7 +21,7 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
 
     IPage<GoodsEntity> queryPage(
             @Param("page") Page<GoodsEntity> page,
-            @Param("ew") QueryWrapper<GoodsEntity> wrapper);
+            @Param(Constants.WRAPPER) QueryWrapper<GoodsEntity> wrapper);
 
 
     GoodsEntity getGoodsAndSku(Long id);

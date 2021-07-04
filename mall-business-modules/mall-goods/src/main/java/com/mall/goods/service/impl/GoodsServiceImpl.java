@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.redis.util.PageBuilder;
 import com.mall.common.redis.util.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
-import com.mall.goods.entity.GoodsSpecificationsEntity;
 import com.mall.goods.mapper.GoodsMapper;
 import com.mall.goods.service.GoodsService;
 import org.apache.commons.lang.StringUtils;
@@ -28,10 +27,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     public PageUtil queryPage(Map<String, Object> params) {
         Page<GoodsEntity> page = (Page<GoodsEntity>)new PageBuilder<GoodsEntity>().getPage(params);
         QueryWrapper<GoodsEntity> wrapper = new QueryWrapper<>();
-        String name = String.valueOf(params.get("name"));//品牌名称
+        String name = String.valueOf(params.get("name"));//商品名称
         wrapper.like(StringUtils.isNotBlank(name), "name", name);
-        IPage<GoodsEntity> iPage = baseMapper
-                .queryPage(page, wrapper);
+        IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }
 

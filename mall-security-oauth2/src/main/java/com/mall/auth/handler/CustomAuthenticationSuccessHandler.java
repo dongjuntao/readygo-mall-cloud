@@ -33,6 +33,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException {
+        long start = System.currentTimeMillis();
         WebApplicationContext applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(httpServletRequest.getServletContext());
         clientDetailsService = (ClientDetailsService) applicationContext.getBean("clientDetailsService");
@@ -57,6 +58,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         httpServletResponse.setContentType("application/json;charset=utf-8");
         //塞到HttpServletResponse中返回给前台
         httpServletResponse.getWriter().write(JSON.toJSONString(CommonResult.success(tokenInfo)));
+        System.out.println("onAuthenticationSuccess = "+(System.currentTimeMillis()-start));
     }
 
 }

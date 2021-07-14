@@ -48,7 +48,7 @@ public class GoodsSkuEntity implements Serializable {
     /**
      * 体积
      */
-    private double column;
+    private double volume;
     /**
      * 是否启用
      */
@@ -61,4 +61,8 @@ public class GoodsSkuEntity implements Serializable {
      * 商品sku扩展属性
      */
     private String extendAttr;
+    /**
+     * 商品sku扩展属性值
+     */
+    private String extendValue;
 }

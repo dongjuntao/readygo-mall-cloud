@@ -1,82 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mall.goods.mapper.GoodsMapper">
-
-    <resultMap id="goods" type="com.mall.goods.entity.GoodsEntity">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
-        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
-        <result column="goods_category_id" property="goodsCategoryId" jdbcType="BIGINT"/>
-        <result column="on_sale" property="onSale" jdbcType="TINYINT"/>
-        <result column="freight_setting" property="freightSetting" jdbcType="INTEGER"/>
+    <!--商品表-->
+    <resultMap id="baseGoodsMap" type="com.mall.goods.entity.GoodsEntity">
+       <id column="id" property="id" jdbcType="BIGINT"/>
+       <result column="name" property="name" jdbcType="VARCHAR"/>
+       <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+       <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
+       <result column="goods_category_ids" property="goodsCategoryIds" jdbcType="VARCHAR"/>
+       <result column="on_sale" property="onSale" jdbcType="TINYINT"/>
+       <result column="freight_setting" property="freightSetting" jdbcType="INTEGER"/>
+       <result column="code" property="code" jdbcType="VARCHAR"/>
+       <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+       <result column="unit" property="unit" jdbcType="VARCHAR"/>
+       <result column="description" property="description" jdbcType="VARCHAR"/>
+       <result column="images" property="images" jdbcType="LONGVARCHAR"/>
+       <result column="info_detail" property="infoDetail" jdbcType="LONGVARCHAR"/>
+       <result column="params" property="params" jdbcType="LONGVARCHAR"/>
+       <result column="points" property="points" jdbcType="INTEGER"/>
+       <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
+       <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+       <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--商品sku表-->
+    <resultMap id="baseGoodsSkuMap" type="com.mall.goods.entity.GoodsSkuEntity">
+        <id column="sku_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
-        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
-        <result column="unit" property="unit" jdbcType="VARCHAR"/>
-        <result column="description" property="description" jdbcType="VARCHAR"/>
-        <result column="images" property="images" jdbcType="LONGVARCHAR"/>
-        <result column="info_detail" property="infoDetail" jdbcType="BLOB"/>
-        <result column="params" property="params" jdbcType="LONGVARCHAR"/>
-        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-        <collection
-                property="goodsSkuList"
-                ofType="com.mall.goods.entity.GoodsSkuEntity"
-                column="id">
-            <id column="sku_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
-            <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
-            <result column="code" property="code" jdbcType="VARCHAR"/>
-            <result column="name" property="name" jdbcType="VARCHAR"/>
-            <result column="price" property="price" jdbcType="DECIMAL"/>
-            <result column="stock" property="stock" jdbcType="INTEGER"/>
-            <result column="weight" property="weight" jdbcType="DOUBLE"/>
-            <result column="volume" property="volume" jdbcType="DOUBLE"/>
-            <result column="enable" property="enable" jdbcType="TINYINT"/>
-            <result column="image" property="image" jdbcType="VARCHAR"/>
-            <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="weight" property="weight" jdbcType="DOUBLE"/>
+        <result column="volume" property="volume" jdbcType="DOUBLE"/>
+        <result column="enable" property="enable" jdbcType="TINYINT"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
+        <result column="extend_value" property="extendValue" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--查询goods和goodsSku组合分页查询结果实体-->
+    <resultMap id="goodsMap"
+               type="com.mall.goods.entity.GoodsEntity"
+               extends="baseGoodsMap">
+        <collection property="goodsSkuList"
+                    ofType="com.mall.goods.entity.GoodsSkuEntity"
+                    column="id"
+                    select="queryGoodsSku">
+        </collection>
+    </resultMap>
+    <resultMap id="goodsSkuMap"
+               type="com.mall.goods.entity.GoodsSkuEntity"
+               extends="baseGoodsSkuMap">
+    </resultMap>
+    <!--查询单条商品记录，包括sku-->
+    <resultMap id="goodsAndGoodsSkuMap"
+               type="com.mall.goods.entity.GoodsEntity"
+               extends="baseGoodsMap">
+        <collection property="goodsSkuList"
+                    ofType="com.mall.goods.entity.GoodsSkuEntity"
+                    column="id"
+                    resultMap="goodsSkuMap">
         </collection>
     </resultMap>
 
     <!--分页查询商品规格列表（包括商品规格详细信息）-->
-    <select id="queryPage" resultMap="goods">
-        SELECT g.id,
-               g.name,
-               g.keyword,
-               g.merchant_id,
-               g.goods_category_id,
-               g.on_sale,
-               g.freight_setting,
-               g.code,
-               g.brand_id,
-               g.unit,
-               g.description,
-               g.images,
-               g.info_detail,
-               g.params,
-               g.create_time,
-               g.update_time,
-               gs.id AS sku_id,
-               gs.goods_id,
-               gs.code,
-               gs.name,
-               gs.price,
-               gs.stock,
-               gs.weight,
-               gs.volume,
-               gs.enable,
-               gs.image,
-               gs.extend_attr
-        FROM goods g
-                 LEFT JOIN goods_sku gs
-                           ON g.id = gs.goods_id
+    <select id="queryPage" resultMap="goodsMap">
+        SELECT id,
+               name,
+               keyword,
+               merchant_id,
+               goods_category_ids,
+               on_sale,
+               freight_setting,
+               code,
+               brand_id,
+               unit,
+               description,
+               images,
+               info_detail,
+               params,
+               points,
+               recommend,
+               create_time,
+               update_time
+        FROM goods
+        ${ew.customSqlSegment}
+    </select>
+    <select id="queryGoodsSku" resultMap="goodsSkuMap">
+        SELECT
+            id AS sku_id,
+            goods_id,
+            code,
+            name,
+            price,
+            stock,
+            weight,
+            volume,
+            enable,
+            image,
+            extend_attr,
+            extend_value
+        FROM goods_sku
+        WHERE goods_id = #{id}
     </select>
 
-    <select id="getGoodsAndSku" resultMap="goods">
+    <select id="getGoodsAndSku" resultMap="goodsAndGoodsSkuMap">
         SELECT g.id,
                g.name,
                g.keyword,
                g.merchant_id,
-               g.goods_category_id,
+               g.goods_category_ids,
                g.on_sale,
                g.freight_setting,
                g.code,
@@ -86,6 +118,8 @@
                g.images,
                g.info_detail,
                g.params,
+               g.points,
+               g.recommend,
                g.create_time,
                g.update_time,
                gs.id AS sku_id,
@@ -98,7 +132,8 @@
                gs.volume,
                gs.enable,
                gs.image,
-               gs.extend_attr
+               gs.extend_attr,
+               gs.extend_value
         FROM goods g
                  LEFT JOIN goods_sku gs
                            ON g.id = gs.goods_id

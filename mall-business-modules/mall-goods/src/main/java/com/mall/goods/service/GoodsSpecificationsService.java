@@ -19,4 +19,6 @@ public interface GoodsSpecificationsService extends IService<GoodsSpecifications
 
     GoodsSpecificationsEntity getGoodsSpecificationsAndDetail(Long id);
 
+    List<GoodsSpecificationsEntity> getGoodsSpecificationList();
+
 }

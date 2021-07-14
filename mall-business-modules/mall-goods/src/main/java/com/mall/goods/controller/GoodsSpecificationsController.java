@@ -98,6 +98,15 @@ public class GoodsSpecificationsController {
     }
 
     /**
+     * 品牌列表（不分页）
+     */
+    @GetMapping("/listAll")
+    public CommonResult listAll(){
+        List<GoodsSpecificationsEntity> goodsSpecificationsEntityList = goodsSpecificationsService.getGoodsSpecificationList();
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsSpecificationsEntityList);
+    }
+
+    /**
      * 删除规格
      */
     @DeleteMapping("delete")

@@ -4,7 +4,6 @@ import com.mall.brand.entity.BrandEntity;
 import com.mall.brand.service.BrandService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.file.util.QCloudCosUtils;
 import com.mall.common.redis.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +25,6 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
-
-    @Autowired
-    private QCloudCosUtils qCloudCosUtils;
 
     /**
      * 新增品牌
@@ -91,11 +87,6 @@ public class BrandController {
      */
     @DeleteMapping("/delete")
     public CommonResult delete(@RequestBody Long[] ids, @RequestParam("folderName") String folderName){
-        //删除文件服务器中的图片
-        for (Long id : ids) {
-            BrandEntity entity = brandService.getById(id);
-            qCloudCosUtils.delete(entity.getLogo(), folderName);
-        }
         brandService.removeByIds(Arrays.asList(ids));
         return CommonResult.success();
     }

@@ -45,6 +45,12 @@
       <artifactId>mall-common-mysql</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--redis-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-redis</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <!--文件服务模块-->
     <dependency>
       <groupId>com.mall.common</groupId>

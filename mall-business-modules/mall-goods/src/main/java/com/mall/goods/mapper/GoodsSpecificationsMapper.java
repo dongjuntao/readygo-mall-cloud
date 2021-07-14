@@ -27,4 +27,7 @@ public interface GoodsSpecificationsMapper extends BaseMapper<GoodsSpecification
 
 
     GoodsSpecificationsEntity getGoodsSpecificationsAndDetail(@Param("id") Long id);
+
+    List<GoodsSpecificationsEntity> getGoodsSpecificationList();
+
 }

@@ -94,7 +94,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        long start = System.currentTimeMillis();
         http.csrf().disable().cors();
         http.requestMatchers()
                 .antMatchers("/oauth/**")

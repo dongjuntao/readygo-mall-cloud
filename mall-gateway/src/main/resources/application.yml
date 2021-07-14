@@ -32,7 +32,13 @@ spring:
           uri: lb://mall-goods #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-goods/**
-
+        - id: mall-file
+          uri: lb://mall-file #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-file/**
+  mvc:
+    servlet:
+      load-on-startup: 1
 feign:
   client:
     config:

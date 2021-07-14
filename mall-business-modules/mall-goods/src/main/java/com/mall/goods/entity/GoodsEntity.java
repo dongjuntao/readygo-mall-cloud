@@ -36,9 +36,9 @@ public class GoodsEntity implements Serializable {
      */
     private Long merchantId;
     /**
-     * 商品分类id
+     * 商品分类id集（1,2,3）
      */
-    private Long goodsCategoryId;
+    private String goodsCategoryIds;
     /**
      * 是否在售
      */
@@ -70,11 +70,19 @@ public class GoodsEntity implements Serializable {
     /**
      * 商品详情
      */
-    private byte[] infoDetail;
+    private String infoDetail;
     /**
      * 商品参数
      */
     private String params;
+    /**
+     * 商品赠送积分
+     */
+    private Integer points;
+    /**
+     * 商品推荐
+     */
+    private String recommend;
     /**
      * 创建时间
      */

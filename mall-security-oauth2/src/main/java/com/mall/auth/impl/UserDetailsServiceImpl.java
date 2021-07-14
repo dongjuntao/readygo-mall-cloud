@@ -30,7 +30,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        long start = System.currentTimeMillis();
         CommonResult result = adminUserService.getAdminUserByUserName(userName);
+        System.out.println("loadUserByUsername == 差值="+(System.currentTimeMillis()-start));
         if (result == null || !"200".equals(result.getCode())) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }

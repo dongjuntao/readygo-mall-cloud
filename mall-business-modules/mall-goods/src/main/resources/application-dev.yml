@@ -31,7 +31,7 @@ spring:
     port: 6379
     password: 123456789
     timeout: 6000
-    database: 0
+    database: 4
 
 feign:
   client:

@@ -27,6 +27,7 @@
     <module>mall-services-api</module>
     <module>mall-gateway</module>
     <module>mall-business-modules</module>
+    <module>mall-file</module>
   </modules>
 
   <!--配置-->

@@ -89,4 +89,22 @@
         WHERE gs.id = #{id}
     </select>
 
+    <select id="getGoodsSpecificationList" resultMap="goodsSpecificationsAndDetailMap">
+        SELECT gs.id,
+               gs.name,
+               gs.description,
+               gs.creator_id,
+               gs.creator_name,
+               gs.create_time,
+               gs.update_time,
+               gsd.id AS detail_id,
+               gsd.goods_specifications_id,
+               gsd.value,
+               gsd.bind_image,
+               gsd.enable
+        FROM goods_specifications gs
+                 LEFT JOIN goods_specifications_detail gsd
+                           ON gs.id = gsd.goods_specifications_id
+    </select>
+
 </mapper>

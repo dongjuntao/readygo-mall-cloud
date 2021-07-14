@@ -1,11 +1,10 @@
-package com.mall.common.file.util;
+package com.mall.file.util;
 
-import com.mall.common.file.property.QCloudCosProperty;
+import com.mall.file.property.QCloudCosProperty;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.exception.CosClientException;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.region.Region;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * @Author DongJunTao

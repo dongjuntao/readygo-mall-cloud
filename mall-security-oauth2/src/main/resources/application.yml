@@ -6,5 +6,8 @@ spring:
     active: dev
   main: #允许bean重名
     allow-bean-definition-overriding: true
+  mvc:
+    servlet:
+      load-on-startup: 1
 server:
   port: 8001

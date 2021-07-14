@@ -1,4 +1,4 @@
-package com.mall.common.file.property;
+package com.mall.file.property;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

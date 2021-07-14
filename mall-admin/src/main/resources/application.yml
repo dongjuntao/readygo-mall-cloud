@@ -6,6 +6,9 @@ spring:
     active: dev
   main:
     allow-bean-definition-overriding: true
+  mvc:
+    servlet:
+      load-on-startup: 1
 server:
   port: 8002
 

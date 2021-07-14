@@ -40,4 +40,9 @@ public class GoodsSpecificationsServiceImpl extends ServiceImpl<GoodsSpecificati
     public GoodsSpecificationsEntity getGoodsSpecificationsAndDetail(Long id) {
         return baseMapper.getGoodsSpecificationsAndDetail(id);
     }
+
+    @Override
+    public List<GoodsSpecificationsEntity> getGoodsSpecificationList() {
+        return baseMapper.getGoodsSpecificationList();
+    }
 }

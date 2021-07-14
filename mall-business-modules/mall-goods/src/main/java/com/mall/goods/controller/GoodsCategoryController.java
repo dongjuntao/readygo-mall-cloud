@@ -2,6 +2,8 @@ package com.mall.goods.controller;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
+import com.mall.common.redis.util.RedisUtil;
+import com.mall.goods.constants.RedisKeyConstant;
 import com.mall.goods.entity.GoodsCategoryEntity;
 import com.mall.goods.service.GoodsCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,21 @@ public class GoodsCategoryController {
     @Autowired
     private GoodsCategoryService goodsCategoryService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     /**
      * 获取商品分类树
      * @return
      */
     @GetMapping("/getGoodsCategoryTree")
     public CommonResult getGoodsCategoryTree() {
-        List<GoodsCategoryEntity> goodsCategoryTree  = goodsCategoryService.queryGoodsCategoryTree(0L);
+        List<GoodsCategoryEntity> goodsCategoryTree = (List<GoodsCategoryEntity>)
+                redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY);
+        if (goodsCategoryTree == null) {
+            goodsCategoryTree = goodsCategoryService.queryGoodsCategoryTree(0L);
+            redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, goodsCategoryTree);
+        }
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryTree);
     }
 
@@ -45,7 +55,12 @@ public class GoodsCategoryController {
         categoryEntity.setId(0L);
         categoryEntity.setName("一级分类");
         categoryEntity.setParentId(-1L);
-        List<GoodsCategoryEntity> goodsCategoryTree  = goodsCategoryService.queryGoodsCategoryTree(0L);
+        List<GoodsCategoryEntity> goodsCategoryTree = (List<GoodsCategoryEntity>)
+                redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY);
+        if (goodsCategoryTree == null){
+            goodsCategoryTree  = goodsCategoryService.queryGoodsCategoryTree(0L);
+            redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, goodsCategoryTree);
+        }
         goodsCategoryTree.add(categoryEntity);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryTree);
     }
@@ -59,6 +74,7 @@ public class GoodsCategoryController {
     public CommonResult save(@RequestBody GoodsCategoryEntity goodsCategoryEntity) {
         goodsCategoryEntity.setCreateTime(new Date());
         goodsCategoryService.saveOrUpdate(goodsCategoryEntity);
+        redisUtil.hDel(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY);
         return CommonResult.success();
     }
 
@@ -71,6 +87,7 @@ public class GoodsCategoryController {
     public CommonResult update(@RequestBody GoodsCategoryEntity goodsCategoryEntity) {
         goodsCategoryEntity.setUpdateTime(new Date());
         goodsCategoryService.saveOrUpdate(goodsCategoryEntity);
+        redisUtil.hDel(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY);
         return CommonResult.success();
     }
 
@@ -97,6 +114,7 @@ public class GoodsCategoryController {
                     ResultCodeEnum.PLEASE_DELETE_CHILD_MENU_BUTTON.getMessage());
         }
         goodsCategoryService.removeById(goodsCategoryId);
+        redisUtil.hDel(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY);
         return CommonResult.success();
     }
 

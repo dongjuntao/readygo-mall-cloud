@@ -63,12 +63,11 @@ public class AdminUserController {
         //认证，获取token
         long start = System.currentTimeMillis();
         String resultMap = feignLoginService.login(loginVO.getUserName(),loginVO.getPassword(), OAuth2Constant.ADMIN_CLIENT_ID);
-        System.out.println("ca == " + (System.currentTimeMillis()-start));
+        System.out.println("登录时长=="+(System.currentTimeMillis() - start));
         CommonResult result = JSON.parseObject(resultMap, CommonResult.class);
         if (StringUtils.isEmpty(resultMap) || result == null) {
             return CommonResult.fail();
         }
-        long start3 = System.currentTimeMillis();
         return result;
     }
 
@@ -137,7 +136,9 @@ public class AdminUserController {
      */
     @GetMapping("/getUserByUserName")
     public CommonResult getAdminUserByUserName(@RequestParam String userName) {
+        long start = System.currentTimeMillis();
         AdminUserEntity adminUser = adminUserService.getAdminUserByUserName(userName);
+        System.out.println("查询用户耗时--"+(System.currentTimeMillis()-start));
         if (adminUser == null) {
             return null;
         }

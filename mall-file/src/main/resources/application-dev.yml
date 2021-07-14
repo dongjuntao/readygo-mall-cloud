@@ -1,0 +1,25 @@
+spring:
+  #####nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #配置nacos地址
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients: mall-file
+

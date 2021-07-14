@@ -1,7 +1,6 @@
-package com.mall.common.file.config;
+package com.mall.file.config;
 
-import com.mall.common.file.util.QCloudCosUtils;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.mall.file.util.QCloudCosUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

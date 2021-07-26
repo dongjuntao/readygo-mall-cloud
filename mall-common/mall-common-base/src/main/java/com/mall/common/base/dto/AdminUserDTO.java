@@ -47,6 +47,10 @@ public class AdminUserDTO {
      */
     private Long createUserId;
     /**
+     * 用户类型（0：系统管理员，1：商户管理员）
+     */
+    private Integer userType;
+    /**
      * 角色ID列表
      */
     private List<Long> roleIdList = new ArrayList<>();

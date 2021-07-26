@@ -15,6 +15,7 @@ public interface AdminUserService {
     @GetMapping("/getUserById")
     CommonResult getAdminUserById(@RequestParam long id);
 
-    @GetMapping("/getUserByUserName")
-    CommonResult getAdminUserByUserName(@RequestParam String userName);
+    @GetMapping("/getUserByUserNameAndUserType")
+    CommonResult getUserByUserNameAndUserType(@RequestParam String userName,
+                                        @RequestParam Integer userType);
 }

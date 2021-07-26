@@ -29,9 +29,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userInfo) throws UsernameNotFoundException {
         long start = System.currentTimeMillis();
-        CommonResult result = adminUserService.getAdminUserByUserName(userName);
+        String userName = userInfo.split(":")[0];
+        //userType【0:系统管理员，1:商户管理员，2:普通商城会员】【0和1时访问管理员表，2时访问普通会员表】
+        Integer userType = Integer.parseInt(userInfo.split(":")[1]);
+        CommonResult result = null;
+        if (userType == 0 || userType == 1) {
+            result = adminUserService.getUserByUserNameAndUserType(userName, userType);
+        }else {
+
+        }
         System.out.println("loadUserByUsername == 差值="+(System.currentTimeMillis()-start));
         if (result == null || !"200".equals(result.getCode())) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
@@ -49,6 +57,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         securityUser.setName(adminUserDTO.getName());
         securityUser.setEmail(adminUserDTO.getEmail());
         securityUser.setMobile(adminUserDTO.getMobile());
+        securityUser.setUserType(adminUserDTO.getUserType());
         return securityUser;
     }
 }

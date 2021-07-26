@@ -51,6 +51,10 @@ public class AdminUserEntity implements Serializable {
      */
     private Integer status;
     /**
+     * 管理员类型用户类型（0:系统管理员；1:商户管理员）
+     */
+    private Integer userType;
+    /**
      * 角色ID列表
      */
     @TableField(exist=false)

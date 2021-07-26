@@ -2,6 +2,8 @@ package com.mall.auth.config;
 
 import com.mall.auth.handler.*;
 import com.mall.auth.impl.UserDetailsServiceImpl;
+//import com.mall.auth.service.CustomUsernamePasswordAuthenticationFilter;
+import com.mall.auth.filter.CustomUsernamePasswordAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @Author DongJunTao
@@ -94,6 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable().cors();
         http.requestMatchers()
                 .antMatchers("/oauth/**")
@@ -113,13 +118,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .formLogin()
-                    .usernameParameter("userName")
+                    .usernameParameter("userInfo")
                     .passwordParameter("password")
                     .loginProcessingUrl("/auth/login")
-                    .successHandler(customAuthenticationSuccessHandler)
-                    .failureHandler(customAuthenticationFailureHandler)
                     .permitAll();
         http.exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);//未登录时返回值
+        http.addFilterAt(customUsernamePasswordAuthenticationFilter(),
+                UsernamePasswordAuthenticationFilter.class);
+
+
+    }
+
+    @Bean
+    CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
+        CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        //登录成功处理器
+        filter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler());
+        //登录失败处理器
+        filter.setAuthenticationFailureHandler(new CustomAuthenticationFailureHandler());
+        return filter;
     }
 
 }

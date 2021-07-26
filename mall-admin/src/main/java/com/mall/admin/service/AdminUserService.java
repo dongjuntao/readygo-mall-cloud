@@ -27,7 +27,7 @@ public interface AdminUserService extends IService<AdminUserEntity> {
      * @param userName
      * @return
      */
-    AdminUserEntity getAdminUserByUserName(String userName);
+    AdminUserEntity getUserByUserNameAndUserType(String userName, Integer userType);
 
     /**
      * 根据用户id获取所有的菜单id

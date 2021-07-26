@@ -17,4 +17,6 @@ public class LoginVO {
 
     private String password;
 
+    private Integer userType;
+
 }

@@ -41,15 +41,16 @@ public class AdminUserServiceImpl extends
     }
 
     /**
-     * 根据用户名查看用户
+     * 根据用户名和用户类型查看用户
      * @param userName
      * @return
      */
     @Override
-    public AdminUserEntity getAdminUserByUserName(String userName) {
+    public AdminUserEntity getUserByUserNameAndUserType(String userName, Integer userType) {
         return  baseMapper.selectOne(
                 new QueryWrapper<AdminUserEntity>()
-                        .eq(StringUtils.isNotBlank(userName), "user_name", userName));
+                        .eq(StringUtils.isNotBlank(userName), "user_name", userName)
+                        .eq(userType != null, "user_type",userType));
 
     }
 

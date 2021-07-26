@@ -143,6 +143,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 additionalInfo.put("userId", user.getId());
                 additionalInfo.put("userName", user.getUsername());
                 additionalInfo.put("name", user.getName());
+                additionalInfo.put("userType", user.getUserType());
             }
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;

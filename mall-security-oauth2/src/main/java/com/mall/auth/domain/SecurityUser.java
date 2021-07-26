@@ -22,6 +22,8 @@ public class SecurityUser extends User {
 
     private String mobile;
 
+    private Integer userType;//用户类型（0：系统管理员，1：商户管理员）
+
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
@@ -60,5 +62,13 @@ public class SecurityUser extends User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 }

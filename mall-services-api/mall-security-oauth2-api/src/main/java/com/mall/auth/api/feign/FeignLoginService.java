@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface FeignLoginService {
     /**
      * 身份认证（security配置loginProcessingUrl地址，用于访问时进行身份认证）
-     * @param userName
+     * @param userInfo
      * @param password
      * @param password
      * @return
      */
     @PostMapping("/login")
-    String login(@RequestParam("userName") String userName,
+    String login(@RequestParam("userInfo") String userInfo,
                  @RequestParam("password") String password,
+                 @RequestParam("userType") Integer userType,
                  @RequestParam("clientId") String clientId);
 
     @DeleteMapping("/logout")

@@ -75,7 +75,7 @@ public class RoleController {
     /**
      * 修改角色
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     public CommonResult update(@RequestBody RoleEntity role){
         role.setCreateUserId(1L);
         roleService.update(role);

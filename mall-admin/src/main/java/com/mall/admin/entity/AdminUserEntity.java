@@ -39,6 +39,14 @@ public class AdminUserEntity implements Serializable {
      */
     private String password;
     /**
+     * 头像
+     */
+    private String avatar;
+    /**
+     * 固定电话
+     */
+    private String fixedTelephone;
+    /**
      * 手机号
      */
     private String mobile;
@@ -51,14 +59,21 @@ public class AdminUserEntity implements Serializable {
      */
     private Integer status;
     /**
+     * 资质材料，文件地址，逗号分隔
+     */
+    private String qualificationMaterials;
+    /**
      * 管理员类型用户类型（0:系统管理员；1:商户管理员）
      */
     private Integer userType;
     /**
-     * 角色ID列表
+     * 所属区域
      */
-    @TableField(exist=false)
-    private List<Long> roleIdList;
+    private String regions;
+    /**
+     * 详细地址
+     */
+    private String address;
     /**
      * 创建时间
      */
@@ -67,5 +82,10 @@ public class AdminUserEntity implements Serializable {
      * 修改时间
      */
     private Date updateTime;
+    /**
+     * 角色ID列表
+     */
+    @TableField(exist=false)
+    private List<Long> roleIdList;
 
 }

@@ -8,10 +8,7 @@ import com.mall.admin.service.ChinaRegionService;
 import com.mall.common.base.CommonResult;
 import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -42,8 +39,28 @@ public class ChinaRegionController {
      * @return
      */
     @GetMapping("list")
-    public CommonResult queryChinaRegionList(@RequestParam Map<String, Object> params) {
+    public CommonResult getChinaRegionList(@RequestParam Map<String, Object> params) {
         return CommonResult.success(chinaRegionService.queryChinaRegionList(params));
+    }
+
+    /**
+     * 根据id查询区域
+     * @param id
+     * @return
+     */
+    @GetMapping("getChinaRegionById")
+    public CommonResult getChinaRegionById(@RequestParam Long id) {
+        return CommonResult.success(chinaRegionService.getChinaRegionById(id));
+    }
+
+    /**
+     * 根据regions查询省、市、区县信息（如：安徽省 淮南市 寿县）
+     * @param regions
+     * @return
+     */
+    @GetMapping("getRegionsNameByRegions")
+    public CommonResult getRegionsNameByRegions(String regions) {
+        return CommonResult.success(chinaRegionService.getRegionsNameByRegions(regions));
     }
 
 

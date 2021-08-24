@@ -2,6 +2,7 @@ package com.mall.admin.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.entity.MenuEntity;
 import com.mall.admin.mapper.MenuMapper;
 import com.mall.admin.service.AdminUserService;
@@ -52,12 +53,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 	}
 
 	@Override
-	public List<MenuEntity> getUserMenuList(Long userId) {
-		//系统管理员，拥有最高权限
-		if(userId == 1){
-			return getAllMenuList(null);
+	public List<MenuEntity> getUserMenuList(Long userId, Integer userType) {
+		//如果是商家，需要看商家是否已被审核过，没有审核过的，没有菜单权限
+		if (userType == 1){
+			AdminUserEntity user = adminUserService.getAdminUserById(userId);
+			if (user.getAuditStatus() != 1){
+				return getAllMenuList(new ArrayList<>());
+			}
 		}
-
 		//用户菜单列表
 		List<Long> menuIdList = adminUserService.queryAllMenuId(userId);
 		return getAllMenuList(menuIdList);

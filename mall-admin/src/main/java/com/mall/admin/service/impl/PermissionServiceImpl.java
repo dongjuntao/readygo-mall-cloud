@@ -26,18 +26,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Set<String> getUserPermissions(long userId) {
-        List<String> permsList;
-
-        //系统管理员，拥有最高权限
-        if(userId == 1){
-            List<MenuEntity> menuList = menuMapper.selectList(null);
-            permsList = new ArrayList<>(menuList.size());
-            for(MenuEntity menu : menuList){
-                permsList.add(menu.getPerms());
-            }
-        }else{
-            permsList = adminUserMapper.queryAllPerms(userId);
-        }
+        List<String> permsList = adminUserMapper.queryAllPerms(userId);
         //用户权限列表
         Set<String> permsSet = new HashSet<>();
         for(String perms : permsList){

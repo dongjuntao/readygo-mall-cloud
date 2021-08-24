@@ -1,4 +1,4 @@
-package com.mall.common.redis.util;
+package com.mall.common.util;
 
 /**
  * @Author DongJunTao

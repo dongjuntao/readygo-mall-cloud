@@ -2,7 +2,7 @@ package com.mall.brand.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.brand.entity.BrandCategoryEntity;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageUtil;
 
 import java.util.List;
 import java.util.Map;

@@ -1,9 +1,8 @@
 package com.mall.goods.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
-import com.mall.goods.entity.GoodsSpecificationsEntity;
 
 import java.util.Map;
 

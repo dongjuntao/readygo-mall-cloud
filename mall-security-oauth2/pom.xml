@@ -49,6 +49,12 @@
       <artifactId>mall-common-base</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--mall-common-util-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-util</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <!--服务注册发现-->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>

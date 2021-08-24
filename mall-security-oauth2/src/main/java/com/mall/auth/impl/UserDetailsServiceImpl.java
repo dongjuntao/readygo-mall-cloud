@@ -6,6 +6,7 @@ import com.mall.auth.domain.SecurityUser;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.MessageConstant;
 import com.mall.common.base.dto.AdminUserDTO;
+import com.mall.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Integer userType = Integer.parseInt(userInfo.split(":")[1]);
         CommonResult result = null;
         if (userType == 0 || userType == 1) {
-            result = adminUserService.getUserByUserNameAndUserType(userName, userType);
+            result = adminUserService.getUserByParams(new MapUtil().put("userName",userName).put("userType", userType));
         }else {
 
         }
@@ -58,6 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         securityUser.setEmail(adminUserDTO.getEmail());
         securityUser.setMobile(adminUserDTO.getMobile());
         securityUser.setUserType(adminUserDTO.getUserType());
+        securityUser.setAuditStatus(adminUserDTO.getAuditStatus());
         return securityUser;
     }
 }

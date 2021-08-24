@@ -13,7 +13,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.OAuth2Constant;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.vo.LoginVO;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +92,10 @@ public class AdminUserController {
      */
     @PostMapping("/save")
     public CommonResult save(@RequestBody AdminUserEntity adminUserEntity){
-        adminUserEntity.setCreateTime(new Date());
-        adminUserService.saveAdmin(adminUserEntity);
+        int num = adminUserService.saveAdmin(adminUserEntity);
+        if (num == -1){
+            return CommonResult.fail(ResultCodeEnum.USER_NAME_EXIST.getCode(),ResultCodeEnum.USER_NAME_EXIST.getMessage());
+        }
         return CommonResult.success();
     }
 
@@ -103,7 +105,10 @@ public class AdminUserController {
     @PutMapping("/update")
     public CommonResult update(@RequestBody AdminUserEntity adminUserEntity){
         adminUserEntity.setUpdateTime(new Date());
-        adminUserService.update(adminUserEntity);
+        int num = adminUserService.update(adminUserEntity);
+        if (num == -1){
+            return CommonResult.fail(ResultCodeEnum.USER_NAME_EXIST.getCode(),ResultCodeEnum.USER_NAME_EXIST.getMessage());
+        }
         return CommonResult.success();
     }
 
@@ -132,15 +137,12 @@ public class AdminUserController {
 
     /**
      * 根据用户名查看用户信息
-     * @param userName
+     * @param params
      * @return
      */
-    @GetMapping("/getUserByUserNameAndUserType")
-    public CommonResult getUserByUserNameAndUserType(@RequestParam String userName,
-                                               @RequestParam Integer userType) {
-        long start = System.currentTimeMillis();
-        AdminUserEntity adminUser = adminUserService.getUserByUserNameAndUserType(userName,userType);
-        System.out.println("查询用户耗时--"+(System.currentTimeMillis()-start));
+    @GetMapping("/getUserByParams")
+    public CommonResult getUserByParams(@RequestParam Map<String, Object> params) {
+        AdminUserEntity adminUser = adminUserService.getUserByParams(params);
         if (adminUser == null) {
             return null;
         }
@@ -160,4 +162,16 @@ public class AdminUserController {
         return CommonResult.success();
     }
 
+    /**
+     * 商家审核
+     */
+    @PutMapping("/audit/{id}")
+    public CommonResult audit(@PathVariable("id") Long id,
+                              @RequestBody AdminUserEntity entity) {
+        int num = adminUserService.audit(id, entity);
+        if (num == -1){
+            return CommonResult.fail(ResultCodeEnum.USER_ACCOUNT_NOT_EXIST.getCode(),ResultCodeEnum.USER_ACCOUNT_NOT_EXIST.getMessage());
+        }
+        return CommonResult.success();
+    }
 }

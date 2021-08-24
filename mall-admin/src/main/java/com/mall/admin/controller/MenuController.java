@@ -38,9 +38,10 @@ public class MenuController {
 	 * 导航菜单
 	 */
 	@GetMapping("/navbar")
-	public CommonResult nav(){
-		List<MenuEntity> menuList = menuService.getUserMenuList(1L);
-		Set<String> permissions = permissionService.getUserPermissions(1L);
+	public CommonResult nav(@RequestParam("userId") Long userId,
+							@RequestParam("userType") Integer userType){
+		List<MenuEntity> menuList = menuService.getUserMenuList(userId, userType);
+		Set<String> permissions = permissionService.getUserPermissions(userId);
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("menuList", menuList);
 		resultMap.put("permissions", permissions);

@@ -2,7 +2,7 @@ package com.mall.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.AdminUserEntity;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -24,10 +24,10 @@ public interface AdminUserService extends IService<AdminUserEntity> {
 
     /**
      * 根据用户名查看用户
-     * @param userName
+     * @param params
      * @return
      */
-    AdminUserEntity getUserByUserNameAndUserType(String userName, Integer userType);
+    AdminUserEntity getUserByParams(Map<String, Object> params);
 
     /**
      * 根据用户id获取所有的菜单id
@@ -51,10 +51,18 @@ public interface AdminUserService extends IService<AdminUserEntity> {
     /**
      * 保存用户
      */
-    void saveAdmin(AdminUserEntity adminUserEntity);
+    int saveAdmin(AdminUserEntity adminUserEntity);
 
     /**
      * 修改用户
      */
-    void update(AdminUserEntity adminUserEntity);
+    int update(AdminUserEntity adminUserEntity);
+
+    /**
+     * 商家审核
+     * @param id
+     * @param adminUserEntity
+     * @return
+     */
+    int audit(Long id, AdminUserEntity adminUserEntity);
 }

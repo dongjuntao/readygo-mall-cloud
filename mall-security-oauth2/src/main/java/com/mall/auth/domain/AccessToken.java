@@ -38,7 +38,7 @@ public class AccessToken {
      */
     private Set<String> scope;
     /**
-     * token增强信息
+     * token增强信息（用户的基本信息）
      */
     Map<String, Object>  enhanceInfo;
 

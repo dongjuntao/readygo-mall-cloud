@@ -1,16 +1,14 @@
 package com.mall;
 
-import com.mall.common.redis.util.RedisUtil;
+import com.mall.common.util.RedisUtil;
 import com.mall.goods.constants.RedisKeyConstant;
 import com.mall.goods.entity.GoodsCategoryEntity;
 import com.mall.goods.service.GoodsCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**

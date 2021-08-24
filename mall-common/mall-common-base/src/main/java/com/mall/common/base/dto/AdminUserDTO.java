@@ -51,6 +51,10 @@ public class AdminUserDTO {
      */
     private Integer userType;
     /**
+     * 审核状态（0：待审核  1：通过审核  2：未通过审核）
+     */
+    private Integer auditStatus;
+    /**
      * 角色ID列表
      */
     private List<Long> roleIdList = new ArrayList<>();

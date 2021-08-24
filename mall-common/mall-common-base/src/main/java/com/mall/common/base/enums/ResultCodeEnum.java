@@ -20,6 +20,7 @@ public enum ResultCodeEnum {
     USER_ACCOUNT_LOCKED("454", "账号被锁定"),
     USER_ACCOUNT_NOT_EXIST("455", "账号不存在"),
     ADMIN_COUNT_NOT_DELETED("456","管理员账号无法删除"),
+    USER_NAME_EXIST("457","用户名已存在"),
 
     PLEASE_DELETE_CHILD_MENU_BUTTON("457","请先删除子菜单或按钮"),
     MENU_NAME_NOT_BE_EMPTY("458", "菜单名称不能为空"),

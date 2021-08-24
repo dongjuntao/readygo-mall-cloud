@@ -4,7 +4,7 @@ import com.mall.brand.entity.BrandCategoryEntity;
 import com.mall.brand.service.BrandCategoryService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

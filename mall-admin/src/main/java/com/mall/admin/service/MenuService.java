@@ -36,7 +36,7 @@ public interface MenuService extends IService<MenuEntity> {
 	/**
 	 * 获取用户菜单列表
 	 */
-	List<MenuEntity> getUserMenuList(Long userId);
+	List<MenuEntity> getUserMenuList(Long userId, Integer userType);
 
 	/**
 	 * 删除

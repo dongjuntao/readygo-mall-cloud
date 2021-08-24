@@ -15,4 +15,9 @@ import java.util.Map;
 public interface ChinaRegionService extends IService<ChinaRegionEntity> {
 
     List<ChinaRegionEntity> queryChinaRegionList(Map<String, Object> paramsMap);
+
+    ChinaRegionEntity getChinaRegionById(Long id);
+
+    String getRegionsNameByRegions(String regions);
+
 }

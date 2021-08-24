@@ -1,9 +1,8 @@
 package com.mall.brand.service;
 
-import com.alibaba.druid.sql.PagerUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.brand.entity.BrandEntity;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageUtil;
 
 import java.util.Map;
 

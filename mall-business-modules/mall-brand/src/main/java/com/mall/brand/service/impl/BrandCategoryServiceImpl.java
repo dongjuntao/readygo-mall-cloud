@@ -4,11 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.brand.entity.BrandCategoryEntity;
-import com.mall.brand.entity.BrandEntity;
 import com.mall.brand.mapper.BrandCategoryMapper;
 import com.mall.brand.service.BrandCategoryService;
-import com.mall.common.redis.util.PageBuilder;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.util.PageBuilder;
+import com.mall.common.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 

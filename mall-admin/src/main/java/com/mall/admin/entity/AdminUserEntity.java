@@ -59,11 +59,19 @@ public class AdminUserEntity implements Serializable {
      */
     private Integer status;
     /**
+     * 审核状态（商户申请后，需要审核 0:待审核，1:已通过 2:已拒绝）
+     */
+    private Integer auditStatus;
+    /**
+     * 审核意见
+     */
+    private String auditComments;
+    /**
      * 资质材料，文件地址，逗号分隔
      */
     private String qualificationMaterials;
     /**
-     * 管理员类型用户类型（0:系统管理员；1:商户管理员）
+     * 管理员类型用户类型（0:平台管理员（该类管理员属于平台所有）；1:商户管理员（卖家））
      */
     private Integer userType;
     /**

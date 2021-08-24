@@ -22,7 +22,9 @@ public class SecurityUser extends User {
 
     private String mobile;
 
-    private Integer userType;//用户类型（0：系统管理员，1：商户管理员）
+    private Integer userType;//用户类型（0：平台管理员，1：商户管理员）
+
+    private Integer auditStatus; //审核状态（0：待审核  1：审核通过  2：审核不通过）
 
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -70,5 +72,13 @@ public class SecurityUser extends User {
 
     public void setUserType(Integer userType) {
         this.userType = userType;
+    }
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
 }

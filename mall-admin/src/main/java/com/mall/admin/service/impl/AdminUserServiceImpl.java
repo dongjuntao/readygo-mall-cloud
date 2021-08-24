@@ -7,8 +7,12 @@ import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.mapper.AdminUserMapper;
 import com.mall.admin.service.AdminUserService;
 import com.mall.admin.service.UserRoleService;
-import com.mall.common.redis.util.PageBuilder;
-import com.mall.common.redis.util.PageUtil;
+import com.mall.common.base.CommonResult;
+import com.mall.common.base.enums.ResultCodeEnum;
+import com.mall.common.util.MapUtil;
+import com.mall.common.util.PageBuilder;
+import com.mall.common.util.PageUtil;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,15 +46,19 @@ public class AdminUserServiceImpl extends
 
     /**
      * 根据用户名和用户类型查看用户
-     * @param userName
+     * @param params
      * @return
      */
     @Override
-    public AdminUserEntity getUserByUserNameAndUserType(String userName, Integer userType) {
-        return  baseMapper.selectOne(
+    public AdminUserEntity getUserByParams(Map<String, Object> params) {
+        String userName = params.get("userName") == null ? null : params.get("userName").toString();
+        Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
+        Long id = params.get("id") == null ? null: Long.valueOf((params.get("id").toString()));
+        return baseMapper.selectOne(
                 new QueryWrapper<AdminUserEntity>()
-                        .eq(StringUtils.isNotBlank(userName), "user_name", userName)
-                        .eq(userType != null, "user_type",userType));
+                        .eq(StringUtils.isNotBlank(userName), "user_name", String.valueOf(params.get("userName")))
+                        .eq(userType != null, "user_type",userType)
+                        .ne(id != null, "id",id));//排除id
 
     }
 
@@ -71,13 +79,18 @@ public class AdminUserServiceImpl extends
      */
     @Override
     public PageUtil queryPage(Map<String, Object> params) {
-        String userName = String.valueOf(params.get("userName"));//用户名
+        //用户名
+        String userName = params.get("userName") == null ? null : params.get("userName").toString();
+        //用户类型
+        Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
+        Integer auditStatus = params.get("auditStatus") == null ? null : new Integer(params.get("auditStatus").toString());
         IPage<AdminUserEntity> page = this.page(
                 new PageBuilder<AdminUserEntity>().getPage(params),
                 new QueryWrapper<AdminUserEntity>()
                         .like(StringUtils.isNotBlank(userName), "user_name", userName)
+                        .eq(userType != null, "user_type", userType)
+                        .eq(auditStatus != null, "audit_status", auditStatus)
         );
-
         return new PageUtil(page);
     }
 
@@ -102,12 +115,21 @@ public class AdminUserServiceImpl extends
      */
     @Override
     @Transactional
-    public void saveAdmin(AdminUserEntity adminUserEntity) {
+    public int saveAdmin(AdminUserEntity adminUserEntity) {
+        //判断用户名是否重复
+        Map<String,Object> params = new HashMap<>();
+        params.put("userName",adminUserEntity.getUserName());
+        AdminUserEntity oldUser = this.getUserByParams(params);
+        if (oldUser != null){
+            return -1;
+        }
+        adminUserEntity.setStatus(adminUserEntity.getStatus() == null ? 1 : adminUserEntity.getStatus());
         adminUserEntity.setCreateTime(new Date());
         adminUserEntity.setPassword(new BCryptPasswordEncoder().encode(adminUserEntity.getPassword()));
         this.save(adminUserEntity);
         //保存用户与角色关系
         userRoleService.saveOrUpdate(adminUserEntity.getId(), adminUserEntity.getRoleIdList());
+        return 1;
     }
 
     /**
@@ -116,7 +138,12 @@ public class AdminUserServiceImpl extends
      */
     @Override
     @Transactional
-    public void update(AdminUserEntity adminUserEntity) {
+    public int update(AdminUserEntity adminUserEntity) {
+        Map<String, Object> params = new MapUtil().put("userName", adminUserEntity.getUserName()).put("id",adminUserEntity.getId());
+        AdminUserEntity oldUser = this.getUserByParams(params);
+        if (oldUser != null){
+            return -1;
+        }
         //密码不为空，修改，为空，保持之前的密码不变
         if(StringUtils.isNotBlank(adminUserEntity.getPassword())){
             adminUserEntity.setPassword(new BCryptPasswordEncoder().encode(adminUserEntity.getPassword()));
@@ -126,5 +153,27 @@ public class AdminUserServiceImpl extends
         this.updateById(adminUserEntity);
         //保存用户与角色关系
         userRoleService.saveOrUpdate(adminUserEntity.getId(), adminUserEntity.getRoleIdList());
+        return 1;
+    }
+
+    /**
+     * 商家审核
+     * @param id
+     * @param adminUserEntity
+     * @return
+     */
+    @Override
+    public int audit(Long id, AdminUserEntity adminUserEntity) {
+        AdminUserEntity oldEntity = this.getAdminUserById(id);
+        if (adminUserEntity == null){
+            return -1;
+        }
+        oldEntity.setAuditStatus(adminUserEntity.getAuditStatus());
+        oldEntity.setAuditComments(adminUserEntity.getAuditComments());
+        oldEntity.setRoleIdList(adminUserEntity.getRoleIdList());
+        this.updateById(oldEntity);
+        //保存用户与角色关系
+        userRoleService.saveOrUpdate(oldEntity.getId(), oldEntity.getRoleIdList());
+        return 1;
     }
 }

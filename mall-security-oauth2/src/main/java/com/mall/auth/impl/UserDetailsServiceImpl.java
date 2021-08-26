@@ -5,7 +5,7 @@ import com.mall.admin.api.feign.AdminUserService;
 import com.mall.auth.domain.SecurityUser;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.MessageConstant;
-import com.mall.common.base.dto.AdminUserDTO;
+import com.mall.common.base.dto.UserDTO;
 import com.mall.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -45,21 +45,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (result == null || !"200".equals(result.getCode())) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
-        AdminUserDTO adminUserDTO = JSON.parseObject(JSON.toJSONString(result.getData()), AdminUserDTO.class);
+        UserDTO userDTO = JSON.parseObject(JSON.toJSONString(result.getData()), UserDTO.class);
         SecurityUser securityUser = new SecurityUser(
-                adminUserDTO.getUserName(),
-                adminUserDTO.getPassword(),
+                userDTO.getUserName(),
+                userDTO.getPassword(),
                 true,
                 true,
                 true,
                 true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(null));
-        securityUser.setId(adminUserDTO.getId());
-        securityUser.setName(adminUserDTO.getName());
-        securityUser.setEmail(adminUserDTO.getEmail());
-        securityUser.setMobile(adminUserDTO.getMobile());
-        securityUser.setUserType(adminUserDTO.getUserType());
-        securityUser.setAuditStatus(adminUserDTO.getAuditStatus());
+        securityUser.setId(userDTO.getId());
+        securityUser.setUserType(userDTO.getUserType());
+        securityUser.setAuditStatus(userDTO.getAuditStatus());
+        securityUser.setAvatar(userDTO.getAvatar());
         return securityUser;
     }
 }

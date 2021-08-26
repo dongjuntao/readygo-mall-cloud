@@ -16,15 +16,11 @@ public class SecurityUser extends User {
 
     private Long id;
 
-    private String name;
-
-    private String email;
-
-    private String mobile;
-
     private Integer userType;//用户类型（0：平台管理员，1：商户管理员）
 
     private Integer auditStatus; //审核状态（0：待审核  1：审核通过  2：审核不通过）
+
+    private String avatar; //头像
 
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -42,30 +38,6 @@ public class SecurityUser extends User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getUserType() {
         return userType;
     }
@@ -80,5 +52,13 @@ public class SecurityUser extends User {
 
     public void setAuditStatus(Integer auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

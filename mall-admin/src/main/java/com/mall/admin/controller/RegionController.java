@@ -2,36 +2,28 @@ package com.mall.admin.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mall.admin.entity.ChinaRegionEntity;
+import com.mall.admin.entity.RegionEntity;
 import com.mall.admin.enums.RegionTypeEnum;
-import com.mall.admin.service.ChinaRegionService;
+import com.mall.admin.service.RegionService;
 import com.mall.common.base.CommonResult;
-import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @Author DongJunTao
- * @Description 中国区域
+ * @Description 区域管理
  * @Date 2021/8/14 23:06
  * @Version 1.0
  */
 @RestController
 @RequestMapping(value = "system/region")
-public class ChinaRegionController {
+public class RegionController {
 
     @Autowired
-    private ChinaRegionService chinaRegionService;
+    private RegionService regionService;
 
     /**
      * 查询区域列表
@@ -39,8 +31,8 @@ public class ChinaRegionController {
      * @return
      */
     @GetMapping("list")
-    public CommonResult getChinaRegionList(@RequestParam Map<String, Object> params) {
-        return CommonResult.success(chinaRegionService.queryChinaRegionList(params));
+    public CommonResult getRegionList(@RequestParam Map<String, Object> params) {
+        return CommonResult.success(regionService.queryRegionList(params));
     }
 
     /**
@@ -48,9 +40,9 @@ public class ChinaRegionController {
      * @param id
      * @return
      */
-    @GetMapping("getChinaRegionById")
-    public CommonResult getChinaRegionById(@RequestParam Long id) {
-        return CommonResult.success(chinaRegionService.getChinaRegionById(id));
+    @GetMapping("getRegionById")
+    public CommonResult getRegionById(@RequestParam Long id) {
+        return CommonResult.success(regionService.getRegionById(id));
     }
 
     /**
@@ -60,7 +52,42 @@ public class ChinaRegionController {
      */
     @GetMapping("getRegionsNameByRegions")
     public CommonResult getRegionsNameByRegions(String regions) {
-        return CommonResult.success(chinaRegionService.getRegionsNameByRegions(regions));
+        return CommonResult.success(regionService.getRegionsNameByRegions(regions));
+    }
+
+    /**
+     * 新增地区
+     * @param regionEntity
+     * @return
+     */
+    @PostMapping("save")
+    public CommonResult save(@RequestBody RegionEntity regionEntity) {
+        int num = regionService.saveRegion(regionEntity);
+        return num > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 修改地区
+     * @param regionEntity
+     * @return
+     */
+    @PutMapping("update")
+    public CommonResult update(@RequestBody RegionEntity regionEntity) {
+        int num = regionService.updateRegion(regionEntity);
+        return num > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 删除地区（会删除子地区）
+     * @param id
+     * @return
+     */
+    @DeleteMapping("delete")
+    public CommonResult delete(@RequestParam Long id) {
+        long start = System.currentTimeMillis();
+        int num = regionService.deleteRegion(id);
+        System.out.println("cha=="+(System.currentTimeMillis() - start));
+        return num > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
 
@@ -87,12 +114,12 @@ public class ChinaRegionController {
             String provinceCode = String.valueOf(provinceObject.get("code"));
             String provinceName = String.valueOf(provinceObject.get("name"));
             //省
-            ChinaRegionEntity province = new ChinaRegionEntity();
+            RegionEntity province = new RegionEntity();
             province.setName(provinceName);
             province.setCode(provinceCode);
             province.setRegionType(RegionTypeEnum.province);
             province.setParentId(0L);
-            chinaRegionService.save(province);
+            regionService.save(province);
 
             JSONArray cityList = provinceObject.getJSONArray("cityList");
             for (int j=0; j<cityList.size(); j++){
@@ -100,12 +127,12 @@ public class ChinaRegionController {
                 String cityCode = String.valueOf(cityObject.get("code"));
                 String cityName = String.valueOf(cityObject.get("name"));
                 //市
-                ChinaRegionEntity city = new ChinaRegionEntity();
+                RegionEntity city = new RegionEntity();
                 city.setName(cityName);
                 city.setCode(cityCode);
                 city.setRegionType(RegionTypeEnum.city);
                 city.setParentId(province.getId());
-                chinaRegionService.save(city);
+                regionService.save(city);
 
                 JSONArray areaList = cityObject.getJSONArray("areaList");
                 for (int k=0; k<areaList.size(); k++){
@@ -113,12 +140,12 @@ public class ChinaRegionController {
                     String areaCode = String.valueOf(areaObject.get("code"));
                     String areaName = String.valueOf(areaObject.get("name"));
                     //区县
-                    ChinaRegionEntity area = new ChinaRegionEntity();
+                    RegionEntity area = new RegionEntity();
                     area.setName(areaName);
                     area.setCode(areaCode);
                     area.setRegionType(RegionTypeEnum.area);
                     area.setParentId(city.getId());
-                    chinaRegionService.save(area);
+                    regionService.save(area);
                 }
             }
         }

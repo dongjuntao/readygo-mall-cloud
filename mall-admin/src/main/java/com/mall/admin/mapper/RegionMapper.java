@@ -1,7 +1,7 @@
 package com.mall.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mall.admin.entity.ChinaRegionEntity;
+import com.mall.admin.entity.RegionEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Version 1.0
  */
 @Mapper
-public interface ChinaRegionMapper extends BaseMapper<ChinaRegionEntity> {
+public interface RegionMapper extends BaseMapper<RegionEntity> {
 }

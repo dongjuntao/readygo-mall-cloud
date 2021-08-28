@@ -12,8 +12,8 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
-@TableName("china_region")
-public class ChinaRegionEntity {
+@TableName("region")
+public class RegionEntity {
 
     @TableId
     private Long id;

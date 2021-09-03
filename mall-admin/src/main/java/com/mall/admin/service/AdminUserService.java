@@ -44,6 +44,13 @@ public interface AdminUserService extends IService<AdminUserEntity> {
     PageUtil queryPage(Map<String, Object> params);
 
     /**
+     * 根据条件查询所有管理员
+     * @param params
+     * @return
+     */
+    List<AdminUserEntity> queryByParams(Map<String, Object> params);
+
+    /**
      * 删除用户
      */
     void deleteBatch(Long[] userIds);

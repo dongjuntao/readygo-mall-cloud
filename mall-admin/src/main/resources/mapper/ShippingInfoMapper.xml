@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.admin.mapper.ShippingInfoMapper">
+
+    <!--分页查询发货信息（其中包括所属商户）-->
+    <select id="queryPage" resultType="com.mall.admin.entity.ShippingInfoEntity">
+        SELECT si.id,
+               si.name,
+               si.sex,
+               si.regions,
+               si.address,
+               si.postal_code,
+               si.mobile,
+               si.fixed_telephone,
+               si.admin_user_id,
+               si.create_time,
+               si.update_time,
+               si.create_by,
+               si.update_by,
+               si.is_default,
+               au.name AS merchant
+        FROM shipping_info si LEFT JOIN admin_user au ON si.admin_user_id=au.id
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="getShippingInfoById" resultType="com.mall.admin.entity.ShippingInfoEntity">
+        SELECT si.id,
+               si.name,
+               si.sex,
+               si.regions,
+               si.address,
+               si.postal_code,
+               si.mobile,
+               si.fixed_telephone,
+               si.admin_user_id,
+               si.create_time,
+               si.update_time,
+               si.create_by,
+               si.update_by,
+               si.is_default,
+               au.name AS merchant
+        FROM shipping_info si LEFT JOIN admin_user au ON si.admin_user_id=au.id
+        WHERE si.id = #{id}
+    </select>
+
+
+
+</mapper>

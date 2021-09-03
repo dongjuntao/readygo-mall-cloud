@@ -84,9 +84,7 @@ public class RegionController {
      */
     @DeleteMapping("delete")
     public CommonResult delete(@RequestParam Long id) {
-        long start = System.currentTimeMillis();
         int num = regionService.deleteRegion(id);
-        System.out.println("cha=="+(System.currentTimeMillis() - start));
         return num > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
@@ -121,31 +119,35 @@ public class RegionController {
             province.setParentId(0L);
             regionService.save(province);
 
-            JSONArray cityList = provinceObject.getJSONArray("cityList");
-            for (int j=0; j<cityList.size(); j++){
-                JSONObject cityObject = cityList.getJSONObject(j);
-                String cityCode = String.valueOf(cityObject.get("code"));
-                String cityName = String.valueOf(cityObject.get("name"));
-                //市
-                RegionEntity city = new RegionEntity();
-                city.setName(cityName);
-                city.setCode(cityCode);
-                city.setRegionType(RegionTypeEnum.city);
-                city.setParentId(province.getId());
-                regionService.save(city);
+            JSONArray cityList = provinceObject.getJSONArray("city");
+            if(cityList !=null && cityList.size()>0){
+                for (int j=0; j<cityList.size(); j++){
+                    JSONObject cityObject = cityList.getJSONObject(j);
+                    String cityCode = String.valueOf(cityObject.get("code"));
+                    String cityName = String.valueOf(cityObject.get("name"));
+                    //市
+                    RegionEntity city = new RegionEntity();
+                    city.setName(cityName);
+                    city.setCode(cityCode);
+                    city.setRegionType(RegionTypeEnum.city);
+                    city.setParentId(province.getId());
+                    regionService.save(city);
 
-                JSONArray areaList = cityObject.getJSONArray("areaList");
-                for (int k=0; k<areaList.size(); k++){
-                    JSONObject areaObject = areaList.getJSONObject(k);
-                    String areaCode = String.valueOf(areaObject.get("code"));
-                    String areaName = String.valueOf(areaObject.get("name"));
-                    //区县
-                    RegionEntity area = new RegionEntity();
-                    area.setName(areaName);
-                    area.setCode(areaCode);
-                    area.setRegionType(RegionTypeEnum.area);
-                    area.setParentId(city.getId());
-                    regionService.save(area);
+                    JSONArray areaList = cityObject.getJSONArray("area");
+                    if (areaList != null && areaList.size()>0){
+                        for (int k=0; k<areaList.size(); k++){
+                            JSONObject areaObject = areaList.getJSONObject(k);
+                            String areaCode = String.valueOf(areaObject.get("code"));
+                            String areaName = String.valueOf(areaObject.get("name"));
+                            //区县
+                            RegionEntity area = new RegionEntity();
+                            area.setName(areaName);
+                            area.setCode(areaCode);
+                            area.setRegionType(RegionTypeEnum.area);
+                            area.setParentId(city.getId());
+                            regionService.save(area);
+                        }
+                    }
                 }
             }
         }

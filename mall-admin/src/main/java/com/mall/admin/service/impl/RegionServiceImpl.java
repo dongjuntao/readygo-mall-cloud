@@ -2,12 +2,11 @@ package com.mall.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.admin.entity.AdminUserEntity;
+import com.google.common.collect.Lists;
 import com.mall.admin.entity.RegionEntity;
 import com.mall.admin.mapper.RegionMapper;
 import com.mall.admin.service.RegionService;
 import com.mall.common.util.MapUtil;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,10 +43,13 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, RegionEntity>
     @Override
     public String getRegionsNameByRegions(String regions) {
         String[] regionId = regions.split(",");
-        RegionEntity province = this.getById(regionId[0]); //省
-        RegionEntity city = this.getById(regionId[1]); //市
-        RegionEntity area = this.getById(regionId[2]); //区县
-        return province.getName() + " " + city.getName() + " " + area.getName();
+        QueryWrapper<RegionEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("id", Lists.newArrayList(
+                Long.valueOf(regionId[0]),
+                Long.valueOf(regionId[1]),
+                Long.valueOf(regionId[2])));
+        List<RegionEntity> regionEntityList = this.list(queryWrapper);
+        return regionEntityList.get(0).getName() + " " + regionEntityList.get(1).getName() + " " + regionEntityList.get(2).getName();
     }
 
     /**

@@ -122,6 +122,15 @@ public class AdminUserController {
     }
 
     /**
+     * 所有用户列表（不分页）
+     */
+    @GetMapping("/listAll")
+    public CommonResult listAll(@RequestParam Map<String, Object> params){
+        List<AdminUserEntity> adminUserEntityList = adminUserService.queryByParams(params);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), adminUserEntityList);
+    }
+
+    /**
      * 根据主键id获取用户实体
      * @param id
      * @return

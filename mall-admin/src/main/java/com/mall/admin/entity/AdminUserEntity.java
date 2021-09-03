@@ -71,7 +71,10 @@ public class AdminUserEntity implements Serializable {
      */
     private String qualificationMaterials;
     /**
-     * 管理员类型用户类型（0:平台管理员（该类管理员属于平台所有）；1:商户管理员（卖家））
+     * 管理员类型用户类型
+     * 0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜）
+     * 1:【商户管理员】（卖家，管理店铺相关事宜）
+     * 2:【商家操作人员】（卖家分配的下级人员，专门负责该店铺某一块业务的操作人员））
      */
     private Integer userType;
     /**

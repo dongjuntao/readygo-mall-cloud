@@ -95,6 +95,23 @@ public class AdminUserServiceImpl extends
     }
 
     /**
+     * 根据条件查询所有管理员
+     * @param params
+     * @return
+     */
+    @Override
+    public List<AdminUserEntity> queryByParams(Map<String, Object> params) {
+        //用户类型
+        Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
+        //审核状态
+        Integer auditStatus = params.get("auditStatus") == null ? null : new Integer(params.get("auditStatus").toString());
+        List<AdminUserEntity> adminUserEntityList = this.list(new QueryWrapper<AdminUserEntity>()
+                .eq(userType != null, "user_type", userType)
+                .eq(auditStatus != null, "audit_status", auditStatus));
+        return adminUserEntityList;
+    }
+
+    /**
      * 删除用户
      * @param userIds
      */

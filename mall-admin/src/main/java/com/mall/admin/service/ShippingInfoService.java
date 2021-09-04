@@ -47,4 +47,6 @@ public interface ShippingInfoService extends IService<ShippingInfoEntity> {
      */
     ShippingInfoEntity getShippingInfoById(Long id);
 
+    void updateIsDefault(Long id, Boolean isDefault);
+
 }

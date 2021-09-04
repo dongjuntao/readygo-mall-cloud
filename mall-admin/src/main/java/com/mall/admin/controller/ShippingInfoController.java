@@ -1,7 +1,5 @@
 package com.mall.admin.controller;
 
-import com.mall.admin.entity.AdminUserEntity;
-import com.mall.admin.entity.RegionEntity;
 import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.service.RegionService;
 import com.mall.admin.service.ShippingInfoService;
@@ -11,7 +9,6 @@ import com.mall.common.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -94,5 +91,16 @@ public class ShippingInfoController {
         ShippingInfoEntity shippingInfo = shippingInfoService.getShippingInfoById(id);
         shippingInfo.setRegionNames(regionService.getRegionsNameByRegions(shippingInfo.getRegions()));
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), shippingInfo);
+    }
+
+    /**
+     * 设为默认 / 取消默认
+     * @param id
+     * @return
+     */
+    @PutMapping("updateIsDefault/{id}")
+    public CommonResult updateIsDefault(@PathVariable("id") Long id, @RequestParam("isDefault") Boolean isDefault) {
+        shippingInfoService.updateIsDefault(id, isDefault);
+        return CommonResult.success();
     }
 }

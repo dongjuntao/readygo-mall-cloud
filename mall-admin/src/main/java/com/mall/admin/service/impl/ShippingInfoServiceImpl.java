@@ -30,20 +30,18 @@ public class ShippingInfoServiceImpl extends ServiceImpl<ShippingInfoMapper, Shi
 
     @Override
     public PageUtil queryPage(Map<String, Object> params) {
-
-//        String name = params.get("name") == null ? null : params.get("name").toString();
-//        IPage<ShippingInfoEntity> page = this.page(
-//                new PageBuilder<ShippingInfoEntity>().getPage(params),
-//                new QueryWrapper<ShippingInfoEntity>()
-//                        .like(StringUtils.isNotBlank(name), "name", name)
-//        );
-//        return new PageUtil(page);
-
         Page<ShippingInfoEntity> page = (Page<ShippingInfoEntity>)new PageBuilder<ShippingInfoEntity>()
                 .getPage(params);
         QueryWrapper<ShippingInfoEntity> wrapper = new QueryWrapper<>();
-        String name = params.get("name") == null ? null : params.get("name").toString();//发货人姓名
-        wrapper.like(StringUtils.isNotBlank(name), "name", name);
+        //发货人姓名
+        String name = params.get("name") == null ? null : params.get("name").toString();
+        //商家id
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        //手机号码
+        String mobile = params.get("mobile") == null ? null : params.get("mobile").toString();
+        wrapper.like(StringUtils.isNotBlank(name), "si.name", name)
+                .eq(adminUserId != null, "admin_user_id", adminUserId)
+                .eq(StringUtils.isNotBlank(mobile), "si.mobile", mobile);
         IPage<ShippingInfoEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }

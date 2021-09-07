@@ -19,7 +19,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @RestController
-@RequestMapping(value = "system/region")
+@RequestMapping(value = "logistics/region")
 public class RegionController {
 
     @Autowired

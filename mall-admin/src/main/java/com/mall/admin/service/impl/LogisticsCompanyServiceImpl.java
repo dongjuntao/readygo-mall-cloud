@@ -2,9 +2,11 @@ package com.mall.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.entity.LogisticsCompanyEntity;
+import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.mapper.LogisticsCompanyMapper;
 import com.mall.admin.service.LogisticsCompanyService;
 import com.mall.common.util.MapUtil;
@@ -152,5 +154,26 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
         }
         logisticsCompanyEntity.setUpdateTime(new Date());
         return baseMapper.updateById(logisticsCompanyEntity);
+    }
+
+    @Override
+    public PageUtil getWithExpressSettingByPage(Map<String, Object> params) {
+        Page<LogisticsCompanyEntity> page = (Page<LogisticsCompanyEntity>)new PageBuilder<LogisticsCompanyEntity>()
+                .getPage(params);
+        //物流公司名称
+        String name = params.get("name") == null ? null : params.get("name").toString();
+        //物流公司简称
+        String abbreviation = params.get("abbreviation") == null ? null : params.get("abbreviation").toString();
+        //物流公司编码
+        String code = params.get("code") == null ? null : params.get("code").toString();
+        QueryWrapper<LogisticsCompanyEntity> wrapper = new QueryWrapper<>();
+        wrapper.like(StringUtils.isNotBlank(name), "name", name)
+                .like(StringUtils.isNotBlank(abbreviation), "abbreviation", abbreviation)
+                .like(StringUtils.isNotBlank(code), "code", code)
+                .orderByAsc("order_num");
+        //所属商家id
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        IPage<LogisticsCompanyEntity> iPage = baseMapper.getWithExpressSettingByPage(page, wrapper, adminUserId);
+        return new PageUtil(iPage);
     }
 }

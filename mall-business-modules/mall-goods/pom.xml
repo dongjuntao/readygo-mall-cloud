@@ -51,12 +51,6 @@
       <artifactId>mall-common-redis</artifactId>
       <version>${common.version}</version>
     </dependency>
-    <!--文件服务模块-->
-    <dependency>
-      <groupId>com.mall.common</groupId>
-      <artifactId>mall-common-file</artifactId>
-      <version>${common.version}</version>
-    </dependency>
     <!--mybatis-plus-->
     <dependency>
       <groupId>com.baomidou</groupId>

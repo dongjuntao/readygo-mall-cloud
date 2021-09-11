@@ -44,6 +44,15 @@ public class LogisticsCompanyController {
     }
 
     /**
+     * 分页查询物流公司列表（与express_setting联合查询获取enable）
+     */
+    @GetMapping("/listWithExpressSetting")
+    public CommonResult listWithExpressSetting(@RequestParam Map<String, Object> params){
+        PageUtil page = logisticsCompanyService.getWithExpressSettingByPage(params);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
+    }
+
+    /**
      * 保存物流公司
      */
     @PostMapping("/save")

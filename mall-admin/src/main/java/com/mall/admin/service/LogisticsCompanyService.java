@@ -38,6 +38,13 @@ public interface LogisticsCompanyService extends IService<LogisticsCompanyEntity
     PageUtil getByPage(Map<String, Object> params);
 
     /**
+     * 分页查询所有物流公司（与express_setting联合查询）
+     * @param params
+     * @return
+     */
+    PageUtil getWithExpressSettingByPage(Map<String, Object> params);
+
+    /**
      * 根据条件查询所有物流公司
      * @param params
      * @return

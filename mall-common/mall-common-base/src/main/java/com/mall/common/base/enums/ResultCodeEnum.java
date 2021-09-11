@@ -12,6 +12,8 @@ public enum ResultCodeEnum {
     UNAUTHORIZED("401", "未登录或token已过期"),
     FORBIDDEN("403","没有访问权限"),
     VALIDATE_FAILED("404", "参数检验失败"),
+    CREATE_FAIL("420","新增失败"),
+    UPDATE_FAIL("421","修改失败"),
 
     USER_ACCOUNT_EXPIRED("450", "账号已过期"),
     USER_CREDENTIALS_ERROR("451", "用户名或密码错误"),
@@ -29,7 +31,7 @@ public enum ResultCodeEnum {
     PARENT_MENU_IS_ONLY_CATALOG("461","上级菜单只能为目录类型"),
     PARENT_MENU_IS_ONLY_MENU("462","上级菜单只能为菜单类型"),
 
-    LOGISTICS_COMPANY_EXIST("463","上级菜单只能为菜单类型"),
+    LOGISTICS_COMPANY_EXIST("463","物流公司已存在"),
 
     COMMON_FAIL("10000", "其他错误");
 

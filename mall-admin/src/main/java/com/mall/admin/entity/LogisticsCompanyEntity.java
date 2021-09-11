@@ -1,5 +1,6 @@
 package com.mall.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -46,4 +47,9 @@ public class LogisticsCompanyEntity {
      * 修改时间
      */
     private Date updateTime;
+    /**
+     * 商家是否启用了此快递公司
+     */
+    @TableField(exist = false)
+    private Boolean enable;
 }

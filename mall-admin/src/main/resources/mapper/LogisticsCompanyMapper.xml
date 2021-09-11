@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.admin.mapper.LogisticsCompanyMapper">
+
+    <!--分页查询物流公司及是否启用-->
+    <select id="getWithExpressSettingByPage" resultType="com.mall.admin.entity.LogisticsCompanyEntity">
+        SELECT lc.id,
+               lc.name,
+               lc.abbreviation,
+               lc.code,
+               lc.url,
+               es.enable
+        FROM logistics_company lc
+            LEFT JOIN express_setting es
+                ON lc.id=es.logistics_company_id
+                AND es.admin_user_id = #{adminUserId}
+            ${ew.customSqlSegment}
+    </select>
+</mapper>

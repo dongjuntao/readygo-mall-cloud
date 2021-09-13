@@ -1,7 +1,6 @@
 package com.mall.admin.controller;
 
 import com.mall.admin.entity.ExpressSettingEntity;
-import com.mall.admin.entity.LogisticsCompanyEntity;
 import com.mall.admin.service.ExpressSettingService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
@@ -41,6 +40,21 @@ public class ExpressSettingController {
     public CommonResult delete(@RequestParam("logisticsCompanyId") Long logisticsCompanyId,
                                @RequestParam("adminUserId") Long adminUserId){
         expressSettingService.delete(logisticsCompanyId,adminUserId);
+        return CommonResult.success();
+    }
+
+    /**
+     * 设为默认 / 取消默认
+     * @param logisticsCompanyId
+     * @param adminUserId
+     * @param isDefault
+     * @return
+     */
+    @PutMapping("updateIsDefault")
+    public CommonResult updateIsDefault(@RequestParam("logisticsCompanyId") Long logisticsCompanyId,
+                                        @RequestParam("adminUserId") Long adminUserId,
+                                        @RequestParam("isDefault") Boolean isDefault) {
+        expressSettingService.updateIsDefault(logisticsCompanyId, adminUserId, isDefault);
         return CommonResult.success();
     }
 }

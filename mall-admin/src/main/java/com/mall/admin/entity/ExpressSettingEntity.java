@@ -24,6 +24,12 @@ public class ExpressSettingEntity {
      * 快递公司id
      */
     private Long logisticsCompanyId;
-
+    /**
+     * 是否开启
+     */
     private Boolean enable;
+    /**
+     * 是否是默认
+     */
+    private Boolean isDefault;
 }

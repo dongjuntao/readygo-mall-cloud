@@ -9,7 +9,8 @@
                lc.abbreviation,
                lc.code,
                lc.url,
-               es.enable
+               es.enable,
+               es.is_default
         FROM logistics_company lc
             LEFT JOIN express_setting es
                 ON lc.id=es.logistics_company_id

@@ -52,4 +52,9 @@ public class LogisticsCompanyEntity {
      */
     @TableField(exist = false)
     private Boolean enable;
+    /**
+     * 是否默认
+     */
+    @TableField(exist = false)
+    private Boolean isDefault;
 }

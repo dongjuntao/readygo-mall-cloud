@@ -3,6 +3,7 @@ package com.mall.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.ExpressSettingEntity;
 import com.mall.admin.entity.LogisticsCompanyEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Author DongJunTao
@@ -24,4 +25,6 @@ public interface ExpressSettingService extends IService<ExpressSettingEntity> {
      * @return
      */
     int saveExpressSetting(ExpressSettingEntity expressSettingEntity);
+
+    void updateIsDefault(Long logisticsCompanyId, Long adminUserId, Boolean isDefault);
 }

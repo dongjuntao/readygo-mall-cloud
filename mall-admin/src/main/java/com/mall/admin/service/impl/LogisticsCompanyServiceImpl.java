@@ -171,7 +171,6 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
                 .like(StringUtils.isNotBlank(abbreviation), "abbreviation", abbreviation)
                 .like(StringUtils.isNotBlank(code), "code", code)
                 .orderByDesc("enable") //开启的放在前面
-                .orderByDesc("is_default") //默认的放在前面
                 .orderByAsc("order_num");
         //所属商家id
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));

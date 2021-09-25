@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.admin.mapper.FreightTemplateMapper">
+
+    <resultMap id="freightTemplateMap" type="com.mall.admin.entity.FreightTemplateEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="charge_type" property="chargeType" jdbcType="INTEGER" />
+        <result column="is_default" property="isDefault" jdbcType="TINYINT" />
+        <result column="enable_default_freight" property="enableDefaultFreight" jdbcType="TINYINT" />
+        <result column="enable_condition_free" property="enableConditionFree" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="BIGINT" />
+        <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+        <association
+                property="freightDefaultEntity"
+                resultMap="freightDefaultMap">
+        </association>
+        <collection property="freightRuleEntityList"
+                    ofType="com.mall.admin.entity.FreightRuleEntity"
+                    resultMap="freightRuleMap">
+        </collection>
+        <collection property="freightFreeRuleEntityList"
+                    ofType="com.mall.admin.entity.FreightFreeRuleEntity"
+                    resultMap="freightFreeRuleMap">
+        </collection>
+    </resultMap>
+    <!--默认运费-->
+    <resultMap id="freightDefaultMap" type="com.mall.admin.entity.FreightDefaultEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" />
+        <result column="first" property="first" jdbcType="DOUBLE" />
+        <result column="first_freight" property="firstFreight" jdbcType="DOUBLE" />
+        <result column="continuation" property="continuation" jdbcType="DOUBLE" />
+        <result column="continuation_freight" property="continuationFreight" jdbcType="DOUBLE" />
+    </resultMap>
+    <!--运费规则-->
+    <resultMap id="freightRuleMap" type="com.mall.admin.entity.FreightRuleEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" />
+        <result column="region_id_names" property="regionIdNames" jdbcType="VARCHAR" />
+        <result column="first" property="first" jdbcType="DOUBLE" />
+        <result column="first_freight" property="firstFreight" jdbcType="DOUBLE" />
+        <result column="continuation" property="continuation" jdbcType="DOUBLE" />
+        <result column="continuation_freight" property="continuationFreight" jdbcType="DOUBLE" />
+    </resultMap>
+    <!--包邮规则-->
+    <resultMap id="freightFreeRuleMap" type="com.mall.admin.entity.FreightFreeRuleEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" />
+        <result column="region_id_names" property="regionIdNames" jdbcType="VARCHAR" />
+        <result column="free_condition" property="freeCondition" jdbcType="INTEGER" />
+        <result column="money" property="money" jdbcType="INTEGER" />
+        <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    </resultMap>
+    <!--分页查询物流公司及是否启用-->
+    <select id="getFreightTemplateEntityByPage" resultMap="freightTemplateMap">
+        SELECT
+            ft.id,
+            ft.name,
+            ft.type,
+            ft.charge_type,
+            ft.is_default,
+            ft.enable_default_freight,
+            ft.enable_condition_free,
+            ft.create_time,
+            ft.update_time,
+            ft.create_by,
+            ft.update_by,
+            fd.id,
+            fd.freight_template_id,
+            fd.first,
+            fd.first_freight,
+            fd.continuation,
+            fd.continuation_freight,
+            fr.id,
+            fr.freight_template_id,
+            fr.region_id_names,
+            fr.first,
+            fr.first_freight,
+            fr.continuation,
+            fr.continuation_freight,
+            ffr.id,
+            ffr.freight_template_id,
+            ffr.region_id_names,
+            ffr.free_condition,
+            ffr.money,
+            ffr.quantity
+        FROM freight_template ft
+            LEFT JOIN freight_default fd ON ft.id=fd.freight_template_id
+            LEFT JOIN freight_rule fr ON ft.id=fr.freight_template_id
+            LEFT JOIN freight_free_rule ffr ON ft.id=ffr.freight_template_id
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

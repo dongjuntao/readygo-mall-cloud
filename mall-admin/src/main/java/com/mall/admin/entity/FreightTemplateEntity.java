@@ -45,6 +45,10 @@ public class FreightTemplateEntity {
      */
     private Boolean enableConditionFree;
     /**
+     * 所属商户id
+     */
+    private Long adminUserId;
+    /**
      * 创建时间
      */
     private Date createTime;

@@ -23,4 +23,6 @@ public interface FreightTemplateMapper extends BaseMapper<FreightTemplateEntity>
             @Param("page") Page<FreightTemplateEntity> page,
             @Param(Constants.WRAPPER) QueryWrapper<FreightTemplateEntity> wrapper,
             @Param("createBy") Long createBy);
+
+    FreightTemplateEntity getFreightTemplateById(Long id);
 }

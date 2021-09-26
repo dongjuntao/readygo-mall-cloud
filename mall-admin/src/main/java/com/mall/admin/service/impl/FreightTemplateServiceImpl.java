@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author DongJunTao
@@ -52,6 +49,10 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
     public int saveFreightTemplate(FreightTemplateEntity freightTemplateEntity) {
         //运费模板保存
         freightTemplateEntity.setCreateTime(new Date());
+        //是否设为默认，如果是，则需要将其他模板设置为非默认（默认只能有一个）
+        if (freightTemplateEntity.getIsDefault()) {
+            setOtherIsNotDefault(freightTemplateEntity);
+        }
         this.save(freightTemplateEntity);
         Integer type = freightTemplateEntity.getType();
         //只有买家承担运费时才需要设置默认运费，运费规则，包邮规则
@@ -85,19 +86,28 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
     public int updateFreightTemplate(FreightTemplateEntity freightTemplateEntity) {
         //修改运费模板
         freightTemplateEntity.setUpdateTime(new Date());
+        //是否设为默认，如果是，则需要将其他模板设置为非默认（默认只能有一个）
+        if (freightTemplateEntity.getIsDefault()) {
+            setOtherIsNotDefault(freightTemplateEntity);
+        }
         this.updateById(freightTemplateEntity);
         //删除原来的默认运费，新增新的默认运费
         freightDefaultService.remove(new QueryWrapper<FreightDefaultEntity>()
                 .eq("freight_template_id", freightTemplateEntity.getId()));
         if (freightTemplateEntity.getEnableDefaultFreight()) {//开启默认运费
             FreightDefaultEntity defaultEntity = freightTemplateEntity.getFreightDefaultEntity();
-            freightDefaultService.save(defaultEntity);
+            if(defaultEntity != null){
+                defaultEntity.setFreightTemplateId(freightTemplateEntity.getId());
+                freightDefaultService.save(defaultEntity);
+            }
         }
         //删除原来的运费规则，新增新的运费规则
         freightRuleService.remove(new QueryWrapper<FreightRuleEntity>()
                 .eq("freight_template_id", freightTemplateEntity.getId()));
         List<FreightRuleEntity> freightRuleEntityList = freightTemplateEntity.getFreightRuleEntityList();
         if (!CollectionUtils.isEmpty(freightRuleEntityList)){
+            freightRuleEntityList.stream().forEach(freightRuleEntity ->
+                    freightRuleEntity.setFreightTemplateId(freightTemplateEntity.getId()));
             freightRuleService.saveBatch(freightRuleEntityList);
         }
         //删除原来的包邮规则，新增新的包邮规则
@@ -105,9 +115,25 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
                 .eq("freight_template_id", freightTemplateEntity.getId()));
         List<FreightFreeRuleEntity> freightFreeRuleEntityList = freightTemplateEntity.getFreightFreeRuleEntityList();
         if (!CollectionUtils.isEmpty(freightFreeRuleEntityList)) {
+            freightFreeRuleEntityList.stream().forEach(freightFreeRuleEntity ->
+                    freightFreeRuleEntity.setFreightTemplateId(freightTemplateEntity.getId()));
             freightFreeRuleService.saveBatch(freightFreeRuleEntityList);
         }
         return 1;
+    }
+
+    /**
+     * 将其他运费模板置为非默认
+     * @param freightTemplateEntity
+     */
+    private void setOtherIsNotDefault(FreightTemplateEntity freightTemplateEntity) {
+        Long adminUserId = freightTemplateEntity.getAdminUserId();
+        FreightTemplateEntity templateEntity = this.getOne(new QueryWrapper<FreightTemplateEntity>()
+                .eq("admin_user_id", adminUserId).eq("is_default", true));
+        if (templateEntity != null){
+            templateEntity.setIsDefault(false);
+            baseMapper.updateById(templateEntity);
+        }
     }
 
     /**
@@ -121,7 +147,53 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
                 .getPage(params);
         QueryWrapper<FreightTemplateEntity> wrapper = new QueryWrapper<>();
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        wrapper.eq("admin_user_id",adminUserId);
         IPage<FreightTemplateEntity> iPage = baseMapper.getFreightTemplateEntityByPage(page, wrapper, adminUserId);
         return new PageUtil(iPage);
+    }
+
+    /**
+     * 根据id获取运费模板信息
+     * @param id
+     * @return
+     */
+    @Override
+    public FreightTemplateEntity getFreightTemplateById(Long id) {
+        return baseMapper.getFreightTemplateById(id);
+    }
+
+    /**
+     * 设为默认 / 取消默认
+     * @param id
+     * @param isDefault
+     */
+    @Override
+    public void updateIsDefault(Long id, Boolean isDefault) {
+        FreightTemplateEntity freightTemplateEntity = baseMapper.getFreightTemplateById(id);
+        if (!isDefault){
+            freightTemplateEntity.setIsDefault(false);
+            this.updateById(freightTemplateEntity);
+        }else {
+            List<FreightTemplateEntity> updateList = new ArrayList<>();
+            freightTemplateEntity.setIsDefault(true);
+            updateList.add(freightTemplateEntity);
+            //查询该商户下所有的发货地址，把原先默认的改为非默认
+            Long adminUserId = freightTemplateEntity.getAdminUserId();
+            FreightTemplateEntity templateEntity = this.getOne(new QueryWrapper<FreightTemplateEntity>()
+                    .eq("admin_user_id", adminUserId).eq("is_default", true));
+            if (templateEntity != null){
+                templateEntity.setIsDefault(false);
+                updateList.add(templateEntity);
+            }
+            this.saveOrUpdateBatch(updateList);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteBatch(Long[] freightTemplateIds) {
+        for (Long freightTemplateId : freightTemplateIds) {
+
+        }
     }
 }

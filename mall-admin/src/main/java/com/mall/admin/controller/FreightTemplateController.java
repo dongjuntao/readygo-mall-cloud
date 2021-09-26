@@ -1,6 +1,7 @@
 package com.mall.admin.controller;
 
 import com.mall.admin.entity.FreightTemplateEntity;
+import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.service.FreightTemplateService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
@@ -53,6 +54,29 @@ public class FreightTemplateController {
         if (num < 0){
             return CommonResult.fail(ResultCodeEnum.UPDATE_FAIL.getCode(),ResultCodeEnum.UPDATE_FAIL.getMessage());
         }
+        return CommonResult.success();
+    }
+
+    /**
+     * 根据主键id获取运费模板
+     * @param id
+     * @return
+     */
+    @GetMapping("/getFreightTemplateById")
+    public CommonResult getShippingInfoById(@RequestParam long id) {
+        FreightTemplateEntity freightTemplateEntity = freightTemplateService.getFreightTemplateById(id);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), freightTemplateEntity);
+    }
+
+
+    /**
+     * 设为默认 / 取消默认
+     * @param id
+     * @return
+     */
+    @PutMapping("updateIsDefault/{id}")
+    public CommonResult updateIsDefault(@PathVariable("id") Long id, @RequestParam("isDefault") Boolean isDefault) {
+        freightTemplateService.updateIsDefault(id, isDefault);
         return CommonResult.success();
     }
 }

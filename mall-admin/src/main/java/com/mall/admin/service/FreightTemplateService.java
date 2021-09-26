@@ -34,4 +34,20 @@ public interface FreightTemplateService extends IService<FreightTemplateEntity> 
      * @return
      */
     PageUtil getByPage(Map<String, Object> params);
+
+    FreightTemplateEntity getFreightTemplateById(Long id);
+
+    /**
+     * 取消默认，设为默认
+     * @param id
+     * @param isDefault
+     */
+    void updateIsDefault(Long id, Boolean isDefault);
+
+    /**
+     * 删除运费模板（支持批量删除）
+     * @param freightTemplateIds
+     */
+    void deleteBatch(Long[] freightTemplateIds);
+
 }

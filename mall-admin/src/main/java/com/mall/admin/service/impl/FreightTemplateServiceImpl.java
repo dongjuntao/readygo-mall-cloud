@@ -189,11 +189,25 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
         }
     }
 
+    /**
+     * 删除模板（支持批量）
+     * @param freightTemplateIds
+     */
     @Override
     @Transactional
     public void deleteBatch(Long[] freightTemplateIds) {
         for (Long freightTemplateId : freightTemplateIds) {
-
+            //删除默认运费
+            freightDefaultService.remove(new QueryWrapper<FreightDefaultEntity>()
+                    .eq("freight_template_id", freightTemplateId));
+            //删除运费规则
+            freightRuleService.remove(new QueryWrapper<FreightRuleEntity>()
+                    .eq("freight_template_id", freightTemplateId));
+            //删除包邮规则
+            freightFreeRuleService.remove(new QueryWrapper<FreightFreeRuleEntity>()
+                    .eq("freight_template_id", freightTemplateId));
+            //删除模板
+            baseMapper.deleteById(freightTemplateId);
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.mall.admin.controller;
 
 import com.mall.admin.entity.FreightTemplateEntity;
-import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.service.FreightTemplateService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
@@ -77,6 +76,15 @@ public class FreightTemplateController {
     @PutMapping("updateIsDefault/{id}")
     public CommonResult updateIsDefault(@PathVariable("id") Long id, @RequestParam("isDefault") Boolean isDefault) {
         freightTemplateService.updateIsDefault(id, isDefault);
+        return CommonResult.success();
+    }
+
+    /**
+     * 删除运费模板
+     */
+    @DeleteMapping("/delete")
+    public CommonResult delete(@RequestBody Long[] freightTemplateIds){
+        freightTemplateService.deleteBatch(freightTemplateIds);
         return CommonResult.success();
     }
 }

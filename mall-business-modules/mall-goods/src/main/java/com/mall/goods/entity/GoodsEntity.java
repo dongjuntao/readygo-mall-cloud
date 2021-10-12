@@ -34,7 +34,7 @@ public class GoodsEntity implements Serializable {
     /**
      * 商户id
      */
-    private Long merchantId;
+    private Long adminUserId;
     /**
      * 商品分类id集（1,2,3）
      */
@@ -96,4 +96,14 @@ public class GoodsEntity implements Serializable {
      */
     @TableField(exist = false)
     private List<GoodsSkuEntity> goodsSkuList;
+    /**
+     * 所属商户名称
+     */
+    @TableField(exist = false)
+    private String merchantName;
+    /**
+     * 所属品牌名称
+     */
+    @TableField(exist = false)
+    private String brandName;
 }

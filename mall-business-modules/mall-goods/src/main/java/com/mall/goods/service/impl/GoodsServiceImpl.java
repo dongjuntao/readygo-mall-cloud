@@ -28,13 +28,27 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         Page<GoodsEntity> page = (Page<GoodsEntity>)new PageBuilder<GoodsEntity>().getPage(params);
         QueryWrapper<GoodsEntity> wrapper = new QueryWrapper<>();
         String name = String.valueOf(params.get("name"));//商品名称
-        wrapper.like(StringUtils.isNotBlank(name), "name", name);
-        IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper);
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        wrapper
+                .like(StringUtils.isNotBlank(name), "name", name)
+                .eq(adminUserId != null, "admin_user_id", adminUserId);
+        IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);
         return new PageUtil(iPage);
     }
 
     @Override
     public GoodsEntity getGoodsAndSku(Long id) {
         return baseMapper.getGoodsAndSku(id);
+    }
+
+    /**
+     * 上架 / 下架
+     * @param onSale
+     */
+    @Override
+    public int updateOnSale(Long goodsId, Boolean onSale) {
+        GoodsEntity goodsEntity = baseMapper.selectById(goodsId);
+        goodsEntity.setOnSale(onSale);
+        return baseMapper.updateById(goodsEntity);
     }
 }

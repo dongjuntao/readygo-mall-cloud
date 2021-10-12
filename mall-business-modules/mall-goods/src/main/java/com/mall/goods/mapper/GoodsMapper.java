@@ -21,7 +21,8 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
 
     IPage<GoodsEntity> queryPage(
             @Param("page") Page<GoodsEntity> page,
-            @Param(Constants.WRAPPER) QueryWrapper<GoodsEntity> wrapper);
+            @Param(Constants.WRAPPER) QueryWrapper<GoodsEntity> wrapper,
+            @Param("adminUserId") Long adminUserId);
 
 
     GoodsEntity getGoodsAndSku(Long id);

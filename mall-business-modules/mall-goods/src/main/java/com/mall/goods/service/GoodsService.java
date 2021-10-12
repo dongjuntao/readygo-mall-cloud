@@ -17,4 +17,6 @@ public interface GoodsService extends IService<GoodsEntity> {
     PageUtil queryPage(Map<String, Object> params);
 
     GoodsEntity getGoodsAndSku(Long id);
+
+    int updateOnSale(Long goodsId, Boolean onSale);
 }

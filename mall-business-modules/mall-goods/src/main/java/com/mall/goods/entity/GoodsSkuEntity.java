@@ -30,10 +30,6 @@ public class GoodsSkuEntity implements Serializable {
      */
     private String code;
     /**
-     * 商品sku名称
-     */
-    private String name;
-    /**
      * 价格
      */
     private BigDecimal price;

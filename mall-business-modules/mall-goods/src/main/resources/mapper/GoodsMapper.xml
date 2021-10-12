@@ -3,31 +3,30 @@
 <mapper namespace="com.mall.goods.mapper.GoodsMapper">
     <!--商品表-->
     <resultMap id="baseGoodsMap" type="com.mall.goods.entity.GoodsEntity">
-       <id column="id" property="id" jdbcType="BIGINT"/>
-       <result column="name" property="name" jdbcType="VARCHAR"/>
-       <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
-       <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
-       <result column="goods_category_ids" property="goodsCategoryIds" jdbcType="VARCHAR"/>
-       <result column="on_sale" property="onSale" jdbcType="TINYINT"/>
-       <result column="freight_setting" property="freightSetting" jdbcType="INTEGER"/>
-       <result column="code" property="code" jdbcType="VARCHAR"/>
-       <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
-       <result column="unit" property="unit" jdbcType="VARCHAR"/>
-       <result column="description" property="description" jdbcType="VARCHAR"/>
-       <result column="images" property="images" jdbcType="LONGVARCHAR"/>
-       <result column="info_detail" property="infoDetail" jdbcType="LONGVARCHAR"/>
-       <result column="params" property="params" jdbcType="LONGVARCHAR"/>
-       <result column="points" property="points" jdbcType="INTEGER"/>
-       <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
-       <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-       <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
+        <result column="goods_category_ids" property="goodsCategoryIds" jdbcType="VARCHAR"/>
+        <result column="on_sale" property="onSale" jdbcType="TINYINT"/>
+        <result column="freight_setting" property="freightSetting" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+        <result column="unit" property="unit" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="images" property="images" jdbcType="LONGVARCHAR"/>
+        <result column="info_detail" property="infoDetail" jdbcType="LONGVARCHAR"/>
+        <result column="params" property="params" jdbcType="LONGVARCHAR"/>
+        <result column="points" property="points" jdbcType="INTEGER"/>
+        <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
     <!--商品sku表-->
     <resultMap id="baseGoodsSkuMap" type="com.mall.goods.entity.GoodsSkuEntity">
         <id column="sku_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
         <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="price" property="price" jdbcType="DECIMAL"/>
         <result column="stock" property="stock" jdbcType="INTEGER"/>
         <result column="weight" property="weight" jdbcType="DOUBLE"/>
@@ -41,6 +40,8 @@
     <resultMap id="goodsMap"
                type="com.mall.goods.entity.GoodsEntity"
                extends="baseGoodsMap">
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
         <collection property="goodsSkuList"
                     ofType="com.mall.goods.entity.GoodsSkuEntity"
                     column="id"
@@ -62,27 +63,31 @@
         </collection>
     </resultMap>
 
-    <!--分页查询商品规格列表（包括商品规格详细信息）-->
+    <!--分页查询商品列表（包括所属商户）-->
     <select id="queryPage" resultMap="goodsMap">
-        SELECT id,
-               name,
-               keyword,
-               merchant_id,
-               goods_category_ids,
-               on_sale,
-               freight_setting,
-               code,
-               brand_id,
-               unit,
-               description,
-               images,
-               info_detail,
-               params,
-               points,
-               recommend,
-               create_time,
-               update_time
-        FROM goods
+        SELECT gs.id,
+               gs.name,
+               gs.keyword,
+               gs.admin_user_id,
+               gs.goods_category_ids,
+               gs.on_sale,
+               gs.freight_setting,
+               gs.code,
+               gs.brand_id,
+               gs.unit,
+               gs.description,
+               gs.images,
+               gs.info_detail,
+               gs.params,
+               gs.points,
+               gs.recommend,
+               gs.create_time,
+               gs.update_time,
+               au.name AS merchant_name,
+               b.name AS brand_name
+        FROM goods gs
+        LEFT JOIN admin_user au ON au.id=gs.admin_user_id
+        LEFT JOIN brand b ON gs.brand_id=b.id
         ${ew.customSqlSegment}
     </select>
     <select id="queryGoodsSku" resultMap="goodsSkuMap">
@@ -90,7 +95,6 @@
             id AS sku_id,
             goods_id,
             code,
-            name,
             price,
             stock,
             weight,
@@ -107,7 +111,7 @@
         SELECT g.id,
                g.name,
                g.keyword,
-               g.merchant_id,
+               g.admin_user_id,
                g.goods_category_ids,
                g.on_sale,
                g.freight_setting,
@@ -125,7 +129,6 @@
                gs.id AS sku_id,
                gs.goods_id,
                gs.code,
-               gs.name,
                gs.price,
                gs.stock,
                gs.weight,

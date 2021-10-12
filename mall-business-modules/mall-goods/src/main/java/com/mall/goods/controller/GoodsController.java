@@ -79,9 +79,8 @@ public class GoodsController {
         return CommonResult.success();
     }
 
-
     /**
-     * 规格信息
+     * 商品信息
      */
     @GetMapping("getGoodsById")
     public CommonResult info(@RequestParam("id") Long id){
@@ -113,5 +112,14 @@ public class GoodsController {
             goodsService.removeById(id);
         }
         return CommonResult.success();
+    }
+
+    /**
+     * 上架 / 下架
+     */
+    @PutMapping("updateOnSale")
+    public CommonResult updateOnSale(@RequestParam("goodsId") Long goodsId,
+                                     @RequestParam("onSale") Boolean onSale){
+        return goodsService.updateOnSale(goodsId, onSale) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 }

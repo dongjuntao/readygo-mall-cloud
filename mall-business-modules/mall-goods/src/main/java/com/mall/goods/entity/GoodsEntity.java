@@ -46,7 +46,7 @@ public class GoodsEntity implements Serializable {
     /**
      * 运费设置
      */
-    private int freightSetting;
+    private Integer freightSetting;
     /**
      * 商品编码
      */

@@ -8,6 +8,7 @@ import com.mall.common.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +33,14 @@ public class FreightTemplateController {
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
+    /**
+     * 查询所有运费模板列表（不分页）
+     */
+    @GetMapping("/listAll")
+    public CommonResult listAll(@RequestParam Map<String, Object> params){
+        List<FreightTemplateEntity> freightTemplateEntityList = freightTemplateService.getByParams(params);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), freightTemplateEntityList);
+    }
     /**
      * 新增运费模板
      */

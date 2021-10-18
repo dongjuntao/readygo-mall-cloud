@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.FreightTemplateEntity;
 import com.mall.common.util.PageUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +35,13 @@ public interface FreightTemplateService extends IService<FreightTemplateEntity> 
      * @return
      */
     PageUtil getByPage(Map<String, Object> params);
+
+    /**
+     * 根据条件查询所有运费模板
+     * @param params
+     * @return
+     */
+    List<FreightTemplateEntity> getByParams(Map<String, Object> params);
 
     FreightTemplateEntity getFreightTemplateById(Long id);
 

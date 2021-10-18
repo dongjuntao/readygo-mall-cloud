@@ -210,4 +210,22 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
             baseMapper.deleteById(freightTemplateId);
         }
     }
+
+    /**
+     * 根据条件查询所有物流公司
+     * @param params
+     * @return
+     */
+    @Override
+    public List<FreightTemplateEntity> getByParams(Map<String, Object> params) {
+        //运费模板名称
+        String name = params.get("name") == null ? null : params.get("name").toString();
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        List<FreightTemplateEntity> freightTemplateEntityList = this.list(
+                new QueryWrapper<FreightTemplateEntity>()
+                        .like(StringUtils.isNotBlank(name), "name", name).
+                        eq(adminUserId != null, "admin_user_id", adminUserId)
+        );
+        return freightTemplateEntityList;
+    }
 }

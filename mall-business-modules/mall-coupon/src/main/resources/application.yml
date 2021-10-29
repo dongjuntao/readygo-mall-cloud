@@ -1,7 +1,7 @@
 #### spring相关配置
 spring:
   application:
-    name: mall-brand #应用名称
+    name: mall-coupon #应用名称
   profiles:
     active: dev
   main:
@@ -17,5 +17,6 @@ spring:
     region: ap-shanghai
     bucketName: dongjuntao-1303976517
     url: https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com
+    prefix: /goods/images/
 server:
-  port: 8003
+  port: 8006

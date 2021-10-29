@@ -1,7 +1,7 @@
-package com.mall.brand.mapper;
+package com.mall.goods.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.mall.brand.entity.BrandEntity;
+import com.mall.goods.entity.BrandEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

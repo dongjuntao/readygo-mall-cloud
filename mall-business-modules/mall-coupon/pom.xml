@@ -5,11 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.mall</groupId>
-  <artifactId>mall-brand</artifactId>
+  <artifactId>mall-coupon</artifactId>
   <version>1.0-SNAPSHOT</version>
-
-  <!--品牌管理微服务-->
-  <name>mall-brand</name>
 
   <!--父级-->
   <parent>
@@ -17,6 +14,9 @@
     <artifactId>mall-business-modules</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
+
+  <!--优惠券微服务-->
+  <name>mall-coupon</name>
 
   <properties>
     <common.version>1.0-SNAPSHOT</common.version>
@@ -43,6 +43,12 @@
     <dependency>
       <groupId>com.mall.common</groupId>
       <artifactId>mall-common-mysql</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--redis-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-redis</artifactId>
       <version>${common.version}</version>
     </dependency>
     <!--mybatis-plus-->

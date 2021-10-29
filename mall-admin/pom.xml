@@ -14,7 +14,7 @@
 
   <parent>
     <groupId>com.mall</groupId>
-    <artifactId>grand-mall-cloud</artifactId>
+    <artifactId>readygo-mall-cloud</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 

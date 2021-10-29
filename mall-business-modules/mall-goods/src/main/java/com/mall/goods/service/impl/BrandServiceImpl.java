@@ -1,13 +1,13 @@
-package com.mall.brand.service.impl;
+package com.mall.goods.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.brand.entity.BrandEntity;
-import com.mall.brand.mapper.BrandMapper;
-import com.mall.brand.service.BrandService;
 import com.mall.common.util.PageBuilder;
 import com.mall.common.util.PageUtil;
+import com.mall.goods.entity.BrandEntity;
+import com.mall.goods.mapper.BrandMapper;
+import com.mall.goods.service.BrandService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 

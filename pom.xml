@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.mall</groupId>
-  <artifactId>grand-mall-cloud</artifactId>
+  <artifactId>readygo-mall-cloud</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <!--父级项目-->
-  <name>grand-mall-cloud</name>
+  <name>readygo-mall-cloud</name>
 
   <!--springboot相关依赖引入-->
   <parent>

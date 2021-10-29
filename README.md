@@ -1,4 +1,4 @@
-# grand-mall-cloud
+# readygo-mall-cloud
 
 #### 介绍
 商城后端项目

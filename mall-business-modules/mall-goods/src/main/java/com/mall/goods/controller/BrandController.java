@@ -1,10 +1,10 @@
-package com.mall.brand.controller;
+package com.mall.goods.controller;
 
-import com.mall.brand.entity.BrandEntity;
-import com.mall.brand.service.BrandService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.util.PageUtil;
+import com.mall.goods.entity.BrandEntity;
+import com.mall.goods.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

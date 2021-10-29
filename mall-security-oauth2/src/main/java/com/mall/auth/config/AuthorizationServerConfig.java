@@ -125,7 +125,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         // 设置jwt加解密秘钥，不设置会随机一个
-        jwtAccessTokenConverter.setSigningKey("grand-mall-cloud-key");
+        jwtAccessTokenConverter.setSigningKey("readygo-mall-cloud-key");
         return jwtAccessTokenConverter;
     }
 

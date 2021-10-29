@@ -1,4 +1,4 @@
-package com.mall.brand.entity;
+package com.mall.goods.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,26 +9,30 @@ import java.util.Date;
 
 /**
  * @Author DongJunTao
- * @Description 品牌分类表
+ * @Description 品牌表
  * @Date 2021/6/16 9:55
  * @Version 1.0
  */
 @Data
-@TableName("brand_category")
-public class BrandCategoryEntity implements Serializable {
+@TableName("brand")
+public class BrandEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId
     private Long id;
     /**
-     * 品牌分类名称
+     * 品牌名称
      */
     private String name;
     /**
-     * 品牌分类描述
+     * 品牌描述
      */
     private String description;
+    /**
+     * 品牌logo
+     */
+    private String logo;
     /**
      * 创建时间
      */
@@ -37,5 +41,12 @@ public class BrandCategoryEntity implements Serializable {
      * 修改时间
      */
     private Date updateTime;
-
+    /**
+     * 是否启用
+     */
+    private Boolean enable;
+    /**
+     * 排序字段
+     */
+    private int orderNum;
 }

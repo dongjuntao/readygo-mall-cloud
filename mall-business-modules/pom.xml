@@ -9,9 +9,9 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>mall-brand</module>
     <module>mall-user</module>
-      <module>mall-goods</module>
+    <module>mall-goods</module>
+    <module>mall-coupon</module>
   </modules>
 
   <name>mall-business-modules</name>
@@ -19,7 +19,7 @@
   <!--父级-->
   <parent>
     <groupId>com.mall</groupId>
-    <artifactId>grand-mall-cloud</artifactId>
+    <artifactId>readygo-mall-cloud</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 

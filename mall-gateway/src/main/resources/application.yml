@@ -24,10 +24,6 @@ spring:
           uri: lb://mall-auth #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-auth/**
-        - id: mall-brand
-          uri: lb://mall-brand #匹配后提供服务的路由地址
-          predicates:
-            - Path=/mall-brand/**
         - id: mall-goods
           uri: lb://mall-goods #匹配后提供服务的路由地址
           predicates:
@@ -36,6 +32,10 @@ spring:
           uri: lb://mall-file #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-file/**
+        - id: mall-coupon
+          uri: lb://mall-coupon #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-coupon/**
   mvc:
     servlet:
       load-on-startup: 1

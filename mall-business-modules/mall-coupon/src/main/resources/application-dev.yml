@@ -2,7 +2,7 @@ spring:
   #####数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/grand-mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/readygo-mall-cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456789
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -31,7 +31,7 @@ spring:
     port: 6379
     password: 123456789
     timeout: 6000
-    database: 0
+    database: 4
 
 feign:
   client:
@@ -41,11 +41,10 @@ feign:
         readTimeout: 5000
   hystrix:
     enabled: false
-
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-brand
+    clients: mall-goods
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）

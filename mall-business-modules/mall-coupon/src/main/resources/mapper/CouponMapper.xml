@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.coupon.mapper.CouponMapper">
+    <!--优惠券表-->
+    <resultMap id="couponMap" type="com.mall.coupon.entity.CouponEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="INTEGER"/>
+        <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="use_threshold" property="useThreshold" jdbcType="INTEGER"/>
+        <result column="min_consumption" property="minConsumption" jdbcType="INTEGER"/>
+        <result column="discount_amount" property="discountAmount" jdbcType="INTEGER"/>
+        <result column="use_scope" property="useScope" jdbcType="INTEGER"/>
+        <result column="applicable_member" property="applicableMember" jdbcType="VARCHAR"/>
+        <result column="issue_number" property="issueNumber" jdbcType="INTEGER"/>
+        <result column="rest_number" property="restNumber" jdbcType="INTEGER"/>
+        <result column="valid_start_time" property="validStartTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="valid_end_time" property="validEndTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="per_limit" property="perLimit" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--分页查询优惠券列表-->
+    <select id="queryPage" resultMap="couponMap">
+        SELECT c.id,
+               c.name,
+               c.source,
+               c.admin_user_id,
+               c.type,
+               c.use_threshold,
+               c.min_consumption,
+               c.discount_amount,
+               c.use_scope,
+               c.applicable_member,
+               c.issue_number,
+               c.rest_number,
+               c.valid_start_time,
+               c.valid_end_time,
+               c.per_limit,
+               c.status,
+               c.create_time,
+               c.update_time,
+               au.name AS merchant_name
+        FROM coupon c
+        LEFT JOIN admin_user au ON au.id=c.admin_user_id
+        ${ew.customSqlSegment}
+    </select>
+
+</mapper>

@@ -43,5 +43,5 @@ public interface CouponService extends IService<CouponEntity> {
      */
     void deleteBatch(Long[] couponIds);
 
-    int updateStatus(Long couponId, Integer status);
+    int updateStatus(Long couponId, Boolean status);
 }

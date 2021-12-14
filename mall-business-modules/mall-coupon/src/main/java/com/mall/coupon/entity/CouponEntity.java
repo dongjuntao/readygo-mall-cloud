@@ -1,5 +1,6 @@
 package com.mall.coupon.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -23,21 +24,25 @@ public class CouponEntity {
      */
     private String name;
     /**
-     * 优惠券描述（说明）
-     */
-    private String description;
-    /**
      * 优惠券来源（优惠券来源（0：平台；1：商家））
      */
     private Integer source;
+    /**
+     * 商户id
+     */
+    private Long adminUserId;
     /**
      * 优惠券类型（0：满减券；1：满折券）
      */
     private Integer type;
     /**
-     * 使用门槛（满多少钱）可以使用，0为无限制
+     * 使用门槛（0：无门槛 1：有门槛）
      */
-    private Double useThreshold;
+    private Integer useThreshold;
+    /**
+     * 有门槛时最低消费
+     */
+    private Double minConsumption;
     /**
      * 优惠额度（如果是满减券，该字段是减钱数，如果是满折券，该字段是打折数）
      */
@@ -55,6 +60,10 @@ public class CouponEntity {
      */
     private Integer issueNumber;
     /**
+     * 剩余数量
+     */
+    private Integer restNumber;
+    /**
      * 有效期开始时间
      */
     private Date validStartTime;
@@ -69,6 +78,19 @@ public class CouponEntity {
     /**
      * 状态（0：禁用；1：启用）
      */
-    private Integer status;
+    private Boolean status;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+    /**
+     * 所属商户名称
+     */
+    @TableField(exist = false)
+    private String merchantName;
 
 }

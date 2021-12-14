@@ -2,6 +2,7 @@ package com.mall.coupon.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.util.PageBuilder;
 import com.mall.common.util.PageUtil;
@@ -50,14 +51,15 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
      */
     @Override
     public PageUtil getByPage(Map<String, Object> params) {
-        //物流公司名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        IPage<CouponEntity> page = this.page(
-                new PageBuilder<CouponEntity>().getPage(params),
-                new QueryWrapper<CouponEntity>()
-                        .like(StringUtils.isNotBlank(name), "name", name)
-        );
-        return new PageUtil(page);
+        Page<CouponEntity> page = (Page<CouponEntity>)new PageBuilder<CouponEntity>().getPage(params);
+        QueryWrapper<CouponEntity> wrapper = new QueryWrapper<>();
+        String name = String.valueOf(params.get("name"));//商品名称
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        wrapper
+                .like(StringUtils.isNotBlank(name), "name", name)
+                .eq(adminUserId != null, "admin_user_id", adminUserId);
+        IPage<CouponEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);
+        return new PageUtil(iPage);
     }
 
     /**
@@ -70,7 +72,7 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
     }
 
     @Override
-    public int updateStatus(Long couponId, Integer status) {
+    public int updateStatus(Long couponId, Boolean status) {
         CouponEntity couponEntity = this.getById(couponId);
         if (couponEntity == null) {
             return -1;

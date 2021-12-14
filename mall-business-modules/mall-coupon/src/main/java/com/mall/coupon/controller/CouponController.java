@@ -39,6 +39,7 @@ public class CouponController {
      */
     @PostMapping("save")
     public CommonResult saveCoupon(@RequestBody CouponEntity couponEntity) {
+        couponEntity.setRestNumber(couponEntity.getIssueNumber());//刚创建时优惠券剩余数量和发行数量一致
         return couponService.saveCoupon(couponEntity) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
@@ -55,8 +56,8 @@ public class CouponController {
     /**
      * 所有单个优惠券
      */
-    @GetMapping("getCouponById/{couponId}")
-    public CommonResult getCouponById(@PathVariable("couponId") Long couponId){
+    @GetMapping("getCouponById")
+    public CommonResult getCouponById(@RequestParam("couponId") Long couponId){
         CouponEntity couponEntity = couponService.getById(couponId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), couponEntity);
     }
@@ -78,7 +79,7 @@ public class CouponController {
      */
     @PutMapping("updateStatus")
     public CommonResult updateStatus(@RequestParam("couponId") Long couponId,
-                                     @RequestParam("status") Integer status) {
+                                     @RequestParam("status") Boolean status) {
         return couponService.updateStatus(couponId, status) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 }

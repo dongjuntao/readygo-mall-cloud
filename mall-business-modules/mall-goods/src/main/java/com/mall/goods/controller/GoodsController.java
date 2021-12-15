@@ -89,12 +89,21 @@ public class GoodsController {
     }
 
     /**
-     * 商品列表
+     * 商品列表（分页）
      */
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params){
         PageUtil pageResult = goodsService.queryPage(params);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
+    }
+
+    /**
+     * 商品列表（不分页）
+     */
+    @GetMapping("/listAll")
+    public CommonResult listAll(@RequestParam Map<String, Object> params){
+        List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsList(params);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), allGoodsEntityList);
     }
 
     /**

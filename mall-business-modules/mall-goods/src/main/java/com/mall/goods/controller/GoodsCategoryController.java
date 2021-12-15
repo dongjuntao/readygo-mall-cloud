@@ -118,5 +118,14 @@ public class GoodsCategoryController {
         return CommonResult.success();
     }
 
+    /**
+     * 获取所有子一级
+     * @return
+     */
+    @GetMapping("/getSubFirst")
+    public CommonResult getSubFirst() {
+        List<GoodsCategoryEntity> goodsCategoryList = goodsCategoryService.queryGoodsCategoryTree(0L);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryList);
+    }
 
 }

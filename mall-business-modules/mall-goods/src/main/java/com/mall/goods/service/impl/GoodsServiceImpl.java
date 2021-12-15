@@ -12,6 +12,7 @@ import com.mall.goods.service.GoodsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,5 +51,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         GoodsEntity goodsEntity = baseMapper.selectById(goodsId);
         goodsEntity.setOnSale(onSale);
         return baseMapper.updateById(goodsEntity);
+    }
+
+    @Override
+    public List<GoodsEntity> getAllGoodsList(Map<String, Object> params) {
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        QueryWrapper<GoodsEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(adminUserId != null, "admin_user_id", adminUserId);
+        return baseMapper.selectList(queryWrapper);
     }
 }

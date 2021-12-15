@@ -1,9 +1,11 @@
 package com.mall.coupon.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.apache.ibatis.type.JdbcType;
 
 import java.util.Date;
 
@@ -30,6 +32,7 @@ public class CouponEntity {
     /**
      * 商户id
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED,jdbcType = JdbcType.VARCHAR)
     private Long adminUserId;
     /**
      * 优惠券类型（0：满减券；1：满折券）
@@ -48,9 +51,19 @@ public class CouponEntity {
      */
     private Double discountAmount;
     /**
-     * 使用范围（0：全部商品；1：指定商品或分类【如果是平台优惠券，则指定分类，如果是商家优惠券，则指定商品】）
+     * 使用范围（0：全部商品；1：指定分类， 2：指定商品）
      */
     private Integer useScope;
+    /**
+     * 支持的商品分类ids
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED,jdbcType = JdbcType.VARCHAR)
+    private String goodsCategoryIds;
+    /**
+     * 支持的商品ids
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED,jdbcType = JdbcType.VARCHAR)
+    private String goodsIds;
     /**
      * 适用会员（普通会员，青铜会员，白银会员，黄金会员，铂金会员，钻石会员，最强买家）
      */

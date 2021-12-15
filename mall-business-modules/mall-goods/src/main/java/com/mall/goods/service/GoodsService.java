@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.util.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,4 +20,6 @@ public interface GoodsService extends IService<GoodsEntity> {
     GoodsEntity getGoodsAndSku(Long id);
 
     int updateOnSale(Long goodsId, Boolean onSale);
+
+    List<GoodsEntity> getAllGoodsList(Map<String, Object> params);
 }

@@ -22,11 +22,9 @@ public interface CouponMapper extends BaseMapper<CouponEntity> {
      * 分页查询优惠券列表
      * @param page
      * @param wrapper
-     * @param adminUserId
      * @return
      */
     IPage<CouponEntity> queryPage(
             @Param("page") Page<CouponEntity> page,
-            @Param(Constants.WRAPPER) QueryWrapper<CouponEntity> wrapper,
-            @Param("adminUserId") Long adminUserId);
+            @Param(Constants.WRAPPER) QueryWrapper<CouponEntity> wrapper);
 }

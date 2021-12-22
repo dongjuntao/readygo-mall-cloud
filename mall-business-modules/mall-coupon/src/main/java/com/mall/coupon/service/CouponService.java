@@ -43,5 +43,20 @@ public interface CouponService extends IService<CouponEntity> {
      */
     void deleteBatch(Long[] couponIds);
 
+    /**
+     * 修改优惠券状态
+     * @param couponId 优惠券id
+     * @param status 状态
+     * @return
+     */
     int updateStatus(Long couponId, Boolean status);
+
+    /**
+     * 优惠券审核
+     * @param couponId
+     * @param authStatus
+     * @param authOpinion
+     * @return
+     */
+    int auth(Long couponId, Integer authStatus, String authOpinion);
 }

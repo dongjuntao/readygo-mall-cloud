@@ -55,10 +55,12 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
         QueryWrapper<CouponEntity> wrapper = new QueryWrapper<>();
         String name = String.valueOf(params.get("name"));//商品名称
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        Integer authStatus = params.get("authStatus") == null ? null : Integer.valueOf((params.get("authStatus").toString()));
         wrapper
-                .like(StringUtils.isNotBlank(name), "name", name)
-                .eq(adminUserId != null, "admin_user_id", adminUserId);
-        IPage<CouponEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);
+                .like(StringUtils.isNotBlank(name), "c.name", name)
+                .eq(adminUserId != null, "admin_user_id", adminUserId)
+                .eq(authStatus != null, "auth_status", authStatus);
+        IPage<CouponEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }
 
@@ -84,5 +86,23 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
     @Override
     public CouponEntity getById(Long couponId) {
         return baseMapper.selectById(couponId);
+    }
+
+    /**
+     * 优惠券审核
+     * @param couponId
+     * @param authStatus
+     * @param authOpinion
+     * @return
+     */
+    @Override
+    public int auth(Long couponId, Integer authStatus, String authOpinion) {
+        CouponEntity couponEntity = this.getById(couponId);
+        if (couponEntity == null) {
+            return -1;
+        }
+        couponEntity.setAuthStatus(authStatus);
+        couponEntity.setAuthOpinion(authOpinion);
+        return baseMapper.updateById(couponEntity);
     }
 }

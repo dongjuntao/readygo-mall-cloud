@@ -12,13 +12,18 @@
         <result column="min_consumption" property="minConsumption" jdbcType="INTEGER"/>
         <result column="discount_amount" property="discountAmount" jdbcType="INTEGER"/>
         <result column="use_scope" property="useScope" jdbcType="INTEGER"/>
+        <result column="goods_category_ids" property="goodsCategoryIds" jdbcType="VARCHAR"/>
+        <result column="goods_ids" property="goodsIds" jdbcType="VARCHAR"/>
         <result column="applicable_member" property="applicableMember" jdbcType="VARCHAR"/>
         <result column="issue_number" property="issueNumber" jdbcType="INTEGER"/>
         <result column="rest_number" property="restNumber" jdbcType="INTEGER"/>
-        <result column="valid_start_time" property="validStartTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-        <result column="valid_end_time" property="validEndTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="valid_period" property="validPeriod" jdbcType="VARCHAR"/>
         <result column="per_limit" property="perLimit" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="auth_status" property="authStatus" jdbcType="INTEGER"/>
+        <result column="auth_opinion" property="authOpinion" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="BIGINT"/>
+        <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
@@ -35,13 +40,18 @@
                c.min_consumption,
                c.discount_amount,
                c.use_scope,
+               c.goods_category_ids,
+               c.goods_ids,
                c.applicable_member,
                c.issue_number,
                c.rest_number,
-               c.valid_start_time,
-               c.valid_end_time,
+               c.valid_period,
                c.per_limit,
                c.status,
+               c.auth_status,
+               c.auth_opinion,
+               c.create_by,
+               c.update_by,
                c.create_time,
                c.update_time,
                au.name AS merchant_name

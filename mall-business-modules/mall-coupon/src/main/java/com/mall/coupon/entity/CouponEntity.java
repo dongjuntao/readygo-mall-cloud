@@ -32,7 +32,7 @@ public class CouponEntity {
     /**
      * 商户id
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED,jdbcType = JdbcType.VARCHAR)
+    @TableField(updateStrategy = FieldStrategy.IGNORED,jdbcType = JdbcType.BIGINT)
     private Long adminUserId;
     /**
      * 优惠券类型（0：满减券；1：满折券）
@@ -77,13 +77,9 @@ public class CouponEntity {
      */
     private Integer restNumber;
     /**
-     * 有效期开始时间
+     * 有效期
      */
-    private Date validStartTime;
-    /**
-     * 有效期结束时间
-     */
-    private Date validEndTime;
+    private String validPeriod;
     /**
      * 每人限领多少张
      */
@@ -92,6 +88,22 @@ public class CouponEntity {
      * 状态（0：禁用；1：启用）
      */
     private Boolean status;
+    /**
+     * 审核状态（0：待审核，1：审核通过，2：审核拒绝）
+     */
+    private Integer authStatus;
+    /**
+     * 审核意见
+     */
+    private String authOpinion;
+    /**
+     * 创建人id
+     */
+    private Long createBy;
+    /**
+     * 修改人id
+     */
+    private Long updateBy;
     /**
      * 创建时间
      */

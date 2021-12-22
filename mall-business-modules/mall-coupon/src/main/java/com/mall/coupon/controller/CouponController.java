@@ -39,6 +39,12 @@ public class CouponController {
      */
     @PostMapping("save")
     public CommonResult saveCoupon(@RequestBody CouponEntity couponEntity) {
+        //如果是平台优惠券，不需要审核，直接为已通过状态, 否则为待审核状态
+        if (couponEntity.getSource() == 0) {
+            couponEntity.setAuthStatus(1);
+        }else {
+            couponEntity.setAuthStatus(0);
+        }
         couponEntity.setRestNumber(couponEntity.getIssueNumber());//刚创建时优惠券剩余数量和发行数量一致
         return couponService.saveCoupon(couponEntity) > 0 ? CommonResult.success() : CommonResult.fail();
     }
@@ -72,7 +78,7 @@ public class CouponController {
     }
 
     /**
-     * 修改优惠券
+     * 修改优惠券状态
      * @param couponId 优惠券id
      * @param status 状态
      * @return
@@ -81,5 +87,19 @@ public class CouponController {
     public CommonResult updateStatus(@RequestParam("couponId") Long couponId,
                                      @RequestParam("status") Boolean status) {
         return couponService.updateStatus(couponId, status) > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 优惠券审核
+     * @param couponId 优惠券id
+     * @param authStatus 审核状态【1:通过 2：拒绝】
+     * @param authOpinion 审核意见【如果拒绝，请必填】
+     * @return
+     */
+    @PutMapping("auth")
+    public CommonResult auth(@RequestParam("couponId") Long couponId,
+                             @RequestParam("authStatus") Integer authStatus,
+                             @RequestParam("authOpinion") String authOpinion) {
+        return couponService.auth(couponId, authStatus, authOpinion) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 }

@@ -72,6 +72,10 @@ public class GoodsEntity implements Serializable {
      */
     private String infoDetail;
     /**
+     * 商品规格类型（0：单规格， 1：多规格）
+     */
+    private Integer specificationType;
+    /**
      * 商品参数
      */
     private String params;

@@ -16,7 +16,6 @@
         <id column="detail_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
         <result column="goods_specifications_id" property="goodsSpecificationsId" jdbcType="BIGINT"/>
         <result column="value" property="value" jdbcType="VARCHAR"/>
-        <result column="bind_image" property="bindImage" jdbcType="VARCHAR"/>
         <result column="enable" property="enable" jdbcType="TINYINT"/>
     </resultMap>
 

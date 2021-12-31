@@ -16,6 +16,7 @@
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="images" property="images" jdbcType="LONGVARCHAR"/>
         <result column="info_detail" property="infoDetail" jdbcType="LONGVARCHAR"/>
+        <result column="specification_type" property="specificationType" jdbcType="INTEGER"/>
         <result column="params" property="params" jdbcType="LONGVARCHAR"/>
         <result column="points" property="points" jdbcType="INTEGER"/>
         <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
@@ -27,10 +28,9 @@
         <id column="sku_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
         <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
-        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
+        <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL"/>
         <result column="stock" property="stock" jdbcType="INTEGER"/>
-        <result column="weight" property="weight" jdbcType="DOUBLE"/>
-        <result column="volume" property="volume" jdbcType="DOUBLE"/>
         <result column="enable" property="enable" jdbcType="TINYINT"/>
         <result column="image" property="image" jdbcType="VARCHAR"/>
         <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
@@ -78,6 +78,7 @@
                gs.description,
                gs.images,
                gs.info_detail,
+               gs.specification_type,
                gs.params,
                gs.points,
                gs.recommend,
@@ -95,10 +96,9 @@
             id AS sku_id,
             goods_id,
             code,
-            price,
+            original_price,
+            selling_price,
             stock,
-            weight,
-            volume,
             enable,
             image,
             extend_attr,
@@ -121,6 +121,7 @@
                g.description,
                g.images,
                g.info_detail,
+               g.specification_type,
                g.params,
                g.points,
                g.recommend,
@@ -129,10 +130,9 @@
                gs.id AS sku_id,
                gs.goods_id,
                gs.code,
-               gs.price,
+               gs.original_price,
+               gs.selling_price,
                gs.stock,
-               gs.weight,
-               gs.volume,
                gs.enable,
                gs.image,
                gs.extend_attr,

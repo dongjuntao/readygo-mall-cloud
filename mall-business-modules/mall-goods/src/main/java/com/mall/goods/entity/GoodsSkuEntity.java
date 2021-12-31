@@ -30,21 +30,17 @@ public class GoodsSkuEntity implements Serializable {
      */
     private String code;
     /**
-     * 价格
+     * 原价（元）
      */
-    private BigDecimal price;
+    private BigDecimal originalPrice;
+    /**
+     * 销售价（元）
+     */
+    private BigDecimal sellingPrice;
     /**
      * 库存
      */
     private Integer stock;
-    /**
-     * 重量
-     */
-    private double weight;
-    /**
-     * 体积
-     */
-    private double volume;
     /**
      * 是否启用
      */

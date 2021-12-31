@@ -32,10 +32,6 @@ public class GoodsSpecificationsDetailEntity implements Serializable {
      */
     private String value;
     /**
-     * 规格绑定图片
-     */
-    private String bindImage;
-    /**
      * 是否启用
      */
     private Boolean enable;

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -87,6 +88,14 @@ public class GoodsEntity implements Serializable {
      * 商品推荐
      */
     private String recommend;
+    /**
+     * 物流重量
+     */
+    private BigDecimal weight;
+    /**
+     * 物流体积
+     */
+    private BigDecimal volume;
     /**
      * 创建时间
      */

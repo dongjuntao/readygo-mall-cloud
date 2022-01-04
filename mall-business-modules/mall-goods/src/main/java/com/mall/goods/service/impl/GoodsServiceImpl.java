@@ -32,7 +32,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         wrapper
                 .like(StringUtils.isNotBlank(name), "name", name)
-                .eq(adminUserId != null, "admin_user_id", adminUserId);
+                .eq(adminUserId != null, "admin_user_id", adminUserId)
+                .orderByDesc("create_time");
         IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);
         return new PageUtil(iPage);
     }
@@ -57,7 +58,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     public List<GoodsEntity> getAllGoodsList(Map<String, Object> params) {
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         QueryWrapper<GoodsEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(adminUserId != null, "admin_user_id", adminUserId);
+        queryWrapper.eq(adminUserId != null, "admin_user_id", adminUserId)
+                .orderByDesc("create_time");;
         return baseMapper.selectList(queryWrapper);
     }
 }

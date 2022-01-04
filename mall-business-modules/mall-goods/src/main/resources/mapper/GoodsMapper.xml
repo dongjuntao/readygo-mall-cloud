@@ -20,6 +20,8 @@
         <result column="params" property="params" jdbcType="LONGVARCHAR"/>
         <result column="points" property="points" jdbcType="INTEGER"/>
         <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
+        <result column="weight" property="weight" jdbcType="DECIMAL"/>
+        <result column="volume" property="volume" jdbcType="DECIMAL"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -27,7 +29,7 @@
     <resultMap id="baseGoodsSkuMap" type="com.mall.goods.entity.GoodsSkuEntity">
         <id column="sku_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
         <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
-        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="sku_code" property="code" jdbcType="VARCHAR"/>
         <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
         <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL"/>
         <result column="stock" property="stock" jdbcType="INTEGER"/>
@@ -82,6 +84,8 @@
                gs.params,
                gs.points,
                gs.recommend,
+               gs.weight,
+               gs.volume,
                gs.create_time,
                gs.update_time,
                au.name AS merchant_name,
@@ -125,11 +129,13 @@
                g.params,
                g.points,
                g.recommend,
+               g.weight,
+               g.volume,
                g.create_time,
                g.update_time,
                gs.id AS sku_id,
                gs.goods_id,
-               gs.code,
+               gs.code sku_code,
                gs.original_price,
                gs.selling_price,
                gs.stock,

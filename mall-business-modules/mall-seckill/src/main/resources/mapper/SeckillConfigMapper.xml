@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.seckill.mapper.SeckillConfigMapper">
+    <!--秒杀配置表-->
+    <resultMap id="seckillConfigMap" type="com.mall.seckill.entity.SeckillConfigEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
+        <result column="seckill_start_date" property="seckillStartDate" javaType="java.util.Date" jdbcType="DATE"/>
+        <result column="seckill_end_date" property="seckillEndDate" javaType="java.util.Date" jdbcType="DATE"/>
+        <result column="seckill_start_time" property="seckillStartTime" javaType="java.sql.Time" jdbcType="TIME"/>
+        <result column="seckill_end_time" property="seckillEndTime" javaType="java.sql.Time" jdbcType="TIME"/>
+        <result column="per_limit" property="perLimit" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="auth_status" property="authStatus" jdbcType="INTEGER"/>
+        <result column="auth_opinion" property="authOpinion" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="BIGINT"/>
+        <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--秒杀配置信息【包括秒杀商品相关详细信息】-->
+    <resultMap id="seckillConfigAndGoodsMap"
+               type="com.mall.seckill.entity.SeckillConfigEntity"
+               extends="seckillConfigMap">
+        <collection property="goodsSkuList" ofType="com.mall.seckill.vo.GoodsSkuVO">
+            <result column="id" property="id" jdbcType="BIGINT"/>
+            <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+            <result column="code" property="code" jdbcType="VARCHAR"/>
+            <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
+            <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL"/>
+            <result column="stock" property="stock" jdbcType="INTEGER"/>
+            <result column="enable" property="enable" jdbcType="TINYINT"/>
+            <result column="image" property="image" jdbcType="VARCHAR"/>
+            <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
+            <result column="extend_value" property="extendValue" jdbcType="VARCHAR"/>
+            <association property="seckillGoodsSkuVO" javaType="com.mall.seckill.vo.SeckillGoodsSkuVO">
+                <result column="seckill_config_id" property="seckillConfigId" jdbcType="BIGINT"/>
+                <result column="goods_sku_id" property="goodsSkuId" jdbcType="BIGINT"/>
+                <result column="seckill_price" property="seckillPrice" jdbcType="DECIMAL"/>
+                <result column="seckill_stock" property="seckillStock" jdbcType="INTEGER"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <!--分页查询秒杀配置列表-->
+    <select id="queryPage" resultMap="seckillConfigMap">
+        SELECT
+            sc.id,
+            sc.goods_id,
+            sc.admin_user_id,
+            sc.seckill_start_date,
+            sc.seckill_end_date,
+            sc.seckill_start_time,
+            sc.seckill_end_time,
+            sc.per_limit,
+            sc.status,
+            sc.auth_status,
+            sc.auth_opinion,
+            sc.create_by,
+            sc.update_by,
+            sc.create_time,
+            sc.update_time,
+            au.name AS merchant_name,
+            g.name AS goods_name
+        FROM seckill_config sc
+        LEFT JOIN admin_user au ON au.id=sc.admin_user_id
+        LEFT JOIN goods g ON g.id=sc.goods_id
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="getById" resultMap="seckillConfigAndGoodsMap">
+        SELECT
+            sc.id,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
+            sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.status,sc.auth_status,
+            sc.auth_opinion,sc.create_by,sc.update_by,sc.create_time,sc.update_time,au.name AS merchant_name,
+            g.name AS goods_name,
+            gs.*,
+            sgs.*
+        FROM seckill_config sc
+        LEFT JOIN admin_user au ON au.id=sc.admin_user_id
+        LEFT JOIN goods g ON g.id=sc.goods_id
+        LEFT JOIN goods_sku gs ON gs.goods_id=g.id
+        LEFT JOIN seckill_goods_sku sgs ON sgs.seckill_config_id=sc.id AND sgs.goods_sku_id=gs.id
+        WHERE sc.id=#{id}
+    </select>
+
+</mapper>

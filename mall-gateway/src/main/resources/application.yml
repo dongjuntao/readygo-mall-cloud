@@ -36,6 +36,10 @@ spring:
           uri: lb://mall-coupon #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-coupon/**
+        - id: mall-seckill
+          uri: lb://mall-seckill #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-seckill/**
   mvc:
     servlet:
       load-on-startup: 1

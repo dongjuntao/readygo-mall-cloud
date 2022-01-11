@@ -11,6 +11,7 @@
   <modules>
     <module>mall-admin-api</module>
     <module>mall-security-oauth2-api</module>
+      <module>mall-goods-api</module>
   </modules>
 
   <!--微服务接口-->

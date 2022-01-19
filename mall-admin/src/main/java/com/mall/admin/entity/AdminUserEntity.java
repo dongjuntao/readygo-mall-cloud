@@ -27,7 +27,7 @@ public class AdminUserEntity implements Serializable {
     @TableId
     private Long id;
     /**
-     * 后台用户名称
+     * 后台用户名称【管理员或商户】
      */
     private String name;
     /**
@@ -60,6 +60,7 @@ public class AdminUserEntity implements Serializable {
     private Integer status;
     /**
      * 审核状态（商户申请后，需要审核 0:待审核，1:已通过 2:已拒绝）
+     * 平台自营账号自动审核通过【无需审核】
      */
     private Integer auditStatus;
     /**
@@ -73,8 +74,9 @@ public class AdminUserEntity implements Serializable {
     /**
      * 管理员类型用户类型
      * 0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜）
-     * 1:【商户管理员】（卖家，管理店铺相关事宜）
-     * 2:【商家操作人员】（卖家分配的下级人员，专门负责该店铺某一块业务的操作人员））
+     * 1:【入驻商户】
+     * 2:【自营商户】
+     * 3:【商户操作人员】（商户分配的下级人员，专门负责该店铺某一块业务的操作人员））【**预留**】
      */
     private Integer userType;
     /**

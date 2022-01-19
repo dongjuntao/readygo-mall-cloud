@@ -95,7 +95,7 @@ public class RegionController {
      */
     @GetMapping("init")
     public void init(String[] args) throws IOException {
-        String filePath = "C:\\Users\\15221164409\\Desktop\\china_region.json";
+        String filePath = "C:\\Users\\15221\\Desktop\\china_region.json";
         File file = new File(filePath);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         StringBuffer stringBuffer = new StringBuffer();
@@ -109,8 +109,8 @@ public class RegionController {
         //遍历List, 插入数据库
         for (int i=0; i<array.size(); i++) {
             JSONObject provinceObject = array.getJSONObject(i);
-            String provinceCode = String.valueOf(provinceObject.get("code"));
-            String provinceName = String.valueOf(provinceObject.get("name"));
+            String provinceCode = String.valueOf(provinceObject.get("id"));
+            String provinceName = String.valueOf(provinceObject.get("label"));
             //省
             RegionEntity province = new RegionEntity();
             province.setName(provinceName);
@@ -119,12 +119,12 @@ public class RegionController {
             province.setParentId(0L);
             regionService.save(province);
 
-            JSONArray cityList = provinceObject.getJSONArray("city");
+            JSONArray cityList = provinceObject.getJSONArray("children");
             if(cityList !=null && cityList.size()>0){
                 for (int j=0; j<cityList.size(); j++){
                     JSONObject cityObject = cityList.getJSONObject(j);
-                    String cityCode = String.valueOf(cityObject.get("code"));
-                    String cityName = String.valueOf(cityObject.get("name"));
+                    String cityCode = String.valueOf(cityObject.get("id"));
+                    String cityName = String.valueOf(cityObject.get("label"));
                     //市
                     RegionEntity city = new RegionEntity();
                     city.setName(cityName);
@@ -133,12 +133,12 @@ public class RegionController {
                     city.setParentId(province.getId());
                     regionService.save(city);
 
-                    JSONArray areaList = cityObject.getJSONArray("area");
+                    JSONArray areaList = cityObject.getJSONArray("children");
                     if (areaList != null && areaList.size()>0){
                         for (int k=0; k<areaList.size(); k++){
                             JSONObject areaObject = areaList.getJSONObject(k);
-                            String areaCode = String.valueOf(areaObject.get("code"));
-                            String areaName = String.valueOf(areaObject.get("name"));
+                            String areaCode = String.valueOf(areaObject.get("id"));
+                            String areaName = String.valueOf(areaObject.get("label"));
                             //区县
                             RegionEntity area = new RegionEntity();
                             area.setName(areaName);

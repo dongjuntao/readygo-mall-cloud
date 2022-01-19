@@ -33,10 +33,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userInfo) throws UsernameNotFoundException {
         long start = System.currentTimeMillis();
         String userName = userInfo.split(":")[0];
-        //userType【0:系统管理员，1:商户管理员，2:普通商城会员】【0和1时访问管理员表，2时访问普通会员表】
+        //userType
+        // 【0:系统管理员，1:入驻商户，2:自营商户，3:商户操作人员】
+        // 【0,1,2,3时访问管理员表，4时访问普通会员表】
         Integer userType = Integer.parseInt(userInfo.split(":")[1]);
         CommonResult result = null;
-        if (userType == 0 || userType == 1) {
+        if (userType == 0 || userType == 1 || userType == 2 || userType == 3) {
             result = adminUserService.getUserByParams(new MapUtil().put("userName",userName).put("userType", userType));
         }else {
 

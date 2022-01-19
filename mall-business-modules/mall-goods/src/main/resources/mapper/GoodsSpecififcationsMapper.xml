@@ -63,7 +63,6 @@
         SELECT id AS detail_id,
                goods_specifications_id,
                value,
-               bind_image,
                enable
         FROM goods_specifications_detail
         WHERE goods_specifications_id = #{id}
@@ -80,7 +79,6 @@
                gsd.id AS detail_id,
                gsd.goods_specifications_id,
                gsd.value,
-               gsd.bind_image,
                gsd.enable
         FROM goods_specifications gs
                  LEFT JOIN goods_specifications_detail gsd
@@ -99,7 +97,6 @@
                gsd.id AS detail_id,
                gsd.goods_specifications_id,
                gsd.value,
-               gsd.bind_image,
                gsd.enable
         FROM goods_specifications gs
                  LEFT JOIN goods_specifications_detail gsd

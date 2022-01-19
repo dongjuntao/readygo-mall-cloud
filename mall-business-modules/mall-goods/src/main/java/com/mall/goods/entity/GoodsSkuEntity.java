@@ -44,7 +44,7 @@ public class GoodsSkuEntity implements Serializable {
     /**
      * 是否启用
      */
-    private boolean enable;
+    private Boolean enable;
     /**
      * 商品sku图片
      */

@@ -23,15 +23,16 @@ public enum ResultCodeEnum {
     USER_ACCOUNT_NOT_EXIST("455", "账号不存在"),
     ADMIN_COUNT_NOT_DELETED("456","管理员账号无法删除"),
     USER_NAME_EXIST("457","用户名已存在"),
+    SYSTEM_ROLE_NOT_DELETED("456","系统内置角色无法删除"),
 
-    PLEASE_DELETE_CHILD_MENU_BUTTON("458","请先删除子菜单或按钮"),
-    MENU_NAME_NOT_BE_EMPTY("459", "菜单名称不能为空"),
-    PARENT_MENU_NOT_BE_EMPTY("460", "上级菜单不能为空"),
-    MENU_URL_NOT_BE_EMPTY("460","菜单URL不能为空"),
-    PARENT_MENU_IS_ONLY_CATALOG("461","上级菜单只能为目录类型"),
-    PARENT_MENU_IS_ONLY_MENU("462","上级菜单只能为菜单类型"),
+    PLEASE_DELETE_CHILD_MENU_BUTTON("510","请先删除子菜单或按钮"),
+    MENU_NAME_NOT_BE_EMPTY("511", "菜单名称不能为空"),
+    PARENT_MENU_NOT_BE_EMPTY("512", "上级菜单不能为空"),
+    MENU_URL_NOT_BE_EMPTY("513","菜单URL不能为空"),
+    PARENT_MENU_IS_ONLY_CATALOG("514","上级菜单只能为目录类型"),
+    PARENT_MENU_IS_ONLY_MENU("515","上级菜单只能为菜单类型"),
 
-    LOGISTICS_COMPANY_EXIST("463","物流公司已存在"),
+    LOGISTICS_COMPANY_EXIST("600","物流公司已存在"),
 
     COMMON_FAIL("10000", "其他错误");
 

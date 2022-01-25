@@ -81,15 +81,19 @@ public class AdminUserServiceImpl extends
     public PageUtil queryPage(Map<String, Object> params) {
         //用户名
         String userName = params.get("userName") == null ? null : params.get("userName").toString();
-        //用户类型
+        //用户类型  0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜） 1:【店铺管理员】包括【入驻商户】【自营商户】
         Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
-        Integer auditStatus = params.get("auditStatus") == null ? null : new Integer(params.get("auditStatus").toString());
+        //商户（店铺）类型 0:入驻商户 1:自营商户
+        Integer merchantType = params.get("merchantType") == null ? null : new Integer(params.get("merchantType").toString());
+        //审核状态
+        Integer authStatus = params.get("authStatus") == null ? null : new Integer(params.get("authStatus").toString());
         IPage<AdminUserEntity> page = this.page(
                 new PageBuilder<AdminUserEntity>().getPage(params),
                 new QueryWrapper<AdminUserEntity>()
                         .like(StringUtils.isNotBlank(userName), "user_name", userName)
                         .eq(userType != null, "user_type", userType)
-                        .eq(auditStatus != null, "audit_status", auditStatus)
+                        .eq(merchantType != null, "merchant_type", merchantType)
+                        .eq(authStatus != null, "auth_status", authStatus)
         );
         return new PageUtil(page);
     }
@@ -104,10 +108,13 @@ public class AdminUserServiceImpl extends
         //用户类型
         Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
         //审核状态
-        Integer auditStatus = params.get("auditStatus") == null ? null : new Integer(params.get("auditStatus").toString());
+        Integer authStatus = params.get("authStatus") == null ? null : new Integer(params.get("authStatus").toString());
+        //商户（店铺）类型 0:入驻商户 1:自营商户
+        Integer merchantType = params.get("merchantType") == null ? null : new Integer(params.get("merchantType").toString());
         List<AdminUserEntity> adminUserEntityList = this.list(new QueryWrapper<AdminUserEntity>()
                 .eq(userType != null, "user_type", userType)
-                .eq(auditStatus != null, "audit_status", auditStatus));
+                .eq(merchantType != null, "merchant_type", merchantType)
+                .eq(authStatus != null, "auth_status", authStatus));
         return adminUserEntityList;
     }
 
@@ -139,6 +146,15 @@ public class AdminUserServiceImpl extends
         AdminUserEntity oldUser = this.getUserByParams(params);
         if (oldUser != null){
             return -1;
+        }
+        //平台管理员
+        if (adminUserEntity.getUserType() == 0) {
+            adminUserEntity.setAuthStatus(1);
+        }else {
+            //自营商户,自动审核通过
+            if (adminUserEntity.getMerchantType() == 1) {
+                adminUserEntity.setAuthStatus(1);
+            }
         }
         adminUserEntity.setStatus(adminUserEntity.getStatus() == null ? 1 : adminUserEntity.getStatus());
         adminUserEntity.setCreateTime(new Date());
@@ -185,8 +201,8 @@ public class AdminUserServiceImpl extends
         if (adminUserEntity == null){
             return -1;
         }
-        oldEntity.setAuditStatus(adminUserEntity.getAuditStatus());
-        oldEntity.setAuditComments(adminUserEntity.getAuditComments());
+        oldEntity.setAuthStatus(adminUserEntity.getAuthStatus());
+        oldEntity.setAuthOpinion(adminUserEntity.getAuthOpinion());
         oldEntity.setRoleIdList(adminUserEntity.getRoleIdList());
         this.updateById(oldEntity);
         //保存用户与角色关系

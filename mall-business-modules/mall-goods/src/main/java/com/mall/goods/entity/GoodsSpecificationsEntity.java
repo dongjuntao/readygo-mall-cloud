@@ -32,13 +32,9 @@ public class GoodsSpecificationsEntity implements Serializable {
      */
     private String description;
     /**
-     * 创建者id
+     * 所属商户
      */
-    private Long creatorId;
-    /**
-     * 创建者名称
-     */
-    private String creatorName;
+    private Long adminUserId;
     /**
      * 商品规格详细信息列表
      */

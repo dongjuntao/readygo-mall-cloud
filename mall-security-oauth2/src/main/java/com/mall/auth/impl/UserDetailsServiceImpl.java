@@ -58,7 +58,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 AuthorityUtils.commaSeparatedStringToAuthorityList(null));
         securityUser.setId(userDTO.getId());
         securityUser.setUserType(userDTO.getUserType());
-        securityUser.setAuditStatus(userDTO.getAuditStatus());
+        securityUser.setAuthStatus(userDTO.getAuthStatus());
         securityUser.setAvatar(userDTO.getAvatar());
         return securityUser;
     }

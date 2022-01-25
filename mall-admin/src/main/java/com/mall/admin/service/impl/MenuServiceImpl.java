@@ -57,7 +57,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 		//如果是商家，需要看商家是否已被审核过，没有审核过的，没有菜单权限
 		if (userType == 1){
 			AdminUserEntity user = adminUserService.getAdminUserById(userId);
-			if (user.getAuditStatus() != Integer.valueOf(1)){
+			if (user.getAuthStatus() != Integer.valueOf(1)){
 				return getAllMenuList(new ArrayList<>());
 			}
 		}

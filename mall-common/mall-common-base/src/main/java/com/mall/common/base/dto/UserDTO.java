@@ -32,7 +32,7 @@ public class UserDTO {
     /**
      * 审核状态（0：待审核  1：通过审核  2：未通过审核）
      */
-    private Integer auditStatus;
+    private Integer authStatus;
     /**
      * 头像信息
      */

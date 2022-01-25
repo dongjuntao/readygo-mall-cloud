@@ -6,8 +6,7 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
-        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
-        <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
+        <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -52,8 +51,7 @@
         SELECT id,
                name,
                description,
-               creator_id,
-               creator_name,
+               admin_user_id,
                create_time,
                update_time
         FROM goods_specifications
@@ -72,8 +70,7 @@
         SELECT gs.id,
                gs.name,
                gs.description,
-               gs.creator_id,
-               gs.creator_name,
+               gs.admin_user_id,
                gs.create_time,
                gs.update_time,
                gsd.id AS detail_id,
@@ -90,8 +87,7 @@
         SELECT gs.id,
                gs.name,
                gs.description,
-               gs.creator_id,
-               gs.creator_name,
+               gs.admin_user_id,
                gs.create_time,
                gs.update_time,
                gsd.id AS detail_id,

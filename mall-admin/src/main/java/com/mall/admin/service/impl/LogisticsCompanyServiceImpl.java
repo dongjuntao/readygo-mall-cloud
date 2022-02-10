@@ -123,7 +123,6 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
      * @param logisticsCompanyEntity
      * @return
      */
-
     @Override
     public int saveLogisticsCompany(LogisticsCompanyEntity logisticsCompanyEntity) {
         //先判断是否有重复的

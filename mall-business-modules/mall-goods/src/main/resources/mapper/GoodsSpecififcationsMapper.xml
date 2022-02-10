@@ -7,6 +7,7 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -48,13 +49,15 @@
 
     <!--分页查询商品规格列表（包括商品规格详细信息） queryPage和querySpecificationsDetail联合查询-->
     <select id="queryPage" resultMap="goodsSpecificationsMap">
-        SELECT id,
-               name,
-               description,
-               admin_user_id,
-               create_time,
-               update_time
-        FROM goods_specifications
+        SELECT gs.id,
+               gs.name,
+               gs.description,
+               gs.admin_user_id,
+               gs.create_time,
+               gs.update_time,
+               au.name AS merchant_name
+        FROM goods_specifications gs
+        LEFT JOIN admin_user au ON au.id=gs.admin_user_id
         ${ew.customSqlSegment}
     </select>
     <select id="querySpecificationsDetail" resultMap="goodsSpecificationsDetailMap">
@@ -78,8 +81,7 @@
                gsd.value,
                gsd.enable
         FROM goods_specifications gs
-                 LEFT JOIN goods_specifications_detail gsd
-                           ON gs.id = gsd.goods_specifications_id
+        LEFT JOIN goods_specifications_detail gsd ON gs.id = gsd.goods_specifications_id
         WHERE gs.id = #{id}
     </select>
 

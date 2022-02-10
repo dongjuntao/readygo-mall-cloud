@@ -35,11 +35,7 @@ public class GoodsSpecificationsEntity implements Serializable {
      * 所属商户
      */
     private Long adminUserId;
-    /**
-     * 商品规格详细信息列表
-     */
-    @TableField(exist=false)
-    private List<GoodsSpecificationsDetailEntity> goodsSpecificationsDetailEntityList;
+
     /**
      * 创建时间
      */
@@ -48,4 +44,17 @@ public class GoodsSpecificationsEntity implements Serializable {
      * 创建时间
      */
     private Date updateTime;
+
+    /**
+     * 所属商户名称
+     */
+    @TableField(exist=false)
+    private String merchantName;
+
+    /**
+     * 商品规格详细信息列表
+     */
+    @TableField(exist=false)
+    private List<GoodsSpecificationsDetailEntity> goodsSpecificationsDetailEntityList;
+
 }

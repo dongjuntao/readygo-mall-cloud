@@ -31,6 +31,8 @@ public class GoodsSpecificationsServiceImpl extends ServiceImpl<GoodsSpecificati
         QueryWrapper<GoodsSpecificationsEntity> wrapper = new QueryWrapper<>();
         String name = String.valueOf(params.get("name"));//商品规格名称
         wrapper.like(StringUtils.isNotBlank(name), "name", name);
+        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+        wrapper.eq(adminUserId != null, "admin_user_id", adminUserId);
         IPage<GoodsSpecificationsEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }

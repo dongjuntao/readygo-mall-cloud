@@ -14,6 +14,7 @@ public enum ResultCodeEnum {
     VALIDATE_FAILED("404", "参数检验失败"),
     CREATE_FAIL("420","新增失败"),
     UPDATE_FAIL("421","修改失败"),
+    ENABLE_FAIL("422", "启用或禁用失败"),
 
     USER_ACCOUNT_EXPIRED("450", "账号已过期"),
     USER_CREDENTIALS_ERROR("451", "用户名或密码错误"),

@@ -11,6 +11,7 @@ import com.mall.common.util.MapUtil;
 import com.mall.common.util.PageBuilder;
 import com.mall.common.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Map;
  * @Date 2022/2/10 22:55
  * @Version 1.0
  */
+@Service("homepagePlateService")
 public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, HomepagePlateEntity> implements HomepagePlateService {
 
     /**
@@ -37,7 +39,6 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
                 new PageBuilder<HomepagePlateEntity>().getPage(params),
                 new QueryWrapper<HomepagePlateEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
-                        .orderByAsc("order_num")
         );
         return new PageUtil(page);
     }
@@ -54,7 +55,6 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
         List<HomepagePlateEntity> homepagePlateEntityList = this.list(
                 new QueryWrapper<HomepagePlateEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
-                        .orderByAsc("order_num")
         );
         return homepagePlateEntityList;
     }
@@ -100,7 +100,8 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
     public int updateHomepagePlate(HomepagePlateEntity homepagePlateEntity) {
         //先判断是否有重复的
         HomepagePlateEntity homepagePlate = this.getHomepagePlateByParams(new MapUtil()
-                .put("name",homepagePlateEntity.getName()));
+                .put("name",homepagePlateEntity.getName())
+                .put("id",homepagePlateEntity.getId()));
         if (homepagePlate != null) {
             return -1;
         }
@@ -124,5 +125,25 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
     @Override
     public void deleteBatch(Long[] plateIds) {
         this.removeByIds(Arrays.asList(plateIds));
+    }
+
+    /**
+     * 启用 / 禁用
+     * @param id
+     * @param enable
+     * @return
+     */
+    @Override
+    public int enable(Long id, Boolean enable) {
+        HomepagePlateEntity homepagePlateEntity = this.getById(id);
+        if (homepagePlateEntity == null) {
+            return -1;
+        }
+        if (enable == Boolean.TRUE) {
+            homepagePlateEntity.setEnable(true);
+        } else {
+            homepagePlateEntity.setEnable(false);
+        }
+        return this.updateById(homepagePlateEntity) ? 1 : 0;
     }
 }

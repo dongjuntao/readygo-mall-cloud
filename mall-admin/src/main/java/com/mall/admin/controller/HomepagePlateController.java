@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Author DongJunTao
+ * @Description 商城首页板块
+ * @Date 2022/2/10 22:58
+ * @Version 1.0
+ */
 @RestController
 @RequestMapping("homepage/plate")
 public class HomepagePlateController {
@@ -67,7 +73,7 @@ public class HomepagePlateController {
      * @return
      */
     @GetMapping("/getHomepagePlateById")
-    public CommonResult getHomepagePlateById(@RequestParam long id) {
+    public CommonResult getHomepagePlateById(@RequestParam("homepagePlateId") long id) {
         HomepagePlateEntity homepagePlateEntity = homepagePlateService.getHomepagePlateById(id);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), homepagePlateEntity);
     }
@@ -78,6 +84,19 @@ public class HomepagePlateController {
     @DeleteMapping("/delete")
     public CommonResult delete(@RequestBody Long[] companyIds){
         homepagePlateService.deleteBatch(companyIds);
+        return CommonResult.success();
+    }
+
+    /**
+     * 启用 / 禁用 导航
+     */
+    @PutMapping("/enable")
+    public CommonResult enable(@RequestParam("plateId") Long plateId,
+                               @RequestParam("enable") Boolean enable){
+        int num = homepagePlateService.enable(plateId, enable);
+        if (num < 0){
+            return CommonResult.fail(ResultCodeEnum.ENABLE_FAIL.getCode(),ResultCodeEnum.ENABLE_FAIL.getMessage());
+        }
         return CommonResult.success();
     }
 }

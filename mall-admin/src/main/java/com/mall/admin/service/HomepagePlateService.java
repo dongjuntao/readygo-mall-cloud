@@ -64,4 +64,9 @@ public interface HomepagePlateService extends IService<HomepagePlateEntity> {
      * @param plateIds
      */
     void deleteBatch(Long[] plateIds);
+
+    /**
+     * 启用 / 禁用
+     */
+    int enable(Long id, Boolean enable);
 }

@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Author DongJunTao
+ * @Description 商城首页导航
+ * @Date 2022/2/10 22:54
+ * @Version 1.0
+ */
 @RestController
 @RequestMapping("homepage/navbar")
 public class HomepageNavbarController {
@@ -66,7 +72,7 @@ public class HomepageNavbarController {
      * @return
      */
     @GetMapping("/getHomepageNavbarById")
-    public CommonResult getHomepageNavbarById(@RequestParam long id) {
+    public CommonResult getHomepageNavbarById(@RequestParam("homepageNavbarId") long id) {
         HomepageNavbarEntity homepageNavbarEntity = homepageNavbarService.getHomepageNavbarById(id);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), homepageNavbarEntity);
     }
@@ -77,6 +83,19 @@ public class HomepageNavbarController {
     @DeleteMapping("/delete")
     public CommonResult delete(@RequestBody Long[] companyIds){
         homepageNavbarService.deleteBatch(companyIds);
+        return CommonResult.success();
+    }
+
+    /**
+     * 启用 / 禁用 导航
+     */
+    @PutMapping("/enable")
+    public CommonResult enable(@RequestParam("navbarId") Long navbarId,
+                               @RequestParam("enable") Boolean enable){
+        int num = homepageNavbarService.enable(navbarId, enable);
+        if (num < 0){
+            return CommonResult.fail(ResultCodeEnum.ENABLE_FAIL.getCode(),ResultCodeEnum.ENABLE_FAIL.getMessage());
+        }
         return CommonResult.success();
     }
 }

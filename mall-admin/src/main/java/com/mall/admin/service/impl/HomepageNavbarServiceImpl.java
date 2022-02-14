@@ -22,7 +22,7 @@ import java.util.Map;
  * @Date 2022/2/10 22:56
  * @Version 1.0
  */
-@Service
+@Service("homepageNavbarService")
 public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper, HomepageNavbarEntity> implements HomepageNavbarService {
 
     /**
@@ -38,7 +38,7 @@ public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper,
                 new PageBuilder<HomepageNavbarEntity>().getPage(params),
                 new QueryWrapper<HomepageNavbarEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
-                        .orderByAsc("order_num")
+                        .orderByAsc("sort_num")
         );
         return new PageUtil(page);
     }
@@ -55,7 +55,7 @@ public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper,
         List<HomepageNavbarEntity> homepageNavbarEntityList = this.list(
                 new QueryWrapper<HomepageNavbarEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
-                        .orderByAsc("order_num")
+                        .orderByAsc("sort_num")
         );
         return homepageNavbarEntityList;
     }
@@ -101,7 +101,8 @@ public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper,
     public int updateHomepageNavbar(HomepageNavbarEntity homepageNavbarEntity) {
         //先判断是否有重复的
         HomepageNavbarEntity homepageNavbar = this.getHomepageNavbarByParams(new MapUtil()
-                .put("name",homepageNavbarEntity.getName()));
+                .put("name",homepageNavbarEntity.getName())
+                .put("id",homepageNavbarEntity.getId()));
         if (homepageNavbar != null) {
             return -1;
         }
@@ -125,5 +126,25 @@ public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper,
     @Override
     public void deleteBatch(Long[] navbarIds) {
         this.removeByIds(Arrays.asList(navbarIds));
+    }
+
+    /**
+     * 启用 / 禁用
+     * @param id
+     * @param enable
+     * @return
+     */
+    @Override
+    public int enable(Long id, Boolean enable) {
+        HomepageNavbarEntity navbarEntity = this.getById(id);
+        if (navbarEntity == null) {
+            return -1;
+        }
+        if (enable == Boolean.TRUE) {
+            navbarEntity.setEnable(true);
+        } else {
+            navbarEntity.setEnable(false);
+        }
+        return this.updateById(navbarEntity) ? 1 : 0;
     }
 }

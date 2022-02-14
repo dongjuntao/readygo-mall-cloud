@@ -62,4 +62,9 @@ public interface HomepageNavbarService extends IService<HomepageNavbarEntity> {
      * @param navbarIds
      */
     void deleteBatch(Long[] navbarIds);
+
+    /**
+     * 启用 / 禁用
+     */
+    int enable(Long id, Boolean enable);
 }

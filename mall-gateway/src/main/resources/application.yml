@@ -64,3 +64,4 @@ white:
       - /mall-admin/captcha/check
       - /mall-admin/system/admin/login
       - /mall-goods/goods/category/getSubFirst
+      - /mall-admin/homepage/index/data

@@ -50,7 +50,7 @@ public class HomepagePlateController {
     public CommonResult save(@RequestBody HomepagePlateEntity homepagePlateEntity){
         int num = homepagePlateService.saveHomepagePlate(homepagePlateEntity);
         if (num == -1){
-            return CommonResult.fail(ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getCode(),ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getMessage());
+            return CommonResult.fail(ResultCodeEnum.HOMEPAGE_PLATE_EXIST.getCode(),ResultCodeEnum.HOMEPAGE_PLATE_EXIST.getMessage());
         }
         return CommonResult.success();
     }
@@ -62,7 +62,7 @@ public class HomepagePlateController {
     public CommonResult update(@RequestBody HomepagePlateEntity homepagePlateEntity){
         int num = homepagePlateService.updateHomepagePlate(homepagePlateEntity);
         if (num == -1){
-            return CommonResult.fail(ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getCode(),ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getMessage());
+            return CommonResult.fail(ResultCodeEnum.HOMEPAGE_PLATE_EXIST.getCode(),ResultCodeEnum.HOMEPAGE_PLATE_EXIST.getMessage());
         }
         return CommonResult.success();
     }

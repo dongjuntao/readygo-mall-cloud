@@ -49,7 +49,7 @@ public class HomepageNavbarController {
     public CommonResult save(@RequestBody HomepageNavbarEntity homepageNavbarEntity){
         int num = homepageNavbarService.saveHomepageNavbar(homepageNavbarEntity);
         if (num == -1){
-            return CommonResult.fail(ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getCode(),ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getMessage());
+            return CommonResult.fail(ResultCodeEnum.HOMEPAGE_NAVBAR_EXIST.getCode(),ResultCodeEnum.HOMEPAGE_NAVBAR_EXIST.getMessage());
         }
         return CommonResult.success();
     }
@@ -61,7 +61,7 @@ public class HomepageNavbarController {
     public CommonResult update(@RequestBody HomepageNavbarEntity homepageNavbarEntity){
         int num = homepageNavbarService.updateHomepageNavbar(homepageNavbarEntity);
         if (num == -1){
-            return CommonResult.fail(ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getCode(),ResultCodeEnum.LOGISTICS_COMPANY_EXIST.getMessage());
+            return CommonResult.fail(ResultCodeEnum.HOMEPAGE_NAVBAR_EXIST.getCode(),ResultCodeEnum.HOMEPAGE_NAVBAR_EXIST.getMessage());
         }
         return CommonResult.success();
     }

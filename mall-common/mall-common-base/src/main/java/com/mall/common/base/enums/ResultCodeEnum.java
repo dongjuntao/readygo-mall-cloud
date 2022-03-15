@@ -34,6 +34,9 @@ public enum ResultCodeEnum {
     PARENT_MENU_IS_ONLY_MENU("515","上级菜单只能为菜单类型"),
 
     LOGISTICS_COMPANY_EXIST("600","物流公司已存在"),
+    HOMEPAGE_CAROUSEL_EXIST("601","首页轮播图已存在"),
+    HOMEPAGE_NAVBAR_EXIST("602","首页导航已存在"),
+    HOMEPAGE_PLATE_EXIST("603","首页板块已存在"),
 
     COMMON_FAIL("10000", "其他错误");
 

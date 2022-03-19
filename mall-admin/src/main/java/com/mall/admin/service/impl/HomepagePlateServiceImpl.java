@@ -3,17 +3,23 @@ package com.mall.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.admin.entity.HomepageNavbarEntity;
 import com.mall.admin.entity.HomepagePlateEntity;
+import com.mall.admin.entity.HomepagePlateGoodsRelatedEntity;
+import com.mall.admin.mapper.HomepagePlateGoodsRelatedMapper;
 import com.mall.admin.mapper.HomepagePlateMapper;
+import com.mall.admin.service.HomepagePlateGoodsRelatedService;
 import com.mall.admin.service.HomepagePlateService;
 import com.mall.common.util.MapUtil;
 import com.mall.common.util.PageBuilder;
 import com.mall.common.util.PageUtil;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +31,9 @@ import java.util.Map;
  */
 @Service("homepagePlateService")
 public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, HomepagePlateEntity> implements HomepagePlateService {
+
+    @Autowired
+    private HomepagePlateGoodsRelatedService homepagePlateGoodsRelatedService;
 
     /**
      * 分页查询所有板块
@@ -145,5 +154,33 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
             homepagePlateEntity.setEnable(false);
         }
         return this.updateById(homepagePlateEntity) ? 1 : 0;
+    }
+
+    /**
+     * 关联商品
+     * @param id
+     * @param goodsIds
+     */
+    @Override
+    @Transactional
+    public void relateGoods(Long id, Long[] goodsIds) {
+        //先查询该板块是否有关联的商品，如果有，先全部删除
+       List<HomepagePlateGoodsRelatedEntity> plateGoodsRelatedEntityList =
+               homepagePlateGoodsRelatedService.getHomepagePlateGoodsRelatedList(id);
+       if (!CollectionUtils.isEmpty(plateGoodsRelatedEntityList)) {
+           homepagePlateGoodsRelatedService.deleteBatch(id);
+       }
+        //批量新增商品关联信息
+        homepagePlateGoodsRelatedService.save(id, goodsIds);
+    }
+
+    /**
+     * 根据板块id获取关联商品
+     * @param plateId
+     * @return
+     */
+    @Override
+    public List<HomepagePlateGoodsRelatedEntity> getRelatedGoods(Long plateId) {
+        return homepagePlateGoodsRelatedService.getHomepagePlateGoodsRelatedList(plateId);
     }
 }

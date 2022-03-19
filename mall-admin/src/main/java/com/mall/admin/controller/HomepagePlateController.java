@@ -1,6 +1,7 @@
 package com.mall.admin.controller;
 
 import com.mall.admin.entity.HomepagePlateEntity;
+import com.mall.admin.entity.HomepagePlateGoodsRelatedEntity;
 import com.mall.admin.service.HomepagePlateService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
@@ -88,7 +89,7 @@ public class HomepagePlateController {
     }
 
     /**
-     * 启用 / 禁用 导航
+     * 启用 / 禁用 板块
      */
     @PutMapping("/enable")
     public CommonResult enable(@RequestParam("plateId") Long plateId,
@@ -98,5 +99,29 @@ public class HomepagePlateController {
             return CommonResult.fail(ResultCodeEnum.ENABLE_FAIL.getCode(),ResultCodeEnum.ENABLE_FAIL.getMessage());
         }
         return CommonResult.success();
+    }
+
+    /**
+     * 关联商品，用于商城首页展示
+     * @param plateId
+     * @param goodsIds
+     * @return
+     */
+    @PostMapping("/relateGoods/{plateId}")
+    public CommonResult relateGoods(@PathVariable("plateId") Long plateId,
+                                    @RequestBody Long[] goodsIds) {
+        homepagePlateService.relateGoods(plateId, goodsIds);
+        return CommonResult.success();
+    }
+
+    /**
+     * 根据板块获取关联的商品
+     * @param plateId
+     * @return
+     */
+    @GetMapping("/getRelatedGoods/{plateId}")
+    public CommonResult getRelatedGoods(@PathVariable("plateId") Long plateId) {
+        List<HomepagePlateGoodsRelatedEntity> entityList = homepagePlateService.getRelatedGoods(plateId);
+        return CommonResult.success(entityList);
     }
 }

@@ -2,6 +2,7 @@ package com.mall.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.HomepagePlateEntity;
+import com.mall.admin.entity.HomepagePlateGoodsRelatedEntity;
 import com.mall.common.util.PageUtil;
 import org.springframework.stereotype.Service;
 
@@ -69,4 +70,18 @@ public interface HomepagePlateService extends IService<HomepagePlateEntity> {
      * 启用 / 禁用
      */
     int enable(Long id, Boolean enable);
+
+    /**
+     * 关联商品
+     * @param id
+     * @param goodsIds
+     */
+    void relateGoods(Long id, Long[] goodsIds);
+
+    /**
+     * 根据板块id获取关联商品
+     * @param plateId
+     * @return
+     */
+    List<HomepagePlateGoodsRelatedEntity> getRelatedGoods(Long plateId);
 }

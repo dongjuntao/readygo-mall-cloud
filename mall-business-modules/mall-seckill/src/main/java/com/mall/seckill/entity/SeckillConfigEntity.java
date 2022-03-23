@@ -41,11 +41,11 @@ public class SeckillConfigEntity {
     /**
      * 秒杀开始时间点
      */
-    private Time seckillStartTime;
+    private Date seckillStartTime;
     /**
      * 秒杀结束时间点
      */
-    private Time seckillEndTime;
+    private Date seckillEndTime;
     /**
      * 每人限购次数
      */
@@ -94,5 +94,11 @@ public class SeckillConfigEntity {
      */
     @TableField(exist = false)
     private String goodsName;
+
+    /**
+     * 秒杀(开始/结束)时间
+     */
+    @TableField(exist = false)
+    private String startAndEndTime;
 
 }

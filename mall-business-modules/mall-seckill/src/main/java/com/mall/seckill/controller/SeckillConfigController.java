@@ -2,12 +2,19 @@ package com.mall.seckill.controller;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
+import com.mall.common.util.DateUtil;
 import com.mall.common.util.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.service.SeckillConfigService;
+import io.netty.util.internal.StringUtil;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -39,9 +46,14 @@ public class SeckillConfigController {
      * @return
      */
     @PostMapping("save")
-    public CommonResult saveSeckillConfig(@RequestBody SeckillConfigEntity seckillConfigEntity) {
+    public CommonResult saveSeckillConfig(@RequestBody SeckillConfigEntity seckillConfigEntity) throws ParseException {
         seckillConfigEntity.setAuthStatus(0);
         seckillConfigEntity.setCreateTime(new Date());
+        String startAndEndTime = seckillConfigEntity.getStartAndEndTime();
+        if (!StringUtil.isNullOrEmpty(startAndEndTime)) {
+            seckillConfigEntity.setSeckillStartTime(DateUtil.getDateByDateString(startAndEndTime.split(" - ")[0],"HH:mm:ss"));
+            seckillConfigEntity.setSeckillEndTime(DateUtil.getDateByDateString(startAndEndTime.split(" - ")[1],"HH:mm:ss"));
+        }
         return seckillConfigService.saveSeckillConfig(seckillConfigEntity) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
@@ -51,8 +63,13 @@ public class SeckillConfigController {
      * @return
      */
     @PutMapping("update")
-    public CommonResult updateSeckillConfig(@RequestBody SeckillConfigEntity seckillConfigEntity) {
+    public CommonResult updateSeckillConfig(@RequestBody SeckillConfigEntity seckillConfigEntity) throws ParseException {
         seckillConfigEntity.setUpdateTime(new Date());
+        String startAndEndTime = seckillConfigEntity.getStartAndEndTime();
+        if (!StringUtil.isNullOrEmpty(startAndEndTime)) {
+            seckillConfigEntity.setSeckillStartTime(DateUtil.getDateByDateString(startAndEndTime.split(" - ")[0],"HH:mm:ss"));
+            seckillConfigEntity.setSeckillEndTime(DateUtil.getDateByDateString(startAndEndTime.split(" - ")[1],"HH:mm:ss"));
+        }
         return seckillConfigService.updateSeckillConfig(seckillConfigEntity) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 

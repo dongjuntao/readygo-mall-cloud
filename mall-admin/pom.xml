@@ -93,6 +93,12 @@
       <artifactId>mall-security-oauth2-api</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--商品服务-->
+    <dependency>
+      <groupId>com.mall.service.api</groupId>
+      <artifactId>mall-goods-api</artifactId>
+      <version>${common.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

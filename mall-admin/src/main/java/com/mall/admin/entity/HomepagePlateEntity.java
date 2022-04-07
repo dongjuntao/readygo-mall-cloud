@@ -35,6 +35,11 @@ public class HomepagePlateEntity {
     private String secondName;
 
     /**
+     * 板块背景色
+     */
+    private String bgColor;
+
+    /**
      * 板块内最大容纳商品数量
      */
     private Integer maxLimit;

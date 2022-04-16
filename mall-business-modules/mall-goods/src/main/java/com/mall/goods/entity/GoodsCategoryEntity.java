@@ -3,6 +3,7 @@ package com.mall.goods.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.goods.vo.GoodsCategoryInfoVO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -42,6 +43,10 @@ public class GoodsCategoryEntity implements Serializable {
      */
     private Integer orderNum;
     /**
+     * 分组号（用于商城前台分类的合并展示）
+     */
+    private Integer groupNum;
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -54,4 +59,9 @@ public class GoodsCategoryEntity implements Serializable {
      */
     @TableField(exist=false)
     private List<GoodsCategoryEntity> children = new ArrayList<>();
+    /**
+     * 商品分类名称（多个，以分隔符分开）
+     */
+    @TableField(exist=false)
+    private List<GoodsCategoryInfoVO> goodsCategoryInfoList;
 }

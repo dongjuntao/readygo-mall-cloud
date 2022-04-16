@@ -119,13 +119,13 @@ public class GoodsCategoryController {
     }
 
     /**
-     * 获取所有子一级
+     * 获取分组并合并后的商品分类 及 未合并的商品分类
      * @return
      */
-    @GetMapping("/getSubFirst")
-    public CommonResult getSubFirst() {
-        List<GoodsCategoryEntity> goodsCategoryList = goodsCategoryService.queryGoodsCategoryTree(0L);
-        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryList);
+    @GetMapping("/getCategoryAndMergedCategory")
+    public CommonResult getCategoryAndMergedCategory() {
+        Map<String,List<GoodsCategoryEntity>> categoryMap = goodsCategoryService.queryMergeGoodsCategoryTree(0L);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), categoryMap);
     }
 
 }

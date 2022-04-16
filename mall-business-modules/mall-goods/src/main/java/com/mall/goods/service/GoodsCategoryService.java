@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.goods.entity.GoodsCategoryEntity;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -19,6 +20,8 @@ public interface GoodsCategoryService extends IService<GoodsCategoryEntity> {
      * @param id
      * @return
      */
+    Map<String,List<GoodsCategoryEntity>> queryMergeGoodsCategoryTree(Long id);
+
     List<GoodsCategoryEntity> queryGoodsCategoryTree(Long id);
 
     /**

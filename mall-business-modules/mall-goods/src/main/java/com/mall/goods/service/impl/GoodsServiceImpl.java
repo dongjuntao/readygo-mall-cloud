@@ -28,12 +28,21 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     public PageUtil queryPage(Map<String, Object> params) {
         Page<GoodsEntity> page = (Page<GoodsEntity>)new PageBuilder<GoodsEntity>().getPage(params);
         QueryWrapper<GoodsEntity> wrapper = new QueryWrapper<>();
-        String name = String.valueOf(params.get("name"));//商品名称
+        String name = params.get("name") == null ? null : String.valueOf(params.get("name"));//商品名称
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         wrapper
                 .like(StringUtils.isNotBlank(name), "name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
                 .orderByDesc("create_time");
+        String categoryIds = params.get("categoryIds") == null ? null : String.valueOf(params.get("categoryIds"));//商品分类id集合
+        if (StringUtils.isNotBlank(categoryIds)) {
+            String[] categorySplit = categoryIds.split(",");
+            if (categorySplit.length == 3) {
+                wrapper.eq("goods_category_ids", categoryIds);
+            } else {
+                wrapper.like("goods_category_ids", categoryIds+",%");
+            }
+        }
         IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);
         return new PageUtil(iPage);
     }

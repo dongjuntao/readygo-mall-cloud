@@ -40,6 +40,10 @@ spring:
           uri: lb://mall-seckill #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-seckill/**
+        - id: mall-member
+          uri: lb://mall-member #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-member/**
   mvc:
     servlet:
       load-on-startup: 1
@@ -63,5 +67,10 @@ white:
       - /mall-admin/captcha/get #验证码接口
       - /mall-admin/captcha/check
       - /mall-admin/system/admin/login
-      - /mall-goods/goods/category/getSubFirst
+      - /mall-goods/goods/category/getCategoryAndMergedCategory
       - /mall-admin/homepage/index/data
+      - /mall-goods/goods/list
+      - /mall-goods/goods/getGoodsById
+      - /mall-member/member/register
+      - /mall-member/captcha/get #验证码接口
+      - /mall-member/captcha/check

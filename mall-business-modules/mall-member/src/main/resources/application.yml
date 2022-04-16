@@ -1,0 +1,40 @@
+#### spring相关配置
+spring:
+  application:
+    name: mall-member #应用名称
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+    #腾讯云对象存储
+  qcloud:
+    secretId: AKIDrwgBSUIsDKEtLYWGl36uUpwnQoxqUu53
+    secretKey: nLfkbEcmhNo0xgAQSFpCKEtKWVFk15vW
+    region: ap-shanghai
+    bucketName: dongjuntao-1303976517
+    url: https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com
+    prefix: /goods/images/
+server:
+  port: 8003
+
+#### 验证码相关配置
+aj:
+  captcha:
+    jigsaw: classpath:images/jigsaw  # 滑动验证，底图路径，不配置将使用默认图片
+    pic-click: classpath:images/pic-click  # 滑动验证，底图路径，不配置将使用默认图片
+    cache-type: redis # 保存到redis
+    type: default
+    water-mark:
+    slip-offset: 10 # 校验滑动拼图允许误差偏移量(默认5像素)
+    aes-status: true
+    interference-options: 2
+    history-data-clear-enable: true
+    req-frequency-limit-enable: true # 接口请求次数一分钟限制是否开启 true|false
+    req-get-lock-limit: 60 # 验证失败50次，get接口锁定
+    req-get-lock-seconds: 60 # 验证失败后，锁定时间间隔
+    req-get-minute-limit: 30 # get接口一分钟内请求数限制
+    req-check-minute-limit: 30 # check接口一分钟内请求数限制

@@ -121,7 +121,6 @@ public class HomepageIndexController {
 
         indexDataMap.put("list", dataList);
 
-
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), indexDataMap);
     }
 }

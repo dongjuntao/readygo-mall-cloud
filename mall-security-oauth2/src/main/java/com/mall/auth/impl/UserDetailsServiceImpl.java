@@ -7,6 +7,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.MessageConstant;
 import com.mall.common.base.dto.UserDTO;
 import com.mall.common.util.MapUtil;
+import com.mall.member.api.FeignMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,8 +27,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private AdminUserService adminUserService;
+
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private FeignMemberService feignMemberService;
 
     @Override
     public UserDetails loadUserByUsername(String userInfo) throws UsernameNotFoundException {
@@ -41,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (userType == 0 || userType == 1 || userType == 2 || userType == 3) {
             result = adminUserService.getUserByParams(new MapUtil().put("userName",userName).put("userType", userType));
         }else {
-
+            result = feignMemberService.getMemberByParams(new MapUtil().put("userName", userName));
         }
         System.out.println("loadUserByUsername == 差值="+(System.currentTimeMillis()-start));
         if (result == null || !"200".equals(result.getCode())) {

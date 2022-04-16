@@ -1,0 +1,66 @@
+spring:
+  #####数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/readygo-mall-member?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456789
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+  #####nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 49.234.85.17:8848 #配置nacos地址
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+  #####redis配置
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456789
+    timeout: 6000
+    database: 5
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients: mall-member
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:**/*Mapper.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+

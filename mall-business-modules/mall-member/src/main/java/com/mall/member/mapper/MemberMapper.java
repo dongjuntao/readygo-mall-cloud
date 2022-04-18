@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Author DongJunTao
- * @Description
+ * @Description 会员mapper
  * @Date 2022/4/14 17:23
  * @Version 1.0
  */

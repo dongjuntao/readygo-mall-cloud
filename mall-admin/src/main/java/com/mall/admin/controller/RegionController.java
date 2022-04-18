@@ -51,7 +51,7 @@ public class RegionController {
      * @return
      */
     @GetMapping("getRegionsNameByRegions")
-    public CommonResult getRegionsNameByRegions(String regions) {
+    public CommonResult getRegionsNameByRegions(@RequestParam("regions") String regions) {
         return CommonResult.success(regionService.getRegionsNameByRegions(regions));
     }
 

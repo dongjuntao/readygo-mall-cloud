@@ -35,6 +35,12 @@
       <artifactId>mall-security-oauth2-api</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--mall-admin接口-->
+    <dependency>
+      <groupId>com.mall.service.api</groupId>
+      <artifactId>mall-admin-api</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>

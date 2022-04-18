@@ -31,6 +31,10 @@ public class MemberEntity {
      */
     private String name;
     /**
+     * 昵称
+     */
+    private String nickName;
+    /**
      * 性别【0：男  1：女】
      */
     private Integer sex;

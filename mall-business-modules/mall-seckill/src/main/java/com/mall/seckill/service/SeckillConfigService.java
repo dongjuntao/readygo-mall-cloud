@@ -1,7 +1,7 @@
 package com.mall.seckill.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 
 import java.util.Map;

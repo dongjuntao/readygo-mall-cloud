@@ -1,4 +1,4 @@
-package com.mall.common.util;
+package com.mall.common.base.utils;
 
 import java.util.HashMap;
 

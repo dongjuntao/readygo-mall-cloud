@@ -5,13 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.admin.entity.HomepagePlateEntity;
 import com.mall.admin.entity.HomepagePlateGoodsRelatedEntity;
-import com.mall.admin.mapper.HomepagePlateGoodsRelatedMapper;
 import com.mall.admin.mapper.HomepagePlateMapper;
 import com.mall.admin.service.HomepagePlateGoodsRelatedService;
 import com.mall.admin.service.HomepagePlateService;
-import com.mall.common.util.MapUtil;
-import com.mall.common.util.PageBuilder;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.MapUtil;
+import com.mall.common.base.utils.PageBuilder;
+import com.mall.common.base.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

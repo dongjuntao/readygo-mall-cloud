@@ -3,12 +3,10 @@ package com.mall.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.admin.entity.ExpressSettingEntity;
-import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.mapper.ExpressSettingMapper;
 import com.mall.admin.service.ExpressSettingService;
-import com.mall.common.util.MapUtil;
+import com.mall.common.base.utils.MapUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;

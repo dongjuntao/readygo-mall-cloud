@@ -2,7 +2,7 @@ package com.mall.goods.controller;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.*;
 import com.mall.goods.service.GoodsService;
 import com.mall.goods.service.GoodsSkuService;

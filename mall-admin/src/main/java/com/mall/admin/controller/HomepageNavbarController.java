@@ -4,7 +4,7 @@ import com.mall.admin.entity.HomepageNavbarEntity;
 import com.mall.admin.service.HomepageNavbarService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

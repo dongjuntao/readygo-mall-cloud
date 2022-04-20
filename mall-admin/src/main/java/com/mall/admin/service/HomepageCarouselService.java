@@ -1,7 +1,7 @@
 package com.mall.admin.service;
 
 import com.mall.admin.entity.HomepageCarouselEntity;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 
 import java.util.List;
 import java.util.Map;

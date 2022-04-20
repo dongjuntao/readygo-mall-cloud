@@ -1,9 +1,8 @@
 package com.mall.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.entity.LogisticsCompanyEntity;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 
 import java.util.List;
 import java.util.Map;

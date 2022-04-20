@@ -2,19 +2,14 @@ package com.mall.seckill.controller;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.util.DateUtil;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.DateUtil;
+import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.service.SeckillConfigService;
 import io.netty.util.internal.StringUtil;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 

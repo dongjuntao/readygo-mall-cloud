@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 import com.mall.admin.entity.RegionEntity;
 import com.mall.admin.mapper.RegionMapper;
 import com.mall.admin.service.RegionService;
-import com.mall.common.util.MapUtil;
+import com.mall.common.base.utils.MapUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;

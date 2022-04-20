@@ -1,7 +1,7 @@
 package com.mall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 import com.mall.coupon.entity.CouponEntity;
 
 import java.util.Map;

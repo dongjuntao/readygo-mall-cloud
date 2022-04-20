@@ -1,11 +1,9 @@
 package com.mall.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.mall.admin.entity.RegionEntity;
 import com.mall.admin.entity.ShippingInfoEntity;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 
-import java.util.List;
 import java.util.Map;
 
 /**

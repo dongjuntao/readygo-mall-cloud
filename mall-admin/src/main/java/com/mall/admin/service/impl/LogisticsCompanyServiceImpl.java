@@ -4,14 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.admin.entity.AdminUserEntity;
 import com.mall.admin.entity.LogisticsCompanyEntity;
-import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.mapper.LogisticsCompanyMapper;
 import com.mall.admin.service.LogisticsCompanyService;
-import com.mall.common.util.MapUtil;
-import com.mall.common.util.PageBuilder;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.MapUtil;
+import com.mall.common.base.utils.PageBuilder;
+import com.mall.common.base.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package com.mall.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.HomepagePlateEntity;
 import com.mall.admin.entity.HomepagePlateGoodsRelatedEntity;
-import com.mall.common.util.PageUtil;
+import com.mall.common.base.utils.PageUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

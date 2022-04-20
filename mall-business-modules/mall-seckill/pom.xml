@@ -33,12 +33,6 @@
       <artifactId>mall-common-base</artifactId>
       <version>${common.version}</version>
     </dependency>
-    <!--mall-common-base-->
-    <dependency>
-      <groupId>com.mall.common</groupId>
-      <artifactId>mall-common-util</artifactId>
-      <version>${common.version}</version>
-    </dependency>
     <!--mall-common-mysql-->
     <dependency>
       <groupId>com.mall.common</groupId>

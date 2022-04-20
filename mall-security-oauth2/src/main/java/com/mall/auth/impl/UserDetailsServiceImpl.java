@@ -6,7 +6,7 @@ import com.mall.auth.domain.SecurityUser;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.MessageConstant;
 import com.mall.common.base.dto.UserDTO;
-import com.mall.common.util.MapUtil;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.member.api.FeignMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

@@ -65,6 +65,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         securityUser.setUserType(userDTO.getUserType());
         securityUser.setAuthStatus(userDTO.getAuthStatus());
         securityUser.setAvatar(userDTO.getAvatar());
+        securityUser.setSex(userDTO.getSex());
+        securityUser.setNickName(userDTO.getNickName());
+        securityUser.setBirthday(userDTO.getBirthday());
         return securityUser;
     }
 }

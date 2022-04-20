@@ -2,6 +2,7 @@ package com.mall.member.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -46,6 +47,14 @@ public class MemberEntity {
      * 身份证号码
      */
     private String idCard;
+    /**
+     * 生日
+     */
+    private Date birthday;
+    /**
+     * 头像
+     */
+    private String avatar;
     /**
      * 创建时间
      */

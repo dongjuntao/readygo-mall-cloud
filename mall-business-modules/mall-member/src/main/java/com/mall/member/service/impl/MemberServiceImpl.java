@@ -56,4 +56,33 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, MemberEntity> i
                         .eq(StringUtils.isNotBlank(userName), "user_name", String.valueOf(params.get("userName")))
                         .ne(id != null, "id",id));//排除id
     }
+
+    @Override
+    public int updateMemberEntity(MemberEntity memberEntity) {
+        memberEntity.setUpdateTime(new Date());
+        return baseMapper.updateById(memberEntity);
+    }
+
+    /**
+     * 修改密码
+     * @param memberId 会员id
+     * @param oldPassword 原密码
+     * @param newPassword 新密码
+     * @return
+     */
+    @Override
+    public int updatePassword(Long memberId, String oldPassword, String newPassword) {
+        MemberEntity member = baseMapper.selectById(memberId);
+        if (member == null) {
+            return -2;
+        }
+        //校验原密码
+        String encodeOldPassword = member.getPassword();
+        BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
+        if (!bpe.matches(oldPassword, encodeOldPassword)) {
+            return -1;
+        }
+        member.setPassword(bpe.encode(newPassword));
+        return baseMapper.updateById(member);
+    }
 }

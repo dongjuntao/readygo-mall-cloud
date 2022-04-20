@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * @Author DongJunTao
@@ -21,6 +22,12 @@ public class SecurityUser extends User {
     private Integer authStatus; //审核状态（0：待审核  1：审核通过  2：审核不通过）
 
     private String avatar; //头像
+
+    private Integer sex; //性别
+
+    private Date birthday; //生日
+
+    private String nickName; //昵称
 
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -60,5 +67,29 @@ public class SecurityUser extends User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

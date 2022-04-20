@@ -31,6 +31,19 @@ public interface MemberService extends IService<MemberEntity> {
      * @return
      */
     MemberEntity getMemberByParams(Map<String, Object> params);
+    /**
+     * 修改会员信息
+     * @param memberEntity
+     * @return
+     */
+    int updateMemberEntity(MemberEntity memberEntity);
 
-
+    /**
+     * 修改密码
+     * @param memberId
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    int updatePassword(Long memberId, String oldPassword, String newPassword);
 }

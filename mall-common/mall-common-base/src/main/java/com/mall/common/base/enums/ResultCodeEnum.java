@@ -24,7 +24,8 @@ public enum ResultCodeEnum {
     USER_ACCOUNT_NOT_EXIST("455", "账号不存在"),
     ADMIN_COUNT_NOT_DELETED("456","管理员账号无法删除"),
     USER_NAME_EXIST("457","用户名已存在"),
-    SYSTEM_ROLE_NOT_DELETED("456","系统内置角色无法删除"),
+    SYSTEM_ROLE_NOT_DELETED("458","系统内置角色无法删除"),
+    OLD_PASSWORD_ERROR("459","旧密码错误"),
 
     PLEASE_DELETE_CHILD_MENU_BUTTON("510","请先删除子菜单或按钮"),
     MENU_NAME_NOT_BE_EMPTY("511", "菜单名称不能为空"),

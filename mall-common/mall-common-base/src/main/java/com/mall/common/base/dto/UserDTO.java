@@ -3,6 +3,7 @@ package com.mall.common.base.dto;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,4 +38,16 @@ public class UserDTO {
      * 头像信息
      */
     private String avatar;
+    /**
+     * 性别
+     */
+    private Integer sex;
+    /**
+     * 昵称
+     */
+    private String nickName;
+    /**
+     * 生日
+     */
+    private Date birthday;
 }

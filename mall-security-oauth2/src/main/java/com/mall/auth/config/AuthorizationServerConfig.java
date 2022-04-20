@@ -131,7 +131,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * token增强,添加一些元信息
-     *
+     * 用户信息的补充
      * @return TokenEnhancer
      */
     @Bean
@@ -140,11 +140,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             final Map<String, Object> additionalInfo = new HashMap<>(10);
             SecurityUser user = (SecurityUser) authentication.getUserAuthentication().getPrincipal();
             if (user != null) {
-                additionalInfo.put("userId", user.getId());
-                additionalInfo.put("userName", user.getUsername());
-                additionalInfo.put("userType", user.getUserType());
-                additionalInfo.put("authStatus", user.getAuthStatus());
-                additionalInfo.put("avatar", user.getAvatar());
+                additionalInfo.put("userId", user.getId()); //用户id
+                additionalInfo.put("userName", user.getUsername()); //用户名
+                additionalInfo.put("userType", user.getUserType()); //用户类型
+                additionalInfo.put("authStatus", user.getAuthStatus()); //用户审核状态
+                additionalInfo.put("avatar", user.getAvatar()); //用户头像
+                additionalInfo.put("sex", user.getSex()); //性别
+                additionalInfo.put("nickName", user.getNickName());
+                additionalInfo.put("birthday", user.getBirthday());
             }
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;

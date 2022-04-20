@@ -11,6 +11,7 @@ import com.mall.common.base.constant.OAuth2Constant;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.vo.LoginVO;
 import com.mall.member.entity.MemberEntity;
+import com.mall.member.entity.RecipientInfoEntity;
 import com.mall.member.service.MemberService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +106,36 @@ public class MemberController {
             return null;
         }
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), member);
+    }
+
+    /**
+     * 修改会员信息
+     * @param memberEntity
+     * @return
+     */
+    @PutMapping("update")
+    public CommonResult update(@RequestBody MemberEntity memberEntity) {
+        int num = memberService.updateMemberEntity(memberEntity);
+        return num > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 修改会员密码
+     * @param memberId 会员id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return
+     */
+    @PutMapping("updatePassword")
+    public CommonResult update(@RequestParam("memberId") Long memberId,
+                               @RequestParam("oldPassword") String oldPassword,
+                               @RequestParam("newPassword") String newPassword) {
+        int num = memberService.updatePassword(memberId, oldPassword, newPassword);
+        if (num == -2) {
+            return CommonResult.fail(ResultCodeEnum.USER_ACCOUNT_NOT_EXIST.getCode(), ResultCodeEnum.USER_ACCOUNT_NOT_EXIST.getMessage());
+        }else if (num == -1) {
+            return CommonResult.fail(ResultCodeEnum.OLD_PASSWORD_ERROR.getCode(), ResultCodeEnum.OLD_PASSWORD_ERROR.getMessage());
+        }
+        return CommonResult.success();
     }
 }

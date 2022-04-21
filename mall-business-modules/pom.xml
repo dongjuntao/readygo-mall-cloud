@@ -9,6 +9,7 @@
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
+    <module>mall-admin</module>
     <module>mall-member</module>
     <module>mall-goods</module>
     <module>mall-coupon</module>

@@ -22,7 +22,6 @@
 
   <modules>
     <module>mall-common</module>
-    <module>mall-admin</module>
     <module>mall-security-oauth2</module>
     <module>mall-services-api</module>
     <module>mall-gateway</module>

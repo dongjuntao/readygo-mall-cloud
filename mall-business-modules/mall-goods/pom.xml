@@ -45,6 +45,11 @@
       <artifactId>mall-common-redis</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-rabbitmq</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <!--mybatis-plus-->
     <dependency>
       <groupId>com.baomidou</groupId>

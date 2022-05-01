@@ -22,4 +22,11 @@ public interface GoodsService extends IService<GoodsEntity> {
     int updateOnSale(Long goodsId, Boolean onSale);
 
     List<GoodsEntity> getAllGoodsList(Map<String, Object> params);
+
+    /**
+     * 根据商品id集合，查询商品【包含sku信息】
+     * @param goodsIds
+     * @return
+     */
+    List<GoodsEntity> getByGoodsIds(Long[] goodsIds);
 }

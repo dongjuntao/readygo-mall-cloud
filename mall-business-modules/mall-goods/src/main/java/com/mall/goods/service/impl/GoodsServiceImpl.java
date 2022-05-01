@@ -71,4 +71,14 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
                 .orderByDesc("create_time");;
         return baseMapper.selectList(queryWrapper);
     }
+
+    /**
+     * 根据商品id集合，查询商品【包括商品sku信息】
+     * @param goodsIds
+     * @return
+     */
+    @Override
+    public List<GoodsEntity> getByGoodsIds(Long[] goodsIds) {
+        return baseMapper.getByGoodsIds(goodsIds);
+    }
 }

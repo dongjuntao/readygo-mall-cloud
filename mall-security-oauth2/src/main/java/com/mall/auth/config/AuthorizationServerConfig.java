@@ -88,7 +88,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 默认使用随机UUID生成的token
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(
-                Arrays.asList(jwtAccessTokenConverter(),tokenEnhancer()));
+                Arrays.asList(tokenEnhancer(),jwtAccessTokenConverter()));
         endpoints
                 .tokenEnhancer(tokenEnhancerChain)
                 // 配置token存储，一般配置redis存储
@@ -125,7 +125,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         // 设置jwt加解密秘钥，不设置会随机一个
-        jwtAccessTokenConverter.setSigningKey("readygo-mall-cloud-key");
+        jwtAccessTokenConverter.setSigningKey(OAuth2Constant.SIGN_KEY);
         return jwtAccessTokenConverter;
     }
 

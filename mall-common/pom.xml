@@ -22,8 +22,9 @@
   <modules>
     <module>mall-common-base</module>
     <module>mall-common-captcha</module>
-    <module>mall-common-redis</module>
     <module>mall-common-mysql</module>
+    <module>mall-common-rabbitmq</module>
+    <module>mall-common-redis</module>
   </modules>
 
   <dependencies>

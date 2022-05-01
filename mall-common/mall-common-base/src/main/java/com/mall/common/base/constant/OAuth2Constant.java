@@ -16,4 +16,6 @@ public class OAuth2Constant {
 
     public static final String RESOURCE_ID = "mall-oauth2-resource-id";
 
+    public static final String SIGN_KEY = "mall-cloud-sign-key"; //token sign
+
 }

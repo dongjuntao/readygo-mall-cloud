@@ -8,16 +8,20 @@ import java.util.List;
 
 /**
  * @Author DongJunTao
- * @Description
+ * @Description 当前登录人的信息
  * @Date 2021/6/3 22:59
  * @Version 1.0
  */
 @Data
-public class UserDTO {
+public class CurrentUserInfo {
     /**
      * 用户主键id
      */
     private Long id;
+    /**
+     * 用户id
+     */
+    private Long userId;
     /**
      * 用户名
      */

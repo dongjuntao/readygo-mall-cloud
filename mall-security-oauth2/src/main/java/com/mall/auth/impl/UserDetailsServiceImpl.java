@@ -5,7 +5,7 @@ import com.mall.admin.api.feign.AdminUserService;
 import com.mall.auth.domain.SecurityUser;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.MessageConstant;
-import com.mall.common.base.dto.UserDTO;
+import com.mall.common.base.dto.CurrentUserInfo;
 import com.mall.common.base.utils.MapUtil;
 import com.mall.member.api.FeignMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,22 +52,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (result == null || !"200".equals(result.getCode())) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
-        UserDTO userDTO = JSON.parseObject(JSON.toJSONString(result.getData()), UserDTO.class);
+        CurrentUserInfo currentUserInfo = JSON.parseObject(JSON.toJSONString(result.getData()), CurrentUserInfo.class);
         SecurityUser securityUser = new SecurityUser(
-                userDTO.getUserName(),
-                userDTO.getPassword(),
+                currentUserInfo.getUserName(),
+                currentUserInfo.getPassword(),
                 true,
                 true,
                 true,
                 true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(null));
-        securityUser.setId(userDTO.getId());
-        securityUser.setUserType(userDTO.getUserType());
-        securityUser.setAuthStatus(userDTO.getAuthStatus());
-        securityUser.setAvatar(userDTO.getAvatar());
-        securityUser.setSex(userDTO.getSex());
-        securityUser.setNickName(userDTO.getNickName());
-        securityUser.setBirthday(userDTO.getBirthday());
+        securityUser.setId(currentUserInfo.getId());
+        securityUser.setUserType(currentUserInfo.getUserType());
+        securityUser.setAuthStatus(currentUserInfo.getAuthStatus());
+        securityUser.setAvatar(currentUserInfo.getAvatar());
+        securityUser.setSex(currentUserInfo.getSex());
+        securityUser.setNickName(currentUserInfo.getNickName());
+        securityUser.setBirthday(currentUserInfo.getBirthday());
         return securityUser;
     }
 }

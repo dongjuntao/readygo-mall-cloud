@@ -9,6 +9,7 @@ import com.mall.auth.api.feign.FeignLoginService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.OAuth2Constant;
 import com.mall.common.base.enums.ResultCodeEnum;
+import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.vo.LoginVO;
 import com.mall.member.entity.MemberEntity;
 import com.mall.member.entity.RecipientInfoEntity;
@@ -121,15 +122,14 @@ public class MemberController {
 
     /**
      * 修改会员密码
-     * @param memberId 会员id
      * @param oldPassword 旧密码
      * @param newPassword 新密码
      * @return
      */
     @PutMapping("updatePassword")
-    public CommonResult update(@RequestParam("memberId") Long memberId,
-                               @RequestParam("oldPassword") String oldPassword,
+    public CommonResult update(@RequestParam("oldPassword") String oldPassword,
                                @RequestParam("newPassword") String newPassword) {
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId(); //当前登录的会员id
         int num = memberService.updatePassword(memberId, oldPassword, newPassword);
         if (num == -2) {
             return CommonResult.fail(ResultCodeEnum.USER_ACCOUNT_NOT_EXIST.getCode(), ResultCodeEnum.USER_ACCOUNT_NOT_EXIST.getMessage());

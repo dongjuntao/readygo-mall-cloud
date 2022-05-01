@@ -69,8 +69,9 @@ white:
       - /mall-admin/system/admin/login
       - /mall-goods/goods/category/getCategoryAndMergedCategory
       - /mall-admin/homepage/index/data
-      - /mall-goods/goods/list
-      - /mall-goods/goods/getGoodsById
+      - /mall-goods/front/goods/list
+      - /mall-goods/front/goods/getGoodsById
       - /mall-member/member/register
       - /mall-member/captcha/get #验证码接口
       - /mall-member/captcha/check
+      - /mall-member/member/login

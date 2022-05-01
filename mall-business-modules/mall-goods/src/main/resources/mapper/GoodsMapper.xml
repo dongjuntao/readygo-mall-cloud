@@ -150,4 +150,45 @@
     </select>
 
 
+    <select id="getByGoodsIds" resultMap="goodsAndGoodsSkuMap">
+        SELECT g.id,
+               g.name,
+               g.keyword,
+               g.admin_user_id,
+               g.goods_category_ids,
+               g.on_sale,
+               g.freight_setting,
+               g.code,
+               g.brand_id,
+               g.unit,
+               g.description,
+               g.images,
+               g.info_detail,
+               g.specification_type,
+               g.params,
+               g.points,
+               g.recommend,
+               g.weight,
+               g.volume,
+               g.create_time,
+               g.update_time,
+               gs.id AS sku_id,
+               gs.goods_id,
+               gs.code sku_code,
+               gs.original_price,
+               gs.selling_price,
+               gs.stock,
+               gs.enable,
+               gs.image,
+               gs.extend_attr,
+               gs.extend_value
+        FROM goods g
+                 LEFT JOIN goods_sku gs
+                           ON g.id = gs.goods_id
+        WHERE g.id in
+        <foreach collection="goodsIds" index="index" item="id" separator="," close=")" open="(">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

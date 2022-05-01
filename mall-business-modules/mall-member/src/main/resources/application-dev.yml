@@ -32,6 +32,17 @@ spring:
     password: 123456789
     timeout: 6000
     database: 5
+  #rabbit mq
+  rabbitmq:
+    host: 127.0.0.1
+    username: guest
+    password: guest
+    virtual-host: /
+    port: 5672
+    listener:
+      simple:
+        retry:
+          enabled: true
 
 feign:
   client:

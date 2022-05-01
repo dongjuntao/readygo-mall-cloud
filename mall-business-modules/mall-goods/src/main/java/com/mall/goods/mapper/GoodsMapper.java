@@ -10,6 +10,8 @@ import com.mall.goods.entity.GoodsSpecificationsEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @Author DongJunTao
  * @Description
@@ -26,4 +28,11 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
 
 
     GoodsEntity getGoodsAndSku(Long id);
+
+    /**
+     * 根据商品id集合，查询商品【包括商品sku信息】
+     * @param goodsIds
+     * @return
+     */
+    List<GoodsEntity> getByGoodsIds(@Param("goodsIds") Long[] goodsIds);
 }

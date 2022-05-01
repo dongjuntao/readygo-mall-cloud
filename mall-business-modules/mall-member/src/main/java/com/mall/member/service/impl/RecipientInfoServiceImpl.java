@@ -2,6 +2,7 @@ package com.mall.member.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.member.entity.RecipientInfoEntity;
 import com.mall.member.mapper.RecipientInfoMapper;
 import com.mall.member.service.RecipientInfoService;
@@ -28,7 +29,7 @@ public class RecipientInfoServiceImpl extends ServiceImpl<RecipientInfoMapper, R
      */
     @Override
     public List<RecipientInfoEntity> listAll(Map<String, Object> params) {
-        Long memberId = params.get("memberId") == null ? null : Long.valueOf(String.valueOf(params.get("memberId")));
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId(); //当前登录人id
         QueryWrapper<RecipientInfoEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(memberId != null, "member_id", memberId);
         return this.baseMapper.selectList(queryWrapper);

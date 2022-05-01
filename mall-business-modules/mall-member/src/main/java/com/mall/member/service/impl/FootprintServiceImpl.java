@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * @Author DongJunTao
@@ -55,5 +56,20 @@ public class FootprintServiceImpl extends ServiceImpl<FootprintMapper, Footprint
                 new QueryWrapper<FootprintEntity>()
                         .eq(memberId !=null, "member_id", memberId)
                         .eq(goodsId != null, "goods_id", goodsId));
+    }
+
+    /**
+     * 删除足迹
+     * @param params（memberId：会员id, goodsId：商品id【不传的话，删除该会员所有足迹】）
+     * @return
+     */
+    @Override
+    public int deleteFootprint(Map<String, Object> params) {
+        Long memberId = params.get("userId") == null ? null: Long.valueOf((params.get("userId").toString()));
+        Long goodsId = params.get("goodsId") == null ? null: Long.valueOf((params.get("goodsId").toString()));
+        QueryWrapper<FootprintEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(memberId != null, "member_id", memberId);
+        queryWrapper.eq(goodsId != null, "goods_id", goodsId);
+        return baseMapper.delete(queryWrapper);
     }
 }

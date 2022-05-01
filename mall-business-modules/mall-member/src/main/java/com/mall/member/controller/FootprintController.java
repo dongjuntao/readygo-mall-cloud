@@ -2,16 +2,14 @@ package com.mall.member.controller;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
+import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.api.front.GoodsService;
 import com.mall.member.entity.FootprintEntity;
 import com.mall.member.service.FootprintService;
 import com.mall.member.vo.FootprintGoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -41,6 +39,9 @@ public class FootprintController {
         PageUtil page = footprintService.getByPage(params);
         //根据分页结果查询商品信息，并设置属性
         List list = page.getList();
+        if (list.size() == 0) {
+            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
+        }
         Long[] goodsIds = new Long[list.size()];
         for (int i=0; i<list.size(); i++) {
             FootprintEntity footprint = (FootprintEntity) list.get(i);
@@ -68,5 +69,17 @@ public class FootprintController {
             }
         }
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
+    }
+
+    /**
+     * 删除会员足迹信息
+     * @param params
+     * @return
+     */
+    @DeleteMapping("delete")
+    public CommonResult delete(@RequestParam Map<String, Object> params) {
+        params.put("userId",CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+        int num = footprintService.deleteFootprint(params);
+        return num > 0 ? CommonResult.success() : CommonResult.fail();
     }
 }

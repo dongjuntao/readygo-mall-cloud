@@ -28,4 +28,6 @@ public interface FootprintService extends IService<FootprintEntity> {
      */
     FootprintEntity getFootprintByParams(Map<String, Object> params);
 
+    int deleteFootprint(Map<String, Object> params);
+
 }

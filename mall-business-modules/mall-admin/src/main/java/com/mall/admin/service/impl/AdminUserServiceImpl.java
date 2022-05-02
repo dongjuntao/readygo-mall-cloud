@@ -206,4 +206,14 @@ public class AdminUserServiceImpl extends
         userRoleService.saveOrUpdate(oldEntity.getId(), oldEntity.getRoleIdList());
         return 1;
     }
+
+    /**
+     * 根据id集合，查询所有商户信息
+     * @param ids
+     * @return
+     */
+    @Override
+    public List<AdminUserEntity> getByIds(Long[] ids) {
+        return baseMapper.selectBatchIds(Arrays.asList(ids));
+    }
 }

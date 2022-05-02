@@ -6,12 +6,12 @@ import java.math.BigDecimal;
 
 /**
  * @Author DongJunTao
- * @Description 商品足迹信息
- * @Date 2022/4/29 20:59
+ * @Description 商品收藏信息
+ * @Date 2022/5/2 16:00
  * @Version 1.0
  */
 @Data
-public class FootprintGoodsVO {
+public class CollectGoodsVO {
     /**
      * 商品id
      */
@@ -32,5 +32,4 @@ public class FootprintGoodsVO {
      * 商品价格
      */
     private BigDecimal price;
-
 }

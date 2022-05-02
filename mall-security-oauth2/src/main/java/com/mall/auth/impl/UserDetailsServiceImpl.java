@@ -1,7 +1,7 @@
 package com.mall.auth.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.mall.admin.api.feign.AdminUserService;
+import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.auth.domain.SecurityUser;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.MessageConstant;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AdminUserService adminUserService;
+    private FeignAdminUserService feignAdminUserService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Integer userType = Integer.parseInt(userInfo.split(":")[1]);
         CommonResult result = null;
         if (userType == 0 || userType == 1 || userType == 2 || userType == 3) {
-            result = adminUserService.getUserByParams(new MapUtil().put("userName",userName).put("userType", userType));
+            result = feignAdminUserService.getUserByParams(new MapUtil().put("userName",userName).put("userType", userType));
         }else {
             result = feignMemberService.getMemberByParams(new MapUtil().put("userName", userName));
         }

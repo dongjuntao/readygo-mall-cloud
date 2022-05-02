@@ -12,7 +12,7 @@ import java.util.Map;
 
 @FeignClient(value = ServiceNameConstant.MALL_ADMIN,configuration = FeignConfig.class)
 @RequestMapping(value = "system/admin")
-public interface AdminUserService {
+public interface FeignAdminUserService {
 
     @GetMapping("/getUserById")
     CommonResult getAdminUserById(@RequestParam long id);

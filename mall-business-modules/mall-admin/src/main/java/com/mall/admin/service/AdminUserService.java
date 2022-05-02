@@ -72,4 +72,11 @@ public interface AdminUserService extends IService<AdminUserEntity> {
      * @return
      */
     int audit(Long id, AdminUserEntity adminUserEntity);
+
+    /**
+     * 根据id集合，查询所有商户信息
+     * @param ids
+     * @return
+     */
+    List<AdminUserEntity> getByIds(Long[] ids);
 }

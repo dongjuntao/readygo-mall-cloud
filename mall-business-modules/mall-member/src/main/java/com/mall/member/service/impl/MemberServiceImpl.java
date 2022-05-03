@@ -1,7 +1,10 @@
 package com.mall.member.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.PageBuilder;
+import com.mall.common.base.utils.PageUtil;
 import com.mall.member.entity.MemberEntity;
 import com.mall.member.mapper.MemberMapper;
 import com.mall.member.service.MemberService;
@@ -9,7 +12,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -60,6 +65,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, MemberEntity> i
     @Override
     public int updateMemberEntity(MemberEntity memberEntity) {
         memberEntity.setUpdateTime(new Date());
+        //密码不为空，修改，为空，保持之前的密码不变
+        if(!StringUtils.isEmpty(memberEntity.getPassword())){
+            memberEntity.setPassword(new BCryptPasswordEncoder().encode(memberEntity.getPassword()));
+        }else {
+            memberEntity.setPassword(this.getMemberById(memberEntity.getId()).getPassword());
+        }
         return baseMapper.updateById(memberEntity);
     }
 
@@ -84,5 +95,41 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, MemberEntity> i
         }
         member.setPassword(bpe.encode(newPassword));
         return baseMapper.updateById(member);
+    }
+
+    /**
+     * 分页查询所有用户
+     * @param params
+     * @return
+     */
+    @Override
+    public PageUtil queryPage(Map<String, Object> params) {
+        //用户名
+        String userName = params.get("userName") == null ? null : params.get("userName").toString();
+        IPage<MemberEntity> page = this.page(
+                new PageBuilder<MemberEntity>().getPage(params),
+                new QueryWrapper<MemberEntity>()
+                        .like(StringUtils.isNotBlank(userName), "user_name", userName)
+        );
+        return new PageUtil(page);
+    }
+
+    /**
+     * 删除用户
+     * @param userIds
+     */
+    @Override
+    public void deleteBatch(Long[] userIds) {
+        this.removeByIds(Arrays.asList(userIds));
+    }
+
+    /**
+     * 根据主键id获取会员实体
+     * @param id
+     * @return
+     */
+    @Override
+    public MemberEntity getMemberById(long id) {
+        return this.getById(id);
     }
 }

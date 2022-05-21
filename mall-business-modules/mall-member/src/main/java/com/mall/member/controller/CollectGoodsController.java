@@ -3,15 +3,11 @@ package com.mall.member.controller;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.goods.api.front.GoodsService;
+import com.mall.goods.api.front.FeignGoodsService;
 import com.mall.member.entity.CollectGoodsEntity;
-import com.mall.member.entity.FootprintEntity;
-import com.mall.member.entity.RecipientInfoEntity;
 import com.mall.member.service.CollectGoodsService;
 import com.mall.member.vo.CollectGoodsVO;
-import com.mall.member.vo.FootprintGoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -32,7 +28,7 @@ public class CollectGoodsController {
     private CollectGoodsService collectGoodsService;
 
     @Autowired
-    private GoodsService goodsService;
+    private FeignGoodsService feignGoodsService;
 
     /**
      * 新增商品收藏
@@ -87,7 +83,7 @@ public class CollectGoodsController {
             goodsIds[i] = collectGoodsList.get(i).getGoodsId();
         }
         //远程调用商品服务，获取商品信息
-        CommonResult result = goodsService.listByIds(goodsIds);
+        CommonResult result = feignGoodsService.listByIds(goodsIds);
         if (result == null || !"200".equals(result.getCode())) {
             return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), collectGoodsList);
         }

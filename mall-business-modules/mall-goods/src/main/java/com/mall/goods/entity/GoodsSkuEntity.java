@@ -1,5 +1,6 @@
 package com.mall.goods.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -57,4 +58,9 @@ public class GoodsSkuEntity implements Serializable {
      * 商品sku扩展属性值
      */
     private String extendValue;
+    /**
+     * 商品名称（不入库）
+     */
+    @TableField(exist = false)
+    private String name;
 }

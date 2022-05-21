@@ -44,6 +44,10 @@ spring:
           uri: lb://mall-member #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-member/**
+        - id: mall-cart
+          uri: lb://mall-cart #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-cart/**
   mvc:
     servlet:
       load-on-startup: 1

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.goods.mapper.GoodsSkuMapper">
+    <!--商品sku表-->
+    <resultMap id="goodsSkuMap" type="com.mall.goods.entity.GoodsSkuEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
+        <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="enable" property="enable" jdbcType="TINYINT"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="extend_attr" property="extendAttr" jdbcType="LONGVARCHAR"/>
+        <result column="extend_value" property="extendValue" jdbcType="LONGVARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getGoodsSkuList" resultMap="goodsSkuMap">
+        SELECT
+            gs.id,
+            gs.goods_id,
+            gs.code,
+            gs.original_price,
+            gs.selling_price,
+            gs.stock,
+            gs.enable,
+            gs.image,
+            gs.extend_attr,
+            gs.extend_value,
+            g.name
+        FROM goods_sku gs
+        left join goods g on gs.goods_id=g.id
+        WHERE gs.id IN
+        <foreach item="skuIds" collection="array" open="(" separator="," close=")">
+            #{skuIds}
+        </foreach>
+    </select>
+
+
+
+</mapper>

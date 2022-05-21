@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient(value = ServiceNameConstant.MALL_GOODS,configuration = FeignConfig.class)
 @RequestMapping(value = "goods")
-public interface GoodsService {
+public interface FeignGoodsService {
 
     /**
      * 通过id获取商品信息

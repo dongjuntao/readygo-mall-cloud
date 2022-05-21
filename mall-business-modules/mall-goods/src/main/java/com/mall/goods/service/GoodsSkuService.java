@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.goods.entity.GoodsSkuEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author DongJunTao
@@ -14,4 +15,6 @@ import java.util.List;
 public interface GoodsSkuService extends IService<GoodsSkuEntity> {
 
     void deleteBatch(List<Long> ids);
+
+    List<GoodsSkuEntity> getGoodsSkuList(Long[] skuIds);
 }

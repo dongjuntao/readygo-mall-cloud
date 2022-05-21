@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient(value = ServiceNameConstant.MALL_GOODS,configuration = FeignConfig.class)
 @RequestMapping(value = "front/goods")
-public interface GoodsService {
+public interface FeignGoodsService {
 
     /**
      * 通过ids获取商品列表
@@ -26,4 +26,12 @@ public interface GoodsService {
      */
     @GetMapping("/listByIds")
     CommonResult listByIds(@RequestParam Long[] ids);
+
+    /**
+     * 根据skuIds获取sku列表信息
+     * @param ids
+     * @return
+     */
+    @GetMapping("/getGoodsSkuList")
+    CommonResult getGoodsSkuList(@RequestParam Long[] ids);
 }

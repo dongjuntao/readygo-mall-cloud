@@ -6,7 +6,9 @@ import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
+import com.mall.goods.entity.GoodsSkuEntity;
 import com.mall.goods.service.GoodsService;
+import com.mall.goods.service.GoodsSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,9 @@ public class FrontGoodsController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private GoodsSkuService goodsSkuService;
 
     /**
      * 商品信息
@@ -52,4 +57,16 @@ public class FrontGoodsController {
         List<GoodsEntity> goodsList = goodsService.getByGoodsIds(ids);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsList);
     }
+
+    /**
+     * 根据skuIds获取sku列表信息
+     * @param ids
+     * @return
+     */
+    @GetMapping("/getGoodsSkuList")
+    public CommonResult getGoodsSkuList(@RequestParam Long[] ids){
+        List<GoodsSkuEntity> goodsSkuList = goodsSkuService.getGoodsSkuList(ids);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsSkuList);
+    }
+
 }

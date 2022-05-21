@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.goods.entity.GoodsSkuEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Author DongJunTao
  * @Description
@@ -12,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface GoodsSkuMapper extends BaseMapper<GoodsSkuEntity> {
+
+    List<GoodsSkuEntity> getGoodsSkuList(Long[] skuIds);
 }

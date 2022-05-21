@@ -10,7 +10,7 @@ import com.mall.admin.service.HomepagePlateGoodsRelatedService;
 import com.mall.admin.service.HomepagePlateService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.goods.api.GoodsService;
+import com.mall.goods.api.FeignGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +44,7 @@ public class HomepageIndexController {
     private HomepagePlateGoodsRelatedService homepagePlateGoodsRelatedService;
 
     @Autowired
-    private GoodsService goodsService;
+    private FeignGoodsService feignGoodsService;
 
     /**
      * 首页数据
@@ -73,7 +73,7 @@ public class HomepageIndexController {
                     homepagePlateGoodsRelatedService.getHomepagePlateGoodsRelatedList(plateId);
             for (int j=0; j<plateGoodsRelatedList.size(); j++) {
                 Long goodsId = plateGoodsRelatedList.get(j).getGoodsId();
-                CommonResult result = goodsService.info(goodsId);
+                CommonResult result = feignGoodsService.info(goodsId);
                 goodsList.add(result.getData());
             }
             homepagePlateList.get(i).setList(goodsList);

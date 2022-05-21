@@ -31,7 +31,7 @@ spring:
     port: 6379
     password: 123456789
     timeout: 6000
-    database: 4
+    database: 3
   #rabbit mq
   rabbitmq:
     host: 127.0.0.1

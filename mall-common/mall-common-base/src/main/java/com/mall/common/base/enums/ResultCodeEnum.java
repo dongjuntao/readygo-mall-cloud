@@ -39,6 +39,8 @@ public enum ResultCodeEnum {
     HOMEPAGE_NAVBAR_EXIST("602","首页导航已存在"),
     HOMEPAGE_PLATE_EXIST("603","首页板块已存在"),
 
+    CART_IS_EXIST("700", "该商品已添加到购物车，无需重复添加"),
+
     COMMON_FAIL("10000", "其他错误");
 
     private String code;

@@ -1,5 +1,6 @@
 package com.mall.cart.vo;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -15,9 +16,13 @@ import java.util.List;
 public class CartVO {
 
     /**
-     * 已选的商品总量
+     * 购物车内总数量
      */
     private Integer totalCount;
+    /**
+     * 已选的商品总量
+     */
+    private Integer checkedTotalCount;
     /**
      * 已选的商品总价
      */

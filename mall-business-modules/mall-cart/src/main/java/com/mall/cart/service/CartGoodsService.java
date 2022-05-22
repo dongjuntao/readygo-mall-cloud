@@ -5,6 +5,7 @@ import com.mall.cart.dto.CartGoodsDTO;
 import com.mall.cart.entity.CartGoodsEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author DongJunTao
@@ -22,5 +23,11 @@ public interface CartGoodsService extends IService<CartGoodsEntity> {
     boolean updateBatch(List<CartGoodsEntity> cartGoodsList);
 
     CartGoodsEntity getById(Long id);
+
+    int delete(Long id);
+
+    int deleteBatch(List<Long> ids);
+
+    List<CartGoodsEntity> getByParams(Map<String, Object> params);
 
 }

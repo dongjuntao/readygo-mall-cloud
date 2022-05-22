@@ -12,13 +12,16 @@ import com.mall.cart.vo.CartVO;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.goods.api.front.FeignGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author DongJunTao
@@ -70,6 +73,7 @@ public class CartController {
         List<CartEntity> cartList = cartService.listAll(params);
         Long[] merchantIds = new Long[cartList.size()]; //商家id集合
         Integer totalCount = 0; //总量
+        Integer checkedTotalCount = 0; //选中的总量
         BigDecimal totalPrice = new BigDecimal("0"); //总价
         List<CartMerchantVO> cartMerchantVOList = new ArrayList<>(); //封装购物车信息
         Map<String, Object> skuListMap = new HashMap<>();
@@ -84,6 +88,9 @@ public class CartController {
                 CommonResult skuResult = feignGoodsService.getGoodsSkuList(skuIds);
                 skuListMap.put(merchantIds[i].toString(), skuResult.getData());
             }
+        }
+        if (merchantIds == null || merchantIds.length==0) {
+            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), cartMerchantVOList);
         }
         //查询所有商家信息
         CommonResult merchantResult = feignAdminUserService.listByIds(merchantIds);
@@ -107,8 +114,11 @@ public class CartController {
                     cartGoodsVO.setSellingPrice(new BigDecimal(String.valueOf(skuMap.get("sellingPrice")))); //销售价格
                     cartGoodsVO.setStock(Integer.parseInt(String.valueOf(skuMap.get("stock"))));
                     //“购买数量”, “是否被选中” 从购物车表中单独获取
-                    List<CartGoodsEntity> cartGoodsList = cartList.get(i).getCartGoodsList();
-                    Optional<CartGoodsEntity> optional = cartGoodsList.stream().filter(cartGoods->cartGoods.getGoodsSkuId().equals(Long.valueOf(String.valueOf(skuMap.get("id"))))).findFirst();
+                    List<CartGoodsEntity> cartGoodsList = cartList.stream()
+                            .filter(cartEntity -> cartEntity.getMerchantId().equals(cartMerchantVO.getMerchantId()))
+                            .collect(Collectors.toList()).stream().findFirst().get().getCartGoodsList();
+                    Optional<CartGoodsEntity> optional = cartGoodsList.stream().filter(cartGoods->cartGoods.getGoodsSkuId()
+                            .equals(Long.valueOf(String.valueOf(skuMap.get("id"))))).findFirst();
                     if(optional.isPresent()) {
                         cartGoodsVO.setId(optional.get().getId());
                         cartGoodsVO.setCount(optional.get().getCount());
@@ -117,7 +127,7 @@ public class CartController {
                                 .multiply(new BigDecimal(optional.get().getCount())));
                         if (optional.get().getChecked()) {
                             //选中时计算选中数量和价格
-                            totalCount += cartGoodsVO.getCount();
+                            checkedTotalCount += cartGoodsVO.getCount();
                             totalPrice = totalPrice.add(new BigDecimal(String.valueOf(cartGoodsVO.getSellingPrice()))
                                     .multiply(new BigDecimal(cartGoodsVO.getCount())));
                         }
@@ -127,6 +137,7 @@ public class CartController {
                         cartGoodsVO.setChecked(false);
                         cartGoodsVO.setSubTotal(new BigDecimal("0"));
                     }
+                    totalCount += cartGoodsVO.getCount();
                     cartGoodsVOList.add(cartGoodsVO);
                 }
                 cartMerchantVO.setCartGoodsList(cartGoodsVOList);
@@ -136,7 +147,8 @@ public class CartController {
         System.out.println("耗时----"+(System.currentTimeMillis() - start));
         CartVO cartVO = new CartVO();
         cartVO.setCartMerchantList(cartMerchantVOList); //购物车列表
-        cartVO.setTotalCount(totalCount); //总数量
+        cartVO.setTotalCount(totalCount);
+        cartVO.setCheckedTotalCount(checkedTotalCount); //总数量
         cartVO.setTotalPrice(totalPrice); //总价格
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), cartVO);
     }
@@ -202,6 +214,86 @@ public class CartController {
         cartGoods.setCount(count);
         cartGoodsList.add(cartGoods);
         cartGoodsService.updateBatch(cartGoodsList);
+        return CommonResult.success();
+    }
+
+    /**
+     * 删除购物车信息
+     * @param deleteType 0：单个删除  1：选中删除 2：清空购物车
+     * @param cartGoodsId 单个删除时，传递商品sku信息id
+     * @return
+     */
+    @DeleteMapping("deleteCart")
+    @Transactional
+    public CommonResult deleteCart(@RequestParam("deleteType") Integer deleteType,
+                                   @RequestParam(value = "cartGoodsId", required = false) Long cartGoodsId) {
+        //单个删除
+        if (deleteType == 0) {
+            CartGoodsEntity cartGoods = cartGoodsService.getById(cartGoodsId);
+            Long cartId = cartGoods.getCartId(); //商品id
+            Map<String, Object> params = new HashMap<>();
+            params.put("cartId", cartId);
+            List<CartGoodsEntity> cartGoodsList = cartGoodsService.getByParams(params);
+            //如果只有一个，需删除商家信息，否则，只需要删除购物车商品信息
+            if (cartGoodsList.size() == 1) {
+                cartGoodsService.delete(cartGoodsId);
+                //再删除商家信息
+                cartService.delete(cartId);
+            } else if (cartGoodsList.size()>1) {
+                cartGoodsService.delete(cartGoodsId);
+            }
+        } else if (deleteType == 1) { //选中删除
+            Map<String,Object> params = new HashMap<>();
+            params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+            List<CartEntity> cartList = cartService.listAll(params);
+            List<Long> deleteCartIdList = new ArrayList<>();
+            for (CartEntity cart : cartList) {
+                List<CartGoodsEntity> cartGoodsList = cart.getCartGoodsList();
+                List<Long> deleteGoodsIdList = new ArrayList<>();
+                Boolean isDeleteMerchant = true;
+                //找到需要删除的商品，该商户下的商品全部删除，则需要删除商户信息
+                for (CartGoodsEntity cartGoods : cartGoodsList) {
+                    Boolean checked = cartGoods.getChecked();
+                    if (checked) {
+                        deleteGoodsIdList.add(cartGoods.getId());
+                    }else {
+                        isDeleteMerchant = false;
+                    }
+                }
+                if (isDeleteMerchant) {
+                    deleteCartIdList.add(cart.getId());
+                }
+                //删除商品信息
+                if (!CollectionUtils.isEmpty(deleteGoodsIdList)) {
+                    cartGoodsService.deleteBatch(deleteGoodsIdList);
+                }
+            }
+            //删除商家信息
+            if (!CollectionUtils.isEmpty(deleteCartIdList)) {
+                cartService.deleteBatch(deleteCartIdList);
+            }
+        } else if (deleteType == 2) { //清空购物车
+            Map<String,Object> params = new HashMap<>();
+            params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+            List<CartEntity> cartList = cartService.listAll(params);
+            List<Long> deleteCartIdList = new ArrayList<>();
+            for (CartEntity cart : cartList) {
+                List<CartGoodsEntity> cartGoodsList = cart.getCartGoodsList();
+                List<Long> deleteGoodsIdList = new ArrayList<>();
+                for (CartGoodsEntity cartGoods : cartGoodsList) {
+                    deleteGoodsIdList.add(cartGoods.getId());
+                }
+                deleteCartIdList.add(cart.getId());
+                //删除商品信息
+                if (!CollectionUtils.isEmpty(deleteGoodsIdList)) {
+                    cartGoodsService.deleteBatch(deleteGoodsIdList);
+                }
+            }
+            //删除商家信息
+            if (!CollectionUtils.isEmpty(deleteCartIdList)) {
+                cartService.deleteBatch(deleteCartIdList);
+            }
+        }
         return CommonResult.success();
     }
 }

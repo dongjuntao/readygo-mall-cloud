@@ -24,4 +24,8 @@ public interface CartService extends IService<CartEntity> {
     List<CartEntity> listAll(Map<String, Object> params);
 
     CartEntity getCart(Long memberId, Long merchantId);
+
+    int deleteBatch(List<Long> ids);
+
+    int delete(Long id);
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, CartEntity> impleme
         if (cartGoods == null) {
             cartGoods = new CartGoodsEntity();
             BeanUtils.copyProperties(cartGoodsDTO, cartGoods);
+            cartGoods.setChecked(false);//设置默认不选中
             cartGoods.setCreateTime(new Date());
             cartGoods.setCartId(cart.getId());
             cartGoodsMapper.insert(cartGoods);
@@ -75,5 +77,15 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, CartEntity> impleme
     @Override
     public CartEntity getCart(Long memberId, Long merchantId) {
         return cartMapper.getCart(memberId, merchantId);
+    }
+
+    @Override
+    public int deleteBatch(List<Long> ids) {
+        return baseMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public int delete(Long id) {
+        return baseMapper.deleteById(id);
     }
 }

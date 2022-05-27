@@ -1,22 +1,24 @@
 package com.mall.cart.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.cart.constant.RedisExpiresTimeConstant;
+import com.mall.cart.constant.RedisKeyConstant;
 import com.mall.cart.dto.CartGoodsDTO;
 import com.mall.cart.entity.CartEntity;
 import com.mall.cart.entity.CartGoodsEntity;
 import com.mall.cart.mapper.CartGoodsMapper;
 import com.mall.cart.mapper.CartMapper;
 import com.mall.cart.service.CartService;
+import com.mall.common.redis.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author DongJunTao
@@ -71,7 +73,17 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, CartEntity> impleme
     @Override
     public List<CartEntity> listAll(Map<String, Object> params) {
         Long memberId = params.get("memberId") == null ? null: Long.valueOf((params.get("memberId").toString()));
-        return cartMapper.getCartList(memberId);
+        //先从redis中查询，找不到，再从数据库中查询
+        Object object = RedisUtil.hGet(RedisKeyConstant.CART_KEY, String.valueOf(memberId));
+        List<CartEntity> cartList;
+        if (object == null) {
+            //查一次数据库，放入redis
+            cartList = cartMapper.getCartList(memberId);
+            RedisUtil.hSet(RedisKeyConstant.CART_KEY, String.valueOf(memberId), cartList, RedisExpiresTimeConstant.CART_EXPIRED_TIME);
+            return cartList;
+        }
+        cartList = (List<CartEntity>) object;
+        return cartList;
     }
 
     @Override

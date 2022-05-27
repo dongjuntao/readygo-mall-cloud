@@ -47,16 +47,30 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             //白名单中，如果有token，则解析token，转发到各个服务, 否则，直接过
             if (!StringUtils.isEmpty(token) && token.startsWith("Bearer")) {
                 //解析token, 获取用户信息，传递到各个服务
-                Claims claims = Jwts.parser().setSigningKey(OAuth2Constant.SIGN_KEY.getBytes(StandardCharsets.UTF_8))
-                        .parseClaimsJws(token.substring(7)).getBody();
-                Map<String, Object> currentUserInfoMap = new HashMap<>();
-                currentUserInfoMap.put("userId", String.valueOf(claims.get("userId")));
-                currentUserInfoMap.put("userName", String.valueOf(claims.get("userName")));
-                Consumer<HttpHeaders> httpHeaders = httpHeader -> {
-                    httpHeader.set("currentUserInfo", JSONObject.toJSONString(currentUserInfoMap));
-                };
-                ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(httpHeaders).build();
-                exchange.mutate().request(serverHttpRequest).build();
+                try {
+                    Claims claims = Jwts.parser().setSigningKey(OAuth2Constant.SIGN_KEY.getBytes(StandardCharsets.UTF_8))
+                            .parseClaimsJws(token.substring(7)).getBody();
+                    Map<String, Object> currentUserInfoMap = new HashMap<>();
+                    currentUserInfoMap.put("userId", String.valueOf(claims.get("userId")));
+                    currentUserInfoMap.put("userName", String.valueOf(claims.get("userName")));
+                    Consumer<HttpHeaders> httpHeaders = httpHeader -> {
+                        httpHeader.set("currentUserInfo", JSONObject.toJSONString(currentUserInfoMap));
+                    };
+                    ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(httpHeaders).build();
+                    exchange.mutate().request(serverHttpRequest).build();
+                } catch (Exception e) {
+                    try {
+                        CommonResult commonResult = CommonResult.fail(ResultCodeEnum.UNAUTHORIZED.getCode(),
+                                ResultCodeEnum.UNAUTHORIZED.getMessage());
+                        DataBuffer buffer = exchange.getResponse().bufferFactory()
+                                .wrap(JSON.toJSONString(commonResult).getBytes(StandardCharsets.UTF_8));
+                        ServerHttpResponse response = exchange.getResponse();
+                        //指定编码，否则在浏览器中会中文乱码
+                        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+                        return response.writeWith(Mono.just(buffer));
+                    }catch (UnsupportedOperationException ue) {}
+                }
+
             }
             return chain.filter(exchange);
         }
@@ -86,7 +100,16 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                 ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(httpHeaders).build();
                 exchange.mutate().request(serverHttpRequest).build();
             }catch (Exception e) {
-                throw new RuntimeException("无法解析token");
+                try {
+                    CommonResult commonResult = CommonResult.fail(ResultCodeEnum.UNAUTHORIZED.getCode(),
+                            ResultCodeEnum.UNAUTHORIZED.getMessage());
+                    DataBuffer buffer = exchange.getResponse().bufferFactory()
+                            .wrap(JSON.toJSONString(commonResult).getBytes(StandardCharsets.UTF_8));
+                    ServerHttpResponse response = exchange.getResponse();
+                    //指定编码，否则在浏览器中会中文乱码
+                    response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+                    return response.writeWith(Mono.just(buffer));
+                }catch (UnsupportedOperationException ue) {}
             }
         }
         return chain.filter(exchange);

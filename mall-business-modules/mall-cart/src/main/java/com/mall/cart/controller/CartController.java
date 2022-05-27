@@ -1,6 +1,7 @@
 package com.mall.cart.controller;
 
 import com.mall.admin.api.feign.front.FeignAdminUserService;
+import com.mall.cart.constant.RedisKeyConstant;
 import com.mall.cart.dto.CartGoodsDTO;
 import com.mall.cart.entity.CartEntity;
 import com.mall.cart.entity.CartGoodsEntity;
@@ -13,6 +14,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.MapUtil;
+import com.mall.common.redis.util.RedisUtil;
 import com.mall.goods.api.front.FeignGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +70,6 @@ public class CartController {
      */
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params) {
-        Long start = System.currentTimeMillis();
         params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         List<CartEntity> cartList = cartService.listAll(params);
         Long[] merchantIds = new Long[cartList.size()]; //商家id集合
@@ -144,7 +145,6 @@ public class CartController {
             }
             cartMerchantVOList.add(cartMerchantVO);
         }
-        System.out.println("耗时----"+(System.currentTimeMillis() - start));
         CartVO cartVO = new CartVO();
         cartVO.setCartMerchantList(cartMerchantVOList); //购物车列表
         cartVO.setTotalCount(totalCount);
@@ -164,9 +164,10 @@ public class CartController {
     public CommonResult setChecked(@RequestParam("type") Integer type,
                                    @RequestParam("checked") Boolean checked,
                                    @RequestParam(value = "bizId", required = false) Long bizId) {
+        Map<String,Object> params = new HashMap<>();
+        params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
         if (type == 0) {
-            Map<String,Object> params = new HashMap<>();
-            params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
             List<CartEntity> cartList = cartService.listAll(params);
             List<CartGoodsEntity> cartGoodsList = new ArrayList<>();
             if (!CollectionUtils.isEmpty(cartList)) {
@@ -180,7 +181,7 @@ public class CartController {
             //批量更新
             cartGoodsService.updateBatch(cartGoodsList);
         } else if(type == 1) {
-            CartEntity cart = cartService.getCart(CurrentUserContextUtil.getCurrentUserInfo().getUserId(), bizId);
+            CartEntity cart = cartService.getCart(memberId, bizId);
             List<CartGoodsEntity> cartGoodsList = new ArrayList<>();
             if (cart != null) {
                 cart.getCartGoodsList().forEach(cartGoods -> {
@@ -197,6 +198,7 @@ public class CartController {
             cartGoodsList.add(cartGoods);
             cartGoodsService.updateBatch(cartGoodsList);
         }
+
         return CommonResult.success();
     }
 
@@ -227,6 +229,7 @@ public class CartController {
     @Transactional
     public CommonResult deleteCart(@RequestParam("deleteType") Integer deleteType,
                                    @RequestParam(value = "cartGoodsId", required = false) Long cartGoodsId) {
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
         //单个删除
         if (deleteType == 0) {
             CartGoodsEntity cartGoods = cartGoodsService.getById(cartGoodsId);
@@ -244,7 +247,7 @@ public class CartController {
             }
         } else if (deleteType == 1) { //选中删除
             Map<String,Object> params = new HashMap<>();
-            params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+            params.put("memberId", memberId);
             List<CartEntity> cartList = cartService.listAll(params);
             List<Long> deleteCartIdList = new ArrayList<>();
             for (CartEntity cart : cartList) {
@@ -274,7 +277,7 @@ public class CartController {
             }
         } else if (deleteType == 2) { //清空购物车
             Map<String,Object> params = new HashMap<>();
-            params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+            params.put("memberId", memberId);
             List<CartEntity> cartList = cartService.listAll(params);
             List<Long> deleteCartIdList = new ArrayList<>();
             for (CartEntity cart : cartList) {

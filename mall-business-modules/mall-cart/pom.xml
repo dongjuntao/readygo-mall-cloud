@@ -55,6 +55,12 @@
             <artifactId>mall-common-redis</artifactId>
             <version>${common.version}</version>
         </dependency>
+        <!--rabbit mq-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-rabbitmq</artifactId>
+            <version>${common.version}</version>
+        </dependency>
         <!--springfox(swagger)-->
         <dependency>
             <groupId>io.springfox</groupId>

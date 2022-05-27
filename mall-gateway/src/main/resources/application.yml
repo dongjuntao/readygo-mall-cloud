@@ -62,7 +62,7 @@ feign:
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-gateway
+    clients: mall-gateway,mall-seckill,mall-security-oauth2,mall-file,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart
 
 #白名单
 white:

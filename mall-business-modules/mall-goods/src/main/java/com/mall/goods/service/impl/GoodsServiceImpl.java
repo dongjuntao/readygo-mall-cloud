@@ -40,7 +40,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
             if (categorySplit.length == 3) {
                 wrapper.eq("goods_category_ids", categoryIds);
             } else {
-                wrapper.like("goods_category_ids", categoryIds+",%");
+                wrapper.apply("goods_category_ids"+" like {0}", categoryIds+",%");
             }
         }
         IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);

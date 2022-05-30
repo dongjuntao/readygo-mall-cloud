@@ -14,6 +14,7 @@
     <module>mall-goods</module>
     <module>mall-coupon</module>
     <module>mall-seckill</module>
+    <module>mall-cart</module>
   </modules>
 
   <name>mall-business-modules</name>

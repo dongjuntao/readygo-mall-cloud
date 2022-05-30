@@ -58,8 +58,8 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
         Integer authStatus = params.get("authStatus") == null ? null : Integer.valueOf((params.get("authStatus").toString()));
         wrapper
                 .like(StringUtils.isNotBlank(name), "c.name", name)
-                .eq(adminUserId != null, "admin_user_id", adminUserId)
-                .eq(authStatus != null, "auth_status", authStatus);
+                .eq(adminUserId != null, "c.admin_user_id", adminUserId)
+                .eq(authStatus != null, "c.auth_status", authStatus);
         IPage<CouponEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }

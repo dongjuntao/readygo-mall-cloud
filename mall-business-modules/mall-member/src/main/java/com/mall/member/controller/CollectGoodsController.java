@@ -39,6 +39,9 @@ public class CollectGoodsController {
     public CommonResult save(@RequestBody CollectGoodsEntity collectGoods) {
         collectGoods.setMemberId(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         int num = collectGoodsService.saveCollectGoods(collectGoods);
+        if (num == -1) {
+            return CommonResult.success(ResultCodeEnum.COLLECT_GOODS_IS_EXIST.getCode(),ResultCodeEnum.COLLECT_GOODS_IS_EXIST.getMessage());
+        }
         return num > 0 ? CommonResult.success() : CommonResult.fail();
     }
 

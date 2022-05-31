@@ -6,13 +6,12 @@ import java.math.BigDecimal;
 
 /**
  * @Author DongJunTao
- * @Description
- * @Date 2022/5/14 16:35
+ * @Description 结算页商品信息
+ * @Date 2022/5/28 15:58
  * @Version 1.0
  */
 @Data
-public class CartGoodsVO {
-
+public class PayGoodsVO {
     private Long id;
 
     /**
@@ -41,16 +40,7 @@ public class CartGoodsVO {
      */
     private Integer count;
     /**
-     * 库存量（用于判断是否有货）
-     */
-    private Integer stock;
-    /**
-     * 是否被选中
-     */
-    private Boolean checked;
-    /**
      * 小计
      */
     private BigDecimal subTotal;
-
 }

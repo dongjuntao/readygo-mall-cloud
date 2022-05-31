@@ -28,6 +28,13 @@ public class CollectGoodsServiceImpl extends ServiceImpl<CollectGoodsMapper, Col
      */
     @Override
     public int saveCollectGoods(CollectGoodsEntity collectGoods) {
+        //判断商品是否已经收藏
+        QueryWrapper<CollectGoodsEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(collectGoods.getMemberId() != null, "member_id", collectGoods.getMemberId());
+        queryWrapper.eq(collectGoods.getGoodsId() != null, "goods_id", collectGoods.getGoodsId());
+        if (baseMapper.selectOne(queryWrapper) != null){
+            return -1;
+        }
         return baseMapper.insert(collectGoods);
     }
 

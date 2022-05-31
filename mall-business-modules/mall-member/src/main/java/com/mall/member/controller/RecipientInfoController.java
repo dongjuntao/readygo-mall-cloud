@@ -35,7 +35,7 @@ public class RecipientInfoController {
      * @return
      */
     @GetMapping("list")
-    public CommonResult getRegionList(@RequestParam Map<String, Object> params) {
+    public CommonResult getRecipientInfoList(@RequestParam Map<String, Object> params) {
         List<RecipientInfoEntity> shippingInfoList = recipientInfoService.listAll(params);
         //所属地区处理
         if(!CollectionUtils.isEmpty(shippingInfoList)) {

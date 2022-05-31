@@ -33,7 +33,8 @@ public class CartDoubleDeleteAspect {
      * 切点【删除或更新购物车信息时触发】
      */
     @Pointcut("execution(* com.mall.cart.service.CartGoodsService.updateBatch(..)) || " +
-            "execution(* com.mall.cart.service.CartService.deleteBatch(..))")
+            "execution(* com.mall.cart.service.CartService.deleteBatch(..)) || " +
+            "execution(* com.mall.cart.service.CartService.saveCart(..))")
     private void cartDoubleDeleteAspect() {}
 
     /**
@@ -47,13 +48,11 @@ public class CartDoubleDeleteAspect {
         Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
         //第一次 删除 redis缓存
         RedisUtil.hDel(RedisKeyConstant.CART_KEY, String.valueOf(memberId));
-        System.out.println("第一次删除-------time------"+LocalDateTime.now());
         //执行目标方法
         Object object = joinPoint.proceed(args);
         //第二次需要延迟删除，发送到 rabbitmq 进行延迟删除，若删除失败，rabbitmq进行重试
         Map<String, Object> messageBody = new HashMap<>();
         messageBody.put("memberId",memberId);
-
         // 指定之前定义的延迟交换机名 与路由键名
         rabbitTemplate.convertAndSend(RabbitMQConstant.CART_DOUBLE_DELETE_DELAY_EXCHANGE,
                 RabbitMQConstant.CART_DOUBLE_DELETE_DELAY_KEY, messageBody);

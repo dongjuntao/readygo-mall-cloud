@@ -40,6 +40,7 @@ public enum ResultCodeEnum {
     HOMEPAGE_PLATE_EXIST("603","首页板块已存在"),
 
     CART_IS_EXIST("700", "该商品已添加到购物车，无需重复添加"),
+    COLLECT_GOODS_IS_EXIST("701", "该商品已收藏，无需重复收藏"),
 
     COMMON_FAIL("10000", "其他错误");
 

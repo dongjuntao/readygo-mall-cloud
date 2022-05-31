@@ -128,4 +128,14 @@ public class GoodsCategoryController {
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), categoryMap);
     }
 
+    /**
+     * 根据父id获取子一级菜单
+     * @return
+     */
+    @GetMapping("getSubFirst")
+    public CommonResult getSubFirst(@RequestParam("goodsCategoryId") Long goodsCategoryId) {
+        List<GoodsCategoryEntity> goodsCategoryEntityList = goodsCategoryService.queryListParentId(goodsCategoryId);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsCategoryEntityList);
+    }
+
 }

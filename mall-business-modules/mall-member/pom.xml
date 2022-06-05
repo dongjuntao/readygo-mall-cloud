@@ -41,10 +41,16 @@
       <artifactId>mall-admin-api</artifactId>
       <version>${common.version}</version>
     </dependency>
-    <!--mall-goods-->
+    <!--mall-goods接口-->
     <dependency>
       <groupId>com.mall.service.api</groupId>
       <artifactId>mall-goods-api</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--mall-coupon接口-->
+    <dependency>
+      <groupId>com.mall.service.api</groupId>
+      <artifactId>mall-coupon-api</artifactId>
       <version>${common.version}</version>
     </dependency>
     <dependency>

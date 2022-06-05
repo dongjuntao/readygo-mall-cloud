@@ -41,6 +41,11 @@ public enum ResultCodeEnum {
 
     CART_IS_EXIST("700", "该商品已添加到购物车，无需重复添加"),
     COLLECT_GOODS_IS_EXIST("701", "该商品已收藏，无需重复收藏"),
+    COUPON_INVALID("702", "优惠券不存在或已失效"),
+    COUPON_RECEIVE_TOO_MANY_TIMES("703", "已超出限领次数"),
+    COUPON_IS_NOT_EXPIRED("704", "优惠券已过期"),
+    COUPON_IS_EMPTY("705", "优惠券已被领完"),
+    COUPON_ISSUE_NUMBER_VALID("706", "发行量不能低于现有的发行量"),
 
     COMMON_FAIL("10000", "其他错误");
 

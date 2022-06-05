@@ -37,9 +37,17 @@ public class GoodsEntity implements Serializable {
      */
     private Long adminUserId;
     /**
-     * 商品分类id集（1,2,3）
+     * 商品一级分类id
      */
-    private String goodsCategoryIds;
+    private Long goodsCategoryIdFirst;
+    /**
+     * 商品二级分类id
+     */
+    private Long goodsCategoryIdSecond;
+    /**
+     * 商品三级分类id
+     */
+    private Long goodsCategoryIdThird;
     /**
      * 是否在售
      */

@@ -45,7 +45,7 @@ public class CouponController {
         }else {
             couponEntity.setAuthStatus(0);
         }
-        couponEntity.setRestNumber(couponEntity.getIssueNumber());//刚创建时优惠券剩余数量和发行数量一致
+        couponEntity.setReceivedNumber(0);//已领取的数量为0
         return couponService.saveCoupon(couponEntity) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
@@ -56,6 +56,10 @@ public class CouponController {
      */
     @PutMapping("update")
     public CommonResult updateCoupon(@RequestBody CouponEntity couponEntity) {
+        int count = couponService.updateCoupon(couponEntity);
+        if (count == -1) {
+            return CommonResult.success(ResultCodeEnum.COUPON_ISSUE_NUMBER_VALID.getCode(),ResultCodeEnum.COUPON_ISSUE_NUMBER_VALID.getMessage(), couponEntity);
+        }
         return couponService.updateCoupon(couponEntity) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 

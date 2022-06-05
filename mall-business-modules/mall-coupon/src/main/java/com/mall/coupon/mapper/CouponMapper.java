@@ -9,6 +9,8 @@ import com.mall.coupon.entity.CouponEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @Author DongJunTao
  * @Description 优惠券mapper
@@ -27,4 +29,6 @@ public interface CouponMapper extends BaseMapper<CouponEntity> {
     IPage<CouponEntity> queryPage(
             @Param("page") Page<CouponEntity> page,
             @Param(Constants.WRAPPER) QueryWrapper<CouponEntity> wrapper);
+
+    List<CouponEntity> getBatchByIds(Long[] ids);
 }

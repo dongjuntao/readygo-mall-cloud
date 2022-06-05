@@ -16,4 +16,6 @@ public class ServiceNameConstant {
 
     public static final String MALL_MEMBER = "mall-member"; //会员微服务
 
+    public static final String MALL_COUPON = "mall-coupon"; //优惠券微服务
+
 }

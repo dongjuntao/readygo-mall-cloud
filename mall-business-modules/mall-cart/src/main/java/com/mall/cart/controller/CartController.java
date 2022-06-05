@@ -1,21 +1,21 @@
 package com.mall.cart.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.mall.admin.api.feign.front.FeignAdminUserService;
 import com.mall.cart.dto.CartGoodsDTO;
+import com.mall.cart.entity.CartCouponSelectedEntity;
 import com.mall.cart.entity.CartEntity;
 import com.mall.cart.entity.CartGoodsEntity;
-import com.mall.cart.entity.RecipientInfoSelectedEntity;
+import com.mall.cart.service.CartCouponSelectedService;
 import com.mall.cart.service.CartGoodsService;
 import com.mall.cart.service.CartService;
-import com.mall.cart.service.RecipientInfoSelectedService;
 import com.mall.cart.vo.*;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
+import com.mall.common.base.utils.PageUtil;
+import com.mall.coupon.api.feign.front.FeignFrontCouponService;
 import com.mall.goods.api.front.FeignGoodsService;
-import com.mall.member.api.FeignRecipientInfoService;
+import com.mall.member.api.FeignCouponReceivedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -46,6 +46,15 @@ public class CartController {
 
     @Autowired
     private FeignGoodsService feignGoodsService;
+
+    @Autowired
+    private CartCouponSelectedService cartCouponSelectedService;
+
+    @Autowired
+    private FeignCouponReceivedService feignCouponReceivedService;
+
+    @Autowired
+    private FeignFrontCouponService feignFrontCouponService;
 
     /**
      * 加入购物车
@@ -303,7 +312,7 @@ public class CartController {
     }
 
     /**
-     * 获取结算页信 【商品信息】
+     * 获取结算页信息 【商品信息】
      * @return
      */
     @GetMapping("/payInfo/goods")
@@ -386,6 +395,32 @@ public class CartController {
         payVO.setPayMerchantList(payMerchantVOList); //购物车列表
         payVO.setTotalCount(totalCount);
         payVO.setTotalPrice(totalPrice); //总价格
+        payVO.setFinalPrice(new BigDecimal("0"));
+        payVO.setDiscountPrice(new BigDecimal("0"));
+        //查询使用使用优惠券
+        List<CartCouponSelectedEntity> cartCouponSelectedList
+                = cartCouponSelectedService.getSelected(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+        if (!CollectionUtils.isEmpty(cartCouponSelectedList)) { //使用优惠券
+            Long receivedCouponId = cartCouponSelectedList.get(0).getReceivedCouponId(); //我的优惠券信息
+            CommonResult receivedCouponResult = feignCouponReceivedService.getById(receivedCouponId);
+            if (receivedCouponResult == null || !"200".equals(receivedCouponResult.getCode())) {
+                return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
+            }
+            Map<String, Object> receivedCouponMap = (Map<String, Object>) receivedCouponResult.getData();
+            Long couponId = Long.valueOf(String.valueOf(receivedCouponMap.get("couponId")));
+            CommonResult couponResult = feignFrontCouponService.getById(couponId);
+            if (couponResult == null || !"200".equals(couponResult.getCode())) {
+                return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
+            }
+            Map<String, Object> couponMap = (Map<String, Object>) couponResult.getData();
+            Integer type = Integer.valueOf(String.valueOf(couponMap.get("type")));
+            if (type == 0) { //满减券
+                payVO.setDiscountPrice(new BigDecimal(String.valueOf(couponMap.get("discountAmount"))));
+            } else if (type == 1) { //满折券
+                payVO.setDiscountPrice(totalPrice.subtract(new BigDecimal(String.valueOf(couponMap.get("discountAmount"))).multiply(totalPrice).divide(new BigDecimal("10"))));
+            }
+            payVO.setFinalPrice(totalPrice.subtract(payVO.getDiscountPrice()));
+        }
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
     }
 

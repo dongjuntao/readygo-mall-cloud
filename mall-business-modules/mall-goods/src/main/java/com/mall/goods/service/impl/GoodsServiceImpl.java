@@ -37,10 +37,12 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         String categoryIds = params.get("categoryIds") == null ? null : String.valueOf(params.get("categoryIds"));//商品分类id集合
         if (StringUtils.isNotBlank(categoryIds)) {
             String[] categorySplit = categoryIds.split(",");
-            if (categorySplit.length == 3) {
-                wrapper.eq("goods_category_ids", categoryIds);
-            } else {
-                wrapper.apply("goods_category_ids"+" like {0}", categoryIds+",%");
+            if (categorySplit.length == 1) { //按一级分类窜查询
+                wrapper.eq("goods_category_id_first", categorySplit[0]);
+            } else if (categorySplit.length == 2) { //按二级分类窜查询
+                wrapper.eq("goods_category_id_second", categorySplit[1]);
+            } else if (categorySplit.length == 3) { //按三级分类窜查询
+                wrapper.eq("goods_category_id_third", categorySplit[2]);
             }
         }
         IPage<GoodsEntity> iPage = baseMapper.queryPage(page, wrapper, adminUserId);

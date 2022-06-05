@@ -22,6 +22,15 @@ public class PayVO {
      * 已选的商品总价
      */
     private BigDecimal totalPrice;
+
+    /**
+     * 最终价格（去掉优惠和运费后的价格）
+     */
+    private BigDecimal finalPrice;
+    /**
+     * 优惠价钱
+     */
+    private BigDecimal discountPrice;
     /**
      * 商家信息
      */

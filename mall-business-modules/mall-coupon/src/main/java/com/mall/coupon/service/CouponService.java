@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.coupon.entity.CouponEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,4 +60,6 @@ public interface CouponService extends IService<CouponEntity> {
      * @return
      */
     int auth(Long couponId, Integer authStatus, String authOpinion);
+
+    List<CouponEntity> getBatchByIds(Long[] ids);
 }

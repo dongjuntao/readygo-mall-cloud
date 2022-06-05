@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +42,11 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
      */
     @Override
     public int updateCoupon(CouponEntity couponEntity) {
+        //如果修改发行量，那么发行量不能低于现有发行量
+        CouponEntity coupon = baseMapper.selectById(couponEntity.getId());
+        if (couponEntity.getIssueNumber()<coupon.getIssueNumber()) {
+            return -1;
+        }
         return baseMapper.updateById(couponEntity);
     }
 
@@ -53,7 +59,7 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
     public PageUtil getByPage(Map<String, Object> params) {
         Page<CouponEntity> page = (Page<CouponEntity>)new PageBuilder<CouponEntity>().getPage(params);
         QueryWrapper<CouponEntity> wrapper = new QueryWrapper<>();
-        String name = String.valueOf(params.get("name"));//商品名称
+        String name = params.get("name") == null ? null : params.get("name").toString();//商品名称
         Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         Integer authStatus = params.get("authStatus") == null ? null : Integer.valueOf((params.get("authStatus").toString()));
         wrapper
@@ -104,5 +110,15 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, CouponEntity> i
         couponEntity.setAuthStatus(authStatus);
         couponEntity.setAuthOpinion(authOpinion);
         return baseMapper.updateById(couponEntity);
+    }
+
+    /**
+     * 根据id集合，批量查询
+     * @param ids
+     * @return
+     */
+    @Override
+    public List<CouponEntity> getBatchByIds(Long[] ids) {
+        return baseMapper.getBatchByIds(ids);
     }
 }

@@ -49,6 +49,12 @@
             <artifactId>mall-member-api</artifactId>
             <version>${common.version}</version>
         </dependency>
+        <!--mall-coupon接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-coupon-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
         <!--mall-common-mysql-->
         <dependency>
             <groupId>com.mall.common</groupId>

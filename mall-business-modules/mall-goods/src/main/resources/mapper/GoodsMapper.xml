@@ -7,7 +7,9 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
         <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
-        <result column="goods_category_ids" property="goodsCategoryIds" jdbcType="VARCHAR"/>
+        <result column="goods_category_id_first" property="goodsCategoryIdFirst" jdbcType="BIGINT"/>
+        <result column="goods_category_id_second" property="goodsCategoryIdSecond" jdbcType="BIGINT"/>
+        <result column="goods_category_id_third" property="goodsCategoryIdThird" jdbcType="BIGINT"/>
         <result column="on_sale" property="onSale" jdbcType="TINYINT"/>
         <result column="freight_setting" property="freightSetting" jdbcType="INTEGER"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
@@ -71,7 +73,9 @@
                gs.name,
                gs.keyword,
                gs.admin_user_id,
-               gs.goods_category_ids,
+               gs.goods_category_id_first,
+               gs.goods_category_id_second,
+               gs.goods_category_id_third,
                gs.on_sale,
                gs.freight_setting,
                gs.code,
@@ -116,7 +120,9 @@
                g.name,
                g.keyword,
                g.admin_user_id,
-               g.goods_category_ids,
+               g.goods_category_id_first,
+               g.goods_category_id_second,
+               g.goods_category_id_third,
                g.on_sale,
                g.freight_setting,
                g.code,
@@ -155,7 +161,9 @@
                g.name,
                g.keyword,
                g.admin_user_id,
-               g.goods_category_ids,
+               g.goods_category_id_first,
+               g.goods_category_id_second,
+               g.goods_category_id_third,
                g.on_sale,
                g.freight_setting,
                g.code,

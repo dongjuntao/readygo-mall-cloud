@@ -1,0 +1,13 @@
+#### spring相关配置
+spring:
+  application:
+    name: mall-order #应用名称
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    servlet:
+      load-on-startup: 1
+server:
+  port: 8009

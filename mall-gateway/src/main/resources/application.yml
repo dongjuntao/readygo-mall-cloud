@@ -48,6 +48,10 @@ spring:
           uri: lb://mall-cart #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-cart/**
+        - id: mall-order
+          uri: lb://mall-order #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-order/**
   mvc:
     servlet:
       load-on-startup: 1
@@ -62,7 +66,7 @@ feign:
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-gateway,mall-seckill,mall-security-oauth2,mall-file,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart
+    clients: mall-gateway,mall-seckill,mall-security-oauth2,mall-file,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart,mall-order
 
 #白名单
 white:

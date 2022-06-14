@@ -1,21 +1,17 @@
 package com.mall.cart.controller;
 
 import com.mall.admin.api.feign.front.FeignAdminUserService;
+import com.mall.admin.api.feign.front.FeignFrontFreightTemplateService;
 import com.mall.cart.dto.CartGoodsDTO;
-import com.mall.cart.entity.CartCouponSelectedEntity;
 import com.mall.cart.entity.CartEntity;
 import com.mall.cart.entity.CartGoodsEntity;
-import com.mall.cart.service.CartCouponSelectedService;
 import com.mall.cart.service.CartGoodsService;
 import com.mall.cart.service.CartService;
 import com.mall.cart.vo.*;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.common.base.utils.PageUtil;
-import com.mall.coupon.api.feign.front.FeignFrontCouponService;
 import com.mall.goods.api.front.FeignGoodsService;
-import com.mall.member.api.FeignCouponReceivedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -46,15 +42,6 @@ public class CartController {
 
     @Autowired
     private FeignGoodsService feignGoodsService;
-
-    @Autowired
-    private CartCouponSelectedService cartCouponSelectedService;
-
-    @Autowired
-    private FeignCouponReceivedService feignCouponReceivedService;
-
-    @Autowired
-    private FeignFrontCouponService feignFrontCouponService;
 
     /**
      * 加入购物车
@@ -310,119 +297,5 @@ public class CartController {
         }
         return CommonResult.success();
     }
-
-    /**
-     * 获取结算页信息 【商品信息】
-     * @return
-     */
-    @GetMapping("/payInfo/goods")
-    public CommonResult goods(@RequestParam Map<String, Object> params) {
-        params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        List<CartEntity> cartList = cartService.listAll(params);
-        Long[] merchantIds = new Long[cartList.size()]; //商家id集合
-        Integer totalCount = 0;
-        BigDecimal totalPrice = new BigDecimal("0"); //总价
-        List<PayMerchantVO> payMerchantVOList = new ArrayList<>(); //封装购物车信息
-        Map<String, Object> skuListMap = new HashMap<>();
-        if (!CollectionUtils.isEmpty(cartList)) {
-            for (int i=0; i<cartList.size(); i++) {
-                merchantIds[i] = cartList.get(i).getMerchantId();
-                List<CartGoodsEntity> cartGoodsList = cartList.get(i).getCartGoodsList();
-                Long[] skuIds = new Long[cartGoodsList.size()];
-                for (int j=0; j<cartGoodsList.size(); j++) {
-                    skuIds[j] = cartList.get(i).getCartGoodsList().get(j).getGoodsSkuId();
-                }
-                CommonResult skuResult = feignGoodsService.getGoodsSkuList(skuIds);
-                skuListMap.put(merchantIds[i].toString(), skuResult.getData());
-            }
-        }
-        if (merchantIds == null || merchantIds.length==0) {
-            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payMerchantVOList);
-        }
-        //查询所有商家信息
-        CommonResult merchantResult = feignAdminUserService.listByIds(merchantIds);
-        if (merchantResult == null || !"200".equals(merchantResult.getCode())) {
-            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payMerchantVOList);
-        }
-        List merchantList = (List) merchantResult.getData();
-        for(int i=0; i<merchantList.size(); i++) {
-            PayMerchantVO payMerchantVO = new PayMerchantVO();
-            Map<String,Object> map = (Map)merchantList.get(i);
-            payMerchantVO.setMerchantId(Long.valueOf(map.get("id").toString())); //商家id
-            payMerchantVO.setMerchantName(String.valueOf(map.get("name"))); //商家名称
-            List skuList = (List)skuListMap.get(map.get("id").toString());
-            if (!CollectionUtils.isEmpty(skuList)) {
-                List<PayGoodsVO> payGoodsVOList = new ArrayList<>();
-                Boolean merchantSelected = false; //该商家有商品时才记录
-                for (int j=0; j<skuList.size(); j++) {
-                    Map<String,Object> skuMap = (Map)skuList.get(j);
-                    //“购买数量”, “是否被选中” 从购物车表中单独获取
-                    List<CartGoodsEntity> cartGoodsList = cartList.stream()
-                            .filter(cartEntity -> cartEntity.getMerchantId().equals(payMerchantVO.getMerchantId()))
-                            .collect(Collectors.toList()).stream().findFirst().get().getCartGoodsList();
-                    Optional<CartGoodsEntity> optional = cartGoodsList.stream().filter(cartGoods->cartGoods.getGoodsSkuId()
-                            .equals(Long.valueOf(String.valueOf(skuMap.get("id"))))).findFirst();
-                    PayGoodsVO payGoodsVO = new PayGoodsVO();
-                    if(optional.isPresent()) {
-                        //挑选出选中的记录
-                        if (optional.get().getChecked()) {
-                            merchantSelected = true;
-                            payGoodsVO.setName(String.valueOf(skuMap.get("name"))); //商品名称
-                            payGoodsVO.setImage(String.valueOf(skuMap.get("image"))); //商品图片
-                            payGoodsVO.setSellingPrice(new BigDecimal(String.valueOf(skuMap.get("sellingPrice")))); //销售价格
-                            payGoodsVO.setCount(optional.get().getCount());
-                            //选中时计算选中数量和价格
-                            totalPrice = totalPrice.add(new BigDecimal(String.valueOf(payGoodsVO.getSellingPrice()))
-                                    .multiply(new BigDecimal(payGoodsVO.getCount())));
-                            payGoodsVO.setId(optional.get().getId());
-                            payGoodsVO.setGoodsId(optional.get().getGoodsId());
-                            payGoodsVO.setGoodsSkuId(optional.get().getGoodsSkuId());
-                            payGoodsVO.setSubTotal(new BigDecimal(String.valueOf(skuMap.get("sellingPrice")))
-                                    .multiply(new BigDecimal(optional.get().getCount())));
-                            totalCount += payGoodsVO.getCount();
-                            payGoodsVOList.add(payGoodsVO);
-                        }
-                    }
-                }
-                payMerchantVO.setPayGoodsList(payGoodsVOList);
-                //商家有商品被选中时，才记录该商家
-                if (merchantSelected) {
-                    payMerchantVOList.add(payMerchantVO);
-                }
-            }
-        }
-        PayVO payVO = new PayVO();
-        payVO.setPayMerchantList(payMerchantVOList); //购物车列表
-        payVO.setTotalCount(totalCount);
-        payVO.setTotalPrice(totalPrice); //总价格
-        payVO.setFinalPrice(new BigDecimal("0"));
-        payVO.setDiscountPrice(new BigDecimal("0"));
-        //查询使用使用优惠券
-        List<CartCouponSelectedEntity> cartCouponSelectedList
-                = cartCouponSelectedService.getSelected(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        if (!CollectionUtils.isEmpty(cartCouponSelectedList)) { //使用优惠券
-            Long receivedCouponId = cartCouponSelectedList.get(0).getReceivedCouponId(); //我的优惠券信息
-            CommonResult receivedCouponResult = feignCouponReceivedService.getById(receivedCouponId);
-            if (receivedCouponResult == null || !"200".equals(receivedCouponResult.getCode())) {
-                return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
-            }
-            Map<String, Object> receivedCouponMap = (Map<String, Object>) receivedCouponResult.getData();
-            Long couponId = Long.valueOf(String.valueOf(receivedCouponMap.get("couponId")));
-            CommonResult couponResult = feignFrontCouponService.getById(couponId);
-            if (couponResult == null || !"200".equals(couponResult.getCode())) {
-                return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
-            }
-            Map<String, Object> couponMap = (Map<String, Object>) couponResult.getData();
-            Integer type = Integer.valueOf(String.valueOf(couponMap.get("type")));
-            if (type == 0) { //满减券
-                payVO.setDiscountPrice(new BigDecimal(String.valueOf(couponMap.get("discountAmount"))));
-            } else if (type == 1) { //满折券
-                payVO.setDiscountPrice(totalPrice.subtract(new BigDecimal(String.valueOf(couponMap.get("discountAmount"))).multiply(totalPrice).divide(new BigDecimal("10"))));
-            }
-            payVO.setFinalPrice(totalPrice.subtract(payVO.getDiscountPrice()));
-        }
-        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
-    }
-
 
 }

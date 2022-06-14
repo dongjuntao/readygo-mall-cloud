@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mall</groupId>
+    <artifactId>mall-order</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <!--商城订单系统服务-->
+    <name>mall-order</name>
+
+    <!--父级-->
+    <parent>
+        <groupId>com.mall</groupId>
+        <artifactId>mall-business-modules</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <description>订单微服务</description>
+
+    <properties>
+        <common.version>1.0-SNAPSHOT</common.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--mall-common-base-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-base</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-admin接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-admin-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-goods接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-goods-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-member接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-member-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-coupon接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-coupon-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-coupon接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-cart-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-common-mysql-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-mysql</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--redis-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-redis</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--rabbit mq-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-rabbitmq</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--springfox(swagger)-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-generator</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!--commons-collections4-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <!--服务注册发现-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

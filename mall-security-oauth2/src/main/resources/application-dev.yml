@@ -28,4 +28,4 @@ feign:
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-security-oauth2,mall-seckill,mall-gateway,mall-file,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart
+    clients: mall-security-oauth2,mall-seckill,mall-gateway,mall-file,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart,mall-order

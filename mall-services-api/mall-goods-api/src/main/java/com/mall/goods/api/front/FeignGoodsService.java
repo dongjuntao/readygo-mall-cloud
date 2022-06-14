@@ -34,4 +34,10 @@ public interface FeignGoodsService {
      */
     @GetMapping("/getGoodsSkuList")
     CommonResult getGoodsSkuList(@RequestParam Long[] ids);
+
+    /**
+     * 商品信息
+     */
+    @GetMapping("getGoodsById")
+    CommonResult getGoodsById(@RequestParam("id") Long id);
 }

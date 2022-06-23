@@ -35,6 +35,16 @@ public class PayMerchantVO {
     private BigDecimal freight;
 
     /**
+     * 该商家商品总数量
+     */
+    private Integer totalCount;
+
+    /**
+     * 该商家商品价格总计
+     */
+    private BigDecimal totalPrice;
+
+    /**
      * 商品信息
      */
     private List<PayGoodsVO> payGoodsList;

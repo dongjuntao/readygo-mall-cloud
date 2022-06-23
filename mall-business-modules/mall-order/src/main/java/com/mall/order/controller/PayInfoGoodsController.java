@@ -65,6 +65,9 @@ public class PayInfoGoodsController {
             Map<String, Object> cartMerchantMap = (Map<String, Object>)cartMerchantList.get(i);
             payMerchantVO.setMerchantId(Long.valueOf(String.valueOf(cartMerchantMap.get("merchantId"))));
             payMerchantVO.setMerchantName(String.valueOf(cartMerchantMap.get("merchantName")));
+            payMerchantVO.setFreight(new BigDecimal("0")); //TODO 运费，后面调整
+            BigDecimal totalPriceForEveryMerchant = new BigDecimal("0"); //每个商家的商品总价
+            Integer totalCountForEveryMerchant = 0; //每个商家的商品总数量
             List<PayGoodsVO> payGoodsList = new ArrayList<>();
             List cartGoodsList = (List)cartMerchantMap.get("cartGoodsList");
             for (int j=0; j<cartGoodsList.size(); j++) {
@@ -81,8 +84,12 @@ public class PayInfoGoodsController {
                     payGoodsVO.setSellingPrice(new BigDecimal(String.valueOf(cartGoodsMap.get("sellingPrice"))));
                     payGoodsVO.setSubTotal(new BigDecimal(String.valueOf(cartGoodsMap.get("subTotal"))));
                     payGoodsList.add(payGoodsVO);
+                    totalCountForEveryMerchant += Integer.valueOf(String.valueOf(cartGoodsMap.get("count"))); //数量计算
+                    totalPriceForEveryMerchant = totalPriceForEveryMerchant.add(payGoodsVO.getSubTotal()); //价格计算
                 }
             }
+            payMerchantVO.setTotalCount(totalCountForEveryMerchant);
+            payMerchantVO.setTotalPrice(totalPriceForEveryMerchant);
             payMerchantVO.setPayGoodsList(payGoodsList);
             payMerchantVOList.add(payMerchantVO);
         }

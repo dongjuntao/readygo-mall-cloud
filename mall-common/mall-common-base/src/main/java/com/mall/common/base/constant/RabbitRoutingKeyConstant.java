@@ -12,4 +12,6 @@ public class RabbitRoutingKeyConstant {
 
     public static final String CART_DOUBLE_DELETE_ROUTING_KEY = "cart_double_delete_routing_key"; //redis双删【购物车】
 
+    public static final String ALIPAY_SUCCESS_ROUTING_KEY = "alipay_success_routing_key"; //支付宝支付成功发送通知
+
 }

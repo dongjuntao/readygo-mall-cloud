@@ -24,4 +24,6 @@ public interface CouponReceivedService extends IService<CouponReceivedEntity> {
     List<CouponReceivedEntity> getListAll(Map<String, Object> params);
 
     CouponReceivedEntity getById(Long id);
+
+    int updateUseStatus(Long receivedCouponId, Integer status);
 }

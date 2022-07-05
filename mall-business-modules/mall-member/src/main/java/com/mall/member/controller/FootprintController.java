@@ -4,7 +4,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
-import com.mall.goods.api.front.FeignGoodsService;
+import com.mall.goods.api.front.FeignFrontGoodsService;
 import com.mall.member.entity.FootprintEntity;
 import com.mall.member.service.FootprintService;
 import com.mall.member.vo.FootprintGoodsVO;
@@ -29,7 +29,7 @@ public class FootprintController {
     private FootprintService footprintService;
 
     @Autowired
-    private FeignGoodsService feignGoodsService;
+    private FeignFrontGoodsService feignFrontGoodsService;
 
     /**
      * 分页查询会员足迹列表
@@ -48,7 +48,7 @@ public class FootprintController {
             goodsIds[i] = footprint.getGoodsId();
         }
         //远程调用商品服务，获取商品信息
-        CommonResult result = feignGoodsService.listByIds(goodsIds);
+        CommonResult result = feignFrontGoodsService.listByIds(goodsIds);
         if (result != null && "200".equals(result.getCode())) {
             List resultList = (List) result.getData();
             for (int i=0;i<list.size();i++) {

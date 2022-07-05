@@ -43,7 +43,7 @@
     <slf4j.version>1.7.30</slf4j.version>
     <swagger.version>3.0.0</swagger.version>
     <spring-cloud.version>Hoxton.SR5</spring-cloud.version><!--spring cloud-->
-    <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+    <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
     <fastjson.version>1.2.76</fastjson.version>
     <commons-collections4.version>4.4</commons-collections4.version>
   </properties>

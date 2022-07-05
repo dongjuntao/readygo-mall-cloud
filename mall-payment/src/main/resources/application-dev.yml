@@ -1,0 +1,42 @@
+spring:
+  #####nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 49.234.85.17:8848 #配置nacos地址
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients: mall-file,mall-seckill,mall-security-oauth2,mall-gateway,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart,mall-order
+
+#支付宝支付配置
+alipay:
+  app-id: 2016091200493620
+  private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC3e9hBDj1SnVLPNPdMcjKM7TS2CrKFa9+SDzT23zNRHD/tziVpkLV9xgqdR2e5C8rR4R6Sz4hJx9NJZYsYzuXc1kbhAVMdrSErII8u5AAc6nAD6cDdRYO4d5vG5dK/XcmU+4jebK6gIkOvGCsdrPpYarAY9W0feyriKjwLB1pzjzmwWeoic2bkvI36xlf0rblPJHsucu8HB83SwTEJRmLoakPU1JrCfOZ+XdAnXe0zLToBI/kTfSKoWCx49qSik7CQ2s2Qt2MZIr9zUrC1Aa9LCNbfWFshMYmxaRPvHDNxR5y63IOCSIGPLSBAMcLI5pgF/9WyhSLymnnba8SNnWiZAgMBAAECggEBAJrXxfFo3fF5WSgKb+Swvt5VVFWIg427MoqlkLICPOFncL/0Z3hGKhPBbLW8S9lLDVe/nriQsVhqbXGUYyWFfVC3+ErsfkMeF065BHyy5zF/2xZCT4OspXOoZOseipL6yCKVf7UNjPUQ1YPPZpt9niu9pWz6uaOGovMIZ3F7PCcmOUkFVFjNO3Iy8qsz8TFut/58w35i4pFEI3AZ2ZpYstz0R2pPUrDFpv9CqAds+/hDW9LCtfDWt4DHPjpDSWywYAMbEcrDUgJjHTn/gsfvKcACzohl3A8K2DnEfCvN++r7xH77HUPWYpgQCFC/P3yBl3sPKl/ZB90uJTDKOscGQL0CgYEA7ecQ/PQYka0kk8/rquOL+DaTsM8DsoBvtCax0CIqNfoCFEOcch1ayW/10gxrM3oIomY+dCGSObhIDgAlzMRNqN6OCMJEzFpkIa+qM6hFhNHg0pxMz1m+QCiwcuC4Hx0NTddrc9w+UI76aahgJXVeolhuwGSuDaD4ouNWWMd2ow8CgYEAxXEFlOpl51Ka4Bo5nRicvLKekM4KVw1cQKBPorjbzZc6reQplA3F3BodI/HQEFpdLYKHUAW9RO5Yzbn1NmL4ZhQI4UYV2C64xHIl1u2OaZ83MkB14RUAC4eZB3qcA5ZN1Z8/qZOXZb4qqrPx4oRyacD1QXdtX8jZYxuwvUQSGdcCgYBF4r8Gz933zVkVYtrkFHwlqkKwid+YLEqkLUnGzoJ/4LWDpmjqzNzCl/UqgyNqt8qZileGXeZKtmvUUQ7JnFED7nzi7c6wCU2o56WkDyZ84fqdY/TcZIyS5GERHhp4aVxjJYkXO/fCSn4dU60K0/O81SWTtv+6WTMxBn9zDQU42QKBgEuA6yeFc67AciWdIccnsFig3e52PJIJs+uq4olRtAys9m2lQRkzIyUGf3pNcMmwJM3QirpZV4XSt/cEU/eWZXNz2el8CcKAK3xEQqAsfDd8AXmgGPQYOcou8qBfjOX6Ro2Ytpm8rTrlPB/HbIq5J5+1gJSmfRcSEb/KyQ23yExFAoGAQy7n4f/hWp4TQugkpP+7QDjpNPlxTH0RnM9L9yzTaFf+2mxSEccoU/OZsrj4U5RMf7egayzIfTOeMlZ9574eF2ACUozwfbs2FYdp9PihgdADBj2QK8yJm3jPeq54k6Xx27R+/30k71uMt7Rlub+PfEg7t4WE/9Wvos99/C8mV+I=
+  public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAthIarCLP+Wswt/6bAUbbUUohYmAJ5Cpxta+FwmWFtBbPaoARYDlNfQ/zUTlpzBKvfY8s4/96NQWIVgpzyZvG2RilNcPkjyvR80YzmBUVcjBy4tjQw3nOQXezX8YB4XrYXKcFFqNDibdoHtpoKFp9nOLgcHhWivtpdDGZsqDqVy6XSQphE6MqgLAz94eJQHXMFpEbKA9Y3/++8yd1xmt+5YF+YtxCWT25vSFiHoErNC3CzE/EtQ0wRaK2B6pz7RStJrYg7w5i7Wo4UjTMnLzupbw98YNI1ho/SYCXj18vXbO30BYX7TnjwuRG3MitnM6sM+sRogwJlS4M+YM310ui2wIDAQAB
+  gateway: https://openapi.alipaydev.com/gateway.do
+  sign-type: RSA2
+  charset: utf-8
+  format: json
+  notify-url: http://dongjuntao.vaiwan.com/mall-payment/alipay/notify
+  return-url:
+  log-path:
+
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true #是否开启数据源自动代理,默认为true
+  tx-service-group: fsp_tx_group  #要与配置文件中的vgroupMapping一致

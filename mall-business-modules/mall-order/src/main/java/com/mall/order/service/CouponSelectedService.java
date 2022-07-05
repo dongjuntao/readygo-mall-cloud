@@ -15,5 +15,9 @@ public interface CouponSelectedService extends IService<CouponSelectedEntity> {
 
     int select(CouponSelectedEntity cartCouponSelected, Boolean use);
 
-    List<CouponSelectedEntity> getSelected(Long memberId);
+    CouponSelectedEntity getSelected(Long memberId);
+
+    void deleteCouponSelected(Long memberId);
+
+    void setIsDel(Long memberId);
 }

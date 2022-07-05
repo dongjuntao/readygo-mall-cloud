@@ -173,4 +173,14 @@ public class CouponReceivedController {
         CouponReceivedEntity couponReceived = couponReceivedService.getById(receivedCouponId);
         return CommonResult.success(couponReceived);
     }
+
+    /**
+     * 更新优惠券使用状态
+     */
+    @PutMapping("updateUseStatus")
+    public CommonResult updateUseStatus(@RequestParam("receivedCouponId") Long receivedCouponId,
+                                        @RequestParam("useStatus") Integer useStatus) {
+        return couponReceivedService.updateUseStatus(receivedCouponId, useStatus) > 0 ?
+                CommonResult.success() : CommonResult.fail();
+    }
 }

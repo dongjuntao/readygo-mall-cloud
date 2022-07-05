@@ -5,6 +5,7 @@ import com.mall.common.base.config.FeignConfig;
 import com.mall.common.base.constant.ServiceNameConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,4 +21,11 @@ public interface FeignCouponReceivedService {
 
     @GetMapping("getById")
     CommonResult getById(@RequestParam("receivedCouponId") Long receivedCouponId);
+
+    /**
+     * 更新优惠券使用状态
+     */
+    @PutMapping("updateUseStatus")
+    CommonResult updateUseStatus(@RequestParam("receivedCouponId") Long receivedCouponId,
+                                        @RequestParam("useStatus") Integer useStatus);
 }

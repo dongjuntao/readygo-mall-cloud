@@ -25,6 +25,7 @@
     <module>mall-common-mysql</module>
     <module>mall-common-rabbitmq</module>
     <module>mall-common-redis</module>
+    <module>mall-common-seata</module>
   </modules>
 
   <dependencies>

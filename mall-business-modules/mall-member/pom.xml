@@ -47,6 +47,12 @@
       <artifactId>mall-goods-api</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--seata-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-seata</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <!--mall-coupon接口-->
     <dependency>
       <groupId>com.mall.service.api</groupId>

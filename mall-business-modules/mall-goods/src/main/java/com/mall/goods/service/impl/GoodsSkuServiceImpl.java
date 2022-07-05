@@ -5,8 +5,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.goods.entity.GoodsSkuEntity;
 import com.mall.goods.mapper.GoodsSkuMapper;
 import com.mall.goods.service.GoodsSkuService;
+import com.mall.goods.vo.ReduceStockVO;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +37,40 @@ public class GoodsSkuServiceImpl extends ServiceImpl<GoodsSkuMapper, GoodsSkuEnt
     @Override
     public List<GoodsSkuEntity> getGoodsSkuList(Long[] skuIds) {
         return baseMapper.getGoodsSkuList(skuIds);
+    }
+
+    /**
+     * 库存扣减
+     * @param reduceStock
+     */
+    @Override
+    public void reduceStock(ReduceStockVO reduceStock) {
+        QueryWrapper<GoodsSkuEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(reduceStock.getSkuId() != null, "id", reduceStock.getSkuId());
+        //找到具体的商品sku
+        GoodsSkuEntity goodsSkuEntity = baseMapper.selectOne(queryWrapper);
+        //库存扣减
+        goodsSkuEntity.setStock(goodsSkuEntity.getStock() - reduceStock.getCount());
+        baseMapper.updateById(goodsSkuEntity);
+    }
+
+    /**
+     * 批量扣减库存
+     * @param reduceStockList
+     */
+    @Override
+    @GlobalTransactional
+    @Transactional
+    public void batchReduceStock(List<Map<String, Object>> reduceStockList) {
+        List<GoodsSkuEntity> goodsSkuList = new ArrayList<>();
+        for (Map<String,Object> reduceStock : reduceStockList) {
+            QueryWrapper<GoodsSkuEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq(reduceStock.get("skuId") != null, "id", Long.valueOf(String.valueOf(reduceStock.get("skuId"))));
+            GoodsSkuEntity goodsSku = baseMapper.selectOne(queryWrapper);
+            //库存扣减
+            goodsSku.setStock(goodsSku.getStock() - Integer.valueOf(String.valueOf(reduceStock.get("count"))));
+            goodsSkuList.add(goodsSku);
+        }
+        this.updateBatchById(goodsSkuList);
     }
 }

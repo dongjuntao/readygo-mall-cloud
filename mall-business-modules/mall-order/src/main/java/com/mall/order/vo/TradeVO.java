@@ -1,5 +1,7 @@
 package com.mall.order.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -24,7 +26,9 @@ public class TradeVO {
     private Date overtime;
     /**
      * 最终金额（应付金额）
+     * 注解的作用，使得数据传到前端不丢失进度
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal finalPrice;
 
     /**

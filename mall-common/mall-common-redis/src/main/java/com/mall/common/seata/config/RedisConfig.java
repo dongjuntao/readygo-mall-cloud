@@ -1,4 +1,4 @@
-package com.mall.common.redis.config;
+package com.mall.common.seata.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

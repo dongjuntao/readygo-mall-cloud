@@ -3,6 +3,7 @@ package com.mall.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.entity.TradeEntity;
+import com.mall.order.vo.PayVO;
 import com.mall.order.vo.TradeDetailVO;
 import com.mall.order.vo.TradeVO;
 
@@ -15,9 +16,12 @@ import com.mall.order.vo.TradeVO;
 public interface OrderService extends IService<OrderEntity> {
 
     /**
-     * 创建交易（创建订单和子订单）
+     * 保存订单（创建订单和子订单）
+     * @param tradeEntity
      * @param tradeDetailVO
      * @return
      */
-    TradeEntity createTrade(TradeDetailVO tradeDetailVO);
+    void saveOrder(TradeEntity tradeEntity, TradeDetailVO tradeDetailVO);
+
+    void updateOrderStatus(Long tradeId);
 }

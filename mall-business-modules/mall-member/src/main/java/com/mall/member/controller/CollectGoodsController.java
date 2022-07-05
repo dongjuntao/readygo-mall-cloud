@@ -3,7 +3,7 @@ package com.mall.member.controller;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.goods.api.front.FeignGoodsService;
+import com.mall.goods.api.front.FeignFrontGoodsService;
 import com.mall.member.entity.CollectGoodsEntity;
 import com.mall.member.service.CollectGoodsService;
 import com.mall.member.vo.CollectGoodsVO;
@@ -28,7 +28,7 @@ public class CollectGoodsController {
     private CollectGoodsService collectGoodsService;
 
     @Autowired
-    private FeignGoodsService feignGoodsService;
+    private FeignFrontGoodsService feignFrontGoodsService;
 
     /**
      * 新增商品收藏
@@ -86,7 +86,7 @@ public class CollectGoodsController {
             goodsIds[i] = collectGoodsList.get(i).getGoodsId();
         }
         //远程调用商品服务，获取商品信息
-        CommonResult result = feignGoodsService.listByIds(goodsIds);
+        CommonResult result = feignFrontGoodsService.listByIds(goodsIds);
         if (result == null || !"200".equals(result.getCode())) {
             return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), collectGoodsList);
         }

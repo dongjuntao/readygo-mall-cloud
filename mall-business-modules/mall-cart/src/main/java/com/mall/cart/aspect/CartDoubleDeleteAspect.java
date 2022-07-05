@@ -3,7 +3,7 @@ package com.mall.cart.aspect;
 import com.mall.cart.constant.RabbitMQConstant;
 import com.mall.cart.constant.RedisKeyConstant;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.common.redis.util.RedisUtil;
+import com.mall.common.seata.util.RedisUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,7 +12,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 

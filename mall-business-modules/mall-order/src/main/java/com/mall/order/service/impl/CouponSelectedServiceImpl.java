@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.order.entity.CouponSelectedEntity;
 import com.mall.order.mapper.CouponSelectedMapper;
 import com.mall.order.service.CouponSelectedService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class CouponSelectedServiceImpl extends ServiceImpl<CouponSelectedMapper,
                 old.setReceivedCouponId(cartCouponSelected.getReceivedCouponId());
                 count = baseMapper.updateById(old);
             } else {
+                cartCouponSelected.setIsDel(false);
                 count = baseMapper.insert(cartCouponSelected);
             }
         } else {
@@ -45,9 +48,32 @@ public class CouponSelectedServiceImpl extends ServiceImpl<CouponSelectedMapper,
     }
 
     @Override
-    public List<CouponSelectedEntity> getSelected(Long memberId) {
+    @GlobalTransactional
+    @Transactional
+    public CouponSelectedEntity getSelected(Long memberId) {
         QueryWrapper<CouponSelectedEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(memberId != null, "member_id", memberId);
-        return baseMapper.selectList(queryWrapper);
+        return baseMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public void deleteCouponSelected(Long memberId) {
+        QueryWrapper<CouponSelectedEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(memberId != null, "member_id", memberId);
+        baseMapper.delete(queryWrapper);
+    }
+
+    /**
+     * 逻辑删除
+     * @param memberId
+     */
+    @Override
+    public void setIsDel(Long memberId) {
+        QueryWrapper<CouponSelectedEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(memberId != null, "member_id", memberId);
+        CouponSelectedEntity couponSelected = baseMapper.selectOne(queryWrapper);
+        if (couponSelected != null) {
+            couponSelected.setIsDel(true);
+        }
     }
 }

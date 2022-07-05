@@ -7,6 +7,7 @@ import com.mall.order.service.CouponSelectedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.sasl.SaslServer;
 import java.util.List;
 
 /**
@@ -42,8 +43,9 @@ public class CouponSelectedController {
      */
     @GetMapping("getSelected")
     public CommonResult getSelected() {
-        List<CouponSelectedEntity> cartCouponSelectedList
+        System.out.println("CurrentUserContextUtil.getCurrentUserInfo() == "+CurrentUserContextUtil.getCurrentUserInfo());
+        CouponSelectedEntity cartCouponSelected
                 = couponSelectedService.getSelected(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        return CommonResult.success(cartCouponSelectedList);
+        return CommonResult.success(cartCouponSelected);
     }
 }

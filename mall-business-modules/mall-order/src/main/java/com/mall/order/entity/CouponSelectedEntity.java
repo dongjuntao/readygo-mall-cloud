@@ -24,4 +24,9 @@ public class CouponSelectedEntity {
      * 已领取优惠券id（mall-member服务中的receivedCoupon）
      */
     private Long receivedCouponId;
+
+    /**
+     * 是否已逻辑删除
+     */
+    private Boolean isDel;
 }

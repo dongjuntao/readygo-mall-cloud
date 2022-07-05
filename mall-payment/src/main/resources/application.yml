@@ -1,0 +1,18 @@
+server:
+  port: 8010
+#### spring相关配置
+spring:
+  application:
+    name: mall-payment #应用名称
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    servlet:
+      load-on-startup: 1
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+

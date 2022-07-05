@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mall</groupId>
+    <artifactId>mall-payment</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>mall-payment</name>
+
+    <description>支付微服务</description>
+
+    <!--父组件-->
+    <parent>
+        <groupId>com.mall</groupId>
+        <artifactId>readygo-mall-cloud</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <common.version>1.0-SNAPSHOT</common.version>
+        <alipay.version>4.31.28.ALL</alipay.version>
+    </properties>
+
+    <dependencies>
+        <!--mall-common-base-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-base</artifactId>
+            <version>${common.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--订单接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-order-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-member接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-member-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--mall-goods接口-->
+        <dependency>
+            <groupId>com.mall.service.api</groupId>
+            <artifactId>mall-goods-api</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--支付宝支付-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>${alipay.version}</version>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!--rabbit mq-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-rabbitmq</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--seata-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-seata</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <!--web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--服务注册发现-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--监控-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build></build>
+
+</project>

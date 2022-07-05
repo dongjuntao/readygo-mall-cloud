@@ -1,5 +1,6 @@
 package com.mall.order.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.order.entity.OrderDetailEntity;
@@ -15,10 +16,12 @@ import com.mall.order.service.OrderDetailService;
 import com.mall.order.service.OrderService;
 import com.mall.order.util.SnowFlakeUtil;
 import com.mall.order.vo.*;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,27 +45,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     @Autowired
     private OrderInvoiceMapper orderInvoiceMapper;
 
-    @Autowired
-    private TradeMapper tradeMapper;
-
     @Override
     @Transactional
-    public TradeEntity createTrade(TradeDetailVO tradeDetailVO) {
+    public void saveOrder(TradeEntity tradeEntity, TradeDetailVO tradeDetailVO) {
         OrderInvoiceVO orderInvoiceVO = tradeDetailVO.getOrderInvoiceVO(); //发票信息
         RecipientInfoVO recipientInfoVO = tradeDetailVO.getRecipientInfoVO(); //收货人信息
         PayVO payVO = tradeDetailVO.getPayVO(); //商家、商品、及支付相关数据
-        TradeEntity tradeEntity = new TradeEntity(); //交易
-        tradeEntity.setCode(SnowFlakeUtil.getSnowFlakeId("T",1,1));
-        tradeEntity.setTotalPrice(payVO.getTotalPrice());
-        tradeEntity.setFreight(payVO.getTotalFreight());
-        tradeEntity.setFinalPrice(payVO.getFinalPrice());
-        tradeEntity.setMemberId(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        tradeEntity.setMemberName(CurrentUserContextUtil.getCurrentUserInfo().getUserName());
-        tradeEntity.setTradeTime(new Date());
-        tradeEntity.setPayStatus(PayStatusEnum.UNPAID);
-        tradeMapper.insert(tradeEntity);
-        int result = 0;
-
         List<PayMerchantVO> payMerchantList = payVO.getPayMerchantList(); //各个商家及相关商品信息
         for (int i=0; i<payMerchantList.size(); i++) {
             OrderEntity orderEntity = new OrderEntity();
@@ -108,9 +96,24 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             BeanUtils.copyProperties(orderInvoiceVO, orderInvoiceEntity);
             orderInvoiceEntity.setOrderId(orderEntity.getId());
             //发票信息入库
-            result = orderInvoiceMapper.insert(orderInvoiceEntity);
+            orderInvoiceMapper.insert(orderInvoiceEntity);
         }
+    }
 
-        return tradeEntity;
+    @Override
+    @GlobalTransactional
+    @Transactional
+    public void updateOrderStatus(Long tradeId) {
+        QueryWrapper<OrderEntity> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.eq(tradeId != null, "trade_id", tradeId);
+        List<OrderEntity> orderList = orderMapper.selectList(orderQueryWrapper);
+        List<OrderEntity> newOrderList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(orderList)) {
+            for (OrderEntity order : orderList) {
+                order.setStatus(OrderStatusEnum.PAID);
+                newOrderList.add(order);
+            }
+            this.updateBatchById(newOrderList);
+        }
     }
 }

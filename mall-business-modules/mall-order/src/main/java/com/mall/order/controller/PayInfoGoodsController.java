@@ -7,13 +7,12 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.coupon.api.feign.front.FeignFrontCouponService;
-import com.mall.goods.api.front.FeignGoodsService;
+import com.mall.goods.api.front.FeignFrontGoodsService;
 import com.mall.member.api.FeignCouponReceivedService;
 import com.mall.order.entity.CouponSelectedEntity;
 import com.mall.order.service.CouponSelectedService;
 import com.mall.order.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -30,7 +29,7 @@ import java.util.*;
 public class PayInfoGoodsController {
 
     @Autowired
-    private FeignGoodsService feignGoodsService;
+    private FeignFrontGoodsService feignFrontGoodsService;
 
     @Autowired
     private CouponSelectedService couponSelectedService;
@@ -98,14 +97,14 @@ public class PayInfoGoodsController {
         payVO.setPayMerchantList(payMerchantVOList); //购物车列表
         payVO.setTotalCount(totalCount);
         payVO.setTotalPrice(totalPrice); //总价格
-        payVO.setFinalPrice(new BigDecimal("0")); //最终价格，可能包含优惠券减去的价格，还有运费等
+        payVO.setFinalPrice(totalPrice); //最终价格，可能包含优惠券减去的价格，还有运费等
         payVO.setDiscountPrice(new BigDecimal("0")); //优惠掉的价格
 
         //查询是否使用优惠券
-        List<CouponSelectedEntity> couponSelectedList
+        CouponSelectedEntity couponSelected
                 = couponSelectedService.getSelected(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        if (!CollectionUtils.isEmpty(couponSelectedList)) { //使用优惠券
-            Long receivedCouponId = couponSelectedList.get(0).getReceivedCouponId(); //我的优惠券信息
+        if (couponSelected != null) { //使用优惠券
+            Long receivedCouponId = couponSelected.getReceivedCouponId(); //我的优惠券信息
             CommonResult receivedCouponResult = feignCouponReceivedService.getById(receivedCouponId);
             if (receivedCouponResult == null || !"200".equals(receivedCouponResult.getCode())) {
                 return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payVO);
@@ -134,7 +133,7 @@ public class PayInfoGoodsController {
 
             for (int j=0; j<payGoodsList.size(); j++) { //开始循环调用运费模板信息，计算运费
                 PayGoodsVO payGoodsVO = payGoodsList.get(j);//先查询商品
-                CommonResult goodsResult = feignGoodsService.getGoodsById(payGoodsVO.getGoodsId());
+                CommonResult goodsResult = feignFrontGoodsService.getGoodsById(payGoodsVO.getGoodsId());
                 if ("200".equals(goodsResult.getCode())) {
                     //运费模板id，再远程调用获取模板信息
                     Integer freightSettingId = Integer.valueOf(((Map<String,Object>) goodsResult.getData()).get("freightSetting").toString());
@@ -149,7 +148,6 @@ public class PayInfoGoodsController {
                         Map<String, Object> freightDefaultEntity = (Map<String, Object>) ((Map<String,Object>) freightTemplateResult.getData()).get("freightDefaultEntity");
                         List<Map<String,Object>> freightRuleEntityList = (List<Map<String,Object>>)((Map<String,Object>)freightTemplateResult.getData()).get("freightRuleEntityList");
                         List<Map<String,Object>> freightFreeRuleEntityList = (List<Map<String,Object>>)((Map<String,Object>)freightTemplateResult.getData()).get("freightFreeRuleEntityList");
-                        System.out.println("aa==");
                     }
                 }
             }

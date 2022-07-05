@@ -52,6 +52,10 @@ spring:
           uri: lb://mall-order #匹配后提供服务的路由地址
           predicates:
             - Path=/mall-order/**
+        - id: mall-payment
+          uri: lb://mall-payment #匹配后提供服务的路由地址
+          predicates:
+            - Path=/mall-payment/**
   mvc:
     servlet:
       load-on-startup: 1
@@ -83,3 +87,4 @@ white:
       - /mall-member/captcha/get #验证码接口
       - /mall-member/captcha/check
       - /mall-member/member/login
+      - /mall-payment/alipay/notify

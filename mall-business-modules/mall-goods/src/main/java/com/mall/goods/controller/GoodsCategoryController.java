@@ -2,7 +2,7 @@ package com.mall.goods.controller;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.redis.util.RedisUtil;
+import com.mall.common.seata.util.RedisUtil;
 import com.mall.goods.constants.RedisKeyConstant;
 import com.mall.goods.entity.GoodsCategoryEntity;
 import com.mall.goods.service.GoodsCategoryService;

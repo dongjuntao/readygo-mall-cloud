@@ -3,8 +3,9 @@ package com.mall.order.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.mall.order.enums.PayStatusEnum;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -39,16 +40,6 @@ public class TradeEntity {
     private String memberName;
 
     /**
-     * 商家id（卖家id）
-     */
-    private Long merchantId;
-
-    /**
-     * 商家名称（卖家名称）
-     */
-    private String merchantName;
-
-    /**
      * 付款状态
      * @see com.mall.order.enums.PayStatusEnum
      */
@@ -72,6 +63,7 @@ public class TradeEntity {
     /**
      * 最终金额（应付金额）
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal finalPrice;
 
 }

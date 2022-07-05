@@ -2,12 +2,10 @@ package com.mall.cart.consumer;
 
 import com.mall.cart.constant.RabbitMQConstant;
 import com.mall.cart.constant.RedisKeyConstant;
-import com.mall.common.redis.util.RedisUtil;
-import org.springframework.amqp.core.ExchangeTypes;
+import com.mall.common.seata.util.RedisUtil;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
 /**

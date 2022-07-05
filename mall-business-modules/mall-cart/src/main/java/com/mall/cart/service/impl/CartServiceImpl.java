@@ -1,6 +1,5 @@
 package com.mall.cart.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.cart.constant.RedisExpiresTimeConstant;
@@ -11,10 +10,9 @@ import com.mall.cart.entity.CartGoodsEntity;
 import com.mall.cart.mapper.CartGoodsMapper;
 import com.mall.cart.mapper.CartMapper;
 import com.mall.cart.service.CartService;
-import com.mall.common.redis.util.RedisUtil;
+import com.mall.common.seata.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

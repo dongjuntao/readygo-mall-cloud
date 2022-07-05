@@ -11,7 +11,9 @@ import com.mall.member.entity.CouponReceivedEntity;
 import com.mall.member.entity.FootprintEntity;
 import com.mall.member.mapper.CouponReceivedMapper;
 import com.mall.member.service.CouponReceivedService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -68,5 +70,22 @@ public class CouponReceivedServiceImpl extends ServiceImpl<CouponReceivedMapper,
     @Override
     public CouponReceivedEntity getById(Long id) {
         return baseMapper.selectById(id);
+    }
+
+    /**
+     * 更新优惠券使用状态
+     * @param receivedCouponId
+     * @param status
+     * @return
+     */
+    @Override
+    @GlobalTransactional
+    @Transactional
+    public int updateUseStatus(Long receivedCouponId, Integer status) {
+        CouponReceivedEntity receivedEntity = baseMapper.selectById(receivedCouponId);
+        if (receivedEntity != null) {
+            receivedEntity.setUseStatus(status);
+        }
+        return baseMapper.updateById(receivedEntity);
     }
 }

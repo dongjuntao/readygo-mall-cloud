@@ -78,3 +78,23 @@ mybatis-plus:
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
 
+#seata:
+#  enabled: true
+#  application-id: mall-order
+#  tx-service-group: fsp_tx_group
+#  # 这里开启自动的数据源配置，否则后秒要自己手动配置
+#  enable-auto-data-source-proxy: true
+#  data-source-proxy-mode: AT
+#  use-jdk-proxy: false
+#  service:
+#    vgroupMapping:
+#      fsp_tx_group: default
+#    grouplist:
+#      default: 127.0.0.1:8091
+#  config:
+#    type: file # 配置中心为file模式
+
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true #是否开启数据源自动代理,默认为true
+  tx-service-group: fsp_tx_group  #要与配置文件中的vgroupMapping一致

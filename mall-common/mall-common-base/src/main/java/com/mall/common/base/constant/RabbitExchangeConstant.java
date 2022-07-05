@@ -12,4 +12,6 @@ public class RabbitExchangeConstant {
 
     public static final String CART_DOUBLE_DELETE_EXCHANGE = "cart_double_delete_exchange"; //redis双删【购物车】
 
+    public static final String ALIPAY_SUCCESS_EXCHANGE = "alipay_success_exchange"; //支付宝支付成功发送通知
+
 }

@@ -45,9 +45,16 @@
       <artifactId>mall-common-redis</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--mq-->
     <dependency>
       <groupId>com.mall.common</groupId>
       <artifactId>mall-common-rabbitmq</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--seata-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-seata</artifactId>
       <version>${common.version}</version>
     </dependency>
     <!--mybatis-plus-->

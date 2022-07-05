@@ -19,4 +19,7 @@ public class ServiceNameConstant {
     public static final String MALL_COUPON = "mall-coupon"; //优惠券微服务
 
     public static final String MALL_CART = "mall-cart"; //购物车微服务
+
+    public static final String MALL_ORDER = "mall-order"; //订单微服务
+
 }

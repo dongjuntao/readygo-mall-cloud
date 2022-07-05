@@ -82,6 +82,12 @@
             <artifactId>mall-common-rabbitmq</artifactId>
             <version>${common.version}</version>
         </dependency>
+        <!--seata-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-seata</artifactId>
+            <version>${common.version}</version>
+        </dependency>
         <!--springfox(swagger)-->
         <dependency>
             <groupId>io.springfox</groupId>

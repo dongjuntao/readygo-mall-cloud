@@ -2,7 +2,10 @@ package com.mall.order.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.order.entity.OrderDetailEntity;
+import com.mall.order.vo.OrderSkuCountVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @Author DongJunTao
@@ -12,4 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderDetailMapper extends BaseMapper<OrderDetailEntity> {
+
+    List<OrderSkuCountVO> getSkuIdAndCount(String code);
 }

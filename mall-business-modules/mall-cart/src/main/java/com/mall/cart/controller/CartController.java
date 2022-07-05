@@ -1,7 +1,6 @@
 package com.mall.cart.controller;
 
 import com.mall.admin.api.feign.front.FeignAdminUserService;
-import com.mall.admin.api.feign.front.FeignFrontFreightTemplateService;
 import com.mall.cart.dto.CartGoodsDTO;
 import com.mall.cart.entity.CartEntity;
 import com.mall.cart.entity.CartGoodsEntity;
@@ -11,7 +10,7 @@ import com.mall.cart.vo.*;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.goods.api.front.FeignGoodsService;
+import com.mall.goods.api.front.FeignFrontGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -41,7 +40,7 @@ public class CartController {
     private FeignAdminUserService feignAdminUserService;
 
     @Autowired
-    private FeignGoodsService feignGoodsService;
+    private FeignFrontGoodsService feignFrontGoodsService;
 
     /**
      * 加入购物车
@@ -82,7 +81,7 @@ public class CartController {
                 for (int j=0; j<cartGoodsList.size(); j++) {
                     skuIds[j] = cartList.get(i).getCartGoodsList().get(j).getGoodsSkuId();
                 }
-                CommonResult skuResult = feignGoodsService.getGoodsSkuList(skuIds);
+                CommonResult skuResult = feignFrontGoodsService.getGoodsSkuList(skuIds);
                 skuListMap.put(merchantIds[i].toString(), skuResult.getData());
             }
         }

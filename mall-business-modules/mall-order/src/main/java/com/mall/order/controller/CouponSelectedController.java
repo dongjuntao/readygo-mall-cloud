@@ -43,9 +43,18 @@ public class CouponSelectedController {
      */
     @GetMapping("getSelected")
     public CommonResult getSelected() {
-        System.out.println("CurrentUserContextUtil.getCurrentUserInfo() == "+CurrentUserContextUtil.getCurrentUserInfo());
         CouponSelectedEntity cartCouponSelected
                 = couponSelectedService.getSelected(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         return CommonResult.success(cartCouponSelected);
+    }
+
+    /**
+     * 删除用户已选中的优惠券
+     * @return
+     */
+    @DeleteMapping("deleteCouponSelected")
+    public CommonResult deleteCouponSelected() {
+        couponSelectedService.deleteCouponSelected(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+        return CommonResult.success();
     }
 }

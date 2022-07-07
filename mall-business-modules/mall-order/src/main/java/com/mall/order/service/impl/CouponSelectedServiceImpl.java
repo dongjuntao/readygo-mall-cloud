@@ -48,8 +48,6 @@ public class CouponSelectedServiceImpl extends ServiceImpl<CouponSelectedMapper,
     }
 
     @Override
-    @GlobalTransactional
-    @Transactional
     public CouponSelectedEntity getSelected(Long memberId) {
         QueryWrapper<CouponSelectedEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(memberId != null, "member_id", memberId);

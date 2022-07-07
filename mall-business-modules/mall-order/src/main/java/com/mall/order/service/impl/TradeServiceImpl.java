@@ -77,7 +77,6 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
      * @param code
      */
     @Override
-    @GlobalTransactional
     @Transactional
     public int updateTradeStatus(String code) {
         QueryWrapper<TradeEntity> queryWrapper = new QueryWrapper<>();

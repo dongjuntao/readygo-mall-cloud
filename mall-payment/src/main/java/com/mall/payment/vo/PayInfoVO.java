@@ -12,7 +12,7 @@ import lombok.*;
 public class PayInfoVO {
 
     private String url;
-    private String tradeId;
+    private String tradeCode;
     private String body;
 
 }

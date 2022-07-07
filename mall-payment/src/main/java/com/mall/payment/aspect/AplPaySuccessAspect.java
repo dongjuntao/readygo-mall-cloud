@@ -103,11 +103,13 @@ public class AplPaySuccessAspect {
                         //用户优惠券改为已使用
                         feignCouponReceivedService.updateUseStatus(receivedCouponId, 1);
                     }
+                    //此时已选择的优惠券需要物理删除
+                    feignCouponSelectedService.deleteCouponSelected(JSON.toJSONString(map));
                 }
             }
-        }catch (Exception e) {
-            //TODO 事务回滚 该订单 显示交易失败，后面可以协调用户进行退款处理
-            System.out.println("e == "+e.getMessage());
+        } catch (Exception e) {
+            //TODO 事务回滚 该订单 显示交易失败，后面可以协调用户进行退款处理, 另外，用掉的优惠券需要恢复
+            throw new RuntimeException();
         }
     }
 

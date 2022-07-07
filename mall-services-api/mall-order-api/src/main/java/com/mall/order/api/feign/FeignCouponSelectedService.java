@@ -4,6 +4,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.config.FeignConfig;
 import com.mall.common.base.constant.ServiceNameConstant;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,4 +24,11 @@ public interface FeignCouponSelectedService {
      */
     @GetMapping("getSelected")
     CommonResult getSelected(@RequestHeader("currentUserInfo") String currentUserInfo);
+
+    /**
+     * 删除用户已选中的优惠券
+     * @return
+     */
+    @DeleteMapping("deleteCouponSelected")
+    CommonResult deleteCouponSelected(@RequestHeader("currentUserInfo") String currentUserInfo);
 }

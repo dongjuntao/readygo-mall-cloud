@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.mall.common.base.CommonResult;
 import com.mall.payment.service.AlipayService;
 import com.mall.payment.vo.PayInfoVO;
+import com.mall.payment.vo.PayResultVO;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,16 +29,16 @@ public class AlipayController {
 
     /**
      * 创建支付二维码信息
-     * @param tradeId
+     * @param tradeCode
      * @param price
      * @param subject
      * @return
      */
     @GetMapping("createQR")
-    public CommonResult getPayInfo(@RequestParam("tradeId") String tradeId,
+    public CommonResult getPayInfo(@RequestParam("tradeCode") String tradeCode,
                                    @RequestParam("price") String price,
                                    @RequestParam(value = "subject") String subject) throws UnsupportedEncodingException {
-        PayInfoVO payInfoVO = alipayService.createQR(tradeId, price, subject);
+        PayInfoVO payInfoVO = alipayService.createQR(tradeCode, price, subject);
         return CommonResult.success(payInfoVO);
     }
 
@@ -68,5 +69,18 @@ public class AlipayController {
         return result;
     }
 
+    /**
+     * 获取交易结果
+     * @param tradeCode
+     * @return
+     */
+    @GetMapping("tradeResult")
+    public CommonResult getAlipayResult(@RequestParam("tradeCode") String tradeCode) {
+        try{
+            PayResultVO payResult = alipayService.getAlipayResult(tradeCode);
+            return CommonResult.success(payResult);
+        }catch (AlipayApiException e) {}
+        return CommonResult.fail();
+    }
 
 }

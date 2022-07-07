@@ -8,11 +8,14 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.order.api.feign.FeignTradeService;
 import com.mall.payment.vo.PayInfoVO;
+import com.mall.payment.vo.PayResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -72,17 +75,17 @@ public class AlipayService {
 
     /**
      * 创建支付二维码信息
-     * @param tradeId
+     * @param tradeCode
      * @param price
      * @param subject
      * @return
      */
-    public PayInfoVO createQR(String tradeId, String price, String subject) throws UnsupportedEncodingException {
+    public PayInfoVO createQR(String tradeCode, String price, String subject) throws UnsupportedEncodingException {
         AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
         request.setNotifyUrl(notifyUrl);
         String passback_params = "userName="+CurrentUserContextUtil.getCurrentUserInfo().getUserName()+"&userId="+CurrentUserContextUtil.getCurrentUserInfo().getUserId();
         JSONObject bizContent = new JSONObject();
-        bizContent.put("out_trade_no", tradeId);
+        bizContent.put("out_trade_no", tradeCode);
         bizContent.put("total_amount", price);
         bizContent.put("subject", subject);
         bizContent.put("timeout_express", "30m");
@@ -104,7 +107,7 @@ public class AlipayService {
         }
         // 封装支付信息 返回
         PayInfoVO payInfoVO = new PayInfoVO();
-        payInfoVO.setTradeId(tradeId);
+        payInfoVO.setTradeCode(tradeCode);
         payInfoVO.setUrl(qrCode);
         payInfoVO.setBody(body);
         return payInfoVO;
@@ -166,6 +169,30 @@ public class AlipayService {
         //3、校验应用id(appId)
         if (!appId.equals(params.get("app_id"))) {
             throw new AlipayApiException("app_id not valid");
+        }
+    }
+
+    /**
+     * 获取交易支付结果
+     * @param tradeCode
+     * @return
+     * @throws AlipayApiException
+     */
+    public PayResultVO getAlipayResult(String tradeCode) throws AlipayApiException {
+        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+        JSONObject bizContent = new JSONObject();
+        bizContent.put("out_trade_no", tradeCode);
+        request.setBizContent(bizContent.toString());
+        AlipayTradeQueryResponse response = alipayClient.execute(request);
+        if(response.isSuccess()){
+            PayResultVO payResultVO = new PayResultVO();
+            payResultVO.setCode(response.getCode());
+            payResultVO.setMsg(response.getMsg());
+            payResultVO.setTradeStatus(response.getTradeStatus());
+            payResultVO.setOutTradeNo(response.getOutTradeNo());
+            return payResultVO;
+        } else {
+            return new PayResultVO();
         }
     }
 }

@@ -15,11 +15,11 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
-public class TradeVO {
+public class TradeOrderVO {
     /**
-     * 交易时间
+     * 交易或订单时间
      */
-    private Date tradeTime;
+    private Date tradeOrOrderTime;
     /**
      * 可以超时的时间
      */

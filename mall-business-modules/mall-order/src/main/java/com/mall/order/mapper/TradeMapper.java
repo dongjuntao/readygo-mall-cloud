@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mall.order.entity.TradeEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 /**
  * @Author DongJunTao
  * @Description 交易
@@ -12,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface TradeMapper extends BaseMapper<TradeEntity> {
+
+    TradeEntity getTradeDetailByCode(String code);
 }

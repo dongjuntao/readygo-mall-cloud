@@ -5,6 +5,7 @@ import com.mall.common.base.config.FeignConfig;
 import com.mall.common.base.constant.ServiceNameConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +21,19 @@ import java.util.Map;
 @RequestMapping(value = "trade")
 public interface FeignTradeService {
 
-    @GetMapping("tradeInfo")
-    CommonResult tradeInfo(@RequestParam Map<String, Object> params);
+    /**
+     * 支付成功后修改状态
+     * @param code 交易号
+     * @return
+     */
+    @PostMapping("updateTradeStatus")
+    CommonResult updateTradeStatus(@RequestParam("code") String code,
+                                   @RequestParam("tradeStatus") String tradeStatus);
+
+    @GetMapping("getTradeByParams")
+    CommonResult getTradeByParams(@RequestParam Map<String, Object> params);
+
+    @GetMapping("getTradeDetailByParams")
+    CommonResult getTradeDetailByParams(@RequestParam Map<String, Object> params);
+
 }

@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.mall.order.enums.OrderStatusEnum;
+import com.mall.order.enums.PayTypeEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -33,6 +36,11 @@ public class OrderEntity {
      * 交易id
      */
     private Long tradeId;
+
+    /**
+     * 交易号
+     */
+    private String tradeCode;
 
     /**
      * 会员id（买家id）
@@ -65,9 +73,14 @@ public class OrderEntity {
     private OrderStatusEnum status;
 
     /**
+     * 取消订单原因
+     */
+    private String cancelReason;
+
+    /**
      * 支付方式（0：微信 1：支付宝）
      */
-    private Integer payType;
+    private PayTypeEnum payType;
 
     /**
      * 支付时间
@@ -82,17 +95,40 @@ public class OrderEntity {
     /**
      * 商品总金额
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal totalPrice;
 
     /**
      * 运费
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal freight;
 
     /**
      * 最终金额（应付金额）
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal finalPrice;
+
+    /**
+     * 收件人姓名
+     */
+    private String recipientName;
+
+    /**
+     * 收件人详细地址
+     */
+    private String recipientDetailAddress;
+
+    /**
+     * 收件人手机号码
+     */
+    private String recipientMobile;
+
+    /**
+     * 收货地区名称（省、市、区县）如（安徽省 淮南市 寿县）
+     */
+    private String regionNames;
 
     /**
      * 下单时间
@@ -103,4 +139,10 @@ public class OrderEntity {
      * 订单更新时间
      */
     private Date updateTime;
+
+    /**
+     * 包含的订单明细
+     */
+    @TableField(exist = false)
+    private List<OrderDetailEntity> orderDetailList;
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 /**
  * @Author DongJunTao
  * @Description
@@ -21,17 +23,28 @@ public interface FeignOrderService {
 
     /**
      * 支付成功后修改状态
-     * @param code 交易号
+     * @param code
      * @return
      */
-    @PostMapping("updateStatus")
-    CommonResult updateStatus(@RequestParam("code") String code);
+    @PostMapping("updateOrderStatus")
+    CommonResult updateOrderStatus(@RequestParam("code") String code,
+                                   @RequestParam("orderStatus") String orderStatus);
 
     /**
      * 根据交易号所有子订单skuId和数量
-     * @param code 交易号
+     * @param code 交易号 或 订单号
+     * @param orderType 支付订单类型
      * @return
      */
     @GetMapping("getSkuIdAndCount")
-    CommonResult getSkuIdAndCount(@RequestParam("code") String code);
+    CommonResult getSkuIdAndCount(@RequestParam("code") String code,
+                                  @RequestParam("orderType") String orderType);
+
+    /**
+     * 根据参数获取订单信息
+     * @param params 参数
+     * @return
+     */
+    @GetMapping("getOrderByParams")
+    CommonResult getOrderByParams(@RequestParam Map<String, Object> params);
 }

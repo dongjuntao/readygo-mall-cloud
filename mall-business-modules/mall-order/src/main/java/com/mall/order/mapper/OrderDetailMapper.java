@@ -16,5 +16,8 @@ import java.util.List;
 @Mapper
 public interface OrderDetailMapper extends BaseMapper<OrderDetailEntity> {
 
-    List<OrderSkuCountVO> getSkuIdAndCount(String code);
+    List<OrderSkuCountVO> getSkuIdAndCountByTradeCode(String code);
+
+
+    List<OrderSkuCountVO> getSkuIdAndCountByOrderCode(String code);
 }

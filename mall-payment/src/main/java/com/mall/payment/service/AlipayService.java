@@ -7,12 +7,14 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.internal.util.StringUtils;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.utils.CurrentUserContextUtil;
+import com.mall.order.api.feign.FeignOrderService;
 import com.mall.order.api.feign.FeignTradeService;
 import com.mall.payment.vo.PayInfoVO;
 import com.mall.payment.vo.PayResultVO;
@@ -68,6 +70,9 @@ public class AlipayService {
     @Autowired
     private FeignTradeService feignTradeService;
 
+    @Autowired
+    private FeignOrderService feignOrderService;
+
     @PostConstruct
     public void init() {
         alipayClient = new DefaultAlipayClient(gateway, appId, privateKey, format, charset, publicKey, signType);
@@ -108,6 +113,8 @@ public class AlipayService {
         // 封装支付信息 返回
         PayInfoVO payInfoVO = new PayInfoVO();
         payInfoVO.setTradeCode(tradeCode);
+        payInfoVO.setPrice(price);
+        payInfoVO.setSubject(subject);
         payInfoVO.setUrl(qrCode);
         payInfoVO.setBody(body);
         return payInfoVO;
@@ -157,7 +164,13 @@ public class AlipayService {
         String outTradeNo = params.get("out_trade_no");
         Map<String, Object> remoteParams = new HashMap<>();
         remoteParams.put("code", outTradeNo);
-        CommonResult commonResult = feignTradeService.tradeInfo(remoteParams);//远程调用获取交易信息
+        CommonResult commonResult = null;
+        //交易号
+        if (outTradeNo.startsWith("T")) { //提交订单后立马支付（一个交易可能包含多个订单）
+            commonResult = feignTradeService.getTradeByParams(remoteParams);//远程调用获取交易信息
+        } else if (outTradeNo.startsWith("O")) { //订单号，后续在订单列表指定某个订单进行支付
+            commonResult = feignOrderService.getOrderByParams(remoteParams);
+        }
         if (commonResult == null || !"200".equals(commonResult.getCode()) ) {
             throw new AlipayApiException("out_trade_no is not valid");
         }

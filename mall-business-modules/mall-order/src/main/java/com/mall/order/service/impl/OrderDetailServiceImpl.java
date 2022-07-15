@@ -25,9 +25,14 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
     private OrderDetailMapper orderDetailMapper;
 
     @Override
-    @GlobalTransactional
     @Transactional
-    public List<OrderSkuCountVO> getSkuIdAndCount(String code) {
-        return orderDetailMapper.getSkuIdAndCount(code);
+    public List<OrderSkuCountVO> getSkuIdAndCountByTradeCode(String code) {
+        return orderDetailMapper.getSkuIdAndCountByTradeCode(code);
+    }
+
+    @Override
+    @Transactional
+    public List<OrderSkuCountVO> getSkuIdAndCountByOrderCode(String code) {
+        return orderDetailMapper.getSkuIdAndCountByOrderCode(code);
     }
 }

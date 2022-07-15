@@ -1,15 +1,17 @@
 package com.mall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.mall.order.enums.PayStatusEnum;
+import com.mall.order.enums.TradeStatusEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author DongJunTao
@@ -41,9 +43,9 @@ public class TradeEntity {
 
     /**
      * 付款状态
-     * @see com.mall.order.enums.PayStatusEnum
+     * @see TradeStatusEnum
      */
-    private PayStatusEnum payStatus;
+    private TradeStatusEnum payStatus;
 
     /**
      * 交易时间
@@ -53,11 +55,13 @@ public class TradeEntity {
     /**
      * 商品总金额
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal totalPrice;
 
     /**
      * 运费
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal freight;
 
     /**
@@ -65,5 +69,11 @@ public class TradeEntity {
      */
     @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal finalPrice;
+
+    /**
+     * 交易里包含的订单信息
+     */
+    @TableField(exist = false)
+    private List<OrderEntity> orderList;
 
 }

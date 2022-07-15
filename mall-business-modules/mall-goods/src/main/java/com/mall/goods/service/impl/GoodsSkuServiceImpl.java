@@ -59,7 +59,6 @@ public class GoodsSkuServiceImpl extends ServiceImpl<GoodsSkuMapper, GoodsSkuEnt
      * @param reduceStockList
      */
     @Override
-    @GlobalTransactional
     @Transactional
     public void batchReduceStock(List<Map<String, Object>> reduceStockList) {
         List<GoodsSkuEntity> goodsSkuList = new ArrayList<>();
@@ -67,6 +66,14 @@ public class GoodsSkuServiceImpl extends ServiceImpl<GoodsSkuMapper, GoodsSkuEnt
             QueryWrapper<GoodsSkuEntity> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq(reduceStock.get("skuId") != null, "id", Long.valueOf(String.valueOf(reduceStock.get("skuId"))));
             GoodsSkuEntity goodsSku = baseMapper.selectOne(queryWrapper);
+
+            //判断库存是否够用，不够，直接抛出异常，事务会回滚
+            Integer oldStock = goodsSku.getStock();
+            Integer reduceCount = Integer.valueOf(String.valueOf(reduceStock.get("count")));
+            if (oldStock < reduceCount) {
+                throw new RuntimeException("rest stock is not enough");
+            }
+
             //库存扣减
             goodsSku.setStock(goodsSku.getStock() - Integer.valueOf(String.valueOf(reduceStock.get("count"))));
             goodsSkuList.add(goodsSku);

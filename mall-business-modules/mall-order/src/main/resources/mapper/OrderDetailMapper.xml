@@ -7,11 +7,17 @@
         <result column="count" property="count" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="getSkuIdAndCount" parameterType="java.lang.String" resultMap="cartMap">
+    <select id="getSkuIdAndCountByTradeCode" parameterType="java.lang.String" resultMap="cartMap">
         select od.goods_sku_id sku_id, od.goods_count count from trade t
             left join order_info oi on t.id = oi.trade_id
             left join order_detail od on oi.id = od.order_id
         where t.code = #{code}
+    </select>
+
+    <select id="getSkuIdAndCountByOrderCode" parameterType="java.lang.String" resultMap="cartMap">
+        select od.goods_sku_id sku_id, od.goods_count count from order_info oi
+            left join order_detail od on oi.id = od.order_id
+        where oi.code = #{code}
     </select>
 
 </mapper>

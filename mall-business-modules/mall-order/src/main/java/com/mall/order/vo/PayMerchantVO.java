@@ -45,6 +45,11 @@ public class PayMerchantVO {
     private BigDecimal totalPrice;
 
     /**
+     * 该商家商品最终价格总计
+     */
+    private BigDecimal finalPrice;
+
+    /**
      * 商品信息
      */
     private List<PayGoodsVO> payGoodsList;

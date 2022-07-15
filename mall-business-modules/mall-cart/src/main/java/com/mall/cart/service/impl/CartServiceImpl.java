@@ -56,7 +56,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, CartEntity> impleme
         if (cartGoods == null) {
             cartGoods = new CartGoodsEntity();
             BeanUtils.copyProperties(cartGoodsDTO, cartGoods);
-            cartGoods.setChecked(false);//设置默认不选中
+            cartGoods.setChecked(true);//设置默认不选中
             cartGoods.setCreateTime(new Date());
             cartGoods.setCartId(cart.getId());
             cartGoodsMapper.insert(cartGoods);

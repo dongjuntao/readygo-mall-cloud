@@ -89,6 +89,7 @@ public class PayInfoGoodsController {
             }
             payMerchantVO.setTotalCount(totalCountForEveryMerchant);
             payMerchantVO.setTotalPrice(totalPriceForEveryMerchant);
+            payMerchantVO.setFinalPrice(totalPriceForEveryMerchant);//TODO 后续调整
             payMerchantVO.setPayGoodsList(payGoodsList);
             payMerchantVOList.add(payMerchantVO);
         }

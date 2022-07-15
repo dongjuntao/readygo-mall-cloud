@@ -14,5 +14,7 @@ import java.util.List;
  */
 public interface OrderDetailService extends IService<OrderDetailEntity> {
 
-    List<OrderSkuCountVO> getSkuIdAndCount(String code);
+    List<OrderSkuCountVO> getSkuIdAndCountByTradeCode(String code);
+
+    List<OrderSkuCountVO> getSkuIdAndCountByOrderCode(String code);
 }

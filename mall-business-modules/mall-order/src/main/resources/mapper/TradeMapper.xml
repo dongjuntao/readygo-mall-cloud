@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.order.mapper.TradeMapper">
+
+    <!--交易信息（包括订单信息）-->
+    <resultMap id="tradeDetailMap" type="com.mall.order.entity.TradeEntity">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="member_name" property="memberName" jdbcType="VARCHAR"/>
+        <result column="pay_status" property="payStatus" jdbcType="VARCHAR"/>
+        <result column="trade_time" property="tradeTime" jdbcType="VARCHAR"/>
+        <result column="total_price" property="totalPrice" jdbcType="VARCHAR"/>
+        <result column="freight" property="freight" jdbcType="VARCHAR"/>
+        <result column="final_price" property="finalPrice" jdbcType="VARCHAR"/>
+        <collection property="orderList" ofType="com.mall.order.entity.OrderEntity">
+            <result column="o_id" property="id" jdbcType="BIGINT"/>
+            <result column="o_code" property="code" jdbcType="VARCHAR"/>
+            <result column="trade_id" property="tradeId" jdbcType="BIGINT"/>
+            <result column="trade_code" property="tradeCode" jdbcType="VARCHAR"/>
+            <result column="o_member_id" property="memberId" jdbcType="BIGINT"/>
+            <result column="o_member_name" property="memberName" jdbcType="VARCHAR"/>
+            <result column="o_merchant_id" property="merchantId" jdbcType="BIGINT"/>
+            <result column="o_merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+            <result column="source" property="source" jdbcType="INTEGER"/>
+            <result column="status" property="status" jdbcType="VARCHAR"/>
+            <result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR"/>
+            <result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+            <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+            <result column="remark" property="remark" jdbcType="VARCHAR"/>
+            <result column="o_total_price" property="totalPrice" jdbcType="DECIMAL"/>
+            <result column="o_freight" property="freight" jdbcType="DECIMAL"/>
+            <result column="o_final_price" property="finalPrice" jdbcType="DECIMAL"/>
+            <result column="recipient_name" property="recipientName" jdbcType="VARCHAR"/>
+            <result column="recipient_detail_address" property="recipientDetailAddress" jdbcType="VARCHAR"/>
+            <result column="recipient_mobile" property="recipientMobile" jdbcType="VARCHAR"/>
+            <result column="region_names" property="regionNames" jdbcType="VARCHAR"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <!--查询订单列表（包含子订单）-->
+    <select id="getTradeDetailByCode" parameterType="java.lang.String" resultMap="tradeDetailMap">
+        select
+            t.id,
+            t.code,
+            t.member_id,
+            t.member_name,
+            t.pay_status,
+            t.trade_time,
+            t.total_price,
+            t.freight,
+            t.final_price,
+            oi.id o_id,
+            oi.code o_code,
+            oi.trade_id,
+            oi.trade_code,
+            oi.member_id o_member_id,
+            oi.member_name o_member_name,
+            oi.merchant_id o_merchant_id,
+            oi.merchant_name o_merchant_name,
+            oi.source,
+            oi.status,
+            oi.cancel_reason,
+            oi.pay_type,
+            oi.pay_time,
+            oi.remark,
+            oi.total_price o_total_price,
+            oi.freight o_freight,
+            oi.final_price o_final_price,
+            oi.create_time,
+            oi.update_time,
+            oi.recipient_name,
+            oi.recipient_detail_address,
+            oi.recipient_mobile,
+            oi.region_names
+        from trade t
+        left join order_info oi on oi.trade_id = t.id
+        where t.code = #{code}
+    </select>
+
+</mapper>

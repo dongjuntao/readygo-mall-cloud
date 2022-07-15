@@ -13,6 +13,8 @@ public class PayInfoVO {
 
     private String url;
     private String tradeCode;
+    private String price;
+    private String subject;
     private String body;
 
 }

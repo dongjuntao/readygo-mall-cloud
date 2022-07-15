@@ -3,6 +3,8 @@ package com.mall.order.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -21,6 +23,11 @@ public class OrderDetailEntity {
     private Long id;
 
     private Long orderId;
+
+    /**
+     * 父订单号
+     */
+    private String orderCode;
 
     /**
      * 子订单号
@@ -47,6 +54,7 @@ public class OrderDetailEntity {
     /**
      * 商品销售价格
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private BigDecimal goodsSellingPrice;
     /**
      * 购买数量
@@ -57,23 +65,4 @@ public class OrderDetailEntity {
      */
     private BigDecimal goodsSubTotal;
 
-    /**
-     * 收件人姓名
-     */
-    private String recipientName;
-
-    /**
-     * 收件人详细地址
-     */
-    private String recipientDetailAddress;
-
-    /**
-     * 收件人手机号码
-     */
-    private String recipientMobile;
-
-    /**
-     * 收货地区名称（省、市、区县）如（安徽省 淮南市 寿县）
-     */
-    private String regionNames;
 }

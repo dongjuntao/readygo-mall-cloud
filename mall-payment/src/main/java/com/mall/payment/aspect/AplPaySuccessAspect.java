@@ -7,6 +7,7 @@ import com.mall.goods.api.front.FeignFrontGoodsService;
 import com.mall.member.api.FeignCouponReceivedService;
 import com.mall.order.api.feign.FeignCouponSelectedService;
 import com.mall.order.api.feign.FeignOrderService;
+import com.mall.order.api.feign.FeignTradeService;
 import com.mall.payment.service.AlipayService;
 import io.seata.core.context.RootContext;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -40,6 +41,9 @@ public class AplPaySuccessAspect {
     private FeignOrderService feignOrderService;
 
     @Autowired
+    private FeignTradeService feignTradeService;
+
+    @Autowired
     private FeignCouponReceivedService feignCouponReceivedService;
 
     @Autowired
@@ -61,20 +65,23 @@ public class AplPaySuccessAspect {
      */
     @AfterReturning(value = "alipaySuccessAspect()", returning = "returnVal")
     private void sendAlipaySuccessInfo(Object returnVal){
-        System.out.println("RootContext.getXID()=sendAlipaySuccessInfo=="+ RootContext.getXID());
         try {
             //如果支付成功，【修改订单状态，商品库存扣减，更新优惠券状态】，需要调用订单服务，商品服务，优惠券服务
             Map<String, String> paramsMap = new HashMap<>();
             if (returnVal != null && "success".equals(String.valueOf(returnVal))) {
-                HttpServletRequest request =((ServletRequestAttributes)
-                        RequestContextHolder.getRequestAttributes()).getRequest();
+                HttpServletRequest request=((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
                 alipayService.getParamsMap(request, paramsMap);
-                String outTradeNo = paramsMap.get("out_trade_no");//商户端订单号
-                //修改交易和订单状态
-                feignOrderService.updateStatus(outTradeNo);
 
-                //先找到交易信息
-                CommonResult orderResult = feignOrderService.getSkuIdAndCount(outTradeNo);
+                String outTradeNo = paramsMap.get("out_trade_no");//商户端订单号
+                //修改订单状态（T开头，表示交易号，包含多个商铺订单一起支付，O开头表示订单号，单个商铺支付）
+                CommonResult orderResult = null;
+                if (outTradeNo.startsWith("T")) {
+                    feignTradeService.updateTradeStatus(outTradeNo, "PAID");
+                    orderResult = feignOrderService.getSkuIdAndCount(outTradeNo, "TRADE");
+                } else if (outTradeNo.startsWith("O")) {
+                    feignOrderService.updateOrderStatus(outTradeNo, "PAID");
+                    orderResult = feignOrderService.getSkuIdAndCount(outTradeNo, "ORDER");
+                }
                 ArrayList<Map<String,Object>> reduceStockMapList = new ArrayList<>();
                 if (orderResult != null && "200".equals(orderResult.getCode())) {
                     List orderList = (List)orderResult.getData();
@@ -89,7 +96,6 @@ public class AplPaySuccessAspect {
                 //批量减库存
                 feignFrontGoodsService.batchReduceStock(reduceStockMapList);
 
-                System.out.println("CurrentUserContextUtil.getCurrentUserInfo())=?="+CurrentUserContextUtil.getCurrentUserInfo());
                 //先查询交易时选中的优惠券信息，据此查询用户优惠券信息，并修改使用状态
                 //TODO 后续修改
                 Map<String, Object> map = new HashMap<>();

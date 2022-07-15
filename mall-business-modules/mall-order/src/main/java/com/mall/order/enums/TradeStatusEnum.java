@@ -2,24 +2,25 @@ package com.mall.order.enums;
 
 /**
  * @Author DongJunTao
- * @Description 订单状态枚举（父订单和子订单共用）
- * @Date 2022/6/15 21:13
+ * @Description 交易状态
+ * @Date 2022/6/18 21:43
  * @Version 1.0
  */
+public enum TradeStatusEnum {
 
-public enum OrderStatusEnum {
+    /**
+     * 交易状态
+     */
     UNPAID("待付款"),
     PAID("已付款"),
-    UNDELIVERED("待发货"),
-    DELIVERED("已发货"),
-    FINISHED("已完成"),
-    CANCELLED("已取消");
-
-    OrderStatusEnum(String description) {
-        this.description = description;
-    }
+    CANCEL("已取消"),
+    FINISHED("已完成");
 
     private String description;
+
+    TradeStatusEnum(String description) {
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;

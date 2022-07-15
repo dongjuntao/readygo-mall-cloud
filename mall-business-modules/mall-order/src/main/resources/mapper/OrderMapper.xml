@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.order.mapper.OrderMapper">
+
+    <resultMap id="orderAndOrderDetailMap" type="com.mall.order.entity.OrderEntity">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="trade_id" property="tradeId" jdbcType="BIGINT"/>
+        <result column="trade_code" property="tradeCode" jdbcType="VARCHAR"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="member_name" property="memberName" jdbcType="VARCHAR"/>
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR"/>
+        <result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+        <result column="freight" property="freight" jdbcType="DECIMAL"/>
+        <result column="final_price" property="finalPrice" jdbcType="DECIMAL"/>
+        <result column="recipient_name" property="recipientName" jdbcType="VARCHAR"/>
+        <result column="recipient_detail_address" property="recipientDetailAddress" jdbcType="VARCHAR"/>
+        <result column="recipient_mobile" property="recipientMobile" jdbcType="VARCHAR"/>
+        <result column="region_names" property="regionNames" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <collection property="orderDetailList" ofType="com.mall.order.entity.OrderDetailEntity">
+            <result column="detail_id" property="id" jdbcType="BIGINT"/>
+            <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+            <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+            <result column="sub_code" property="subCode" jdbcType="VARCHAR"/>
+            <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+            <result column="goods_sku_id" property="goodsSkuId" jdbcType="BIGINT"/>
+            <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+            <result column="goods_image" property="goodsImage" jdbcType="VARCHAR"/>
+            <result column="goods_selling_price" property="goodsSellingPrice" jdbcType="DECIMAL"/>
+            <result column="goods_count" property="goodsCount" jdbcType="INTEGER"/>
+            <result column="goods_sub_total" property="goodsSubTotal" jdbcType="DECIMAL"/>
+        </collection>
+    </resultMap>
+
+    <!--查询订单列表（包含子订单）-->
+    <select id="queryPage" parameterType="com.mall.order.entity.OrderEntity" resultMap="orderAndOrderDetailMap">
+        select oi.id,
+               oi.code,
+               oi.trade_id,
+               oi.trade_code,
+               oi.member_id,
+               oi.member_name,
+               oi.merchant_id,
+               oi.merchant_name,
+               oi.source,
+               oi.status,
+               oi.cancel_reason,
+               oi.pay_type,
+               oi.pay_time,
+               oi.remark,
+               oi.total_price,
+               oi.freight,
+               oi.final_price,
+               oi.create_time,
+               oi.update_time,
+               oi.recipient_name,
+               oi.recipient_detail_address,
+               oi.recipient_mobile,
+               oi.region_names,
+               od.id detail_id,
+               od.order_id,
+               od.order_code,
+               od.sub_code,
+               od.goods_id,
+               od.goods_sku_id,
+               od.goods_name,
+               od.goods_image,
+               od.goods_selling_price,
+               od.goods_count,
+               od.goods_sub_total
+        from order_info oi
+        left join order_detail od on oi.id = od.order_id
+        ${ew.customSqlSegment}
+    </select>
+
+</mapper>

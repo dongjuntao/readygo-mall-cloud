@@ -23,5 +23,11 @@ public interface TradeService extends IService<TradeEntity> {
 
     TradeEntity getTradeByParams(Map<String, Object> params);
 
-    int updateTradeStatus(String code);
+    int updateTradeStatus(String code, String tradeStatus);
+
+    /**
+     * 根据查询查询交易信息（包括订单信息）
+     * @return
+     */
+    TradeEntity getTradeDetailByParams(Map<String, Object> params);
 }

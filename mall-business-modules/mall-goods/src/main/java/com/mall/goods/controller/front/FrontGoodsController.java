@@ -85,8 +85,6 @@ public class FrontGoodsController {
      */
     @PostMapping(value = "batchReduceStock", consumes = "application/json", produces = "application/json")
     public CommonResult batchReduceStock(@RequestBody ArrayList<Map<String,Object>> reduceStockList){
-        String XID = RootContext.getXID();
-        System.out.println("XID======================="+XID);
         goodsSkuService.batchReduceStock(reduceStockList);
         return CommonResult.success();
     }

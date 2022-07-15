@@ -1,6 +1,7 @@
 package com.mall.order.util;
 
 import cn.hutool.core.util.IdUtil;
+import com.mall.order.enums.CodePrefixEnum;
 
 /**
  * @Author DongJunTao
@@ -12,12 +13,12 @@ public class SnowFlakeUtil {
 
     /**
      * 订单号生成
-     * @param predix
+     * @param predixEnum
      * @param workerId
      * @param datacenterId
      * @return
      */
-    public static String getSnowFlakeId(String predix, long workerId, long datacenterId) {
-        return predix + IdUtil.getSnowflake(workerId,datacenterId).nextId();
+    public static String getSnowFlakeId(CodePrefixEnum predixEnum, long workerId, long datacenterId) {
+        return predixEnum.name() + IdUtil.getSnowflake(workerId,datacenterId).nextId();
     }
 }

@@ -3,30 +3,21 @@ package com.mall.order.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.order.entity.OrderDetailEntity;
-import com.mall.order.entity.OrderEntity;
-import com.mall.order.entity.OrderInvoiceEntity;
 import com.mall.order.entity.TradeEntity;
+import com.mall.order.enums.CodePrefixEnum;
 import com.mall.order.enums.OrderStatusEnum;
-import com.mall.order.enums.PayStatusEnum;
-import com.mall.order.mapper.OrderInvoiceMapper;
-import com.mall.order.mapper.OrderMapper;
+import com.mall.order.enums.TradeStatusEnum;
 import com.mall.order.mapper.TradeMapper;
-import com.mall.order.service.OrderDetailService;
 import com.mall.order.service.OrderService;
 import com.mall.order.service.TradeService;
 import com.mall.order.util.SnowFlakeUtil;
 import com.mall.order.vo.*;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,14 +40,14 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
     public TradeEntity createTrade(TradeDetailVO tradeDetailVO) {
         PayVO payVO = tradeDetailVO.getPayVO(); //商家、商品、及支付相关数据
         TradeEntity tradeEntity = new TradeEntity(); //交易
-        tradeEntity.setCode(SnowFlakeUtil.getSnowFlakeId("T",1,1));
+        tradeEntity.setCode(SnowFlakeUtil.getSnowFlakeId(CodePrefixEnum.T,1,1));
         tradeEntity.setTotalPrice(payVO.getTotalPrice());
         tradeEntity.setFreight(payVO.getTotalFreight());
         tradeEntity.setFinalPrice(payVO.getFinalPrice());
         tradeEntity.setMemberId(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         tradeEntity.setMemberName(CurrentUserContextUtil.getCurrentUserInfo().getUserName());
         tradeEntity.setTradeTime(new Date());
-        tradeEntity.setPayStatus(PayStatusEnum.UNPAID);
+        tradeEntity.setPayStatus(TradeStatusEnum.UNPAID);
         tradeMapper.insert(tradeEntity);
         //保存订单信息
         orderService.saveOrder(tradeEntity, tradeDetailVO);
@@ -78,16 +69,28 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
      */
     @Override
     @Transactional
-    public int updateTradeStatus(String code) {
+    public int updateTradeStatus(String code, String tradeStatus) {
         QueryWrapper<TradeEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(!StringUtils.isEmpty(code), "code", code);
         TradeEntity trade = baseMapper.selectOne(queryWrapper);
         if (trade != null) {
             //修改交易付款状态
-            trade.setPayStatus(PayStatusEnum.PAID);
+            System.out.println("TradeStatusEnum=====tradeStatus======"+TradeStatusEnum.valueOf(tradeStatus));
+            trade.setPayStatus(TradeStatusEnum.valueOf(tradeStatus));
             baseMapper.updateById(trade);
-            orderService.updateOrderStatus(trade.getId());
+            orderService.updateOrderStatusByTrade(trade.getId(), tradeStatus);
         }
         return 1;
+    }
+
+    /**
+     * 获取交易信息详情（包括订单信息）
+     * @param params
+     * @return
+     */
+    @Override
+    public TradeEntity getTradeDetailByParams(Map<String, Object> params) {
+        String code = params.get("code") == null ? null: params.get("code").toString();
+        return tradeMapper.getTradeDetailByCode(code);
     }
 }

@@ -1,5 +1,6 @@
 package com.mall.goods.controller;
 
+import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @Author DongJunTao
@@ -25,8 +25,12 @@ public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
+
     @Autowired
     private GoodsSkuService goodsSkuService;
+
+    @Autowired
+    private FeignAdminUserService feignAdminUserService;
 
     /**
      * 新增商品
@@ -95,6 +99,31 @@ public class GoodsController {
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params){
         PageUtil pageResult = goodsService.queryPage(params);
+
+        //根据分页结果查询商品信息，并设置属性
+        List list = pageResult.getList();
+        if (list.size() == 0) {
+            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
+        }
+        Long[] adminUserIds = new Long[list.size()];
+        for (int i=0; i<list.size(); i++) {
+            GoodsEntity goods = (GoodsEntity) list.get(i);
+            adminUserIds[i] = goods.getAdminUserId();
+        }
+        //远程调用admin服务，获取商户信息
+        CommonResult result = feignAdminUserService.listByIds(adminUserIds);
+        if (result != null && "200".equals(result.getCode())) {
+            List resultList = (List) result.getData();
+            for (int i=0;i<list.size();i++) {
+                for(int j=0; j<resultList.size(); j++) {
+                    Map<String,Object> map = (Map)resultList.get(j);
+                    if (((GoodsEntity)list.get(i)).getAdminUserId().toString().equals(map.get("id").toString())) {
+                        ((GoodsEntity) list.get(i)).setMerchantName(map.get("name").toString());
+                        break;//一旦找到，退出当前循环，减少循环次数
+                    }
+                }
+            }
+        }
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
     }
 
@@ -105,6 +134,15 @@ public class GoodsController {
     public CommonResult listAll(@RequestParam Map<String, Object> params){
         List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsList(params);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), allGoodsEntityList);
+    }
+
+    /**
+     * 根据ids集合所有商品列表（不分页）
+     */
+    @GetMapping("/listByIds")
+    public CommonResult listByIds(@RequestParam Long[] ids){
+        List<GoodsEntity> goodsEntityList = goodsService.getByIds(ids);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsEntityList);
     }
 
     /**

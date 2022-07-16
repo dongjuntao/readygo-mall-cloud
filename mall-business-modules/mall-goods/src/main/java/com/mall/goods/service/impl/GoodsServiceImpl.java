@@ -12,6 +12,7 @@ import com.mall.goods.service.GoodsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,16 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
         queryWrapper.eq(adminUserId != null, "admin_user_id", adminUserId)
                 .orderByDesc("create_time");;
         return baseMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 根据id集合，查询所有商品信息
+     * @param ids
+     * @return
+     */
+    @Override
+    public List<GoodsEntity> getByIds(Long[] ids) {
+        return baseMapper.selectBatchIds(Arrays.asList(ids));
     }
 
     /**

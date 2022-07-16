@@ -54,10 +54,8 @@
                gs.description,
                gs.admin_user_id,
                gs.create_time,
-               gs.update_time,
-               au.name AS merchant_name
+               gs.update_time
         FROM goods_specifications gs
-        LEFT JOIN admin_user au ON au.id=gs.admin_user_id
         ${ew.customSqlSegment}
     </select>
     <select id="querySpecificationsDetail" resultMap="goodsSpecificationsDetailMap">

@@ -45,6 +45,12 @@
       <artifactId>mall-common-redis</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--mall-admin接口-->
+    <dependency>
+      <groupId>com.mall.service.api</groupId>
+      <artifactId>mall-admin-api</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <!--seata-->
     <dependency>
       <groupId>com.mall.common</groupId>

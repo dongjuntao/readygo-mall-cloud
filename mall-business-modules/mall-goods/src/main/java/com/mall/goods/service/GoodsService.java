@@ -24,6 +24,13 @@ public interface GoodsService extends IService<GoodsEntity> {
     List<GoodsEntity> getAllGoodsList(Map<String, Object> params);
 
     /**
+     * 根据id集合，查询所有商户信息
+     * @param ids
+     * @return
+     */
+    List<GoodsEntity> getByIds(Long[] ids);
+
+    /**
      * 根据商品id集合，查询商品【包含sku信息】
      * @param goodsIds
      * @return

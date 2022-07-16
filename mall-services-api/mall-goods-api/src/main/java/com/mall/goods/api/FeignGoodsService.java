@@ -25,4 +25,10 @@ public interface FeignGoodsService {
      */
     @GetMapping("/getGoodsById")
     CommonResult info(@RequestParam("id") Long id);
+
+    /**
+     * 根据ids集合所有商品列表（不分页）
+     */
+    @GetMapping("/listByIds")
+    CommonResult listByIds(@RequestParam Long[] ids);
 }

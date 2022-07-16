@@ -1,5 +1,6 @@
 package com.mall.coupon.controller;
 
+import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
@@ -8,6 +9,8 @@ import com.mall.coupon.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,12 +26,44 @@ public class CouponController {
     @Autowired
     private CouponService couponService;
 
+    @Autowired
+    private FeignAdminUserService feignAdminUserService;
+
     /**
      * 所有优惠券列表
      */
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params){
         PageUtil page = couponService.getByPage(params);
+
+        //根据分页结果查询商品信息，并设置属性
+        List list = page.getList();
+        if (list.size() == 0) {
+            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
+        }
+        List<Long> adminUserIds = new ArrayList<>();
+        for (int i=0; i<list.size(); i++) {
+            CouponEntity coupon = (CouponEntity) list.get(i);
+            if (coupon.getAdminUserId() != null) {
+                adminUserIds.add(coupon.getAdminUserId());
+            }
+        }
+        //远程调用admin服务，获取商户信息
+        CommonResult result = feignAdminUserService.listByIds(adminUserIds.toArray(new Long[adminUserIds.size()]));
+        if (result != null && "200".equals(result.getCode())) {
+            List resultList = (List) result.getData();
+            for (int i=0;i<list.size();i++) {
+                for(int j=0; j<resultList.size(); j++) {
+                    Map<String,Object> map = (Map)resultList.get(j);
+                    if (((CouponEntity)list.get(i)).getAdminUserId() != null &&
+                            ((CouponEntity)list.get(i)).getAdminUserId().toString().equals(map.get("id").toString())) {
+                        ((CouponEntity) list.get(i)).setMerchantName(map.get("name").toString());
+                        break;//一旦找到，退出当前循环，减少循环次数
+                    }
+                }
+            }
+        }
+
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 

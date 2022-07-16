@@ -41,7 +41,7 @@ public class FrontAdminUserController {
      * 所有用户列表（不分页）
      */
     @GetMapping("/listByIds")
-    public CommonResult listAll(@RequestParam Long[] ids){
+    public CommonResult listByIds(@RequestParam Long[] ids){
         List<AdminUserEntity> adminUserEntityList = adminUserService.getByIds(ids);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), adminUserEntityList);
     }

@@ -92,10 +92,8 @@
                gs.volume,
                gs.create_time,
                gs.update_time,
-               au.name AS merchant_name,
                b.name AS brand_name
         FROM goods gs
-        LEFT JOIN admin_user au ON au.id=gs.admin_user_id
         LEFT JOIN brand b ON gs.brand_id=b.id
         ${ew.customSqlSegment}
     </select>

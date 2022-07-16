@@ -1,8 +1,10 @@
 package com.mall.goods.controller;
 
+import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
+import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.entity.GoodsSpecificationsDetailEntity;
 import com.mall.goods.entity.GoodsSpecificationsEntity;
 import com.mall.goods.service.GoodsSpecificationsDetailService;
@@ -25,8 +27,12 @@ public class GoodsSpecificationsController {
 
     @Autowired
     private GoodsSpecificationsService goodsSpecificationsService;
+
     @Autowired
     private GoodsSpecificationsDetailService goodsSpecificationsDetailService;
+
+    @Autowired
+    private FeignAdminUserService feignAdminUserService;
 
     /**
      * 新增商品规格
@@ -94,6 +100,32 @@ public class GoodsSpecificationsController {
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params) {
         PageUtil pageResult = goodsSpecificationsService.queryPage(params);
+
+        //根据分页结果查询商品信息，并设置属性
+        List list = pageResult.getList();
+        if (list.size() == 0) {
+            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
+        }
+        Long[] adminUserIds = new Long[list.size()];
+        for (int i=0; i<list.size(); i++) {
+            GoodsSpecificationsEntity goodsSpecifications = (GoodsSpecificationsEntity) list.get(i);
+            adminUserIds[i] = goodsSpecifications.getAdminUserId();
+        }
+        //远程调用admin服务，获取商户信息
+        CommonResult result = feignAdminUserService.listByIds(adminUserIds);
+        if (result != null && "200".equals(result.getCode())) {
+            List resultList = (List) result.getData();
+            for (int i=0;i<list.size();i++) {
+                for(int j=0; j<resultList.size(); j++) {
+                    Map<String,Object> map = (Map)resultList.get(j);
+                    if (((GoodsSpecificationsEntity)list.get(i)).getAdminUserId().toString().equals(map.get("id").toString())) {
+                        ((GoodsSpecificationsEntity) list.get(i)).setMerchantName(map.get("name").toString());
+                        break;//一旦找到，退出当前循环，减少循环次数
+                    }
+                }
+            }
+        }
+
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
     }
 

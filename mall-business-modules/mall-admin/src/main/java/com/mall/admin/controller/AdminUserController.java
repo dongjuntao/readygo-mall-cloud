@@ -172,6 +172,15 @@ public class AdminUserController {
     }
 
     /**
+     * 根据ids集合所有用户列表（不分页）
+     */
+    @GetMapping("/listByIds")
+    public CommonResult listByIds(@RequestParam Long[] ids){
+        List<AdminUserEntity> adminUserEntityList = adminUserService.getByIds(ids);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), adminUserEntityList);
+    }
+
+    /**
      * 商家审核
      */
     @PutMapping("/audit/{id}")

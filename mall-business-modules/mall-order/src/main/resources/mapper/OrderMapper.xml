@@ -38,10 +38,12 @@
             <result column="goods_selling_price" property="goodsSellingPrice" jdbcType="DECIMAL"/>
             <result column="goods_count" property="goodsCount" jdbcType="INTEGER"/>
             <result column="goods_sub_total" property="goodsSubTotal" jdbcType="DECIMAL"/>
+            <result column="after_sales_status" property="afterSalesStatus" jdbcType="VARCHAR"/>
+            <result column="comment_status" property="commentStatus" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
 
-    <!--查询订单列表（包含子订单）-->
+    <!--分页查询订单列表（包含子订单）-->
     <select id="queryPage" parameterType="com.mall.order.entity.OrderEntity" resultMap="orderAndOrderDetailMap">
         select oi.id,
                oi.code,
@@ -76,10 +78,60 @@
                od.goods_image,
                od.goods_selling_price,
                od.goods_count,
-               od.goods_sub_total
+               od.goods_sub_total,
+               od.after_sales_status,
+               od.comment_status
         from order_info oi
         left join order_detail od on oi.id = od.order_id
         ${ew.customSqlSegment}
+    </select>
+
+
+    <!--分页查询订单列表（包含子订单）-->
+    <select id="getOrderAndDetail" parameterType="com.mall.order.entity.OrderEntity" resultMap="orderAndOrderDetailMap">
+        select oi.id,
+               oi.code,
+               oi.trade_id,
+               oi.trade_code,
+               oi.member_id,
+               oi.member_name,
+               oi.merchant_id,
+               oi.merchant_name,
+               oi.source,
+               oi.status,
+               oi.cancel_reason,
+               oi.pay_type,
+               oi.pay_time,
+               oi.remark,
+               oi.total_price,
+               oi.freight,
+               oi.final_price,
+               oi.create_time,
+               oi.update_time,
+               oi.recipient_name,
+               oi.recipient_detail_address,
+               oi.recipient_mobile,
+               oi.region_names,
+               od.id detail_id,
+               od.order_id,
+               od.order_code,
+               od.sub_code,
+               od.goods_id,
+               od.goods_sku_id,
+               od.goods_name,
+               od.goods_image,
+               od.goods_selling_price,
+               od.goods_count,
+               od.goods_sub_total,
+               od.after_sales_status,
+               od.comment_status
+        from order_info oi
+            left join order_detail od on oi.id = od.order_id
+        <where>
+            <if test="code != null and code != ''">
+                oi.code = #{code}
+            </if>
+        </where>
     </select>
 
 </mapper>

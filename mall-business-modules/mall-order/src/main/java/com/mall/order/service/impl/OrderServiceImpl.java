@@ -11,9 +11,7 @@ import com.mall.order.entity.OrderDetailEntity;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.entity.OrderInvoiceEntity;
 import com.mall.order.entity.TradeEntity;
-import com.mall.order.enums.CodePrefixEnum;
-import com.mall.order.enums.OrderStatusEnum;
-import com.mall.order.enums.PayTypeEnum;
+import com.mall.order.enums.*;
 import com.mall.order.mapper.OrderInvoiceMapper;
 import com.mall.order.mapper.OrderMapper;
 import com.mall.order.service.OrderDetailService;
@@ -115,6 +113,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                 orderDetailEntity.setGoodsName(payGoodsVO.getName());
                 orderDetailEntity.setGoodsSkuId(payGoodsVO.getGoodsSkuId());
                 orderDetailEntity.setGoodsSubTotal(payGoodsVO.getSubTotal());
+                orderDetailEntity.setAfterSalesStatus(AfterSalesStatusEnum.NEW);//默认新订单，不能申请售后
+                orderDetailEntity.setCommentStatus(CommentStatusEnum.NEW); //默认新订单，不能评价
                 orderDetailList.add(orderDetailEntity);
             });
             //订单详细信息入库
@@ -138,7 +138,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         List<OrderEntity> newOrderList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(orderList)) {
             for (OrderEntity order : orderList) {
-                System.out.println("OrderStatusEnum===orderStatus=="+OrderStatusEnum.valueOf(orderStatus));
+                if ("PAID".equals(orderStatus)) {
+                    //修改售后状态为 未申请，表示可以申请售后
+                    orderDetailService.updateAfterSalesStatusByOrderId(order.getId(), AfterSalesStatusEnum.NOT_APPLIED);
+                }
                 order.setStatus(OrderStatusEnum.valueOf(orderStatus));
                 newOrderList.add(order);
             }
@@ -152,6 +155,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         QueryWrapper<OrderEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(code), "code", code);
         return baseMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public OrderEntity getOrderAndDetailByParams(Map<String, Object> params) {
+        String code = params.get("code") == null ? null: params.get("code").toString();
+        OrderEntity orderParams = new OrderEntity();
+        orderParams.setCode(code);
+        return baseMapper.getOrderAndDetail(orderParams);
     }
 
     /**
@@ -168,6 +179,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             order.setStatus(OrderStatusEnum.valueOf(orderStatus));
             if ("PAID".equals(orderStatus)) {
                 order.setPayTime(new Date());//支付时间
+                orderDetailService.updateAfterSalesStatusByOrderId(order.getId(), AfterSalesStatusEnum.NOT_APPLIED);
             }
             orderMapper.updateById(order);
         }

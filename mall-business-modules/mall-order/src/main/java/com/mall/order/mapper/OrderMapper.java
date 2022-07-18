@@ -25,4 +25,5 @@ public interface OrderMapper extends BaseMapper<OrderEntity> {
             @Param("page") Page<OrderEntity> page,
             @Param(Constants.WRAPPER) QueryWrapper<OrderEntity> wrapper);
 
+    OrderEntity getOrderAndDetail(OrderEntity orderEntity);
 }

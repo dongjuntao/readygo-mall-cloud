@@ -36,7 +36,19 @@ public interface OrderService extends IService<OrderEntity> {
      */
     void updateOrderStatusByTrade(Long tradeId, String orderStatus);
 
+    /**
+     * 获取订单表信息
+     * @param params
+     * @return
+     */
     OrderEntity getOrderByParams(Map<String, Object> params);
+
+    /**
+     * 获取订单表信息（包括订单明细）
+     * @param params
+     * @return
+     */
+    OrderEntity getOrderAndDetailByParams(Map<String, Object> params);
 
     /**
      * 修改订单状态

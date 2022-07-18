@@ -88,6 +88,17 @@ public class OrderController {
         return CommonResult.success(order);
     }
 
+    /**
+     * 根据参数获取订单信息（包括订单明细）
+     * @param params 参数
+     * @return
+     */
+    @GetMapping("getOrderAndDetailByParams")
+    public CommonResult getOrderAndDetailByParams(@RequestParam Map<String, Object> params) {
+        OrderEntity order = orderService.getOrderAndDetailByParams(params);
+        return CommonResult.success(order);
+    }
+
 
     /**
      * 取消订单

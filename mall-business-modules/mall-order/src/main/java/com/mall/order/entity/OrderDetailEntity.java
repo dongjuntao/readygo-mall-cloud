@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.mall.order.enums.AfterSalesStatusEnum;
+import com.mall.order.enums.CommentStatusEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -64,5 +66,17 @@ public class OrderDetailEntity {
      * 小计
      */
     private BigDecimal goodsSubTotal;
+
+    /**
+     * 售后状态
+     * @see com.mall.order.enums.AfterSalesStatusEnum
+     */
+    private AfterSalesStatusEnum afterSalesStatus;
+
+    /**
+     * 评价状态
+     * @see com.mall.order.enums.CommentStatusEnum
+     */
+    private CommentStatusEnum commentStatus;
 
 }

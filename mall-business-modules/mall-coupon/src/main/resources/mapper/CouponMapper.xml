@@ -85,10 +85,8 @@
                c.create_by,
                c.update_by,
                c.create_time,
-               c.update_time,
-               au.name AS merchant_name
+               c.update_time
         FROM coupon c
-        LEFT JOIN admin_user au ON au.id=c.admin_user_id
         <where>
             <if test="ids != null and ids.length > 0">
                 AND c.id in

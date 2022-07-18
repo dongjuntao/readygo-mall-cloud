@@ -75,7 +75,6 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
         TradeEntity trade = baseMapper.selectOne(queryWrapper);
         if (trade != null) {
             //修改交易付款状态
-            System.out.println("TradeStatusEnum=====tradeStatus======"+TradeStatusEnum.valueOf(tradeStatus));
             trade.setPayStatus(TradeStatusEnum.valueOf(tradeStatus));
             baseMapper.updateById(trade);
             orderService.updateOrderStatusByTrade(trade.getId(), tradeStatus);

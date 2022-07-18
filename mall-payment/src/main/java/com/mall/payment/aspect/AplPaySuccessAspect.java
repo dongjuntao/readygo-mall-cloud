@@ -115,6 +115,7 @@ public class AplPaySuccessAspect {
             }
         } catch (Exception e) {
             //TODO 事务回滚 该订单 显示交易失败，后面可以协调用户进行退款处理, 另外，用掉的优惠券需要恢复
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }

@@ -2,6 +2,7 @@ package com.mall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.order.entity.OrderDetailEntity;
+import com.mall.order.enums.AfterSalesStatusEnum;
 import com.mall.order.vo.OrderSkuCountVO;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface OrderDetailService extends IService<OrderDetailEntity> {
     List<OrderSkuCountVO> getSkuIdAndCountByTradeCode(String code);
 
     List<OrderSkuCountVO> getSkuIdAndCountByOrderCode(String code);
+
+    void updateAfterSalesStatus(Long orderDetailId, AfterSalesStatusEnum afterSalesStatus);
+
+    void updateAfterSalesStatusByOrderId(Long orderId, AfterSalesStatusEnum afterSalesStatus);
 }

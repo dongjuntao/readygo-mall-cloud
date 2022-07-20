@@ -93,5 +93,38 @@ mybatis-plus:
 
 seata:
   enabled: true
-  enable-auto-data-source-proxy: true #是否开启数据源自动代理,默认为true
-  tx-service-group: fsp_tx_group  #要与配置文件中的vgroupMapping一致
+  application-id: mall-order
+  tx-service-group: default_tx_group
+  # 是否自动开启数据源代理
+  enable-auto-data-source-proxy: true
+  # 数据源代理模式，使用AT模式
+  data-source-proxy-mode: AT
+  service:
+    # 事务群组
+    vgroupMapping:
+      default_tx_group: default  # default 的值为集群的名字，在配置 seata service 的时候指定的
+    grouplist:
+      default: 49.234.85.17:8091
+    enable-degrade: false
+    # 全局事务开关
+    disable-global-transaction: false
+  # 配置中心，需要和 seata server 保持一致
+  config:
+    type: nacos
+    nacos:
+      namespace: "a361e8e8-d854-465a-ba3c-4119bf32e078"
+      server-addr: "49.234.85.17:8848"
+      group: "nacos-seata"
+      username: "nacos"
+      password: "nacos"
+      data-id: "nacos-config.properties"
+  # 注册中心，需要和 seata server 保持一致
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      group: "SEATA_GROUP"
+      namespace: "a361e8e8-d854-465a-ba3c-4119bf32e078"
+      username: "nacos"
+      password: "nacos"
+      server-addr: "49.234.85.17:8848"

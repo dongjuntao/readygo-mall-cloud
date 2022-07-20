@@ -1,5 +1,6 @@
 package com.mall.goods.controller.front;
 
+import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.dto.CurrentUserInfo;
 import com.mall.common.base.enums.ResultCodeEnum;
@@ -32,12 +33,18 @@ public class FrontGoodsController {
     @Autowired
     private GoodsSkuService goodsSkuService;
 
+    @Autowired
+    private FeignAdminUserService feignAdminUserService;
+
     /**
-     * 商品信息
+     * 商品信息（包括sku）
      */
     @GetMapping("getGoodsById")
     public CommonResult getGoodsById(@RequestParam("id") Long id){
         GoodsEntity goodsEntity = goodsService.getGoodsAndSku(id);
+        CommonResult result = feignAdminUserService.getAdminUserById(goodsEntity.getAdminUserId());
+        Map<String,Object> resultMap = (Map<String, Object>)result.getData();
+        goodsEntity.setMerchantName(String.valueOf(resultMap.get("name"))); //商户名称
         return CommonResult.success(goodsEntity);
     }
 

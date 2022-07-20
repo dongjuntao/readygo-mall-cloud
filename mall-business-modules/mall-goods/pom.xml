@@ -56,6 +56,21 @@
       <groupId>com.mall.common</groupId>
       <artifactId>mall-common-seata</artifactId>
       <version>${common.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>io.seata</groupId>
+          <artifactId>seata-spring-boot-starter</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.seata</groupId>
+          <artifactId>seata-all</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.seata</groupId>
+      <artifactId>seata-spring-boot-starter</artifactId>
+      <version>1.4.2</version>
     </dependency>
     <!--mall-admin接口-->
     <dependency>

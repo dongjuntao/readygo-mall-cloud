@@ -17,45 +17,11 @@
   </parent>
 
   <dependencies>
-
-<!--    <dependency>-->
-<!--      <groupId>com.alibaba.cloud</groupId>-->
-<!--      <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
-<!--      <exclusions>-->
-<!--        <exclusion>-->
-<!--          <groupId>io.seata</groupId>-->
-<!--          <artifactId>seata-spring-boot-starter</artifactId>-->
-<!--        </exclusion>-->
-<!--      </exclusions>-->
-<!--    </dependency>-->
-<!--    &lt;!&ndash; seata-all版本与seata server版本保持一致 &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>io.seata</groupId>-->
-<!--      <artifactId>seata-all</artifactId>-->
-<!--      <version>1.4.0</version>&lt;!&ndash;$NO-MVN-MAN-VER$&ndash;&gt;-->
-<!--    </dependency>-->
-
-
+    <!--seata-->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.seata</groupId>
-          <artifactId>seata-spring-boot-starter</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.seata</groupId>
-          <artifactId>seata-all</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
-    <dependency>
-      <groupId>io.seata</groupId>
-      <artifactId>seata-spring-boot-starter</artifactId>
-      <version>1.4.0</version>
-    </dependency>
-
 
   </dependencies>
 </project>

@@ -65,6 +65,7 @@ public class AplPaySuccessAspect {
      */
     @AfterReturning(value = "alipaySuccessAspect()", returning = "returnVal")
     private void sendAlipaySuccessInfo(Object returnVal){
+        System.out.println("RootContext.getXID();=="+RootContext.getXID());
         try {
             //如果支付成功，【修改订单状态，商品库存扣减，更新优惠券状态】，需要调用订单服务，商品服务，优惠券服务
             Map<String, String> paramsMap = new HashMap<>();

@@ -191,9 +191,11 @@ public class CartController {
         } else if (type == 2) {
             List<CartGoodsEntity> cartGoodsList = new ArrayList<>();
             CartGoodsEntity cartGoods = cartGoodsService.getById(bizId);
-            cartGoods.setChecked(checked);
-            cartGoodsList.add(cartGoods);
-            cartGoodsService.updateBatch(cartGoodsList);
+            if (cartGoods != null) {
+                cartGoods.setChecked(checked);
+                cartGoodsList.add(cartGoods);
+                cartGoodsService.updateBatch(cartGoodsList);
+            }
         }
 
         return CommonResult.success();

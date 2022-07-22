@@ -33,6 +33,7 @@ public class CartDoubleDeleteAspect {
      */
     @Pointcut("execution(* com.mall.cart.service.CartGoodsService.updateBatch(..)) || " +
             "execution(* com.mall.cart.service.CartService.deleteBatch(..)) || " +
+            "execution(* com.mall.cart.service.CartGoodsService.delete(..)) || " +
             "execution(* com.mall.cart.service.CartService.saveCart(..))")
     private void cartDoubleDeleteAspect() {}
 

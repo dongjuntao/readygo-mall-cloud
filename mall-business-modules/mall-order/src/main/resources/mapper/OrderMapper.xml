@@ -87,7 +87,7 @@
     </select>
 
 
-    <!--分页查询订单列表（包含子订单）-->
+    <!--查询订单（包含子订单）-->
     <select id="getOrderAndDetail" parameterType="com.mall.order.entity.OrderEntity" resultMap="orderAndOrderDetailMap">
         select oi.id,
                oi.code,

@@ -28,6 +28,10 @@ public class FootprintEntity {
      */
     private Long goodsId;
     /**
+     * 商户id
+     */
+    private Long merchantId;
+    /**
      * 创建时间
      */
     private Date createTime;

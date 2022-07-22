@@ -26,6 +26,10 @@ public class CollectGoodsEntity {
      */
     private Long goodsId;
     /**
+     * 商户id
+     */
+    private Long merchantId;
+    /**
      * 关联的收藏商品
      */
     @TableField(exist = false)

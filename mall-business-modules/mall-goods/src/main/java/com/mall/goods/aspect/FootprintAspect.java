@@ -1,11 +1,15 @@
 package com.mall.goods.aspect;
 
+import com.alibaba.fastjson.JSONObject;
+import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.RabbitExchangeConstant;
 import com.mall.common.base.constant.RabbitRoutingKeyConstant;
 import com.mall.common.base.dto.CurrentUserInfo;
 import com.mall.common.base.utils.CurrentUserContextUtil;
+import com.mall.goods.entity.GoodsEntity;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -36,15 +40,16 @@ public class FootprintAspect {
 
     /**
      * 拦截controller,发送消息通知
-     * @param joinPoint
+     * @param returnVal
      */
-    @After(value = "footprintAspect()")
-    private void sendFootprint(JoinPoint joinPoint){
-
-        Object[] paramValueList = joinPoint.getArgs();
-        Long goodsId = null; //商品id
-        if (paramValueList.length > 0) {
-            goodsId = Long.parseLong(paramValueList[0].toString());
+    @AfterReturning(value = "footprintAspect()", returning = "returnVal")
+    private void sendFootprint(CommonResult returnVal){
+        Long goodsId = null;
+        Long merchantId = null;
+        if (returnVal != null && "200".equals(returnVal.getCode())) {
+            GoodsEntity goodsEntity = (GoodsEntity) returnVal.getData();
+            goodsId = goodsEntity.getId();
+            merchantId = goodsEntity.getAdminUserId();
         }
         //先判断用户是否登录，若已登录，再需要发送消息
         if (CurrentUserContextUtil.getCurrentUserInfo() != null) {
@@ -52,8 +57,9 @@ public class FootprintAspect {
             Map<String, Object> message = new HashMap<>();
             message.put("userId",userId);
             message.put("goodsId",goodsId);
+            message.put("merchantId", merchantId);
             rabbitTemplate.convertAndSend(RabbitExchangeConstant.FOOTPRINT_EXCHANGE,
-                    RabbitRoutingKeyConstant.FOOTPRINT_ROUTING_KEY,message);
+                    RabbitRoutingKeyConstant. FOOTPRINT_ROUTING_KEY,message);
         }
     }
 

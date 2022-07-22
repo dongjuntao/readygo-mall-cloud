@@ -41,6 +41,7 @@ public class FootprintConsumer {
             footprint = new FootprintEntity();
             footprint.setMemberId(Long.valueOf(String.valueOf(message.get("userId"))));
             footprint.setGoodsId(Long.valueOf(String.valueOf(message.get("goodsId"))));
+            footprint.setMerchantId(Long.valueOf(String.valueOf(message.get("merchantId"))));
             footprint.setCreateTime(new Date());
         } else {
             footprint.setUpdateTime(new Date());

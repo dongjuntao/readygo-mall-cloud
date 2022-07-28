@@ -15,6 +15,10 @@ rabbitmq3.9.15(或其他版本)，
 seata1.4.0，
 nacos2.0.3
 
+#### 前端项目
+后台管理端（运营管理端和商户端）：git@github.com:dongjuntao/readygo-mall-admin-vue.git，
+门户端（PC端网站）：git@github.com:dongjuntao/readygo-mall-portal-vue.git
+
 #### 系统部分截图
 ![输入图片说明](1.png)
 ![输入图片说明](2.png)

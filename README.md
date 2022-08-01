@@ -1,35 +1,28 @@
-# readygo-mall-cloud
+# readygo-mall-cloud 莱蒂购商城
 
 #### 介绍
-商城后端项目
+一个基于SpringCloud, SpringCloud alibaba的微服务商城系统，支持单商户，多商户。目前包含的功能有“系统管理”，“会员管理”，“商品管理”，“商户管理”，“物流管理”，“营销管理”，“商城管理”等，使用的技术有Java,SpringBoot,SpringCloud,SpringCloudAlibaba, mysql, redis, rabbitmq, seata, nacos, SpringCloud gateway, SpringCloud OAuth等
 
 #### 软件架构
 
 
-#### 平台目录结构
-```
-|——groud-mall-cloud ----------父项目及公共依赖
-|   |mall-admin ----------商城管理端后端组件
-|   |mall-common ----------公共组件
-|   |   |mall-common-base ----------公共基础组件
-|   |   |mall-common-captcha ----------验证码组件
-|   |   |mall-common-config --------公共配置信息
-|   |   |mall-common-redis --------redis
-|   |   |mall-common--util ----------公共工具类
-
-```
-#### 后端端口说明
-```
-mall-admin: 8000
-```
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
 #### 使用说明
+本地启动前，请确保基础软件的安装
+jdk8，
+mysql8(或mysql5.7)，
+redis5.0.3(或其他版本)，
+rabbitmq3.9.15(或其他版本)，
+seata1.4.0，
+nacos2.0.3
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 前端项目
+后台管理端（运营管理端和商户端）：git@github.com:dongjuntao/readygo-mall-admin-vue.git，
+门户端（PC端网站）：git@github.com:dongjuntao/readygo-mall-portal-vue.git
+
+#### 系统部分截图
+![输入图片说明](1.png)
+![输入图片说明](2.png)
+![输入图片说明](3.png)
+![输入图片说明](4.png)
+![输入图片说明](5.png)
+![输入图片说明](6.png)

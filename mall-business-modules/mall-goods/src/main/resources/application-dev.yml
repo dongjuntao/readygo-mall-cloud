@@ -34,9 +34,9 @@ spring:
     database: 3
   #rabbit mq
   rabbitmq:
-    host: 127.0.0.1
-    username: guest
-    password: guest
+    host: 49.234.85.17
+    username: rabbitAdmin
+    password: rabbit@123
     virtual-host: /
     port: 5672
     listener:

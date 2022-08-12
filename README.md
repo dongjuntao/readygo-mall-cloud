@@ -7,9 +7,9 @@
 
 
 #### 使用说明
-本地启动前，请确保基础软件的安装
+本地可以直接启动所有服务(可以使用idea services),所需的中间件已经安装在云服务，若需要使用自己的中间件，请在启动前确保其已安装并在项目中修改配置信息，所需的中间件有：
 jdk8，
-mysql8(或mysql5.7)，
+mysql5.7(或以上版本)，
 redis5.0.3(或其他版本)，
 rabbitmq3.9.15(或其他版本)，
 seata1.4.0，
@@ -18,11 +18,3 @@ nacos2.0.3
 #### 前端项目
 后台管理端（运营管理端和商户端）：git@github.com:dongjuntao/readygo-mall-admin-vue.git，
 门户端（PC端网站）：git@github.com:dongjuntao/readygo-mall-portal-vue.git
-
-#### 系统部分截图
-![输入图片说明](1.png)
-![输入图片说明](2.png)
-![输入图片说明](3.png)
-![输入图片说明](4.png)
-![输入图片说明](5.png)
-![输入图片说明](6.png)

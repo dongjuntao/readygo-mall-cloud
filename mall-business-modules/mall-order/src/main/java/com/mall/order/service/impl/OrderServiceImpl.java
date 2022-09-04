@@ -57,12 +57,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         QueryWrapper<OrderEntity> wrapper = new QueryWrapper<>();
         //订单号
         String code = params.get("code") == null ? null : params.get("code").toString();
-        //买家id
-        Long memberId = params.get("memberId") == null ? null: Long.valueOf((params.get("memberId").toString()));
-        //手机号码
+        //订单状态
         String status = params.get("status") == null ? null : params.get("status").toString();
         wrapper.like(StringUtils.isNotBlank(code), "oi.code", code)
-                .eq(memberId != null, "oi.member_id", memberId)
                 .eq(StringUtils.isNotBlank(status), "oi.status", status);
         IPage<OrderEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);

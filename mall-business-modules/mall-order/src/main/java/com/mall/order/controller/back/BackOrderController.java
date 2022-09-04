@@ -1,14 +1,12 @@
-package com.mall.order.controller;
+package com.mall.order.controller.back;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.order.entity.OrderEntity;
-import com.mall.order.entity.TradeEntity;
 import com.mall.order.service.OrderDetailService;
 import com.mall.order.service.OrderService;
-import com.mall.order.service.TradeService;
 import com.mall.order.vo.OrderSkuCountVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +17,13 @@ import java.util.Map;
 
 /**
  * @Author DongJunTao
- * @Description 订单controller
+ * @Description 订单controller（管理端）
  * @Date 2022/6/30 21:28
  * @Version 1.0
  */
 @RestController
-@RequestMapping( "order")
-public class OrderController {
-
-    @Autowired
-    private OrderDetailService orderDetailService;
+@RequestMapping( "back/order")
+public class BackOrderController {
 
     @Autowired
     private OrderService orderService;
@@ -58,23 +53,6 @@ public class OrderController {
     }
 
     /**
-     * 根据交易号所有子订单skuId和数量
-     * @param code 交易号
-     * @return
-     */
-    @GetMapping("getSkuIdAndCount")
-    public CommonResult getSkuIdAndCount(@RequestParam("code") String code,
-                                         @RequestParam("orderType") String orderType) {
-        List<OrderSkuCountVO> orderSkuCountList = new ArrayList<>();
-        if ("TRADE".equals(orderType)) {
-            orderSkuCountList = orderDetailService.getSkuIdAndCountByTradeCode(code);
-        } else if ("ORDER".equals(orderType)) {
-            orderSkuCountList = orderDetailService.getSkuIdAndCountByOrderCode(code);
-        }
-        return CommonResult.success(orderSkuCountList);
-    }
-
-    /**
      * 根据参数获取订单信息
      * @param params 参数
      * @return
@@ -95,7 +73,6 @@ public class OrderController {
         OrderEntity order = orderService.getOrderAndDetailByParams(params);
         return CommonResult.success(order);
     }
-
 
     /**
      * 取消订单

@@ -27,11 +27,13 @@ spring:
           include: '*'
   #####redis配置
   redis:
-    host: localhost
+    host: 49.234.85.17
     port: 6379
-    password: 123456789
+    password: DJTReadyGO19930312!@#$legion
     timeout: 6000
     database: 0
+    lettuce:
+      shutdown-timeout: 100
 
 feign:
   client:

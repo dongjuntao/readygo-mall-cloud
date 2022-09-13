@@ -101,4 +101,7 @@ public class SeckillConfigEntity {
     @TableField(exist = false)
     private String startAndEndTime;
 
+    @TableField(exist = false)
+    List<SeckillGoodsSkuEntity> seckillGoodsSkuList;
+
 }

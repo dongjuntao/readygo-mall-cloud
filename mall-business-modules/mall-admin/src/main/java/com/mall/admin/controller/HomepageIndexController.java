@@ -79,6 +79,8 @@ public class HomepageIndexController {
             homepagePlateList.get(i).setList(goodsList);
         }
 
+        //获取当前时段
+
         //===========================================组装数据================================================
         List<Object> dataList = new ArrayList<>();
 

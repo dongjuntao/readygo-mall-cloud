@@ -3,55 +3,27 @@
 <mapper namespace="com.mall.seckill.mapper.SeckillGoodsSkuMapper">
 
     <!--秒杀商品sku详细信息-->
-    <resultMap id="goodsSkuVOMap" type="com.mall.seckill.vo.GoodsSkuVO">
-        <id column="id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
-        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
-        <result column="code" property="code" jdbcType="VARCHAR"/>
-        <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
-        <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL"/>
-        <result column="stock" property="stock" jdbcType="INTEGER"/>
-        <result column="enable" property="enable" jdbcType="TINYINT"/>
-        <result column="image" property="image" jdbcType="VARCHAR"/>
-        <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
-        <result column="extend_value" property="extendValue" jdbcType="VARCHAR"/>
-        <association property="seckillGoodsSkuVO" javaType="com.mall.seckill.vo.SeckillGoodsSkuVO">
-            <result column="seckill_goods_sku_id" property="id" jdbcType="BIGINT"/>
-            <result column="seckill_config_id" property="seckillConfigId" jdbcType="BIGINT"/>
-            <result column="goods_sku_id" property="goodsSkuId" jdbcType="BIGINT"/>
-            <result column="seckill_price" property="seckillPrice" jdbcType="DECIMAL"/>
-            <result column="seckill_stock" property="seckillStock" jdbcType="INTEGER"/>
-        </association>
+    <resultMap id="SeckillGoodsSkuVOMap" type="com.mall.seckill.vo.SeckillGoodsSkuVO">
+        <result column="seckill_goods_sku_id" property="id" jdbcType="BIGINT"/>
+        <result column="seckill_config_id" property="seckillConfigId" jdbcType="BIGINT"/>
+        <result column="goods_sku_id" property="goodsSkuId" jdbcType="BIGINT"/>
+        <result column="seckill_price" property="seckillPrice" jdbcType="DECIMAL"/>
+        <result column="seckill_stock" property="seckillStock" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询商品sku信息，关联秒杀商品的sku详细信息-->
-    <select id="getGoodsSkuListById" resultMap="goodsSkuVOMap">
+    <select id="getSeckillGoodsSkuListByIds" resultMap="SeckillGoodsSkuVOMap">
         SELECT
-            gs.id,
-            gs.goods_id,
-            gs.code,
-            gs.original_price,
-            gs.selling_price,
-            gs.stock,
-            gs.enable,
-            gs.image,
-            gs.extend_attr,
-            gs.extend_value,
             sgs.id AS seckill_goods_sku_id,
             sgs.seckill_config_id,
             sgs.goods_sku_id,
             sgs.seckill_price,
             sgs.seckill_stock
-        FROM goods_sku gs
-        LEFT JOIN seckill_goods_sku sgs ON gs.id=sgs.goods_sku_id
-           <if test="seckillConfigId == null">
-               AND sgs.seckill_config_id IS NULL
-           </if>
-            <if test="seckillConfigId != null">
-                AND sgs.seckill_config_id=#{seckillConfigId}
-            </if>
+        FROM seckill_goods_sku sgs
         WHERE
-            gs.goods_id=#{goodsId}
+            sgs.goods_sku_id in
+            <foreach collection="seckillGoodsSkuIds" item="seckillGoodsSkuId" index="index" open="(" close=")" separator=",">
+                #{seckillGoodsSkuId}
+            </foreach>
     </select>
-
-
 </mapper>

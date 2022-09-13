@@ -16,9 +16,5 @@ import java.util.Map;
  */
 public interface SeckillGoodsSkuService extends IService<SeckillGoodsSkuEntity> {
 
-    /**
-     * 查询秒杀商品相关信息(关联商品sku)
-     * @return
-     */
-    List<GoodsSkuVO> getGoodsSkuListById(Map<String, Object> params);
+    List<SeckillGoodsSkuEntity> getSeckillGoodsSkuListByIds(List<Long> seckillGoodsSkuIds);
 }

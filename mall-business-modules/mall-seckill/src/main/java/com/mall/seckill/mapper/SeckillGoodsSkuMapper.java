@@ -18,9 +18,10 @@ import java.util.List;
 public interface SeckillGoodsSkuMapper extends BaseMapper<SeckillGoodsSkuEntity> {
 
     /**
-     * 查询秒杀商品相关信息(关联商品sku)
+     * 根据skuId集合查询秒杀商品列表
+     * @param seckillGoodsSkuIds
      * @return
      */
-    List<GoodsSkuVO> getGoodsSkuListById(@Param("seckillConfigId") Long seckillConfigId,
-                             @Param("goodsId") Long goodsId);
+    List<SeckillGoodsSkuEntity> getSeckillGoodsSkuListByIds(List<Long> seckillGoodsSkuIds);
+
 }

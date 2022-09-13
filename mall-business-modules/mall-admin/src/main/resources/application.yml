@@ -20,12 +20,12 @@ aj:
     cache-type: redis # 保存到redis
     type: default
     water-mark:
-    slip-offset: 10 # 校验滑动拼图允许误差偏移量(默认5像素)
+    slip-offset: 5 # 校验滑动拼图允许误差偏移量(默认5像素)
     aes-status: true
     interference-options: 2
     history-data-clear-enable: true
     req-frequency-limit-enable: true # 接口请求次数一分钟限制是否开启 true|false
-    req-get-lock-limit: 60 # 验证失败50次，get接口锁定
+    req-get-lock-limit: 100 # 验证失败50次，get接口锁定
     req-get-lock-seconds: 60 # 验证失败后，锁定时间间隔
-    req-get-minute-limit: 30 # get接口一分钟内请求数限制
-    req-check-minute-limit: 30 # check接口一分钟内请求数限制
+    req-get-minute-limit: 500 # get接口一分钟内请求数限制
+    req-check-minute-limit: 300 # check接口一分钟内请求数限制

@@ -9,6 +9,7 @@ import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.entity.SeckillGoodsSkuEntity;
 import com.mall.seckill.mapper.SeckillConfigMapper;
+import com.mall.seckill.mapper.SeckillGoodsSkuMapper;
 import com.mall.seckill.service.SeckillConfigService;
 import com.mall.seckill.service.SeckillGoodsSkuService;
 import com.mall.seckill.vo.GoodsSkuVO;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author DongJunTao
@@ -36,6 +34,9 @@ public class SeckillConfigServiceImpl
 
     @Autowired
     private SeckillGoodsSkuService seckillGoodsSkuService;
+
+    @Autowired
+    private SeckillGoodsSkuMapper seckillGoodsSkuMapper;
 
     /**
      * 新增秒杀配置
@@ -117,7 +118,12 @@ public class SeckillConfigServiceImpl
      */
     @Override
     public void deleteBatch(Long[] seckillConfigIds) {
+        //删除秒杀配置
         this.removeByIds(Arrays.asList(seckillConfigIds));
+        //删除秒杀商品
+        QueryWrapper<SeckillGoodsSkuEntity> deleteWrapper = new QueryWrapper<>();
+        deleteWrapper.in("seckill_config_id", seckillConfigIds);
+        seckillGoodsSkuMapper.delete(deleteWrapper);
     }
 
     @Override

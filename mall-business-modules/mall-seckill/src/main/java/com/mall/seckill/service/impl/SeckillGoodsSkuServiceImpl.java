@@ -23,14 +23,9 @@ public class SeckillGoodsSkuServiceImpl
 
     @Autowired
     private SeckillGoodsSkuMapper seckillGoodsSkuMapper;
-    /**
-     * 查询秒杀商品相关信息(关联商品sku)
-     * @return
-     */
+
     @Override
-    public List<GoodsSkuVO> getGoodsSkuListById(Map<String, Object> params) {
-        Long seckillConfigId = params.get("seckillConfigId") == null ? null: Long.valueOf((params.get("seckillConfigId").toString()));
-        Long goodsId = params.get("goodsId") == null ? null: Long.valueOf((params.get("goodsId").toString()));
-        return seckillGoodsSkuMapper.getGoodsSkuListById(seckillConfigId, goodsId);
+    public List<SeckillGoodsSkuEntity> getSeckillGoodsSkuListByIds(List<Long> seckillGoodsSkuIds) {
+        return seckillGoodsSkuMapper.getSeckillGoodsSkuListByIds(seckillGoodsSkuIds);
     }
 }

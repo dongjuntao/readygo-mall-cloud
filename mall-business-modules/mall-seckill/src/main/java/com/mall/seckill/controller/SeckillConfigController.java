@@ -1,5 +1,7 @@
 package com.mall.seckill.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
@@ -7,9 +9,14 @@ import com.mall.common.base.utils.DateUtil;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.api.FeignGoodsService;
 import com.mall.seckill.entity.SeckillConfigEntity;
+import com.mall.seckill.entity.SeckillGoodsSkuEntity;
 import com.mall.seckill.service.SeckillConfigService;
+import com.mall.seckill.vo.GoodsSkuVO;
+import com.mall.seckill.vo.SeckillGoodsSkuVO;
 import io.netty.util.internal.StringUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.Date;
@@ -126,6 +133,32 @@ public class SeckillConfigController {
     @GetMapping("getSeckillConfigById")
     public CommonResult getSeckillConfigById(@RequestParam("seckillConfigId") Long seckillConfigId){
         SeckillConfigEntity seckillConfigEntity = seckillConfigService.getById(seckillConfigId);
+        //远程获取用户信息，作为商户名称
+        CommonResult userResult = feignAdminUserService.getAdminUserById(seckillConfigEntity.getAdminUserId());
+        if (userResult != null && "200".equals(userResult.getCode())) {
+            JSONObject userJSON = JSONObject.parseObject(JSON.toJSONString(userResult.getData()));
+            seckillConfigEntity.setMerchantName(userJSON.getString("name"));
+        }
+        //远程获取商信息，作为商品名称
+        CommonResult goodsResult = feignGoodsService.info(seckillConfigEntity.getGoodsId());
+        if (goodsResult != null && "200".equals(goodsResult.getCode())) {
+            JSONObject goodsJSON = JSONObject.parseObject(JSON.toJSONString(goodsResult.getData()));
+            seckillConfigEntity.setGoodsName(goodsJSON.getString("name"));
+            List<GoodsSkuVO> goodsSkuList = goodsJSON.getJSONArray("goodsSkuList").toJavaList(GoodsSkuVO.class);
+            List<SeckillGoodsSkuEntity> seckillGoodsSkuList = seckillConfigEntity.getSeckillGoodsSkuList();
+            if (!CollectionUtils.isEmpty(seckillGoodsSkuList)) {
+                for (GoodsSkuVO goodsSkuVO : goodsSkuList) {
+                    for (SeckillGoodsSkuEntity seckillGoodsSkuEntity: seckillGoodsSkuList) {
+                        if (goodsSkuVO.getId().equals(seckillGoodsSkuEntity.getGoodsSkuId())) {
+                            SeckillGoodsSkuVO seckillGoodsSku = new SeckillGoodsSkuVO();
+                            BeanUtils.copyProperties(seckillGoodsSkuEntity, seckillGoodsSku);
+                            goodsSkuVO.setSeckillGoodsSkuVO(seckillGoodsSku);
+                        }
+                    }
+                }
+            }
+            seckillConfigEntity.setGoodsSkuList(goodsSkuList);
+        }
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), seckillConfigEntity);
     }
 

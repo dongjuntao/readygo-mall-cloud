@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 49.234.85.17
  Source Server Type    : MySQL
- Source Server Version : 80022
- Source Host           : 127.0.0.1:3306
+ Source Server Version : 80029
+ Source Host           : 49.234.85.17:3306
  Source Schema         : readygo-mall-member
 
  Target Server Type    : MySQL
- Target Server Version : 80022
+ Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 01/08/2022 15:59:26
+ Date: 20/09/2022 16:47:55
 */
 
 SET NAMES utf8mb4;
@@ -67,7 +67,7 @@ CREATE TABLE `coupon_received`  (
 -- Records of coupon_received
 -- ----------------------------
 INSERT INTO `coupon_received` VALUES (3, 1, 1, 0, '2022-06-04 22:24:50');
-INSERT INTO `coupon_received` VALUES (4, 1, 2, 0, '2022-06-04 22:24:58');
+INSERT INTO `coupon_received` VALUES (4, 1, 2, 2, '2022-06-04 22:24:58');
 INSERT INTO `coupon_received` VALUES (5, 1, 4, 1, '2022-06-04 22:25:06');
 INSERT INTO `coupon_received` VALUES (6, 1, 5, 1, '2022-06-04 22:25:16');
 INSERT INTO `coupon_received` VALUES (7, 1, 3, 1, '2022-06-04 22:26:13');
@@ -85,16 +85,29 @@ CREATE TABLE `footprint`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '记录创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '记录修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 89 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of footprint
 -- ----------------------------
-INSERT INTO `footprint` VALUES (71, 1, 4, 2, '2022-07-22 14:59:13', '2022-07-22 15:43:39');
-INSERT INTO `footprint` VALUES (72, 1, 5, 4, '2022-07-22 15:00:30', '2022-07-22 15:43:45');
-INSERT INTO `footprint` VALUES (73, 1, 2, 2, '2022-07-22 15:00:36', '2022-07-22 15:43:50');
-INSERT INTO `footprint` VALUES (74, 1, 1, 2, '2022-07-22 15:00:38', '2022-07-26 09:37:30');
-INSERT INTO `footprint` VALUES (75, 1, 3, 2, '2022-07-22 15:51:41', '2022-07-22 17:52:34');
+INSERT INTO `footprint` VALUES (71, 1, 4, 2, '2022-07-22 14:59:13', '2022-09-16 17:23:05');
+INSERT INTO `footprint` VALUES (72, 1, 5, 4, '2022-07-22 15:00:30', '2022-09-08 17:22:22');
+INSERT INTO `footprint` VALUES (73, 1, 2, 2, '2022-07-22 15:00:36', '2022-09-20 15:06:40');
+INSERT INTO `footprint` VALUES (74, 1, 1, 2, '2022-07-22 15:00:38', '2022-09-20 16:10:07');
+INSERT INTO `footprint` VALUES (75, 1, 3, 2, '2022-07-22 15:51:41', '2022-09-20 13:34:42');
+INSERT INTO `footprint` VALUES (76, 1, 6, 2, '2022-09-04 21:33:59', '2022-09-14 15:23:37');
+INSERT INTO `footprint` VALUES (77, 1, 7, 4, '2022-09-05 14:40:22', '2022-09-14 15:23:35');
+INSERT INTO `footprint` VALUES (78, 3, 2, 2, '2022-09-08 13:01:38', '2022-09-08 14:11:36');
+INSERT INTO `footprint` VALUES (79, 3, 4, 2, '2022-09-08 13:02:38', '2022-09-08 13:06:48');
+INSERT INTO `footprint` VALUES (80, 3, 1, 2, '2022-09-08 13:06:49', '2022-09-08 14:03:29');
+INSERT INTO `footprint` VALUES (81, 1, 8, 2, '2022-09-08 21:46:15', '2022-09-09 15:29:08');
+INSERT INTO `footprint` VALUES (82, 1, 15, 5, '2022-09-09 14:52:35', '2022-09-13 21:26:46');
+INSERT INTO `footprint` VALUES (83, 1, 10, 4, '2022-09-09 15:28:07', NULL);
+INSERT INTO `footprint` VALUES (84, 1, 9, 4, '2022-09-09 15:28:13', '2022-09-09 15:28:57');
+INSERT INTO `footprint` VALUES (85, 1, 11, 2, '2022-09-09 15:29:00', '2022-09-15 14:28:32');
+INSERT INTO `footprint` VALUES (86, 1, 14, 5, '2022-09-09 15:30:00', '2022-09-15 14:28:27');
+INSERT INTO `footprint` VALUES (87, 1, 12, 3, '2022-09-09 15:37:29', '2022-09-16 17:23:03');
+INSERT INTO `footprint` VALUES (88, 1, 13, 3, '2022-09-09 15:40:53', '2022-09-15 14:28:30');
 
 -- ----------------------------
 -- Table structure for member
@@ -114,13 +127,13 @@ CREATE TABLE `member`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES (1, 'test', '$2a$10$dx0qKrlQGEKGa8AF4VouFOSOw5ncEUiX5xorbd3wgdBrofT3GcXrO', '大董', 'tom', 0, '18888888888', '342933877266566715', '2022-07-06', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1650361266276458099xiaomi.jpg', '2022-04-15 19:12:40', '2022-07-08 15:42:14');
-INSERT INTO `member` VALUES (2, 'test2', '$2a$10$5emJJ60wCCESYnCTSK2AM.TekTPA1f1HOXXA2nTg7iq8scvj9CmY.', '小董', 'tom', 0, '15726553345', NULL, '2022-04-07', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1650377712122635512apple.jpg', '2022-04-15 21:04:03', '2022-05-03 17:41:44');
+INSERT INTO `member` VALUES (1, 'test', '$2a$10$8//5kSsttPB6uZM8Xl/DJ.36kIqvc5jpcZJFNnUDd5ipYEJ0nvA0m', '测试买家', '隔壁老王', 0, '18888888888', '342933877266566715', '2022-07-06', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1650361266276458099xiaomi.jpg', '2022-04-15 19:12:40', '2022-09-14 10:29:00');
+INSERT INTO `member` VALUES (2, 'test2', '$2a$10$nOA3z9YkpfhXWRF44m9dKeDoHnTwDawJHo21JlJHU.//poRTArfKu', '测试买家', '武大郎', 0, '15726553345', NULL, '2022-04-07', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1650377712122635512apple.jpg', '2022-04-15 21:04:03', '2022-09-14 10:28:49');
 
 -- ----------------------------
 -- Table structure for recipient_info

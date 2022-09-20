@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 49.234.85.17
  Source Server Type    : MySQL
- Source Server Version : 80022
- Source Host           : 127.0.0.1:3306
+ Source Server Version : 80029
+ Source Host           : 49.234.85.17:3306
  Source Schema         : readygo-mall-admin
 
  Target Server Type    : MySQL
- Target Server Version : 80022
+ Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 01/08/2022 15:58:47
+ Date: 20/09/2022 16:46:39
 */
 
 SET NAMES utf8mb4;
@@ -47,10 +47,10 @@ CREATE TABLE `admin_user`  (
 -- Records of admin_user
 -- ----------------------------
 INSERT INTO `admin_user` VALUES (1, '平台管理员', 'admin', '$2a$10$5dcQM16N174zklJ91lrLqePrhHZXJvyAAtSRV9ey20b.uoNNPgYhO', NULL, NULL, '15999999999', '15999999999@163.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2021-12-28 11:06:18', NULL);
-INSERT INTO `admin_user` VALUES (2, '入驻商户', 'merchant', '$2a$10$5dcQM16N174zklJ91lrLqePrhHZXJvyAAtSRV9ey20b.uoNNPgYhO', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1629040064180632733apple.jpg', NULL, '15888888888', '15888888888@163.com', 1, 1, '好的，通过', NULL, 1, 0, NULL, NULL, '2022-01-19 13:33:47', NULL);
-INSERT INTO `admin_user` VALUES (3, '平台自营商户', 'merchant3', '$2a$10$5dcQM16N174zklJ91lrLqePrhHZXJvyAAtSRV9ey20b.uoNNPgYhO', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1629179514968844327xiaomi.jpg', NULL, '15777777777', '15777777777@163.com', 1, 1, NULL, NULL, 1, 1, NULL, NULL, '2022-01-19 16:16:52', '2022-05-01 17:38:24');
-INSERT INTO `admin_user` VALUES (4, '入驻商户2', 'merchant2', '$2a$10$5dcQM16N174zklJ91lrLqePrhHZXJvyAAtSRV9ey20b.uoNNPgYhO', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1629040064180632733apple.jpg', NULL, '15888888888', '15888888888@163.com', 1, 1, '好的，通过', NULL, 1, 0, NULL, NULL, '2022-01-19 13:33:47', NULL);
-INSERT INTO `admin_user` VALUES (5, '平台自营商户2', 'merchant4', '$2a$10$5dcQM16N174zklJ91lrLqePrhHZXJvyAAtSRV9ey20b.uoNNPgYhO', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1629179514968844327xiaomi.jpg', NULL, '15777777777', '15777777777@163.com', 1, 1, NULL, NULL, 1, 1, NULL, NULL, '2022-01-19 16:16:52', '2022-05-01 17:38:24');
+INSERT INTO `admin_user` VALUES (2, '测试商户', 'merchant', '$2a$10$EwWVpPkpaiSrlOhmO0cAs.XoUa8uNo6VKktpzY2AlccxbBloAp74O', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/16631228201779431161.jpg', '', '15888888888', '15888888888@163.com', 1, 1, '好的，通过', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1663122841963608949readygo.png', 1, 0, '795,796,807', '航头镇鹤沙航城', '2022-01-19 13:33:47', '2022-09-14 10:34:09');
+INSERT INTO `admin_user` VALUES (3, '平台自营商户', 'merchant3', '$2a$10$L6xW0/RZ.k0V.ugIDNgxP.j6RQDInXhAC76KY14UtbxsxJKrzNFXm', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1629179514968844327xiaomi.jpg', NULL, '15777777777', '15777777777@163.com', 1, 1, NULL, NULL, 1, 1, NULL, NULL, '2022-01-19 16:16:52', '2022-09-14 10:37:55');
+INSERT INTO `admin_user` VALUES (4, '测试商户', 'merchant2', '$2a$10$KyWetw2oRZWr7qboYCnSo.d26rrP.VmvOL4Ebw7YuAxNlSSy00d5m', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/16631228732711267772.jpg', '', '15888888888', '15888888888@163.com', 1, 1, '好的，通过', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1663122894469142964readygo.png', 1, 0, '795,796,807', '航头镇鹤沙航城', '2022-01-19 13:33:47', '2022-09-14 10:35:27');
+INSERT INTO `admin_user` VALUES (5, '平台自营商户2', 'merchant4', '$2a$10$9FeJ87b.jG7bILS/RFsPEOCUpwO8m5Lzs3PE6QV18Qo2ygi/L7S8q', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1629179514968844327xiaomi.jpg', NULL, '15777777777', '15777777777@163.com', 1, 1, NULL, NULL, 1, 1, NULL, NULL, '2022-01-19 16:16:52', '2022-09-14 10:38:13');
 
 -- ----------------------------
 -- Table structure for express_setting
@@ -63,7 +63,7 @@ CREATE TABLE `express_setting`  (
   `enable` tinyint(0) NULL DEFAULT NULL COMMENT '是否开启',
   `is_default` tinyint(0) NULL DEFAULT NULL COMMENT '是否默认',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of express_setting
@@ -217,15 +217,14 @@ CREATE TABLE `homepage_plate`  (
   `max_limit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '板块内最大容纳商品数量',
   `enable` tinyint(0) NULL DEFAULT NULL COMMENT '是否启用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城首页板块' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城首页板块' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of homepage_plate
 -- ----------------------------
-INSERT INTO `homepage_plate` VALUES (1, '秒杀', 'seckill', '#EE3F3F', '查看更多', '10', 1);
-INSERT INTO `homepage_plate` VALUES (2, '好货推荐', 'goodsRecommend', '#EE3F3F', '更多好货', '10', 1);
-INSERT INTO `homepage_plate` VALUES (3, '新品排行', 'newGoodsSort', '#F64494', '更多新品', '10', 1);
-INSERT INTO `homepage_plate` VALUES (4, '优惠多多', 'manyDiscounts', '#E77B4C', '更多优惠', '10', 1);
+INSERT INTO `homepage_plate` VALUES (1, '好货推荐', 'goodsRecommend', '#EE3F3F', '更多好货', '10', 1);
+INSERT INTO `homepage_plate` VALUES (2, '新品排行', 'newGoodsSort', '#F64494', '更多新品', '10', 1);
+INSERT INTO `homepage_plate` VALUES (3, '优惠多多', 'manyDiscounts', '#E77B4C', '更多优惠', '10', 1);
 
 -- ----------------------------
 -- Table structure for homepage_plate_goods_related
@@ -236,14 +235,51 @@ CREATE TABLE `homepage_plate_goods_related`  (
   `plate_id` bigint(0) NULL DEFAULT NULL COMMENT '板块id',
   `goods_id` bigint(0) NULL DEFAULT NULL COMMENT '商品id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of homepage_plate_goods_related
 -- ----------------------------
-INSERT INTO `homepage_plate_goods_related` VALUES (30, 2, 1);
-INSERT INTO `homepage_plate_goods_related` VALUES (31, 3, 1);
-INSERT INTO `homepage_plate_goods_related` VALUES (32, 4, 1);
+INSERT INTO `homepage_plate_goods_related` VALUES (78, 2, 1);
+INSERT INTO `homepage_plate_goods_related` VALUES (79, 2, 7);
+INSERT INTO `homepage_plate_goods_related` VALUES (80, 2, 2);
+INSERT INTO `homepage_plate_goods_related` VALUES (81, 2, 8);
+INSERT INTO `homepage_plate_goods_related` VALUES (82, 2, 14);
+INSERT INTO `homepage_plate_goods_related` VALUES (83, 2, 15);
+INSERT INTO `homepage_plate_goods_related` VALUES (84, 2, 13);
+INSERT INTO `homepage_plate_goods_related` VALUES (85, 2, 12);
+INSERT INTO `homepage_plate_goods_related` VALUES (86, 2, 10);
+INSERT INTO `homepage_plate_goods_related` VALUES (87, 2, 6);
+INSERT INTO `homepage_plate_goods_related` VALUES (88, 3, 4);
+INSERT INTO `homepage_plate_goods_related` VALUES (89, 3, 2);
+INSERT INTO `homepage_plate_goods_related` VALUES (90, 3, 15);
+INSERT INTO `homepage_plate_goods_related` VALUES (91, 3, 12);
+INSERT INTO `homepage_plate_goods_related` VALUES (92, 3, 14);
+INSERT INTO `homepage_plate_goods_related` VALUES (93, 3, 10);
+INSERT INTO `homepage_plate_goods_related` VALUES (94, 3, 6);
+INSERT INTO `homepage_plate_goods_related` VALUES (95, 3, 3);
+INSERT INTO `homepage_plate_goods_related` VALUES (96, 3, 1);
+INSERT INTO `homepage_plate_goods_related` VALUES (97, 3, 5);
+INSERT INTO `homepage_plate_goods_related` VALUES (98, 4, 13);
+INSERT INTO `homepage_plate_goods_related` VALUES (99, 4, 15);
+INSERT INTO `homepage_plate_goods_related` VALUES (100, 4, 12);
+INSERT INTO `homepage_plate_goods_related` VALUES (101, 4, 14);
+INSERT INTO `homepage_plate_goods_related` VALUES (102, 4, 9);
+INSERT INTO `homepage_plate_goods_related` VALUES (103, 4, 5);
+INSERT INTO `homepage_plate_goods_related` VALUES (104, 4, 4);
+INSERT INTO `homepage_plate_goods_related` VALUES (105, 4, 8);
+INSERT INTO `homepage_plate_goods_related` VALUES (106, 4, 7);
+INSERT INTO `homepage_plate_goods_related` VALUES (107, 4, 6);
+INSERT INTO `homepage_plate_goods_related` VALUES (108, 1, 15);
+INSERT INTO `homepage_plate_goods_related` VALUES (109, 1, 13);
+INSERT INTO `homepage_plate_goods_related` VALUES (110, 1, 14);
+INSERT INTO `homepage_plate_goods_related` VALUES (111, 1, 12);
+INSERT INTO `homepage_plate_goods_related` VALUES (112, 1, 11);
+INSERT INTO `homepage_plate_goods_related` VALUES (113, 1, 8);
+INSERT INTO `homepage_plate_goods_related` VALUES (114, 1, 5);
+INSERT INTO `homepage_plate_goods_related` VALUES (115, 1, 4);
+INSERT INTO `homepage_plate_goods_related` VALUES (116, 1, 3);
+INSERT INTO `homepage_plate_goods_related` VALUES (117, 1, 7);
 
 -- ----------------------------
 -- Table structure for logistics_company
@@ -288,7 +324,7 @@ CREATE TABLE `menu`  (
   `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单图标',
   `order_num` int(0) NULL DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -386,6 +422,8 @@ INSERT INTO `menu` VALUES (107, 105, '修改', '', 'system-payType-update', 2, '
 INSERT INTO `menu` VALUES (108, 105, '删除', '', 'system-payType-delete', 2, '', 0);
 INSERT INTO `menu` VALUES (109, 105, '批量删除', '', 'system-payType-batchDelete', 2, '', 0);
 INSERT INTO `menu` VALUES (110, 105, '查询', '', 'system-payType-search', 2, '', 0);
+INSERT INTO `menu` VALUES (111, 0, '订单管理', '', '', 0, 'tixing', 0);
+INSERT INTO `menu` VALUES (112, 111, '订单列表', 'order/order', '', 1, 'tubiao', 0);
 
 -- ----------------------------
 -- Table structure for pay_type
@@ -4180,166 +4218,172 @@ CREATE TABLE `role_menu`  (
   `role_id` bigint(0) NULL DEFAULT NULL COMMENT '角色id',
   `menu_id` bigint(0) NULL DEFAULT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 805 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 966 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES (395, 2, 31);
-INSERT INTO `role_menu` VALUES (396, 2, 32);
-INSERT INTO `role_menu` VALUES (397, 2, 44);
-INSERT INTO `role_menu` VALUES (398, 2, 45);
-INSERT INTO `role_menu` VALUES (399, 2, 46);
-INSERT INTO `role_menu` VALUES (400, 2, 47);
-INSERT INTO `role_menu` VALUES (401, 2, 55);
-INSERT INTO `role_menu` VALUES (402, 2, 34);
-INSERT INTO `role_menu` VALUES (403, 2, 51);
-INSERT INTO `role_menu` VALUES (404, 2, 52);
-INSERT INTO `role_menu` VALUES (405, 2, 53);
-INSERT INTO `role_menu` VALUES (406, 2, 54);
-INSERT INTO `role_menu` VALUES (407, 2, 56);
-INSERT INTO `role_menu` VALUES (408, 2, 41);
-INSERT INTO `role_menu` VALUES (409, 2, 42);
-INSERT INTO `role_menu` VALUES (410, 2, 78);
-INSERT INTO `role_menu` VALUES (411, 2, 79);
-INSERT INTO `role_menu` VALUES (412, 2, 80);
-INSERT INTO `role_menu` VALUES (413, 2, 81);
-INSERT INTO `role_menu` VALUES (414, 2, 82);
-INSERT INTO `role_menu` VALUES (415, 2, 83);
-INSERT INTO `role_menu` VALUES (416, 2, 84);
-INSERT INTO `role_menu` VALUES (417, 2, 85);
-INSERT INTO `role_menu` VALUES (418, 2, 43);
-INSERT INTO `role_menu` VALUES (419, 2, 86);
-INSERT INTO `role_menu` VALUES (420, 2, 87);
-INSERT INTO `role_menu` VALUES (421, 2, 88);
-INSERT INTO `role_menu` VALUES (422, 2, 89);
-INSERT INTO `role_menu` VALUES (423, 2, 90);
-INSERT INTO `role_menu` VALUES (424, 2, 91);
-INSERT INTO `role_menu` VALUES (425, 2, 92);
-INSERT INTO `role_menu` VALUES (509, 3, 32);
-INSERT INTO `role_menu` VALUES (510, 3, 44);
-INSERT INTO `role_menu` VALUES (511, 3, 45);
-INSERT INTO `role_menu` VALUES (512, 3, 46);
-INSERT INTO `role_menu` VALUES (513, 3, 47);
-INSERT INTO `role_menu` VALUES (514, 3, 55);
-INSERT INTO `role_menu` VALUES (515, 3, 34);
-INSERT INTO `role_menu` VALUES (516, 3, 51);
-INSERT INTO `role_menu` VALUES (517, 3, 52);
-INSERT INTO `role_menu` VALUES (518, 3, 53);
-INSERT INTO `role_menu` VALUES (519, 3, 54);
-INSERT INTO `role_menu` VALUES (520, 3, 56);
-INSERT INTO `role_menu` VALUES (521, 3, 41);
-INSERT INTO `role_menu` VALUES (522, 3, 42);
-INSERT INTO `role_menu` VALUES (523, 3, 78);
-INSERT INTO `role_menu` VALUES (524, 3, 79);
-INSERT INTO `role_menu` VALUES (525, 3, 80);
-INSERT INTO `role_menu` VALUES (526, 3, 81);
-INSERT INTO `role_menu` VALUES (527, 3, 82);
-INSERT INTO `role_menu` VALUES (528, 3, 83);
-INSERT INTO `role_menu` VALUES (529, 3, 84);
-INSERT INTO `role_menu` VALUES (530, 3, 85);
-INSERT INTO `role_menu` VALUES (531, 3, 43);
-INSERT INTO `role_menu` VALUES (532, 3, 86);
-INSERT INTO `role_menu` VALUES (533, 3, 87);
-INSERT INTO `role_menu` VALUES (534, 3, 88);
-INSERT INTO `role_menu` VALUES (535, 3, 89);
-INSERT INTO `role_menu` VALUES (536, 3, 90);
-INSERT INTO `role_menu` VALUES (537, 3, 91);
-INSERT INTO `role_menu` VALUES (538, 3, 92);
-INSERT INTO `role_menu` VALUES (539, 3, 31);
-INSERT INTO `role_menu` VALUES (712, 1, 1);
-INSERT INTO `role_menu` VALUES (713, 1, 2);
-INSERT INTO `role_menu` VALUES (714, 1, 16);
-INSERT INTO `role_menu` VALUES (715, 1, 17);
-INSERT INTO `role_menu` VALUES (716, 1, 18);
-INSERT INTO `role_menu` VALUES (717, 1, 93);
-INSERT INTO `role_menu` VALUES (718, 1, 94);
-INSERT INTO `role_menu` VALUES (719, 1, 3);
-INSERT INTO `role_menu` VALUES (720, 1, 20);
-INSERT INTO `role_menu` VALUES (721, 1, 21);
-INSERT INTO `role_menu` VALUES (722, 1, 22);
-INSERT INTO `role_menu` VALUES (723, 1, 4);
-INSERT INTO `role_menu` VALUES (724, 1, 24);
-INSERT INTO `role_menu` VALUES (725, 1, 25);
-INSERT INTO `role_menu` VALUES (726, 1, 26);
-INSERT INTO `role_menu` VALUES (727, 1, 105);
-INSERT INTO `role_menu` VALUES (728, 1, 106);
-INSERT INTO `role_menu` VALUES (729, 1, 107);
-INSERT INTO `role_menu` VALUES (730, 1, 108);
-INSERT INTO `role_menu` VALUES (731, 1, 109);
-INSERT INTO `role_menu` VALUES (732, 1, 110);
-INSERT INTO `role_menu` VALUES (733, 1, 31);
-INSERT INTO `role_menu` VALUES (734, 1, 32);
-INSERT INTO `role_menu` VALUES (735, 1, 44);
-INSERT INTO `role_menu` VALUES (736, 1, 45);
-INSERT INTO `role_menu` VALUES (737, 1, 46);
-INSERT INTO `role_menu` VALUES (738, 1, 47);
-INSERT INTO `role_menu` VALUES (739, 1, 55);
-INSERT INTO `role_menu` VALUES (740, 1, 33);
-INSERT INTO `role_menu` VALUES (741, 1, 48);
-INSERT INTO `role_menu` VALUES (742, 1, 49);
-INSERT INTO `role_menu` VALUES (743, 1, 50);
-INSERT INTO `role_menu` VALUES (744, 1, 34);
-INSERT INTO `role_menu` VALUES (745, 1, 51);
-INSERT INTO `role_menu` VALUES (746, 1, 52);
-INSERT INTO `role_menu` VALUES (747, 1, 53);
-INSERT INTO `role_menu` VALUES (748, 1, 54);
-INSERT INTO `role_menu` VALUES (749, 1, 56);
-INSERT INTO `role_menu` VALUES (750, 1, 35);
-INSERT INTO `role_menu` VALUES (751, 1, 57);
-INSERT INTO `role_menu` VALUES (752, 1, 58);
-INSERT INTO `role_menu` VALUES (753, 1, 59);
-INSERT INTO `role_menu` VALUES (754, 1, 60);
-INSERT INTO `role_menu` VALUES (755, 1, 61);
-INSERT INTO `role_menu` VALUES (756, 1, 36);
-INSERT INTO `role_menu` VALUES (757, 1, 37);
-INSERT INTO `role_menu` VALUES (758, 1, 63);
-INSERT INTO `role_menu` VALUES (759, 1, 64);
-INSERT INTO `role_menu` VALUES (760, 1, 65);
-INSERT INTO `role_menu` VALUES (761, 1, 66);
-INSERT INTO `role_menu` VALUES (762, 1, 67);
-INSERT INTO `role_menu` VALUES (763, 1, 68);
-INSERT INTO `role_menu` VALUES (764, 1, 69);
-INSERT INTO `role_menu` VALUES (765, 1, 62);
-INSERT INTO `role_menu` VALUES (766, 1, 95);
-INSERT INTO `role_menu` VALUES (767, 1, 96);
-INSERT INTO `role_menu` VALUES (768, 1, 97);
-INSERT INTO `role_menu` VALUES (769, 1, 98);
-INSERT INTO `role_menu` VALUES (770, 1, 99);
-INSERT INTO `role_menu` VALUES (771, 1, 100);
-INSERT INTO `role_menu` VALUES (772, 1, 38);
-INSERT INTO `role_menu` VALUES (773, 1, 39);
-INSERT INTO `role_menu` VALUES (774, 1, 70);
-INSERT INTO `role_menu` VALUES (775, 1, 71);
-INSERT INTO `role_menu` VALUES (776, 1, 72);
-INSERT INTO `role_menu` VALUES (777, 1, 73);
-INSERT INTO `role_menu` VALUES (778, 1, 74);
-INSERT INTO `role_menu` VALUES (779, 1, 40);
-INSERT INTO `role_menu` VALUES (780, 1, 75);
-INSERT INTO `role_menu` VALUES (781, 1, 76);
-INSERT INTO `role_menu` VALUES (782, 1, 77);
-INSERT INTO `role_menu` VALUES (783, 1, 41);
-INSERT INTO `role_menu` VALUES (784, 1, 42);
-INSERT INTO `role_menu` VALUES (785, 1, 78);
-INSERT INTO `role_menu` VALUES (786, 1, 79);
-INSERT INTO `role_menu` VALUES (787, 1, 80);
-INSERT INTO `role_menu` VALUES (788, 1, 81);
-INSERT INTO `role_menu` VALUES (789, 1, 82);
-INSERT INTO `role_menu` VALUES (790, 1, 83);
-INSERT INTO `role_menu` VALUES (791, 1, 84);
-INSERT INTO `role_menu` VALUES (792, 1, 85);
-INSERT INTO `role_menu` VALUES (793, 1, 43);
-INSERT INTO `role_menu` VALUES (794, 1, 86);
-INSERT INTO `role_menu` VALUES (795, 1, 87);
-INSERT INTO `role_menu` VALUES (796, 1, 88);
-INSERT INTO `role_menu` VALUES (797, 1, 89);
-INSERT INTO `role_menu` VALUES (798, 1, 90);
-INSERT INTO `role_menu` VALUES (799, 1, 91);
-INSERT INTO `role_menu` VALUES (800, 1, 92);
-INSERT INTO `role_menu` VALUES (801, 1, 101);
-INSERT INTO `role_menu` VALUES (802, 1, 102);
-INSERT INTO `role_menu` VALUES (803, 1, 103);
-INSERT INTO `role_menu` VALUES (804, 1, 104);
+INSERT INTO `role_menu` VALUES (805, 1, 1);
+INSERT INTO `role_menu` VALUES (806, 1, 2);
+INSERT INTO `role_menu` VALUES (807, 1, 16);
+INSERT INTO `role_menu` VALUES (808, 1, 17);
+INSERT INTO `role_menu` VALUES (809, 1, 18);
+INSERT INTO `role_menu` VALUES (810, 1, 93);
+INSERT INTO `role_menu` VALUES (811, 1, 94);
+INSERT INTO `role_menu` VALUES (812, 1, 3);
+INSERT INTO `role_menu` VALUES (813, 1, 20);
+INSERT INTO `role_menu` VALUES (814, 1, 21);
+INSERT INTO `role_menu` VALUES (815, 1, 22);
+INSERT INTO `role_menu` VALUES (816, 1, 4);
+INSERT INTO `role_menu` VALUES (817, 1, 24);
+INSERT INTO `role_menu` VALUES (818, 1, 25);
+INSERT INTO `role_menu` VALUES (819, 1, 26);
+INSERT INTO `role_menu` VALUES (820, 1, 105);
+INSERT INTO `role_menu` VALUES (821, 1, 106);
+INSERT INTO `role_menu` VALUES (822, 1, 107);
+INSERT INTO `role_menu` VALUES (823, 1, 108);
+INSERT INTO `role_menu` VALUES (824, 1, 109);
+INSERT INTO `role_menu` VALUES (825, 1, 110);
+INSERT INTO `role_menu` VALUES (826, 1, 31);
+INSERT INTO `role_menu` VALUES (827, 1, 32);
+INSERT INTO `role_menu` VALUES (828, 1, 44);
+INSERT INTO `role_menu` VALUES (829, 1, 45);
+INSERT INTO `role_menu` VALUES (830, 1, 46);
+INSERT INTO `role_menu` VALUES (831, 1, 47);
+INSERT INTO `role_menu` VALUES (832, 1, 55);
+INSERT INTO `role_menu` VALUES (833, 1, 33);
+INSERT INTO `role_menu` VALUES (834, 1, 48);
+INSERT INTO `role_menu` VALUES (835, 1, 49);
+INSERT INTO `role_menu` VALUES (836, 1, 50);
+INSERT INTO `role_menu` VALUES (837, 1, 34);
+INSERT INTO `role_menu` VALUES (838, 1, 51);
+INSERT INTO `role_menu` VALUES (839, 1, 52);
+INSERT INTO `role_menu` VALUES (840, 1, 53);
+INSERT INTO `role_menu` VALUES (841, 1, 54);
+INSERT INTO `role_menu` VALUES (842, 1, 56);
+INSERT INTO `role_menu` VALUES (843, 1, 35);
+INSERT INTO `role_menu` VALUES (844, 1, 57);
+INSERT INTO `role_menu` VALUES (845, 1, 58);
+INSERT INTO `role_menu` VALUES (846, 1, 59);
+INSERT INTO `role_menu` VALUES (847, 1, 60);
+INSERT INTO `role_menu` VALUES (848, 1, 61);
+INSERT INTO `role_menu` VALUES (849, 1, 36);
+INSERT INTO `role_menu` VALUES (850, 1, 37);
+INSERT INTO `role_menu` VALUES (851, 1, 63);
+INSERT INTO `role_menu` VALUES (852, 1, 64);
+INSERT INTO `role_menu` VALUES (853, 1, 65);
+INSERT INTO `role_menu` VALUES (854, 1, 66);
+INSERT INTO `role_menu` VALUES (855, 1, 67);
+INSERT INTO `role_menu` VALUES (856, 1, 68);
+INSERT INTO `role_menu` VALUES (857, 1, 69);
+INSERT INTO `role_menu` VALUES (858, 1, 62);
+INSERT INTO `role_menu` VALUES (859, 1, 95);
+INSERT INTO `role_menu` VALUES (860, 1, 96);
+INSERT INTO `role_menu` VALUES (861, 1, 97);
+INSERT INTO `role_menu` VALUES (862, 1, 98);
+INSERT INTO `role_menu` VALUES (863, 1, 99);
+INSERT INTO `role_menu` VALUES (864, 1, 100);
+INSERT INTO `role_menu` VALUES (865, 1, 38);
+INSERT INTO `role_menu` VALUES (866, 1, 39);
+INSERT INTO `role_menu` VALUES (867, 1, 70);
+INSERT INTO `role_menu` VALUES (868, 1, 71);
+INSERT INTO `role_menu` VALUES (869, 1, 72);
+INSERT INTO `role_menu` VALUES (870, 1, 73);
+INSERT INTO `role_menu` VALUES (871, 1, 74);
+INSERT INTO `role_menu` VALUES (872, 1, 40);
+INSERT INTO `role_menu` VALUES (873, 1, 75);
+INSERT INTO `role_menu` VALUES (874, 1, 76);
+INSERT INTO `role_menu` VALUES (875, 1, 77);
+INSERT INTO `role_menu` VALUES (876, 1, 41);
+INSERT INTO `role_menu` VALUES (877, 1, 42);
+INSERT INTO `role_menu` VALUES (878, 1, 78);
+INSERT INTO `role_menu` VALUES (879, 1, 79);
+INSERT INTO `role_menu` VALUES (880, 1, 80);
+INSERT INTO `role_menu` VALUES (881, 1, 81);
+INSERT INTO `role_menu` VALUES (882, 1, 82);
+INSERT INTO `role_menu` VALUES (883, 1, 83);
+INSERT INTO `role_menu` VALUES (884, 1, 84);
+INSERT INTO `role_menu` VALUES (885, 1, 85);
+INSERT INTO `role_menu` VALUES (886, 1, 43);
+INSERT INTO `role_menu` VALUES (887, 1, 86);
+INSERT INTO `role_menu` VALUES (888, 1, 87);
+INSERT INTO `role_menu` VALUES (889, 1, 88);
+INSERT INTO `role_menu` VALUES (890, 1, 89);
+INSERT INTO `role_menu` VALUES (891, 1, 90);
+INSERT INTO `role_menu` VALUES (892, 1, 91);
+INSERT INTO `role_menu` VALUES (893, 1, 92);
+INSERT INTO `role_menu` VALUES (894, 1, 101);
+INSERT INTO `role_menu` VALUES (895, 1, 102);
+INSERT INTO `role_menu` VALUES (896, 1, 103);
+INSERT INTO `role_menu` VALUES (897, 1, 104);
+INSERT INTO `role_menu` VALUES (898, 1, 111);
+INSERT INTO `role_menu` VALUES (899, 1, 112);
+INSERT INTO `role_menu` VALUES (900, 2, 32);
+INSERT INTO `role_menu` VALUES (901, 2, 44);
+INSERT INTO `role_menu` VALUES (902, 2, 45);
+INSERT INTO `role_menu` VALUES (903, 2, 46);
+INSERT INTO `role_menu` VALUES (904, 2, 47);
+INSERT INTO `role_menu` VALUES (905, 2, 55);
+INSERT INTO `role_menu` VALUES (906, 2, 34);
+INSERT INTO `role_menu` VALUES (907, 2, 51);
+INSERT INTO `role_menu` VALUES (908, 2, 52);
+INSERT INTO `role_menu` VALUES (909, 2, 53);
+INSERT INTO `role_menu` VALUES (910, 2, 54);
+INSERT INTO `role_menu` VALUES (911, 2, 56);
+INSERT INTO `role_menu` VALUES (912, 2, 41);
+INSERT INTO `role_menu` VALUES (913, 2, 42);
+INSERT INTO `role_menu` VALUES (914, 2, 78);
+INSERT INTO `role_menu` VALUES (915, 2, 79);
+INSERT INTO `role_menu` VALUES (916, 2, 80);
+INSERT INTO `role_menu` VALUES (917, 2, 81);
+INSERT INTO `role_menu` VALUES (918, 2, 82);
+INSERT INTO `role_menu` VALUES (919, 2, 83);
+INSERT INTO `role_menu` VALUES (920, 2, 84);
+INSERT INTO `role_menu` VALUES (921, 2, 85);
+INSERT INTO `role_menu` VALUES (922, 2, 43);
+INSERT INTO `role_menu` VALUES (923, 2, 86);
+INSERT INTO `role_menu` VALUES (924, 2, 87);
+INSERT INTO `role_menu` VALUES (925, 2, 88);
+INSERT INTO `role_menu` VALUES (926, 2, 89);
+INSERT INTO `role_menu` VALUES (927, 2, 90);
+INSERT INTO `role_menu` VALUES (928, 2, 91);
+INSERT INTO `role_menu` VALUES (929, 2, 92);
+INSERT INTO `role_menu` VALUES (930, 2, 111);
+INSERT INTO `role_menu` VALUES (931, 2, 112);
+INSERT INTO `role_menu` VALUES (932, 2, 31);
+INSERT INTO `role_menu` VALUES (933, 3, 31);
+INSERT INTO `role_menu` VALUES (934, 3, 32);
+INSERT INTO `role_menu` VALUES (935, 3, 44);
+INSERT INTO `role_menu` VALUES (936, 3, 45);
+INSERT INTO `role_menu` VALUES (937, 3, 46);
+INSERT INTO `role_menu` VALUES (938, 3, 47);
+INSERT INTO `role_menu` VALUES (939, 3, 55);
+INSERT INTO `role_menu` VALUES (940, 3, 34);
+INSERT INTO `role_menu` VALUES (941, 3, 51);
+INSERT INTO `role_menu` VALUES (942, 3, 52);
+INSERT INTO `role_menu` VALUES (943, 3, 53);
+INSERT INTO `role_menu` VALUES (944, 3, 54);
+INSERT INTO `role_menu` VALUES (945, 3, 56);
+INSERT INTO `role_menu` VALUES (946, 3, 41);
+INSERT INTO `role_menu` VALUES (947, 3, 42);
+INSERT INTO `role_menu` VALUES (948, 3, 78);
+INSERT INTO `role_menu` VALUES (949, 3, 79);
+INSERT INTO `role_menu` VALUES (950, 3, 80);
+INSERT INTO `role_menu` VALUES (951, 3, 81);
+INSERT INTO `role_menu` VALUES (952, 3, 82);
+INSERT INTO `role_menu` VALUES (953, 3, 83);
+INSERT INTO `role_menu` VALUES (954, 3, 84);
+INSERT INTO `role_menu` VALUES (955, 3, 85);
+INSERT INTO `role_menu` VALUES (956, 3, 43);
+INSERT INTO `role_menu` VALUES (957, 3, 86);
+INSERT INTO `role_menu` VALUES (958, 3, 87);
+INSERT INTO `role_menu` VALUES (959, 3, 88);
+INSERT INTO `role_menu` VALUES (960, 3, 89);
+INSERT INTO `role_menu` VALUES (961, 3, 90);
+INSERT INTO `role_menu` VALUES (962, 3, 91);
+INSERT INTO `role_menu` VALUES (963, 3, 92);
+INSERT INTO `role_menu` VALUES (964, 3, 111);
+INSERT INTO `role_menu` VALUES (965, 3, 112);
 
 -- ----------------------------
 -- Table structure for shipping_info
@@ -4361,7 +4405,7 @@ CREATE TABLE `shipping_info`  (
   `update_by` bigint(0) NULL DEFAULT NULL COMMENT '修改人id',
   `is_default` tinyint(0) NULL DEFAULT NULL COMMENT '是否默认',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of shipping_info
@@ -4396,13 +4440,15 @@ CREATE TABLE `user_role`  (
   `user_id` bigint(0) NULL DEFAULT NULL COMMENT '用户id',
   `role_id` bigint(0) NULL DEFAULT NULL COMMENT '角色id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES (6, 2, 2);
 INSERT INTO `user_role` VALUES (7, 1, 1);
-INSERT INTO `user_role` VALUES (9, 3, 3);
+INSERT INTO `user_role` VALUES (10, 2, 2);
+INSERT INTO `user_role` VALUES (11, 4, 2);
+INSERT INTO `user_role` VALUES (12, 3, 3);
+INSERT INTO `user_role` VALUES (13, 5, 3);
 
 SET FOREIGN_KEY_CHECKS = 1;

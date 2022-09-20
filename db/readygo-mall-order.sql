@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 49.234.85.17
  Source Server Type    : MySQL
- Source Server Version : 80022
- Source Host           : 127.0.0.1:3306
+ Source Server Version : 80029
+ Source Host           : 49.234.85.17:3306
  Source Schema         : readygo-mall-order
 
  Target Server Type    : MySQL
- Target Server Version : 80022
+ Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 01/08/2022 15:59:34
+ Date: 20/09/2022 16:48:26
 */
 
 SET NAMES utf8mb4;
@@ -27,11 +27,12 @@ CREATE TABLE `coupon_selected`  (
   `received_coupon_id` bigint(0) NULL DEFAULT NULL COMMENT '领取id',
   `is_del` tinyint(0) NULL DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 83 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 84 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of coupon_selected
 -- ----------------------------
+INSERT INTO `coupon_selected` VALUES (83, 1, 4, 0);
 
 -- ----------------------------
 -- Table structure for invoice
@@ -74,7 +75,7 @@ CREATE TABLE `order_detail`  (
   `after_sales_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '售后状态',
   `comment_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评价状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_detail
@@ -87,6 +88,8 @@ INSERT INTO `order_detail` VALUES (44, 47, 'O1549773634317455360', 'S15497736344
 INSERT INTO `order_detail` VALUES (45, 48, 'O1550321102503415808', 'S1550321102541164544', 4, 77, '华为/HUAWEI MateBook 14 11代英特尔酷睿处理器 16GB+512GB SSD锐炬显卡笔记本轻薄办公电脑 2K触控护眼屏', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652600106407320786t-gvMHnbgVq9ZzL2HItykA.jpg', 4899.00, 1, '4899', 'NEW', 'NEW');
 INSERT INTO `order_detail` VALUES (46, 48, 'O1550321102503415808', 'S1550321102541164545', 1, 89, '小米12pro', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652599892005820252Qzc-AnSXiWhJKiZIejeadQ.jpg', 2699.00, 1, '2699', 'NEW', 'NEW');
 INSERT INTO `order_detail` VALUES (47, 49, 'O1550321102654410752', 'S1550321102666993664', 5, 73, 'Apple 苹果 MacBook Air 2020新款', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652597528758451679PFEFLnSQyU1651911291903.png', 8799.00, 1, '8799', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (48, 50, 'O1564812088252174336', 'S1564812088411557888', 4, 77, '华为/HUAWEI MateBook 14 11代英特尔酷睿处理器 16GB+512GB SSD锐炬显卡笔记本轻薄办公电脑 2K触控护眼屏', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652600106407320786t-gvMHnbgVq9ZzL2HItykA.jpg', 4899.00, 1, '4899', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (49, 50, 'O1564812088252174336', 'S1564812088411557889', 3, 82, '佳能5d4 EOS 5D Mark IV单机身专业级单反相机24-105f4 USM全画幅', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652600182482789415RuVkd5CO5ICXFV2QovpvaQ.png', 12999.00, 1, '12999', 'NEW', 'NEW');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -117,18 +120,19 @@ CREATE TABLE `order_info`  (
   `recipient_mobile` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人手机号',
   `region_names` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收货地区名称（省、市、区县）如（安徽省 淮南市 寿县）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
 INSERT INTO `order_info` VALUES (43, 'O1549315192398155776', 40, 'T1549315192226189312', 1, 'test', 0, '入驻商户', 0, 'CANCELLED', '拍错了', 'ALIPAY', '2022-07-19 16:48:44', NULL, 9798.00, 0.00, 9798.00, '2022-07-19 16:48:21', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
-INSERT INTO `order_info` VALUES (44, 'O1549318424184885248', 41, 'T1549318423996141568', 1, 'test', 0, '入驻商户2', 0, 'PAID', NULL, 'ALIPAY', NULL, NULL, 19998.00, 0.00, 19998.00, '2022-07-19 17:01:12', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (44, 'O1549318424184885248', 41, 'T1549318423996141568', 1, 'test', 0, '入驻商户2', 0, 'CANCELLED', '有更满意的了', 'ALIPAY', NULL, NULL, 19998.00, 0.00, 19998.00, '2022-07-19 17:01:12', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
 INSERT INTO `order_info` VALUES (45, 'O1549757635123875840', 42, 'T1549757634721222656', 1, 'test', 2, '入驻商户', 0, 'CANCELLED', '买重复了', 'ALIPAY', NULL, NULL, 4899.00, 0.00, 4899.00, '2022-07-20 22:06:28', NULL, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '江苏省 苏州市 相城区');
 INSERT INTO `order_info` VALUES (46, 'O1549757635492974592', 42, 'T1549757634721222656', 1, 'test', 4, '入驻商户2', 0, 'CANCELLED', '拍错了', 'ALIPAY', NULL, NULL, 8799.00, 0.00, 8799.00, '2022-07-20 22:06:28', NULL, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '江苏省 苏州市 相城区');
 INSERT INTO `order_info` VALUES (47, 'O1549773634317455360', 43, 'T1549773634019659776', 1, 'test', 2, '入驻商户', 0, 'PAID', NULL, 'ALIPAY', NULL, NULL, 4899.00, 0.00, 4899.00, '2022-07-20 23:10:02', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
 INSERT INTO `order_info` VALUES (48, 'O1550321102503415808', 44, 'T1550321102432112640', 1, 'test', 2, '入驻商户', 0, 'UNPAID', NULL, 'ALIPAY', NULL, NULL, 7598.00, 0.00, 7598.00, '2022-07-22 11:25:29', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
 INSERT INTO `order_info` VALUES (49, 'O1550321102654410752', 44, 'T1550321102432112640', 1, 'test', 4, '入驻商户2', 0, 'UNPAID', NULL, 'ALIPAY', NULL, NULL, 8799.00, 0.00, 8799.00, '2022-07-22 11:25:29', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (50, 'O1564812088252174336', 45, 'T1564812088113762304', 1, 'test', 2, '入驻商户', 0, 'UNPAID', NULL, 'ALIPAY', NULL, NULL, 17898.00, 0.00, 17898.00, '2022-08-31 11:07:29', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
 
 -- ----------------------------
 -- Table structure for order_invoice
@@ -145,7 +149,7 @@ CREATE TABLE `order_invoice`  (
   `mobile` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收票人手机号',
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收票人邮箱',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_invoice
@@ -162,6 +166,7 @@ INSERT INTO `order_invoice` VALUES (42, 46, '1', '1', '董俊涛', '333555667000
 INSERT INTO `order_invoice` VALUES (43, 47, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 INSERT INTO `order_invoice` VALUES (44, 48, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 INSERT INTO `order_invoice` VALUES (45, 49, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (46, 50, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 
 -- ----------------------------
 -- Table structure for recipient_info_selected
@@ -194,7 +199,7 @@ CREATE TABLE `trade`  (
   `freight` decimal(10, 2) NULL DEFAULT NULL COMMENT '运费',
   `final_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '最终金额（应付金额）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '交易表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '交易表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of trade
@@ -204,6 +209,7 @@ INSERT INTO `trade` VALUES (41, 'T1549318423996141568', 1, 'test', 'PAID', '2022
 INSERT INTO `trade` VALUES (42, 'T1549757634721222656', 1, 'test', 'UNPAID', '2022-07-20 22:06:28', 13698.00, NULL, 13698.00);
 INSERT INTO `trade` VALUES (43, 'T1549773634019659776', 1, 'test', 'PAID', '2022-07-20 23:10:02', 4899.00, NULL, 4899.00);
 INSERT INTO `trade` VALUES (44, 'T1550321102432112640', 1, 'test', 'UNPAID', '2022-07-22 11:25:29', 16397.00, NULL, 16397.00);
+INSERT INTO `trade` VALUES (45, 'T1564812088113762304', 1, 'test', 'UNPAID', '2022-08-31 11:07:29', 17898.00, NULL, 17698.00);
 
 -- ----------------------------
 -- Table structure for undo_log

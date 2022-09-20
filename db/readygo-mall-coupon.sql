@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 49.234.85.17
  Source Server Type    : MySQL
- Source Server Version : 80022
- Source Host           : 127.0.0.1:3306
+ Source Server Version : 80029
+ Source Host           : 49.234.85.17:3306
  Source Schema         : readygo-mall-coupon
 
  Target Server Type    : MySQL
- Target Server Version : 80022
+ Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 01/08/2022 15:59:06
+ Date: 20/09/2022 16:47:15
 */
 
 SET NAMES utf8mb4;

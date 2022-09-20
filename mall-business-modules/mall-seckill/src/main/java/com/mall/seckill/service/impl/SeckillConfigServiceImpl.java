@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.DateUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -157,5 +160,15 @@ public class SeckillConfigServiceImpl
         seckillConfigEntity.setAuthStatus(authStatus);
         seckillConfigEntity.setAuthOpinion(authOpinion);
         return baseMapper.updateById(seckillConfigEntity);
+    }
+
+    /**
+     * 通过参数查询秒杀配置列表
+     * @param params
+     * @return
+     */
+    @Override
+    public List<SeckillConfigEntity> getByParams(Map<String, Object> params) {
+        return baseMapper.getByParams(params);
     }
 }

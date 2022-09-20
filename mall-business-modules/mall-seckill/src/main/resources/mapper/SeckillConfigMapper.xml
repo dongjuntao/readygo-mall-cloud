@@ -55,16 +55,28 @@
             sc.id,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
             sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.status,sc.auth_status,
             sc.auth_opinion,sc.create_by,sc.update_by,sc.create_time,sc.update_time,
---             au.name AS merchant_name,
---             g.name AS goods_name,
---             gs.*,
             sgs.*
         FROM seckill_config sc
---         LEFT JOIN admin_user au ON au.id=sc.admin_user_id
---         LEFT JOIN goods g ON g.id=sc.goods_id
---         LEFT JOIN goods_sku gs ON gs.goods_id=g.id
         LEFT JOIN seckill_goods_sku sgs ON sgs.seckill_config_id=sc.id
         WHERE sc.id=#{id}
+    </select>
+
+    <select id="getByParams" parameterType="map" resultMap="seckillConfigMap">
+        SELECT
+            sc.id,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
+            sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.status,sc.auth_status,
+            sc.auth_opinion,sc.create_by,sc.update_by,sc.create_time,sc.update_time,
+            sgs.*
+        FROM seckill_config sc
+        LEFT JOIN seckill_goods_sku sgs ON sgs.seckill_config_id=sc.id
+        <where>
+            <if test="seckillDate != null">
+                seckill_start_date &lt;= #{seckillDate} and seckill_end_date &gt;= #{seckillDate}
+            </if>
+            <if test="seckillStartTime != null">and seckill_start_time = #{seckillStartTime}</if>
+            <if test="seckillEndTime != null">and seckill_end_time = #{seckillEndTime}</if>
+            and status = 1 and auth_status = 1
+        </where>
     </select>
 
 </mapper>

@@ -94,6 +94,13 @@
       <artifactId>mall-goods-api</artifactId>
       <version>${common.version}</version>
     </dependency>
+
+    <!--秒杀服务-->
+    <dependency>
+      <groupId>com.mall.service.api</groupId>
+      <artifactId>mall-seckill-api</artifactId>
+      <version>${common.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

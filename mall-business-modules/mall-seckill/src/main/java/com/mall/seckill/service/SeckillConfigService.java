@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 
+import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,4 +66,11 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
      * @return
      */
     int auth(Long seckillConfigId, Integer authStatus, String authOpinion);
+
+    /**
+     * 通过参数查询秒杀配置列表
+     * @param params
+     * @return
+     */
+    List<SeckillConfigEntity> getByParams(Map<String, Object> params);
 }

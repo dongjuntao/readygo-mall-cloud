@@ -9,6 +9,9 @@ import com.mall.seckill.entity.SeckillConfigEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author DongJunTao
  * @Description 秒杀配置
@@ -28,4 +31,6 @@ public interface SeckillConfigMapper extends BaseMapper<SeckillConfigEntity> {
             @Param(Constants.WRAPPER) QueryWrapper<SeckillConfigEntity> wrapper);
 
     SeckillConfigEntity getById(Long id);
+
+    List<SeckillConfigEntity> getByParams(Map<String, Object> params);
 }

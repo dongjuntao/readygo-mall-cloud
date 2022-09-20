@@ -39,6 +39,8 @@ public enum ResultCodeEnum {
     HOMEPAGE_NAVBAR_EXIST("602","首页导航已存在"),
     HOMEPAGE_PLATE_EXIST("603","首页板块已存在"),
 
+    SECKILL_GOODS_IS_EXIST_IN_PERIOD("604","该时间段已设置该商品为秒杀商品，不可重复设置"),
+
     CART_IS_EXIST("700", "该商品已添加到购物车，无需重复添加"),
     COLLECT_GOODS_IS_EXIST("701", "该商品已收藏，无需重复收藏"),
     COUPON_INVALID("702", "优惠券不存在或已失效"),

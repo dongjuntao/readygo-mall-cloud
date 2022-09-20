@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author DongJunTao
@@ -29,8 +30,8 @@ public class InitDataApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY) == null) {
-            List<GoodsCategoryEntity> goodsCategoryTree  = goodsCategoryService.queryGoodsCategoryTree(0L);
-            redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, goodsCategoryTree);
+            Map<String,List<GoodsCategoryEntity>> categoryMap = goodsCategoryService.queryMergeGoodsCategoryTree(0L);
+            redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, categoryMap);
         }
     }
 }

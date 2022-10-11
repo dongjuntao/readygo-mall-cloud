@@ -73,4 +73,7 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
      * @return
      */
     List<SeckillConfigEntity> getByParams(Map<String, Object> params);
+
+    SeckillConfigEntity getSeckillConfigByParams(Map<String, Object> params);
+
 }

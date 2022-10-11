@@ -151,6 +151,8 @@ public class AdminUserServiceImpl extends
             //自营商户,自动审核通过
             if (adminUserEntity.getMerchantType() == 1) {
                 adminUserEntity.setAuthStatus(1);
+            } else {
+                adminUserEntity.setAuthStatus(0);
             }
         }
         adminUserEntity.setStatus(adminUserEntity.getStatus() == null ? 1 : adminUserEntity.getStatus());

@@ -3,6 +3,7 @@ package com.mall.goods.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.goods.vo.SeckillInfo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -63,4 +64,10 @@ public class GoodsSkuEntity implements Serializable {
      */
     @TableField(exist = false)
     private String name;
+
+    /**
+     * 参与秒杀时的信息，包括【秒杀价，秒杀库存】
+     */
+    @TableField(exist = false)
+    private SeckillInfo seckillInfo;
 }

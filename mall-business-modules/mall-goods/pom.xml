@@ -23,6 +23,12 @@
   </properties>
 
   <dependencies>
+    <!--秒杀服务-->
+    <dependency>
+      <groupId>com.mall.service.api</groupId>
+      <artifactId>mall-seckill-api</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>

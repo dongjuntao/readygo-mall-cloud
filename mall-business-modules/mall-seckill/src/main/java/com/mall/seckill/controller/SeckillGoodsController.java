@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.goods.api.FeignGoodsService;
+import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.entity.SeckillGoodsSkuEntity;
 import com.mall.seckill.service.SeckillConfigService;
 import com.mall.seckill.service.SeckillGoodsSkuService;
@@ -97,7 +98,8 @@ public class SeckillGoodsController {
         params.put("seckillDate", startDateTime.split(" ")[0]);
         params.put("seckillStartTime", startDateTime.split(" ")[1]);
         params.put("seckillEndTime", endDateTime.split(" ")[1]);
-        return CommonResult.success(seckillConfigService.getByParams(params)) ;
+        List<SeckillConfigEntity> list = seckillConfigService.getByParams(params);
+        return CommonResult.success(list);
     }
 
     /**

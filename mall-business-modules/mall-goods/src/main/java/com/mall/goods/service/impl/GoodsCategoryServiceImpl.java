@@ -26,9 +26,9 @@ public class GoodsCategoryServiceImpl extends ServiceImpl<GoodsCategoryMapper, G
 	@Override
 	public Map<String,List<GoodsCategoryEntity>> queryMergeGoodsCategoryTree(Long id) {
 		//从redis中获取，如果没有再从数据库
-		if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY) != null) {
+		if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY) != null) {
 			return (Map<String,List<GoodsCategoryEntity>>)
-					redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY);
+					redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY);
 		} else {
 			List<GoodsCategoryEntity> categoryList = baseMapper.queryGoodsCategoryTree(id);
 			List<GoodsCategoryEntity> mergeCategoryList = new ArrayList<>();
@@ -68,7 +68,7 @@ public class GoodsCategoryServiceImpl extends ServiceImpl<GoodsCategoryMapper, G
 			categoryMap.put("categoryList", categoryList);
 			categoryMap.put("mergeCategoryList", mergeCategoryList);
 			//载入redis
-			redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, categoryMap);
+			redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY, categoryMap);
 			return categoryMap;
 		}
 	}

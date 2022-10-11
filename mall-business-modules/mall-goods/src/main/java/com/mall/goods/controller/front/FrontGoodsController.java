@@ -2,16 +2,15 @@ package com.mall.goods.controller.front;
 
 import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
-import com.mall.common.base.dto.CurrentUserInfo;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.entity.GoodsSkuEntity;
 import com.mall.goods.service.GoodsService;
 import com.mall.goods.service.GoodsSkuService;
 import com.mall.goods.vo.ReduceStockVO;
-import io.seata.core.context.RootContext;
+import com.mall.seckill.api.feign.FeignSeckillConfigService;
+import com.mall.seckill.api.feign.FeignSeckillGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +35,9 @@ public class FrontGoodsController {
     @Autowired
     private FeignAdminUserService feignAdminUserService;
 
+    @Autowired
+    private FeignSeckillConfigService feignSeckillConfigService;
+
     /**
      * 商品信息（包括sku）
      */
@@ -45,6 +47,8 @@ public class FrontGoodsController {
         CommonResult result = feignAdminUserService.getAdminUserById(goodsEntity.getAdminUserId());
         Map<String,Object> resultMap = (Map<String, Object>)result.getData();
         goodsEntity.setMerchantName(String.valueOf(resultMap.get("name"))); //商户名称
+        //查看是否参与了秒杀，如果有，需要填入秒杀信息
+//        feignSeckillConfigService.getById()
         return CommonResult.success(goodsEntity);
     }
 

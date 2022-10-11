@@ -81,6 +81,7 @@ white:
       - /mall-admin/system/admin/login
       - /mall-goods/goods/category/getCategoryAndMergedCategory
       - /mall-admin/homepage/index/data
+      - /mall-admin/logistics/region/list
       - /mall-goods/front/goods/list
       - /mall-goods/front/goods/getGoodsById
       - /mall-member/member/register

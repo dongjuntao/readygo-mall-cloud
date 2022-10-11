@@ -171,4 +171,9 @@ public class SeckillConfigServiceImpl
     public List<SeckillConfigEntity> getByParams(Map<String, Object> params) {
         return baseMapper.getByParams(params);
     }
+
+    @Override
+    public SeckillConfigEntity getSeckillConfigByParams(Map<String, Object> params) {
+        return baseMapper.getSeckillConfigByParams(params);
+    }
 }

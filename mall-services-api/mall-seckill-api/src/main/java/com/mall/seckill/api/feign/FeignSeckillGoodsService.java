@@ -8,19 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+
 /**
  * @Author DongJunTao
  * @Description
- * @Date 2022/9/26 17:18
+ * @Date 2022/9/15 11:15
  * @Version 1.0
  */
 @FeignClient(value = ServiceNameConstant.MALL_SECKILL,configuration = FeignConfig.class)
-@RequestMapping("seckillConfig")
-public interface FeignSeckillConfigService {
+@RequestMapping("seckillGoods")
+public interface FeignSeckillGoodsService {
 
     /**
-     * 所有单个秒杀配置
+     * 获取当天所有批次的商品
      */
-    @GetMapping("getById")
-    CommonResult getById(@RequestParam("seckillConfigId") Long seckillConfigId);
+    @GetMapping("/batch")
+    CommonResult seckillGoodsBatch(@RequestParam(value = "dateTime",required = false) String dateTime) throws ParseException;
 }

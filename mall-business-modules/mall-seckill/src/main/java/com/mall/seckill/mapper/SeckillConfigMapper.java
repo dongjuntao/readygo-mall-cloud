@@ -33,4 +33,6 @@ public interface SeckillConfigMapper extends BaseMapper<SeckillConfigEntity> {
     SeckillConfigEntity getById(Long id);
 
     List<SeckillConfigEntity> getByParams(Map<String, Object> params);
+
+    SeckillConfigEntity getSeckillConfigByParams(Map<String, Object> params);
 }

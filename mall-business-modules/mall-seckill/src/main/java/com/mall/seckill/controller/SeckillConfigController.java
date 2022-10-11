@@ -11,15 +11,20 @@ import com.mall.goods.api.FeignGoodsService;
 import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.entity.SeckillGoodsSkuEntity;
 import com.mall.seckill.service.SeckillConfigService;
+import com.mall.seckill.service.SeckillGoodsSkuService;
 import com.mall.seckill.vo.GoodsSkuVO;
 import com.mall.seckill.vo.SeckillGoodsSkuVO;
 import io.netty.util.internal.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +46,9 @@ public class SeckillConfigController {
 
     @Autowired
     private FeignGoodsService feignGoodsService;
+
+    @Autowired
+    private SeckillGoodsSkuService seckillGoodsSkuService;
 
     /**
      * 秒杀配置列表
@@ -128,7 +136,16 @@ public class SeckillConfigController {
     }
 
     /**
-     * 所有单个秒杀配置
+     * 查询单个秒杀配置
+     */
+    @GetMapping("getById")
+    public CommonResult getById(@RequestParam("seckillConfigId") Long seckillConfigId){
+        SeckillConfigEntity seckillConfigEntity = seckillConfigService.getById(seckillConfigId);
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), seckillConfigEntity);
+    }
+
+    /**
+     * 查询单个秒杀配置（详细）包括【关联的商品详细信息，商户名称，商品名称等】
      */
     @GetMapping("getSeckillConfigById")
     public CommonResult getSeckillConfigById(@RequestParam("seckillConfigId") Long seckillConfigId){
@@ -195,5 +212,28 @@ public class SeckillConfigController {
                              @RequestParam("authStatus") Integer authStatus,
                              @RequestParam("authOpinion") String authOpinion) {
         return seckillConfigService.auth(seckillConfigId, authStatus, authOpinion) > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 根据商品id查询是否是秒杀中，且返回秒杀相关配置信息
+     */
+    @GetMapping("getSeckillConfigByParams")
+    public CommonResult getSeckillConfigByParams(@RequestParam(value = "dateTime",required = false) String dateTime,
+                                                 @RequestParam("goodsId") Long goodsId){
+        LocalDateTime localDateTime;
+        if (StringUtils.isEmpty(dateTime)) {
+            localDateTime = LocalDateTime.now();//当前时间
+        }else {
+            localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
+        String currentBatch = seckillGoodsSkuService.getBatchByCurrentTime(localDateTime);
+        String startDateTime = currentBatch.split(",")[0]; //起始日期时间
+        String endDateTime = currentBatch.split(",")[1]; //结束日期时间
+        Map<String, Object> params = new HashMap<>();
+        params.put("seckillDate", startDateTime.split(" ")[0]);
+        params.put("seckillStartTime", startDateTime.split(" ")[1]);
+        params.put("seckillEndTime", endDateTime.split(" ")[1]);
+        params.put("goodsId", goodsId);
+        return CommonResult.success(seckillConfigService.getSeckillConfigByParams(params));
     }
 }

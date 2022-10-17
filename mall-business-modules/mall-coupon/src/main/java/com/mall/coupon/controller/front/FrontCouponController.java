@@ -7,6 +7,7 @@ import com.mall.common.base.utils.PageUtil;
 import com.mall.coupon.entity.CouponEntity;
 import com.mall.coupon.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,6 +47,9 @@ public class FrontCouponController {
             }
         }
         //远程调用admin服务，获取商户信息
+        if (CollectionUtils.isEmpty(adminUserIds)) {
+            return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), couponList);
+        }
         CommonResult result = feignAdminUserService.listByIds(adminUserIds.toArray(new Long[adminUserIds.size()]));
         if (result != null && "200".equals(result.getCode())) {
             List resultList = (List) result.getData();

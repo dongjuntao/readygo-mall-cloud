@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 20/09/2022 16:49:02
+ Date: 30/10/2022 14:54:58
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `seckill_config`  (
 -- ----------------------------
 -- Records of seckill_config
 -- ----------------------------
-INSERT INTO `seckill_config` VALUES (3, 11, 2, '2022-08-01', '2024-09-06', '00:00:00', '02:00:00', 1, 1, 2, '不想通过！', 1, NULL, '2022-09-13 15:29:40', '2022-09-13 15:30:39');
+INSERT INTO `seckill_config` VALUES (3, 11, 2, '2022-08-01', '2024-09-06', '00:00:00', '02:00:00', 1, 1, 2, '不想通过！', 1, NULL, '2022-09-13 15:29:40', '2022-09-26 13:57:20');
 INSERT INTO `seckill_config` VALUES (4, 8, 2, '2022-09-04', '2024-10-01', '06:00:00', '08:00:00', 1, 1, 1, '可以通过', NULL, NULL, '2022-09-13 15:31:06', NULL);
 INSERT INTO `seckill_config` VALUES (5, 6, 2, '2022-07-01', '2024-08-01', '08:00:00', '10:00:00', 1, 1, 1, NULL, NULL, NULL, '2022-09-13 15:31:52', NULL);
 INSERT INTO `seckill_config` VALUES (6, 4, 2, '2022-09-01', '2024-10-01', '10:00:00', '12:00:00', 1, 1, 1, NULL, NULL, NULL, '2022-09-13 15:32:37', NULL);
@@ -65,12 +65,11 @@ CREATE TABLE `seckill_goods_sku`  (
   `seckill_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '秒杀价',
   `seckill_stock` decimal(10, 2) NULL DEFAULT NULL COMMENT '秒杀库存',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of seckill_goods_sku
 -- ----------------------------
-INSERT INTO `seckill_goods_sku` VALUES (6, 3, 103, 4999.00, 200.00);
 INSERT INTO `seckill_goods_sku` VALUES (7, 4, 100, 2499.00, 200.00);
 INSERT INTO `seckill_goods_sku` VALUES (8, 5, 96, 5199.00, 300.00);
 INSERT INTO `seckill_goods_sku` VALUES (9, 6, 121, 4299.00, 500.00);
@@ -84,7 +83,7 @@ INSERT INTO `seckill_goods_sku` VALUES (16, 7, 84, 11999.00, 2000.00);
 INSERT INTO `seckill_goods_sku` VALUES (17, 8, 113, 3599.00, 50.00);
 INSERT INTO `seckill_goods_sku` VALUES (18, 8, 114, 4299.00, 100.00);
 INSERT INTO `seckill_goods_sku` VALUES (19, 8, 115, 6199.00, 100.00);
-INSERT INTO `seckill_goods_sku` VALUES (20, 8, 116, 7199.00, 200.00);
+INSERT INTO `seckill_goods_sku` VALUES (20, 8, 116, 6799.00, 200.00);
 INSERT INTO `seckill_goods_sku` VALUES (21, 9, 117, 2299.00, 50.00);
 INSERT INTO `seckill_goods_sku` VALUES (22, 9, 118, 2588.00, 200.00);
 INSERT INTO `seckill_goods_sku` VALUES (23, 9, 119, 2499.00, 800.00);
@@ -92,6 +91,7 @@ INSERT INTO `seckill_goods_sku` VALUES (24, 9, 120, 2788.00, 1000.00);
 INSERT INTO `seckill_goods_sku` VALUES (25, 10, 105, 49.00, 2000.00);
 INSERT INTO `seckill_goods_sku` VALUES (26, 11, 104, 299.00, 500.00);
 INSERT INTO `seckill_goods_sku` VALUES (27, 12, 102, 2999.00, 1000.00);
+INSERT INTO `seckill_goods_sku` VALUES (29, 3, 103, 4999.00, 200.00);
 
 -- ----------------------------
 -- Table structure for undo_log

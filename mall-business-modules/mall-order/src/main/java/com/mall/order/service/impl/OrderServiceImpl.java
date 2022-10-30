@@ -60,7 +60,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         //订单状态
         String status = params.get("status") == null ? null : params.get("status").toString();
         wrapper.like(StringUtils.isNotBlank(code), "oi.code", code)
-                .eq(StringUtils.isNotBlank(status), "oi.status", status);
+                .eq(StringUtils.isNotBlank(status), "oi.status", status).orderByDesc("create_time");
         IPage<OrderEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }

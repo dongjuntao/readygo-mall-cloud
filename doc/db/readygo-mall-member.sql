@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/10/2022 14:53:44
+ Date: 01/11/2022 15:06:12
 */
 
 SET NAMES utf8mb4;
@@ -91,9 +91,9 @@ CREATE TABLE `footprint`  (
 -- Records of footprint
 -- ----------------------------
 INSERT INTO `footprint` VALUES (71, 1, 4, 2, '2022-07-22 14:59:13', '2022-10-11 14:51:57');
-INSERT INTO `footprint` VALUES (72, 1, 5, 4, '2022-07-22 15:00:30', '2022-10-11 15:12:34');
+INSERT INTO `footprint` VALUES (72, 1, 5, 4, '2022-07-22 15:00:30', '2022-11-01 11:27:48');
 INSERT INTO `footprint` VALUES (73, 1, 2, 2, '2022-07-22 15:00:36', '2022-10-17 15:21:22');
-INSERT INTO `footprint` VALUES (74, 1, 1, 2, '2022-07-22 15:00:38', '2022-10-18 16:08:52');
+INSERT INTO `footprint` VALUES (74, 1, 1, 2, '2022-07-22 15:00:38', '2022-11-01 11:27:48');
 INSERT INTO `footprint` VALUES (75, 1, 3, 2, '2022-07-22 15:51:41', '2022-10-11 13:58:30');
 INSERT INTO `footprint` VALUES (76, 1, 6, 2, '2022-09-04 21:33:59', '2022-09-30 10:36:09');
 INSERT INTO `footprint` VALUES (77, 1, 7, 4, '2022-09-05 14:40:22', '2022-09-30 10:36:14');
@@ -132,7 +132,7 @@ CREATE TABLE `member`  (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES (1, 'test', '$2a$10$8//5kSsttPB6uZM8Xl/DJ.36kIqvc5jpcZJFNnUDd5ipYEJ0nvA0m', '测试买家', '隔壁老王', 0, '18888888888', '342933877266566715', '2022-07-06', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1650361266276458099xiaomi.jpg', '2022-04-15 19:12:40', '2022-10-18 16:15:14');
+INSERT INTO `member` VALUES (1, 'test', '$2a$10$8//5kSsttPB6uZM8Xl/DJ.36kIqvc5jpcZJFNnUDd5ipYEJ0nvA0m', '测试买家', '隔壁老王', 0, '18888888888', '342933877266566715', '2022-07-06', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1667272764516802261touxiang.jpg', '2022-04-15 19:12:40', '2022-11-01 11:19:28');
 INSERT INTO `member` VALUES (2, 'test2', '$2a$10$nOA3z9YkpfhXWRF44m9dKeDoHnTwDawJHo21JlJHU.//poRTArfKu', '测试买家', '武大郎', 0, '15726553345', NULL, '2022-04-07', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/member/avatar1650377712122635512apple.jpg', '2022-04-15 21:04:03', '2022-09-14 10:28:49');
 
 -- ----------------------------

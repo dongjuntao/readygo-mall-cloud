@@ -23,3 +23,21 @@
 #### 前端项目（github）
 - 后台管理端（运营管理端和商户端）：https://github.com/dongjuntao/readygo-mall-admin-vue
 - 门户端（PC端网站）：https://github.com/dongjuntao/readygo-mall-portal-vue
+
+#### 管理端部分页面展示
+- 会员管理
+![会员管理](doc/image/member.jpg)
+- 商品管理
+![商品管理](doc/image/goods.jpg)
+- 商品规格
+![商品规格](doc/image/goods-specifications.jpg)
+- 商品分类
+![商品分类](doc/image/goods-category.jpg)
+- 品牌管理
+![品牌管理](doc/image/brand.jpg)
+- 订单管理
+![订单管理](doc/image/order.jpg)
+- 优惠券管理
+![优惠券管理](doc/image/coupon.jpg)
+- 秒杀管理
+![输入图片说明](doc/image/seckill.jpg)

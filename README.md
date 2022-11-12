@@ -26,18 +26,34 @@
 
 #### 管理端部分页面展示
 - 会员管理
-![会员管理](doc/image/member.jpg)
+![会员管理](doc/image/admin/member.jpg)
 - 商品管理
-![商品管理](doc/image/goods.jpg)
+![商品管理](doc/image/admin/goods.jpg)
 - 商品规格
-![商品规格](doc/image/goods-specifications.jpg)
+![商品规格](doc/image/admin/goods-specifications.jpg)
 - 商品分类
-![商品分类](doc/image/goods-category.jpg)
+![商品分类](doc/image/admin/goods-category.jpg)
 - 品牌管理
-![品牌管理](doc/image/brand.jpg)
+![品牌管理](doc/image/admin/brand.jpg)
 - 订单管理
-![订单管理](doc/image/order.jpg)
+![订单管理](doc/image/admin/order.jpg)
 - 优惠券管理
-![优惠券管理](doc/image/coupon.jpg)
+![优惠券管理](doc/image/admin/coupon.jpg)
 - 秒杀管理
-![输入图片说明](doc/image/seckill.jpg)
+![秒杀管理](doc/image/admin/seckill.jpg)
+
+#### 门户端部分页面展示
+- 门户首页
+![门户首页](doc/image/user/homepage1.jpg)
+- 门户首页
+![门户首页](doc/image/user/homepage2.jpg)
+- 收货地址
+![收货地址](doc/image/user/my-address.jpg)
+- 购物车
+![购物车](doc/image/user/my-cart.jpg)
+- 我的订单
+![我的订单](doc/image/user/my-order.jpg)
+- 我的足迹
+![订单管理](doc/image/user/my-track.jpg)
+- 支付宝支付
+![支付宝支付](doc/image/user/alipay.jpg)

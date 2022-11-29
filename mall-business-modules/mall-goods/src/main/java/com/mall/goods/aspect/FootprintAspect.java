@@ -7,6 +7,7 @@ import com.mall.common.base.constant.RabbitRoutingKeyConstant;
 import com.mall.common.base.dto.CurrentUserInfo;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.goods.entity.GoodsEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 @Component
 @Aspect
+@Slf4j
 public class FootprintAspect {
 
     @Autowired

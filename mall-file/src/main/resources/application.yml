@@ -23,3 +23,7 @@ spring:
     bucketName: dongjuntao-1303976517
     url: https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com
 
+#logostash
+logging:
+  config: classpath:logback-spring.xml
+

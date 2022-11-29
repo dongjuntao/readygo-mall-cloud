@@ -82,6 +82,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+    <!--logstash logback-->
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+    </dependency>
     <!--mall-oauth2接口-->
     <dependency>
       <groupId>com.mall.service.api</groupId>
@@ -94,7 +99,6 @@
       <artifactId>mall-goods-api</artifactId>
       <version>${common.version}</version>
     </dependency>
-
     <!--秒杀服务-->
     <dependency>
       <groupId>com.mall.service.api</groupId>

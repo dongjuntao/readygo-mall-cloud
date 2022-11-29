@@ -11,3 +11,7 @@ spring:
       load-on-startup: 1
 server:
   port: 8009
+
+#logostash
+logging:
+  config: classpath:logback-spring.xml

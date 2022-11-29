@@ -46,6 +46,7 @@
     <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
     <fastjson.version>1.2.76</fastjson.version>
     <commons-collections4.version>4.4</commons-collections4.version>
+    <logstash.logback.version>6.6</logstash.logback.version>
   </properties>
 
   <!--依赖-->
@@ -57,11 +58,6 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-    <!--springboot-->
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-web</artifactId>-->
-<!--    </dependency>-->
   </dependencies>
 
   <!--依赖管理-->
@@ -89,6 +85,12 @@
         <groupId>io.springfox</groupId>
         <artifactId>springfox-boot-starter</artifactId>
         <version>${swagger.version}</version>
+      </dependency>
+      <!--logstash logback-->
+      <dependency>
+        <groupId>net.logstash.logback</groupId>
+        <artifactId>logstash-logback-encoder</artifactId>
+        <version>${logstash.logback.version}</version>
       </dependency>
       <!--mybatis-plus-->
       <dependency>

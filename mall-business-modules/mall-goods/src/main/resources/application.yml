@@ -23,3 +23,7 @@ spring:
     prefix: /goods/images/
 server:
   port: 8004
+
+#logostash
+logging:
+  config: classpath:logback-spring.xml

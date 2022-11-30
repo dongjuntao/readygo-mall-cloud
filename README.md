@@ -15,6 +15,7 @@
 - rabbitmq3.9.15(或其他版本)，
 - seata1.4.0，
 - nacos2.0.3
+- elk（elasticsearch(7.13.3) + logstash(7.13.3) + kibana(7.13.3)）
 
 #### 前端项目（gitee）
 - 后台管理端（运营管理端和商户端）：https://gitee.com/dongjuntao/readygo-mall-admin-vue

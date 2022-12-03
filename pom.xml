@@ -21,12 +21,13 @@
   </parent>
 
   <modules>
+    <module>mall-business-modules</module>
     <module>mall-common</module>
+    <module>mall-file</module>
+    <module>mall-gateway</module>
+    <module>mall-payment</module>
     <module>mall-security-oauth2</module>
     <module>mall-services-api</module>
-    <module>mall-gateway</module>
-    <module>mall-business-modules</module>
-    <module>mall-file</module>
   </modules>
 
   <!--配置-->

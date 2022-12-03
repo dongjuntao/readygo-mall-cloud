@@ -10,11 +10,12 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>mall-admin</module>
-    <module>mall-member</module>
-    <module>mall-goods</module>
-    <module>mall-coupon</module>
-    <module>mall-seckill</module>
     <module>mall-cart</module>
+    <module>mall-coupon</module>
+    <module>mall-goods</module>
+    <module>mall-member</module>
+    <module>mall-order</module>
+    <module>mall-seckill</module>
   </modules>
 
   <name>mall-business-modules</name>

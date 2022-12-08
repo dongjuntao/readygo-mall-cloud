@@ -10,12 +10,12 @@
 本地可以直接启动所有服务(可以使用idea services)，所需的中间件已经安装在云服务，启动前请将db文件夹下的数据库文件执行一遍，
 由于服务器资源有限，性能也一般，建议大家自行安装所需要的软件环境，若使用自己的环境，请在启动前确保其已安装并在项目中修改配置信息，所需的软件环境有：
 - jdk8
-- mysql5.7(或以上版本)，
-- redis5.0.3(或其他版本)，
-- rabbitmq3.9.15(或其他版本)，
-- seata1.4.0，
+- mysql5.7(或以上版本)
+- redis5.0.3(或其他版本)
+- rabbitmq3.9.15(或其他版本)
+- seata1.4.0
 - nacos2.0.3
-- elk（elasticsearch(7.13.3) + logstash(7.13.3) + kibana(7.13.3)）
+- elk（elasticsearch(7.13.3) + logstash(7.13.3) + kibana(7.13.3) + kafka）
 
 #### 前端项目（gitee）
 - 后台管理端（运营管理端和商户端）：https://gitee.com/dongjuntao/readygo-mall-admin-vue

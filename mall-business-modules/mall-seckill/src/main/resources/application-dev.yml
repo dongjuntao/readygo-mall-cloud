@@ -66,3 +66,9 @@ mybatis-plus:
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
 
+elk:
+  kafka:
+    appender:
+      servers: '192.168.72.129:9092'
+      topic: readygo-mall-logs
+

@@ -76,6 +76,12 @@ ribbon:
 logging:
   config: classpath:logback-spring.xml
 
+elk:
+  kafka:
+    appender:
+      servers: '192.168.72.129:9092'
+      topic: readygo-mall-logs
+
 #白名单
 white:
   list:

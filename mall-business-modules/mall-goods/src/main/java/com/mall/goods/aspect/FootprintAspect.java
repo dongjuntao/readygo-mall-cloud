@@ -1,15 +1,11 @@
 package com.mall.goods.aspect;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.RabbitExchangeConstant;
 import com.mall.common.base.constant.RabbitRoutingKeyConstant;
-import com.mall.common.base.dto.CurrentUserInfo;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.goods.entity.GoodsEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

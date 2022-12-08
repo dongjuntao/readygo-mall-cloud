@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false">
+<configuration>
 
     <property name="console_log_pattern" value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>
-
     <springProperty scope="context" name="applicationName" source="spring.application.name"/>
+    <springProperty name="kafka.servers" source="elk.kafka.appender.servers"/>
+    <springProperty name="kafka.topic" source="elk.kafka.appender.topic"/>
 
-    <!--LogStash-->
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <!--logstash的请求地址-->
-        <destination>192.168.72.129:5044</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"serverName":"${applicationName}"}</customFields>
-        </encoder>
-    </appender>
-
-    <!--输出到控制台-->
-    <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
-    <!-- 例如：如果此处配置了INFO级别，则后面其他位置即使配置了DEBUG级别的日志，也不会被输出 -->
+    <!-- ConsoleAppender把日志添加到控制台 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>info</level>
-        </filter>
         <encoder>
-            <Pattern>${console_log_pattern}</Pattern>
+            <pattern>${console_log_pattern}</pattern>
             <!-- 设置字符集 -->
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <!-- 日志输出级别 -->
-    <root level="info">
-        <appender-ref ref="logstash"/>
-        <appender-ref ref="console"/>
-    </root>
+    <!-- 连接kafka -->
+    <appender name="kafka" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <!-- encoder负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "serverName":"${applicationName}",
+                        "date":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level":"%level",
+                        "thread": "%thread",
+                        "message":"%msg",
+                        "exception":"%exception"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <topic>${kafka.topic}</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy" />
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+        <producerConfig>bootstrap.servers=${kafka.servers}</producerConfig>
+        <producerConfig>acks=0</producerConfig>
+        <producerConfig>linger.ms=1000</producerConfig>
+        <producerConfig>max.block.ms=0</producerConfig>
+    </appender>
 
+    <!--Level: OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL-->
+    <!--root也是logger元素，它是根loger,是所有loger的上级，输出日志是从子节点开始，子节点如果有输出源直接输入，否则向上级root传递，采用root的输出源-->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="kafka" />
+    </root>
 </configuration>

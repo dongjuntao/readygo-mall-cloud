@@ -130,3 +130,9 @@ seata:
       username: "nacos"
       password: "nacos"
       server-addr: "49.234.85.17:8848"
+
+elk:
+  kafka:
+    appender:
+      servers: '192.168.72.129:9092'
+      topic: readygo-mall-logs

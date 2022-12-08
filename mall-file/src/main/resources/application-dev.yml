@@ -23,3 +23,9 @@ ribbon:
     enabled: true
     clients: mall-file,mall-seckill,mall-security-oauth2,mall-gateway,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart,mall-order
 
+elk:
+  kafka:
+    appender:
+      servers: '192.168.72.129:9092'
+      topic: readygo-mall-logs
+

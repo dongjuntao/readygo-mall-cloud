@@ -35,5 +35,5 @@ ribbon:
 elk:
   kafka:
     appender:
-      servers: '192.168.72.129:9092'
+      servers: '123.60.173.14:9092'
       topic: readygo-mall-logs

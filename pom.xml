@@ -28,6 +28,7 @@
     <module>mall-payment</module>
     <module>mall-security-oauth2</module>
     <module>mall-services-api</module>
+    <module>mall-xxl-job</module>
   </modules>
 
   <!--配置-->

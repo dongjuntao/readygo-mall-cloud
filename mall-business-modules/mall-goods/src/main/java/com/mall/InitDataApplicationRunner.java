@@ -28,15 +28,19 @@ public class InitDataApplicationRunner implements ApplicationRunner {
     private RedisUtil redisUtil;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY) == null) {
-            Map<String,List<GoodsCategoryEntity>> categoryMap = goodsCategoryService.queryMergeGoodsCategoryTree(0L);
-            redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY, categoryMap);
-        }
+    public void run(ApplicationArguments args) {
+        try {
+            if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY) == null) {
+                Map<String,List<GoodsCategoryEntity>> categoryMap = goodsCategoryService.queryMergeGoodsCategoryTree(0L);
+                redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_MERGED_KEY, RedisKeyConstant.GOODS_CATEGORY_MERGED_HASH_KEY, categoryMap);
+            }
 
-        if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY) == null) {
-            List<GoodsCategoryEntity> goodsCategoryTree = goodsCategoryService.queryGoodsCategoryTree(0L);
-            redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, goodsCategoryTree);
+            if (redisUtil.hGet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY) == null) {
+                List<GoodsCategoryEntity> goodsCategoryTree = goodsCategoryService.queryGoodsCategoryTree(0L);
+                redisUtil.hSet(RedisKeyConstant.GOODS_CATEGORY_KEY, RedisKeyConstant.GOODS_CATEGORY_HASH_KEY, goodsCategoryTree);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

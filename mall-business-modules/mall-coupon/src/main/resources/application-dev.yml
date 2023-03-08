@@ -34,6 +34,15 @@ spring:
     database: 5
     lettuce:
       shutdown-timeout: 100
+      pool:
+        max-active: 20
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 2
+      cluster:
+        refresh:
+          adaptive: true #20秒自动刷新一次
+          period: 20
 
 feign:
   client:

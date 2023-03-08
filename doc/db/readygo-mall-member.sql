@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 01/11/2022 15:06:12
+ Date: 08/03/2023 15:29:18
 */
 
 SET NAMES utf8mb4;
@@ -85,29 +85,26 @@ CREATE TABLE `footprint`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '记录创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '记录修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 89 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of footprint
 -- ----------------------------
-INSERT INTO `footprint` VALUES (71, 1, 4, 2, '2022-07-22 14:59:13', '2022-10-11 14:51:57');
-INSERT INTO `footprint` VALUES (72, 1, 5, 4, '2022-07-22 15:00:30', '2022-11-01 11:27:48');
-INSERT INTO `footprint` VALUES (73, 1, 2, 2, '2022-07-22 15:00:36', '2022-10-17 15:21:22');
-INSERT INTO `footprint` VALUES (74, 1, 1, 2, '2022-07-22 15:00:38', '2022-11-01 11:27:48');
-INSERT INTO `footprint` VALUES (75, 1, 3, 2, '2022-07-22 15:51:41', '2022-10-11 13:58:30');
-INSERT INTO `footprint` VALUES (76, 1, 6, 2, '2022-09-04 21:33:59', '2022-09-30 10:36:09');
-INSERT INTO `footprint` VALUES (77, 1, 7, 4, '2022-09-05 14:40:22', '2022-09-30 10:36:14');
 INSERT INTO `footprint` VALUES (78, 3, 2, 2, '2022-09-08 13:01:38', '2022-09-08 14:11:36');
 INSERT INTO `footprint` VALUES (79, 3, 4, 2, '2022-09-08 13:02:38', '2022-09-08 13:06:48');
 INSERT INTO `footprint` VALUES (80, 3, 1, 2, '2022-09-08 13:06:49', '2022-09-08 14:03:29');
-INSERT INTO `footprint` VALUES (81, 1, 8, 2, '2022-09-08 21:46:15', '2022-09-09 15:29:08');
-INSERT INTO `footprint` VALUES (82, 1, 15, 5, '2022-09-09 14:52:35', '2022-10-17 16:33:36');
-INSERT INTO `footprint` VALUES (83, 1, 10, 4, '2022-09-09 15:28:07', '2022-09-21 14:48:35');
-INSERT INTO `footprint` VALUES (84, 1, 9, 4, '2022-09-09 15:28:13', '2022-09-09 15:28:57');
-INSERT INTO `footprint` VALUES (85, 1, 11, 2, '2022-09-09 15:29:00', '2022-09-15 14:28:32');
-INSERT INTO `footprint` VALUES (86, 1, 14, 5, '2022-09-09 15:30:00', '2022-10-17 16:33:36');
-INSERT INTO `footprint` VALUES (87, 1, 12, 3, '2022-09-09 15:37:29', '2022-10-18 16:10:09');
-INSERT INTO `footprint` VALUES (88, 1, 13, 3, '2022-09-09 15:40:53', '2022-10-17 14:55:41');
+INSERT INTO `footprint` VALUES (89, 1, 10, 4, '2022-11-29 14:57:26', '2023-03-08 15:02:17');
+INSERT INTO `footprint` VALUES (90, 1, 1, 2, '2022-11-29 14:58:12', '2023-03-08 10:27:57');
+INSERT INTO `footprint` VALUES (91, 1, 4, 2, '2022-11-29 15:06:23', '2023-02-28 15:55:17');
+INSERT INTO `footprint` VALUES (92, 1, 6, 2, '2022-11-29 15:08:11', '2023-03-08 11:03:32');
+INSERT INTO `footprint` VALUES (93, 1, 5, 4, '2022-12-02 13:43:34', '2023-03-08 11:04:34');
+INSERT INTO `footprint` VALUES (94, 1, 15, 5, '2022-12-02 14:07:48', '2023-01-06 17:36:28');
+INSERT INTO `footprint` VALUES (95, 1, 14, 5, '2022-12-02 14:15:02', '2022-12-20 11:39:38');
+INSERT INTO `footprint` VALUES (96, 1, 9, 4, '2022-12-02 14:15:25', '2022-12-04 17:12:42');
+INSERT INTO `footprint` VALUES (97, 1, 13, 3, '2022-12-04 22:04:53', '2023-03-08 10:27:51');
+INSERT INTO `footprint` VALUES (98, 1, 8, 2, '2022-12-05 14:05:41', NULL);
+INSERT INTO `footprint` VALUES (99, 1, 12, 3, '2022-12-19 17:35:11', '2022-12-20 13:06:10');
+INSERT INTO `footprint` VALUES (100, 1, 2, 2, '2023-02-28 15:54:58', '2023-03-08 10:27:55');
 
 -- ----------------------------
 -- Table structure for member

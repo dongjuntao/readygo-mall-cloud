@@ -35,4 +35,6 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
      * @return
      */
     List<GoodsEntity> getByGoodsIds(@Param("goodsIds") Long[] goodsIds);
+
+    List<GoodsEntity> getAllGoodsWithDetail();
 }

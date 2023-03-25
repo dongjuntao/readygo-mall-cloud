@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 /**
  * @Author DongJunTao
  * @Description
@@ -31,4 +33,12 @@ public interface FeignGoodsService {
      */
     @GetMapping("/listByIds")
     CommonResult listByIds(@RequestParam Long[] ids);
+
+    /**
+     * 全部商品（包括关联的详细信息）
+     * @return
+     */
+    @GetMapping("/allGoodsWithDetail")
+    CommonResult allGoodsWithDetail();
+
 }

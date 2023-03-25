@@ -1,0 +1,34 @@
+spring:
+  #####nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 49.234.85.17:8848 #配置nacos地址
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+  elasticsearch:
+    rest:
+      uris: http://123.60.173.14:9200
+
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients: mall-file,mall-seckill,mall-security-oauth2,mall-gateway,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart,mall-order
+
+elk:
+  kafka:
+    appender:
+      servers: '123.60.173.14:9092'
+      topic: readygo-mall-logs

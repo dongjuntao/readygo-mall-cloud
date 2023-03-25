@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="console_log_pattern" value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>
+    <springProperty scope="context" name="applicationName" source="spring.application.name"/>
+    <springProperty name="kafka.servers" source="elk.kafka.appender.servers"/>
+    <springProperty name="kafka.topic" source="elk.kafka.appender.topic"/>
+
+    <!-- ConsoleAppender把日志添加到控制台 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console_log_pattern}</pattern>
+            <!-- 设置字符集 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 连接kafka -->
+    <appender name="kafka" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <!-- encoder负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "serverName":"${applicationName}",
+                        "date":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "level":"%level",
+                        "thread": "%thread",
+                        "message":"%msg",
+                        "exception":"%exception"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <topic>${kafka.topic}</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy" />
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+        <producerConfig>bootstrap.servers=${kafka.servers}</producerConfig>
+        <producerConfig>acks=0</producerConfig>
+        <producerConfig>linger.ms=1000</producerConfig>
+        <producerConfig>max.block.ms=0</producerConfig>
+    </appender>
+
+    <!--Level: OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL-->
+    <!--root也是logger元素，它是根loger,是所有loger的上级，输出日志是从子节点开始，子节点如果有输出源直接输入，否则向上级root传递，采用root的输出源-->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="kafka" />
+    </root>
+</configuration>

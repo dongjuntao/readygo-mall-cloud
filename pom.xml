@@ -29,6 +29,7 @@
     <module>mall-security-oauth2</module>
     <module>mall-services-api</module>
     <module>mall-xxl-job</module>
+    <module>mall-search</module>
   </modules>
 
   <!--配置-->

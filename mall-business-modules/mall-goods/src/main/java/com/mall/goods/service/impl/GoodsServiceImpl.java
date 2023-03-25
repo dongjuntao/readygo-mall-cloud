@@ -94,4 +94,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     public List<GoodsEntity> getByGoodsIds(Long[] goodsIds) {
         return baseMapper.getByGoodsIds(goodsIds);
     }
+
+    @Override
+    public List<GoodsEntity> getAllGoodsWithDetail() {
+        return baseMapper.getAllGoodsWithDetail();
+    }
 }

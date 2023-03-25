@@ -36,4 +36,6 @@ public interface GoodsService extends IService<GoodsEntity> {
      * @return
      */
     List<GoodsEntity> getByGoodsIds(Long[] goodsIds);
+
+    List<GoodsEntity> getAllGoodsWithDetail();
 }

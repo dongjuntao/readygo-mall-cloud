@@ -170,4 +170,13 @@ public class GoodsController {
                                      @RequestParam("onSale") Boolean onSale){
         return goodsService.updateOnSale(goodsId, onSale) > 0 ? CommonResult.success() : CommonResult.fail();
     }
+
+    /**
+     * 商品列表（所有商品，包括详细信息）
+     */
+    @GetMapping("/allGoodsWithDetail")
+    public CommonResult allGoodsWithDetail(){
+        List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsWithDetail();
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), allGoodsEntityList);
+    }
 }

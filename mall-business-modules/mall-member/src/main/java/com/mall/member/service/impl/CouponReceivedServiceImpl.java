@@ -12,6 +12,7 @@ import com.mall.member.entity.FootprintEntity;
 import com.mall.member.mapper.CouponReceivedMapper;
 import com.mall.member.service.CouponReceivedService;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,5 +88,17 @@ public class CouponReceivedServiceImpl extends ServiceImpl<CouponReceivedMapper,
             receivedEntity.setUseStatus(status);
         }
         return baseMapper.updateById(receivedEntity);
+    }
+
+    @Override
+    public PageUtil queryPageWithMemberInfo(Map<String, Object> params) {
+        Page<CouponReceivedEntity> page = (Page<CouponReceivedEntity>)new PageBuilder<CouponReceivedEntity>()
+                .getPage(params);
+        QueryWrapper<CouponReceivedEntity> wrapper = new QueryWrapper<>();
+        //商家id
+        Long couponId = params.get("couponId") == null ? null: Long.valueOf((params.get("couponId").toString()));
+        wrapper.eq(couponId != null, "coupon_id", couponId);
+        IPage<CouponReceivedEntity> iPage = baseMapper.queryPageWithMemberInfo(page, wrapper);
+        return new PageUtil(iPage);
     }
 }

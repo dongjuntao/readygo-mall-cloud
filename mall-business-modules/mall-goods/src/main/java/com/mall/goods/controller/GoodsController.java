@@ -62,25 +62,26 @@ public class GoodsController {
     @PutMapping("update")
     @Transactional(rollbackFor = Exception.class)
     public CommonResult update(@RequestBody GoodsEntity goodsEntity) {
-        goodsEntity.setUpdateTime(new Date());
-        //查找原来的商品sku
-        GoodsEntity old = goodsService.getGoodsAndSku(goodsEntity.getId());
-        List<GoodsSkuEntity> oldSkuList = old.getGoodsSkuList();
-        List<Long> skuIdList = new ArrayList<>();
-        if (oldSkuList != null && oldSkuList.size()>0) {
-            oldSkuList.forEach(sku->{ skuIdList.add(sku.getId()); });
-            //删除旧的商品sku信息
-            goodsSkuService.deleteBatch(skuIdList);
+        List<GoodsSkuEntity> skuList = goodsEntity.getGoodsSkuList();
+        if (skuList.get(0).getId() != null) { //商品规格未变，即未重新选择规格
+            //直接更新sku列表
+            goodsSkuService.updateBatchById(skuList);
+        }else {
+            GoodsEntity old = goodsService.getGoodsAndSku(goodsEntity.getId());
+            List<GoodsSkuEntity> oldSkuList = old.getGoodsSkuList();
+            List<Long> skuIdList = new ArrayList<>();
+            if (oldSkuList != null && oldSkuList.size()>0) {
+                oldSkuList.forEach(sku->{ skuIdList.add(sku.getId()); });
+                //删除旧的商品sku信息
+                goodsSkuService.deleteBatch(skuIdList);
+            }
+            skuList.forEach(sku->{sku.setGoodsId(goodsEntity.getId());});
+            //保存商品sku
+            goodsSkuService.saveBatch(skuList);
         }
         //保存商品
+        goodsEntity.setUpdateTime(new Date());
         goodsService.saveOrUpdate(goodsEntity);
-        //sku表中的商品id
-        List<GoodsSkuEntity> skuList = goodsEntity.getGoodsSkuList();
-        if (skuList != null && skuList.size()>0) {
-            skuList.forEach(sku->{sku.setGoodsId(goodsEntity.getId());});
-        }
-        //保存商品sku
-        goodsSkuService.saveBatch(skuList);
         return CommonResult.success();
     }
 

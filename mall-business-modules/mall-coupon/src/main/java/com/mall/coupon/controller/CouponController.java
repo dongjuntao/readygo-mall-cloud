@@ -1,11 +1,13 @@
 package com.mall.coupon.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.coupon.entity.CouponEntity;
 import com.mall.coupon.service.CouponService;
+import com.mall.member.api.back.FeignBackCouponReceivedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,9 @@ public class CouponController {
 
     @Autowired
     private FeignAdminUserService feignAdminUserService;
+
+    @Autowired
+    private FeignBackCouponReceivedService feignBackCouponReceivedService;
 
     /**
      * 所有优惠券列表
@@ -140,5 +145,18 @@ public class CouponController {
                              @RequestParam("authStatus") Integer authStatus,
                              @RequestParam("authOpinion") String authOpinion) {
         return couponService.auth(couponId, authStatus, authOpinion) > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 获取优惠券领取列表
+     */
+    @GetMapping("getCouponReceivedList")
+    public CommonResult getCouponReceivedList(@RequestParam Map<String, Object> params){
+        CommonResult result = feignBackCouponReceivedService.getCouponReceivedList(params);
+        PageUtil resultPage = null;
+        if (result != null && "200".equals(result.getCode())) {
+            resultPage = BeanUtil.copyProperties(result.getData(), PageUtil.class);
+        }
+        return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), resultPage);
     }
 }

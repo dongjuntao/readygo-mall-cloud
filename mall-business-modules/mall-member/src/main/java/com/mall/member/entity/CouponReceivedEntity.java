@@ -1,5 +1,6 @@
 package com.mall.member.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -34,5 +35,10 @@ public class CouponReceivedEntity {
      * 领取时间
      */
     private Date createTime;
+    /**
+     * 会员名称
+     */
+    @TableField(exist = false)
+    private String memberName;
 
 }

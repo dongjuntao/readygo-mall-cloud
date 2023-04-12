@@ -103,3 +103,4 @@ white:
       - /mall-member/captcha/check
       - /mall-member/member/login
       - /mall-payment/alipay/notify
+      - /mall-file/file/upload

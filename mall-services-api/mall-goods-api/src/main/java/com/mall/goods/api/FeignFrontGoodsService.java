@@ -1,4 +1,4 @@
-package com.mall.goods.api.front;
+package com.mall.goods.api;
 
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.config.FeignConfig;

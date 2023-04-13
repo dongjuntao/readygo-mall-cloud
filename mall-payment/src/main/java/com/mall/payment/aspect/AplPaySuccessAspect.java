@@ -2,14 +2,12 @@ package com.mall.payment.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.mall.common.base.CommonResult;
-import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.goods.api.front.FeignFrontGoodsService;
+import com.mall.goods.api.FeignFrontGoodsService;
 import com.mall.member.api.FeignCouponReceivedService;
 import com.mall.order.api.feign.FeignCouponSelectedService;
 import com.mall.order.api.feign.FeignOrderService;
 import com.mall.order.api.feign.FeignTradeService;
 import com.mall.payment.service.AlipayService;
-import io.seata.core.context.RootContext;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

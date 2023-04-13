@@ -1,4 +1,4 @@
-package com.mall.goods.controller.front;
+package com.mall.goods.controller;
 
 import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
@@ -6,11 +6,10 @@ import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.entity.GoodsSkuEntity;
-import com.mall.goods.service.GoodsService;
+import com.mall.goods.service.FrontGoodsService;
 import com.mall.goods.service.GoodsSkuService;
 import com.mall.goods.vo.ReduceStockVO;
 import com.mall.seckill.api.feign.FeignSeckillConfigService;
-import com.mall.seckill.api.feign.FeignSeckillGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ import java.util.*;
 public class FrontGoodsController {
 
     @Autowired
-    private GoodsService goodsService;
+    private FrontGoodsService frontGoodsService;
 
     @Autowired
     private GoodsSkuService goodsSkuService;
@@ -43,10 +42,15 @@ public class FrontGoodsController {
      */
     @GetMapping("getGoodsById")
     public CommonResult getGoodsById(@RequestParam("id") Long id){
-        GoodsEntity goodsEntity = goodsService.getGoodsAndSku(id);
+        GoodsEntity goodsEntity = frontGoodsService.getGoodsAndSku(id);
+        if (goodsEntity == null) {
+            return CommonResult.fail(ResultCodeEnum.GOODS_NOT_EXIST.getCode(), ResultCodeEnum.GOODS_NOT_EXIST.getMessage());
+        }
         CommonResult result = feignAdminUserService.getAdminUserById(goodsEntity.getAdminUserId());
-        Map<String,Object> resultMap = (Map<String, Object>)result.getData();
-        goodsEntity.setMerchantName(String.valueOf(resultMap.get("name"))); //商户名称
+        if ("200".equals(result.getCode()) && result.getData() != null) {
+            Map<String,Object> resultMap = (Map<String, Object>)result.getData();
+            goodsEntity.setMerchantName(String.valueOf(resultMap.get("name"))); //商户名称
+        }
         //查看是否参与了秒杀，如果有，需要填入秒杀信息
 //        feignSeckillConfigService.getById()
         return CommonResult.success(goodsEntity);
@@ -57,7 +61,7 @@ public class FrontGoodsController {
      */
     @GetMapping("/list")
     public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil pageResult = goodsService.queryPage(params);
+        PageUtil pageResult = frontGoodsService.queryPage(params);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
     }
 
@@ -67,7 +71,7 @@ public class FrontGoodsController {
      */
     @GetMapping("/listByIds")
     public CommonResult listByIds(@RequestParam Long[] ids){
-        List<GoodsEntity> goodsList = goodsService.getByGoodsIds(ids);
+        List<GoodsEntity> goodsList = frontGoodsService.getByGoodsIds(ids);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), goodsList);
     }
 

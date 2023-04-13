@@ -57,7 +57,7 @@ public class SeckillGoodsController {
     public CommonResult list(@RequestParam Map<String, Object> params){
         Long goodsId = params.get("goodsId") == null ? null: Long.valueOf((params.get("goodsId").toString()));
         List<GoodsSkuVO> goodsSkuList = new ArrayList<>();
-        CommonResult goodsResult = feignGoodsService.info(goodsId);
+        CommonResult goodsResult = feignGoodsService.getGoodsById(goodsId);
         if (goodsResult != null && "200".equals(goodsResult.getCode())) {
             JSONObject goodsObject = JSON.parseObject(JSON.toJSONString(goodsResult.getData()));
             goodsSkuList = goodsObject.getJSONArray("goodsSkuList").toJavaList(GoodsSkuVO.class);

@@ -157,7 +157,7 @@ public class SeckillConfigController {
             seckillConfigEntity.setMerchantName(userJSON.getString("name"));
         }
         //远程获取商信息，作为商品名称
-        CommonResult goodsResult = feignGoodsService.info(seckillConfigEntity.getGoodsId());
+        CommonResult goodsResult = feignGoodsService.getGoodsById(seckillConfigEntity.getGoodsId());
         if (goodsResult != null && "200".equals(goodsResult.getCode())) {
             JSONObject goodsJSON = JSONObject.parseObject(JSON.toJSONString(goodsResult.getData()));
             seckillConfigEntity.setGoodsName(goodsJSON.getString("name"));

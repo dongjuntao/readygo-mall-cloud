@@ -104,3 +104,4 @@ white:
       - /mall-member/member/login
       - /mall-payment/alipay/notify
       - /mall-file/file/upload
+      - /mall-admin/system/admin/save

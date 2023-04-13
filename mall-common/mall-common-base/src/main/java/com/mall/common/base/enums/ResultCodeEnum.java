@@ -49,6 +49,9 @@ public enum ResultCodeEnum {
     COUPON_IS_EMPTY("705", "优惠券已被领完"),
     COUPON_ISSUE_NUMBER_VALID("706", "发行量不能低于现有的发行量"),
 
+    GOODS_NOT_EXIST("800", "商品不存在"),
+
+
     COMMON_FAIL("10000", "其他错误");
 
     private String code;

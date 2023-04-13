@@ -4,7 +4,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
-import com.mall.goods.api.front.FeignFrontGoodsService;
+import com.mall.goods.api.FeignFrontGoodsService;
 import com.mall.member.entity.FootprintEntity;
 import com.mall.member.service.FootprintService;
 import com.mall.member.vo.FootprintGoodsVO;

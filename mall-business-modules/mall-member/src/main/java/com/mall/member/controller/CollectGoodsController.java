@@ -3,7 +3,7 @@ package com.mall.member.controller;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.goods.api.front.FeignFrontGoodsService;
+import com.mall.goods.api.FeignFrontGoodsService;
 import com.mall.member.entity.CollectGoodsEntity;
 import com.mall.member.service.CollectGoodsService;
 import com.mall.member.vo.CollectGoodsVO;

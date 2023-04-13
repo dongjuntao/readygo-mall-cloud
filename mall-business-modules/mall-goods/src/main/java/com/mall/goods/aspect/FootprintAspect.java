@@ -33,7 +33,7 @@ public class FootprintAspect {
     /**
      * 切点【前台用户点击到某一商品时需要记录足迹】
      */
-    @Pointcut("execution(* com.mall.goods.controller.front.FrontGoodsController.getGoodsById(..))")
+    @Pointcut("execution(* com.mall.goods.controller.FrontGoodsController.getGoodsById(..))")
     private void footprintAspect() {}
 
     /**

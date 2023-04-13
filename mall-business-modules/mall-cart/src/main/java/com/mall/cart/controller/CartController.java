@@ -10,7 +10,7 @@ import com.mall.cart.vo.*;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
-import com.mall.goods.api.front.FeignFrontGoodsService;
+import com.mall.goods.api.FeignFrontGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;

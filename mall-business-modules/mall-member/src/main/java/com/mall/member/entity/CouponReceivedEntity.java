@@ -28,7 +28,7 @@ public class CouponReceivedEntity {
      */
     private Long couponId;
     /**
-     * 优惠券是否使用（0：未使用 1：已使用 2：冻结中【表示已选中该优惠券，提交了订单，还为支付】）
+     * 优惠券是否使用（0：未使用 1：已使用 2:已过期 3：冻结中【表示已选中该优惠券，提交了订单，还未支付】）
      */
     private Integer useStatus;
     /**

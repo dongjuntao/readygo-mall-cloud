@@ -10,12 +10,12 @@ import java.util.Map;
 
 /**
  * @Author DongJunTao
- * @Description rabbit mq配置
+ * @Description 购物车数据延迟双删 RabbitMQ
  * @Date 2022/5/26 15:42
  * @Version 1.0
  */
 @Configuration
-public class RabbitMQDelayConfig {
+public class CartDoubleDeleteRabbitDelayConfig {
 
     /**
      * 延时交换机
@@ -33,7 +33,7 @@ public class RabbitMQDelayConfig {
     public Queue delayQueue() {
         Map<String, Object> map = new HashMap<>();
         // 设置1秒过期时间
-        map.put("x-message-ttl", 1000);
+        map.put("x-message-ttl", RabbitMQConstant.CART_DOUBLE_DELETE_DELAY_TIME);
         map.put("x-dead-letter-exchange", RabbitMQConstant.CART_DOUBLE_DELETE_DEAD_EXCHANGE);
         map.put("x-dead-letter-routing-key", RabbitMQConstant.CART_DOUBLE_DELETE_DEAD_KEY);
         return QueueBuilder.durable(RabbitMQConstant.CART_DOUBLE_DELETE_DELAY_QUEUE).withArguments(map).build();

@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 08/03/2023 15:28:27
+ Date: 06/05/2023 16:53:25
 */
 
 SET NAMES utf8mb4;
@@ -41,7 +41,6 @@ CREATE TABLE `coupon`  (
   `valid_period_end` datetime(0) NULL DEFAULT NULL COMMENT '有效期（结束）',
   `status` tinyint(0) NULL DEFAULT NULL COMMENT '状态（0：禁用；1：启用）',
   `auth_status` int(0) NULL DEFAULT NULL COMMENT '审核状态（0：待审核，1：审核通过，2：审核拒绝）',
-  `use_status` tinyint(0) NULL DEFAULT NULL COMMENT '使用状态（0：未使用 1：已使用）',
   `auth_opinion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '审核意见',
   `create_by` bigint(0) NULL DEFAULT NULL COMMENT '创建人id',
   `update_by` bigint(0) NULL DEFAULT NULL COMMENT '修改人id',
@@ -53,11 +52,11 @@ CREATE TABLE `coupon`  (
 -- ----------------------------
 -- Records of coupon
 -- ----------------------------
-INSERT INTO `coupon` VALUES (1, '满100减10', 0, NULL, 0, 1, 100.00, 10.00, 0, NULL, NULL, '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 300, 0, 1, '2022-09-22 00:00:00', '2022-10-18 00:00:00', 1, 1, 0, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `coupon` VALUES (2, '满1000减200', 1, 2, 0, 1, 1000.00, 200.00, 2, '', '2', '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 100, 0, 1, '2021-05-27 00:00:00', '2021-06-26 00:00:00', 1, 1, 0, '通过', NULL, NULL, NULL, NULL);
-INSERT INTO `coupon` VALUES (3, '满100打8折', 1, 2, 1, 1, 100.00, 8.00, 2, '', '2', '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 200, 0, 2, '2022-08-16 01:00:00', '2022-08-17 02:00:00', 1, 1, 0, '成都市', NULL, NULL, NULL, NULL);
-INSERT INTO `coupon` VALUES (4, '满1000打9折', 0, NULL, 1, 1, 1000.00, 9.00, 1, '8,11', '', '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 500, 0, 1, '2022-05-03 00:00:00', '2023-06-15 00:00:00', 1, 1, 0, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `coupon` VALUES (5, '满500减100', 0, NULL, 0, 1, 500.00, 100.00, 0, NULL, NULL, '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 200, 0, 1, '2022-07-29 00:00:00', '2022-08-30 00:00:00', 1, 1, 0, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `coupon` VALUES (1, '满100减10', 0, NULL, 0, 1, 100.00, 10.00, 0, NULL, NULL, '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 300, 0, 1, '2022-09-22 00:00:00', '2022-10-18 00:00:00', 1, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `coupon` VALUES (2, '满1000减200', 1, 2, 0, 1, 1000.00, 200.00, 2, '', '2', '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 100, 0, 1, '2021-05-27 00:00:00', '2021-06-26 00:00:00', 1, 1, '通过', NULL, NULL, NULL, NULL);
+INSERT INTO `coupon` VALUES (3, '满100打8折', 1, 2, 1, 1, 100.00, 8.00, 2, '', '2', '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 200, 0, 2, '2022-08-16 01:00:00', '2022-08-17 02:00:00', 1, 1, '成都市', NULL, NULL, NULL, NULL);
+INSERT INTO `coupon` VALUES (4, '满1000打9折', 0, NULL, 1, 1, 1000.00, 9.00, 1, '8,11', '', '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 500, 0, 1, '2022-05-03 00:00:00', '2023-06-15 00:00:00', 1, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `coupon` VALUES (5, '满500减100', 0, NULL, 0, 1, 500.00, 100.00, 0, NULL, NULL, '普通会员,青铜会员,白银会员,黄金会员,铂金会员,钻石会员,最强买家', 200, 0, 1, '2022-07-29 00:00:00', '2022-08-30 00:00:00', 1, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for undo_log

@@ -90,15 +90,15 @@ public class PayInfoGoodsController {
             PayMerchantVO payMerchantVO = new PayMerchantVO();
             payMerchantVO.setMerchantId(goodsJSON.getLongValue("merchantId"));
             payMerchantVO.setMerchantName(goodsJSON.getString("merchantName"));
-            payMerchantVO.setFreight(new BigDecimal("0")); //TODO 运费，后面调整
+            payMerchantVO.setFreight(new BigDecimal("0")); //运费，初始为0
             payMerchantVO.setTotalCount(payGoodsVO.getCount());
-            payMerchantVO.setTotalPrice(new BigDecimal(payGoodsVO.getCount()).multiply(payGoodsVO.getSellingPrice()));
-            payMerchantVO.setFinalPrice(new BigDecimal(payGoodsVO.getCount()).multiply(payGoodsVO.getSellingPrice()));
+            payMerchantVO.setTotalPrice(new BigDecimal(payGoodsVO.getCount()).multiply(payGoodsVO.getSellingPrice()));//每一家总价格
+            payMerchantVO.setFinalPrice(new BigDecimal(payGoodsVO.getCount()).multiply(payGoodsVO.getSellingPrice()));//每一家最终价格
             payMerchantVO.setPayGoodsList(payGoodsList);
             payMerchantVOList.add(payMerchantVO);
 
             payVO.setPayMerchantList(payMerchantVOList); //购物车列表
-            payVO.setTotalCount(payGoodsVO.getCount());
+            payVO.setTotalCount(payGoodsVO.getCount()); //总的商品数量
             payVO.setTotalPrice(new BigDecimal(payGoodsVO.getCount()).multiply(payGoodsVO.getSellingPrice())); //总价格
             payVO.setFinalPrice(new BigDecimal(payGoodsVO.getCount()).multiply(payGoodsVO.getSellingPrice())); //最终价格，可能包含优惠券减去的价格，还有运费等
             payVO.setDiscountPrice(new BigDecimal("0")); //优惠掉的价格
@@ -137,14 +137,14 @@ public class PayInfoGoodsController {
                         totalPriceForEveryMerchant = totalPriceForEveryMerchant.add(payGoodsVO.getSubTotal()); //价格计算
                     }
                 }
-                payMerchantVO.setTotalCount(totalCountForEveryMerchant);
-                payMerchantVO.setTotalPrice(totalPriceForEveryMerchant);
-                payMerchantVO.setFinalPrice(totalPriceForEveryMerchant);//TODO 后续调整
+                payMerchantVO.setTotalCount(totalCountForEveryMerchant);//每一家的总数量
+                payMerchantVO.setTotalPrice(totalPriceForEveryMerchant);//每一家的总价
+                payMerchantVO.setFinalPrice(totalPriceForEveryMerchant);//每一家的最终价
                 payMerchantVO.setPayGoodsList(payGoodsList);
                 payMerchantVOList.add(payMerchantVO);
             }
             payVO.setPayMerchantList(payMerchantVOList); //购物车列表
-            payVO.setTotalCount(totalCount);
+            payVO.setTotalCount(totalCount); //总的商品数量
             payVO.setTotalPrice(totalPrice); //总价格
             payVO.setFinalPrice(totalPrice); //最终价格，可能包含优惠券减去的价格，还有运费等
             payVO.setDiscountPrice(new BigDecimal("0")); //优惠掉的价格

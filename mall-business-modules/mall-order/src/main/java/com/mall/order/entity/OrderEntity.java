@@ -69,6 +69,7 @@ public class OrderEntity {
 
     /**
      * 订单状态
+     * @see com.mall.order.enums.OrderStatusEnum
      */
     private OrderStatusEnum status;
 

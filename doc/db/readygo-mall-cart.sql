@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 08/03/2023 15:27:53
+ Date: 06/05/2023 16:53:13
 */
 
 SET NAMES utf8mb4;
@@ -26,13 +26,11 @@ CREATE TABLE `cart`  (
   `member_id` bigint(0) NULL DEFAULT NULL COMMENT '会员id',
   `merchant_id` bigint(0) NULL DEFAULT NULL COMMENT '商户id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 374 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 376 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (371, 1, 5);
-INSERT INTO `cart` VALUES (373, 1, 4);
 
 -- ----------------------------
 -- Table structure for cart_goods
@@ -47,13 +45,10 @@ CREATE TABLE `cart_goods`  (
   `checked` tinyint(1) NULL DEFAULT NULL COMMENT '是否已被选中',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '加入时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 479 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 482 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart_goods
 -- ----------------------------
-INSERT INTO `cart_goods` VALUES (476, 371, 15, 126, 1, 1, '2023-01-06 17:36:43');
-INSERT INTO `cart_goods` VALUES (478, 373, 5, 73, 2, 1, '2023-03-08 11:04:36');
-INSERT INTO `cart_goods` VALUES (479, 373, 10, 131, 1, 1, '2023-03-08 15:02:18');
 
 SET FOREIGN_KEY_CHECKS = 1;

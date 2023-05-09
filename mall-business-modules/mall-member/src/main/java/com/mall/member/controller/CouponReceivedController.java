@@ -1,5 +1,6 @@
 package com.mall.member.controller;
 
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
@@ -129,7 +130,7 @@ public class CouponReceivedController {
      * @return
      */
     @PostMapping("save")
-    public CommonResult save(@RequestParam("couponId") Long couponId) {
+    public CommonResult save(@RequestParam("couponId") Long couponId) throws ParseException {
         //查询商家发布的优惠券
         CommonResult result = feignCouponService.getCouponById(couponId);
         if (result == null || !"200".equals(result.getCode())) {
@@ -141,6 +142,10 @@ public class CouponReceivedController {
         couponReceived.setUseStatus(0); //默认未使用
         couponReceived.setCouponId(couponId);
         couponReceived.setMemberId(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
+        couponReceived.setValidPeriodStart(DateUtil
+                .getDateByDateString(String.valueOf(resultMap.get("validPeriodStart")), DateUtil.YYYY_MM_DD_HH_MM_SS));
+        couponReceived.setValidPeriodEnd(DateUtil
+                .getDateByDateString(String.valueOf(resultMap.get("validPeriodEnd")), DateUtil.YYYY_MM_DD_HH_MM_SS));
         //每人限领几张
         Integer perLimit = Integer.parseInt(String.valueOf(resultMap.get("perLimit")));
         Map<String, Object> params = new HashMap<>();
@@ -157,7 +162,7 @@ public class CouponReceivedController {
             return CommonResult.success(ResultCodeEnum.COUPON_IS_EMPTY.getCode(),ResultCodeEnum.COUPON_IS_EMPTY.getMessage());
         }
         try {
-            Date couponValidPeriodEnd = DateUtil.getDateByDateString(String.valueOf(resultMap.get("validPeriodEnd")),"yyyy-MM-dd hh:mm:ss");
+            Date couponValidPeriodEnd = DateUtil.getDateByDateString(String.valueOf(resultMap.get("validPeriodEnd")),DateUtil.YYYY_MM_DD_HH_MM_SS);
             if (new Date().getTime() > couponValidPeriodEnd.getTime()) { //此时已过期
                 return CommonResult.success(ResultCodeEnum.COUPON_IS_NOT_EXPIRED.getCode(),ResultCodeEnum.COUPON_IS_NOT_EXPIRED.getMessage());
             }

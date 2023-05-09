@@ -1,8 +1,7 @@
 package com.mall.goods.aspect;
 
 import com.mall.common.base.CommonResult;
-import com.mall.common.base.constant.RabbitExchangeConstant;
-import com.mall.common.base.constant.RabbitRoutingKeyConstant;
+import com.mall.common.base.constant.RabbitConstant;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.goods.entity.GoodsEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -56,8 +55,8 @@ public class FootprintAspect {
             message.put("userId",userId);
             message.put("goodsId",goodsId);
             message.put("merchantId", merchantId);
-            rabbitTemplate.convertAndSend(RabbitExchangeConstant.FOOTPRINT_EXCHANGE,
-                    RabbitRoutingKeyConstant. FOOTPRINT_ROUTING_KEY,message);
+            rabbitTemplate.convertAndSend(RabbitConstant.MEMBER_FOOTPRINT_EXCHANGE,
+                    RabbitConstant.MEMBER_FOOTPRINT_KEY,message);
         }
     }
 

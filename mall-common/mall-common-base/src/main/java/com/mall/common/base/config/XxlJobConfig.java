@@ -1,4 +1,4 @@
-package com.mall.goods.config;
+package com.mall.common.base.config;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.slf4j.Logger;

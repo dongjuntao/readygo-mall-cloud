@@ -4,18 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.member.entity.CouponReceivedEntity;
-import com.mall.member.entity.FootprintEntity;
 import com.mall.member.mapper.CouponReceivedMapper;
 import com.mall.member.service.CouponReceivedService;
 import io.seata.spring.annotation.GlobalTransactional;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

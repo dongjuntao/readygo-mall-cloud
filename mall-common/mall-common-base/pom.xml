@@ -18,6 +18,10 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <xxl.job.version>2.3.1</xxl.job.version>
+  </properties>
+
   <dependencies>
     <!--mybatis-plus-->
     <dependency>
@@ -34,6 +38,12 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+    </dependency>
+    <!-- xxl-job-core -->
+    <dependency>
+      <groupId>com.xuxueli</groupId>
+      <artifactId>xxl-job-core</artifactId>
+      <version>${xxl.job.version}</version>
     </dependency>
     <!-- spring cloud openfeign-->
     <dependency>

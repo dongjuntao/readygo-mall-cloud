@@ -1,7 +1,7 @@
 package com.mall.cart.aspect;
 
-import com.mall.cart.constant.RabbitMQConstant;
 import com.mall.cart.constant.RedisKeyConstant;
+import com.mall.common.base.constant.RabbitConstant;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.seata.util.RedisUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -54,8 +54,8 @@ public class CartDoubleDeleteAspect {
         Map<String, Object> messageBody = new HashMap<>();
         messageBody.put("memberId",memberId);
         // 指定之前定义的延迟交换机名 与路由键名
-        rabbitTemplate.convertAndSend(RabbitMQConstant.CART_DOUBLE_DELETE_DELAY_EXCHANGE,
-                RabbitMQConstant.CART_DOUBLE_DELETE_DELAY_KEY, messageBody);
+        rabbitTemplate.convertAndSend(RabbitConstant.CART_DOUBLE_DELETE_DELAY_EXCHANGE,
+                RabbitConstant.CART_DOUBLE_DELETE_DELAY_KEY, messageBody);
 
         return object;
 

@@ -1,7 +1,7 @@
 package com.mall.order.consumer;
 
+import com.mall.common.base.constant.RabbitConstant;
 import com.mall.common.base.utils.MapUtil;
-import com.mall.order.constant.RabbitMQConstant;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.entity.TradeEntity;
 import com.mall.order.enums.OrderStatusEnum;
@@ -34,7 +34,7 @@ public class OrderAutoCancelConsumer {
      * 订单超时未支付，自动取消
      * @param message
      */
-    @RabbitListener(queues = RabbitMQConstant.ORDER_AUTO_CANCEL_DEAD_QUEUE)
+    @RabbitListener(queues = RabbitConstant.ORDER_AUTO_CANCEL_DEAD_QUEUE)
     public void process(Map<String, Object> message) {
         String tradeCode =  String.valueOf(message.get("tradeCode"));
         if (!Strings.isEmpty(tradeCode)) {

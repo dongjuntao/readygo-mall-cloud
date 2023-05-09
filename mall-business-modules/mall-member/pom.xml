@@ -20,6 +20,7 @@
 
   <properties>
     <common.version>1.0-SNAPSHOT</common.version>
+    <xxl.job.version>2.3.1</xxl.job.version>
   </properties>
 
   <dependencies>
@@ -46,6 +47,12 @@
       <groupId>com.mall.service.api</groupId>
       <artifactId>mall-goods-api</artifactId>
       <version>${common.version}</version>
+    </dependency>
+    <!-- xxl-job-core -->
+    <dependency>
+      <groupId>com.xuxueli</groupId>
+      <artifactId>xxl-job-core</artifactId>
+      <version>${xxl.job.version}</version>
     </dependency>
     <!--seata-->
     <dependency>

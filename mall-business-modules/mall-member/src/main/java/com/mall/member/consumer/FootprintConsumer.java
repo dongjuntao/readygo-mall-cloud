@@ -1,8 +1,6 @@
 package com.mall.member.consumer;
 
-import com.mall.common.base.constant.RabbitExchangeConstant;
-import com.mall.common.base.constant.RabbitRoutingKeyConstant;
-import com.mall.common.base.utils.CurrentUserContextUtil;
+import com.mall.common.base.constant.RabbitConstant;
 import com.mall.member.entity.FootprintEntity;
 import com.mall.member.service.FootprintService;
 import org.springframework.amqp.core.ExchangeTypes;
@@ -21,9 +19,9 @@ import java.util.Map;
  */
 @Component
 @RabbitListener(bindings = @QueueBinding(
-        value = @Queue(value = RabbitRoutingKeyConstant.FOOTPRINT_ROUTING_KEY,autoDelete="true"),
-        exchange = @Exchange(value = RabbitExchangeConstant.FOOTPRINT_EXCHANGE,type = ExchangeTypes.TOPIC),
-        key = RabbitRoutingKeyConstant.FOOTPRINT_ROUTING_KEY)
+        value = @Queue(value = RabbitConstant.MEMBER_FOOTPRINT_KEY,autoDelete="true"),
+        exchange = @Exchange(value = RabbitConstant.MEMBER_FOOTPRINT_EXCHANGE,type = ExchangeTypes.TOPIC),
+        key = RabbitConstant.MEMBER_FOOTPRINT_KEY)
 )
 public class FootprintConsumer {
 

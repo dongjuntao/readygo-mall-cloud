@@ -12,6 +12,10 @@ import java.util.Date;
  */
 public class DateUtil {
 
+    public static String YYYY_DD_MM = "yyyy-MM-dd";
+
+    public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+
     /**
      * 根据时间字符串和转换格式 获取Date类型值
      * @param format

@@ -17,6 +17,7 @@
     <module>mall-cart-api</module>
     <module>mall-coupon-api</module>
     <module>mall-seckill-api</module>
+    <module>mall-log-api</module>
   </modules>
 
   <!--微服务接口-->

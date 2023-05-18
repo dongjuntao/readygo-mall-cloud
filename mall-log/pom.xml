@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mall</groupId>
+  <artifactId>mall-log</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <!--日志服务，记录业务日志-->
+  <name>mall-log</name>
+
+  <!--父组件-->
+  <parent>
+    <groupId>com.mall</groupId>
+    <artifactId>readygo-mall-cloud</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <common.version>1.0-SNAPSHOT</common.version>
+    <xxl.job.version>2.3.1</xxl.job.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!--mall-common-base-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-base</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--mall-common-mysql-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-mysql</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--redis-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-redis</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--mq-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-rabbitmq</artifactId>
+      <version>${common.version}</version>
+    </dependency>
+    <!--seata-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-seata</artifactId>
+      <version>${common.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>io.seata</groupId>
+          <artifactId>seata-spring-boot-starter</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.seata</groupId>
+          <artifactId>seata-all</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.seata</groupId>
+      <artifactId>seata-spring-boot-starter</artifactId>
+      <version>1.4.2</version>
+    </dependency>
+    <!--mybatis-plus-->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.baomidou</groupId>
+          <artifactId>mybatis-plus-generator</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--lombok-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <!--服务注册发现-->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    </dependency>
+    <!--监控-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <!--logstash logback-->
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.danielwegener</groupId>
+      <artifactId>logback-kafka-appender</artifactId>
+      <version>0.2.0-RC2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- xxl-job-core -->
+    <dependency>
+      <groupId>com.xuxueli</groupId>
+      <artifactId>xxl-job-core</artifactId>
+      <version>${xxl.job.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build></build>
+</project>

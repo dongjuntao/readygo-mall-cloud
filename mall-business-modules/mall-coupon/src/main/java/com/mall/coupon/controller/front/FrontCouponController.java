@@ -3,7 +3,6 @@ package com.mall.coupon.controller.front;
 import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
-import com.mall.common.base.utils.PageUtil;
 import com.mall.coupon.entity.CouponEntity;
 import com.mall.coupon.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;

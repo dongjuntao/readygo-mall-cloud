@@ -10,6 +10,7 @@ public class RabbitConstant {
 
     //会员足迹记录
     public static final String MEMBER_FOOTPRINT_EXCHANGE = "member_footprint_exchange";
+    public static final String MEMBER_FOOTPRINT_QUEUE = "member_footprint_queue";
     public static final String MEMBER_FOOTPRINT_KEY = "member_footprint_key";
 
     //购物车延迟双删
@@ -30,8 +31,4 @@ public class RabbitConstant {
     public static final String ORDER_AUTO_CANCEL_DEAD_KEY = "order_auto_cancel_dead_key";//死信队列key
     public static final Integer ORDER_AUTO_CANCEL_DELAY_TIME = 1000*60*30; //延迟30分钟
 
-    //优惠券状态表更
-    public static final String COUPON_USE_STATUS_CHANGE_EXCHANGE = "coupon_use_status_change_exchange";
-    public static final String COUPON_USE_STATUS_CHANGE_QUEUE = "coupon_use_status_change_queue";
-    public static final String COUPON_USE_STATUS_CHANGE_KEY = "coupon_use_status_change_key";
 }

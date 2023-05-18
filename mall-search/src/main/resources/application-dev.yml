@@ -18,14 +18,27 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 5000
+        connectTimeout: 6000
+        readTimeout: 6000
   hystrix:
     enabled: false
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-file,mall-seckill,mall-security-oauth2,mall-gateway,mall-goods,mall-coupon,mall-member,mall-admin,mall-cart,mall-order
+    clients:
+      - mall-file
+      - mall-order
+      - mall-member
+      - mall-admin
+      - mall-goods
+      - mall-seckill
+      - mall-security-oauth2
+      - mall-log
+      - mall-payment
+      - mall-gateway
+      - mall-coupon
+      - mall-cart
+      - mall-search
 
 elk:
   kafka:

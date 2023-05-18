@@ -24,4 +24,6 @@ public class ServiceNameConstant {
 
     public static final String MALL_SECKILL = "mall-seckill"; //秒杀微服务
 
+    public static final String MALL_LOG = "mall-log"; //日志微服务
+
 }

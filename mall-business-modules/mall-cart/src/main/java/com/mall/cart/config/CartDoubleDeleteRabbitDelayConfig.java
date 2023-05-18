@@ -23,7 +23,7 @@ public class CartDoubleDeleteRabbitDelayConfig {
      */
     @Bean
     public DirectExchange delayExchange() {
-       return new DirectExchange(RabbitConstant.CART_DOUBLE_DELETE_DELAY_EXCHANGE);
+       return ExchangeBuilder.directExchange(RabbitConstant.CART_DOUBLE_DELETE_DELAY_EXCHANGE).durable(true).build();
     }
     /**
      * 延时队列
@@ -53,7 +53,7 @@ public class CartDoubleDeleteRabbitDelayConfig {
      */
     @Bean
     public DirectExchange deadExchange() {
-        return new DirectExchange(RabbitConstant.CART_DOUBLE_DELETE_DEAD_EXCHANGE);
+        return ExchangeBuilder.directExchange(RabbitConstant.CART_DOUBLE_DELETE_DEAD_EXCHANGE).durable(true).build();
     }
     /**
      * 死信队列

@@ -23,7 +23,7 @@ public class OrderAutoCancelRabbitDelayConfig {
      */
     @Bean
     public DirectExchange delayExchange() {
-       return new DirectExchange(RabbitConstant.ORDER_AUTO_CANCEL_DELAY_EXCHANGE);
+       return ExchangeBuilder.directExchange(RabbitConstant.ORDER_AUTO_CANCEL_DELAY_EXCHANGE).durable(true).build();
     }
     /**
      * 延时队列
@@ -53,7 +53,7 @@ public class OrderAutoCancelRabbitDelayConfig {
      */
     @Bean
     public DirectExchange deadExchange() {
-        return new DirectExchange(RabbitConstant.ORDER_AUTO_CANCEL_DEAD_EXCHANGE);
+        return ExchangeBuilder.directExchange(RabbitConstant.ORDER_AUTO_CANCEL_DEAD_EXCHANGE).durable(true).build();
     }
     /**
      * 死信队列

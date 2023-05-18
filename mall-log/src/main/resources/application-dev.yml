@@ -1,0 +1,182 @@
+spring:
+  #####数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://49.234.85.17:3306/readygo-mall-log?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: DJTReadyGO19930312!@#$legion
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+  #####nacos配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 49.234.85.17:8848 #配置nacos地址
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+  #####redis配置
+  redis:
+    host: 49.234.85.17
+    port: 6379
+    password: DJTReadyGO19930312!@#$legion
+    timeout: 6000
+    database: 3
+    lettuce:
+      shutdown-timeout: 100
+      pool:
+        max-active: 20
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 2
+      cluster:
+        refresh:
+          adaptive: true #20秒自动刷新一次
+          period: 20
+
+  #rabbit mq
+  rabbitmq:
+    host: 49.234.85.17
+    username: rabbitAdmin
+    password: rabbit@123
+    virtual-host: /
+    port: 5672
+    listener:
+      direct:
+        acknowledge-mode: manual #NONE（默认）：自动；AUTO：根据情况确认；MANUAL：手动确认
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 5000
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true #开启重发
+          max-attempts: 3 #重试次数
+          initial-interval: 5000 #重试间隔(ms)
+    publisher-confirm-type: correlated #开启发送者confirm机制,对应RabbitTemplate.ConfirmCallback接口
+    publisher-returns: true #发送失败回退，对应RabbitTemplate.ReturnCallback接口
+    template:
+      mandatory: true
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 6000
+        readTimeout: 6000
+  hystrix:
+    enabled: false
+ribbon:
+  eager-load:
+    enabled: true
+    clients:
+      - mall-file
+      - mall-order
+      - mall-member
+      - mall-admin
+      - mall-goods
+      - mall-seckill
+      - mall-security-oauth2
+      - mall-log
+      - mall-payment
+      - mall-gateway
+      - mall-coupon
+      - mall-cart
+      - mall-search
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:**/*Mapper.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+seata:
+  enabled: true
+  application-id: mall-log
+  tx-service-group: default_tx_group
+  # 是否自动开启数据源代理
+  enable-auto-data-source-proxy: true
+  # 数据源代理模式，使用AT模式
+  data-source-proxy-mode: AT
+  service:
+    # 事务群组
+    vgroupMapping:
+      default_tx_group: default  # default 的值为集群的名字，在配置 seata service 的时候指定的
+    grouplist:
+      default: 49.234.85.17:8091
+    enable-degrade: false
+    # 全局事务开关
+    disable-global-transaction: false
+  # 配置中心，需要和 seata server 保持一致
+  config:
+    type: nacos
+    nacos:
+      namespace: "a361e8e8-d854-465a-ba3c-4119bf32e078"
+      server-addr: "49.234.85.17:8848"
+      group: "nacos-seata"
+      username: "nacos"
+      password: "nacos"
+      data-id: "nacos-config.properties"
+  # 注册中心，需要和 seata server 保持一致
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      group: "SEATA_GROUP"
+      namespace: "a361e8e8-d854-465a-ba3c-4119bf32e078"
+      username: "nacos"
+      password: "nacos"
+      server-addr: "49.234.85.17:8848"
+
+elk:
+  kafka:
+    appender:
+      servers: '123.60.173.14:9092'
+      topic: readygo-mall-logs
+
+xxl:
+  job:
+    admin:
+      # 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。
+      # 执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+      addresses: http://127.0.0.1:8020/xxl-job-admin
+    # 执行器通讯TOKEN [选填]：非空时启用；
+    accessToken:
+    executor:
+      # 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
+      appname: mall-log-executor
+      # 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。
+      #从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
+      address:
+      # 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；
+      # 地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
+      ip: 127.0.0.1
+      # 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
+      port: 9911
+      # 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
+      logpath: D:\\
+      # 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
+      logretentiondays: 3

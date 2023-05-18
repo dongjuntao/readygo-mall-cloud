@@ -51,22 +51,48 @@ spring:
     virtual-host: /
     port: 5672
     listener:
-      simple:
+      direct:
+        acknowledge-mode: manual #NONE（默认）：自动；AUTO：根据情况确认；MANUAL：手动确认
         retry:
           enabled: true
+          max-attempts: 3
+          initial-interval: 5000
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true #开启重发
+          max-attempts: 3 #重试次数
+          initial-interval: 5000 #重试间隔(ms)
+    publisher-confirm-type: correlated #开启发送者confirm机制,对应RabbitTemplate.ConfirmCallback接口
+    publisher-returns: true #发送失败回退，对应RabbitTemplate.ReturnCallback接口
+    template:
+      mandatory: true
 
 feign:
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 5000
+        connectTimeout: 6000
+        readTimeout: 6000
   hystrix:
     enabled: false
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-coupon,mall-file,mall-security-oauth2,mall-gateway,mall-member,mall-goods,mall-seckill,mall-admin,mall-cart,mall-order
+    clients:
+      - mall-file
+      - mall-order
+      - mall-member
+      - mall-admin
+      - mall-goods
+      - mall-seckill
+      - mall-security-oauth2
+      - mall-log
+      - mall-payment
+      - mall-gateway
+      - mall-coupon
+      - mall-cart
+      - mall-search
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）

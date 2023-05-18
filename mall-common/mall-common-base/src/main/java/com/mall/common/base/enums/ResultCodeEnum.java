@@ -51,6 +51,8 @@ public enum ResultCodeEnum {
 
     GOODS_NOT_EXIST("800", "商品不存在"),
 
+    LOG_NOT_EXIST("900","日志不存在"),
+    EXCEEDED_MAX_RETRY_COUNT("901","超过最大重试次数"),
 
     COMMON_FAIL("10000", "其他错误");
 

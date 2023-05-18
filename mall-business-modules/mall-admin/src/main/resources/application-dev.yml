@@ -48,14 +48,27 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 5000
+        connectTimeout: 6000
+        readTimeout: 6000
   hystrix:
     enabled: false
 ribbon:
   eager-load:
     enabled: true
-    clients: mall-admin,mall-file,mall-security-oauth2,mall-gateway,mall-member,mall-coupon,mall-goods,mall-seckill,mall-cart,mall-order
+    clients:
+      - mall-file
+      - mall-order
+      - mall-member
+      - mall-admin
+      - mall-goods
+      - mall-seckill
+      - mall-security-oauth2
+      - mall-log
+      - mall-payment
+      - mall-gateway
+      - mall-coupon
+      - mall-cart
+      - mall-search
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）

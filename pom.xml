@@ -30,6 +30,7 @@
     <module>mall-services-api</module>
     <module>mall-xxl-job</module>
     <module>mall-search</module>
+    <module>mall-log</module>
   </modules>
 
   <!--配置-->

@@ -4,7 +4,6 @@ import com.mall.admin.api.feign.FeignAdminUserService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
-import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.entity.GoodsSpecificationsDetailEntity;
 import com.mall.goods.entity.GoodsSpecificationsEntity;
 import com.mall.goods.service.GoodsSpecificationsDetailService;

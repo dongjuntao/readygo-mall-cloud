@@ -20,7 +20,6 @@
   <properties>
     <cos_api.version>5.6.45</cos_api.version>
     <common.version>1.0-SNAPSHOT</common.version>
-    <xxl.job.version>2.3.1</xxl.job.version>
   </properties>
 
   <dependencies>
@@ -44,12 +43,6 @@
       <groupId>com.mall.common</groupId>
       <artifactId>mall-common-base</artifactId>
       <version>${common.version}</version>
-    </dependency>
-    <!-- xxl-job-core -->
-    <dependency>
-      <groupId>com.xuxueli</groupId>
-      <artifactId>xxl-job-core</artifactId>
-      <version>${xxl.job.version}</version>
     </dependency>
     <!--服务注册发现-->
     <dependency>

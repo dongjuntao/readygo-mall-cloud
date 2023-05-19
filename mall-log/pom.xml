@@ -20,7 +20,6 @@
 
   <properties>
     <common.version>1.0-SNAPSHOT</common.version>
-    <xxl.job.version>2.3.1</xxl.job.version>
   </properties>
 
   <dependencies>
@@ -109,12 +108,6 @@
       <artifactId>logback-kafka-appender</artifactId>
       <version>0.2.0-RC2</version>
       <scope>runtime</scope>
-    </dependency>
-    <!-- xxl-job-core -->
-    <dependency>
-      <groupId>com.xuxueli</groupId>
-      <artifactId>xxl-job-core</artifactId>
-      <version>${xxl.job.version}</version>
     </dependency>
   </dependencies>
 

@@ -64,7 +64,6 @@ public class AdminUserController {
         long start = System.currentTimeMillis();
         String resultMap = feignLoginService.login(loginVO.getUserName(),loginVO.getPassword(),
                 loginVO.getUserType(), OAuth2Constant.ADMIN_CLIENT_ID);
-        System.out.println("登录时长=="+(System.currentTimeMillis() - start));
         CommonResult result = JSON.parseObject(resultMap, CommonResult.class);
         if (StringUtils.isEmpty(resultMap) || result == null) {
             return CommonResult.fail();
@@ -113,11 +112,23 @@ public class AdminUserController {
     }
 
     /**
-     * 所有用户列表
+     * 分页查询所有用户
+     * @param userName 用户名
+     * @param userType 用户类型  0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜） 1:【店铺管理员】包括【入驻商户】【自营商户】
+     * @param merchantType 商户（店铺）类型 0:入驻商户 1:自营商户
+     * @param authStatus 审核状态
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @return
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = adminUserService.queryPage(params);
+    public CommonResult list(@RequestParam(value = "userName", required = false) String userName,
+                             @RequestParam(value = "userType", required = false) Integer userType,
+                             @RequestParam(value = "merchantType", required = false) Integer merchantType,
+                             @RequestParam(value = "authStatus", required = false) Integer authStatus,
+                             @RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize){
+        PageUtil page = adminUserService.queryPage(userName,userType,merchantType,authStatus,pageNum,pageSize);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -125,8 +136,10 @@ public class AdminUserController {
      * 所有用户列表（不分页）
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<AdminUserEntity> adminUserEntityList = adminUserService.queryByParams(params);
+    public CommonResult listAll(@RequestParam(value = "userType", required = false) Integer userType,
+                                @RequestParam(value = "authStatus", required = false) Integer authStatus,
+                                @RequestParam(value = "merchantType", required = false) Integer merchantType){
+        List<AdminUserEntity> adminUserEntityList = adminUserService.queryByParams(userType, authStatus, merchantType);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), adminUserEntityList);
     }
 
@@ -145,13 +158,17 @@ public class AdminUserController {
     }
 
     /**
-     * 根据用户名查看用户信息
-     * @param params
+     * 根据用户名和用户类型查看用户
+     * @param userName 用户名
+     * @param userType 用户类型  0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜） 1:【店铺管理员】包括【入驻商户】【自营商户】
+     * @param id 用户id
      * @return
      */
-    @GetMapping("/getUserByParams")
-    public CommonResult getUserByParams(@RequestParam Map<String, Object> params) {
-        AdminUserEntity adminUser = adminUserService.getUserByParams(params);
+    @GetMapping("getUserByParams")
+    public CommonResult getUserByParams(@RequestParam(value = "userName", required = false) String userName,
+                                        @RequestParam(value = "userType", required = false) Integer userType,
+                                        @RequestParam(value = "id", required = false) Long id) {
+        AdminUserEntity adminUser = adminUserService.getUserByParams(userName, userType, id);
         if (adminUser == null) {
             return null;
         }

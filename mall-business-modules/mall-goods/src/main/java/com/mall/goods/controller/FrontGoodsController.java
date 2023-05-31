@@ -60,8 +60,12 @@ public class FrontGoodsController {
      * 商品列表（分页）
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil pageResult = frontGoodsService.queryPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name,
+                             @RequestParam(value = "adminUserId",required = false) Long adminUserId,
+                             @RequestParam(value = "categoryIds",required = false) String categoryIds){
+        PageUtil pageResult = frontGoodsService.queryPage(pageNum,pageSize,name,adminUserId,categoryIds);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), pageResult);
     }
 

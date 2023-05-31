@@ -19,18 +19,20 @@ import java.util.Map;
 public interface HomepagePlateService extends IService<HomepagePlateEntity> {
 
     /**
-     * 分页查询板块列表
-     * @param params
+     * 分页查询所有板块
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 板块名称
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name);
 
     /**
      * 根据条件查询所有板块
      * @param params
      * @return
      */
-    List<HomepagePlateEntity> getByParams(Map<String, Object> params);
+    List<HomepagePlateEntity> getByParams(String name);
 
     /**
      * 保存板块

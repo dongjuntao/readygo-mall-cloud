@@ -3,6 +3,7 @@ package com.mall.payment.controller;
 import com.alipay.api.AlipayApiException;
 import com.mall.common.base.CommonResult;
 import com.mall.order.api.feign.FeignTradeService;
+import com.mall.payment.constant.OrderTypeConstant;
 import com.mall.payment.service.AlipayService;
 import com.mall.payment.vo.CreateQrParamsVO;
 import com.mall.payment.vo.PayInfoVO;
@@ -49,13 +50,13 @@ public class AlipayController {
         String subject = ""; //订单说明
         PayInfoVO payInfoVO = null;
         //提交订单后立马支付（一个交易可能包含多个订单）
-        if ("TRADE".equals(orderType)) {
+        if (OrderTypeConstant.TRADE.equals(orderType)) {
             CommonResult result = feignTradeService.getTradeByParams(params);
             Map<String, Object> resultMap = (Map<String, Object>)result.getData();
             subject = tradeCode;
             price = String.valueOf(resultMap.get("finalPrice"));
             payInfoVO = alipayService.createQR(tradeCode, price, subject);
-        } else if ("ORDER".equals(orderType)) { //后续在订单列表指定某个订单进行支付
+        } else if (OrderTypeConstant.ORDER.equals(orderType)) { //后续在订单列表指定某个订单进行支付
             CommonResult result = feignTradeService.getTradeDetailByParams(params);
             Map<String, Object> resultMap = (Map<String, Object>)result.getData();
             List resultList = (List) resultMap.get("orderList");

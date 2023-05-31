@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
@@ -28,18 +29,25 @@ public class FrontGoodsServiceImpl extends ServiceImpl<FrontGoodsMapper, GoodsEn
         return baseMapper.getGoodsAndSku(id);
     }
 
+    /**
+     *
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 商品名称
+     * @param adminUserId 商家id
+     * @param categoryIds 商品分类id集
+     * @return
+     */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        Page<GoodsEntity> page = (Page<GoodsEntity>)new PageBuilder<GoodsEntity>().getPage(params);
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String categoryIds) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
+        Page<GoodsEntity> page = (Page<GoodsEntity>)new PageBuilder<GoodsEntity>().getPage(pageParams);
         QueryWrapper<GoodsEntity> wrapper = new QueryWrapper<>();
-        String name = params.get("name") == null ? null : String.valueOf(params.get("name"));//商品名称
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         wrapper
                 .like(StringUtils.isNotBlank(name), "g.name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
                 .eq("on_sale", 1)
                 .orderByDesc("create_time");
-        String categoryIds = params.get("categoryIds") == null ? null : String.valueOf(params.get("categoryIds"));//商品分类id集合
         if (StringUtils.isNotBlank(categoryIds)) {
             String[] categorySplit = categoryIds.split(",");
             if (categorySplit.length == 1) { //按一级分类窜查询

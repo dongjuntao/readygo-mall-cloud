@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public interface GoodsService extends IService<GoodsEntity> {
 
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String categoryIds);
 
     GoodsEntity getGoodsAndSku(Long id);
 
     int updateOnSale(Long goodsId, Boolean onSale);
 
-    List<GoodsEntity> getAllGoodsList(Map<String, Object> params);
+    List<GoodsEntity> getAllGoodsList(Long adminUserId);
 
     /**
      * 根据id集合，查询所有商户信息

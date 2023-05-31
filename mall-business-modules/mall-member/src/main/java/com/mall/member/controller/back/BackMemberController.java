@@ -31,8 +31,10 @@ public class BackMemberController {
      * 所有用户列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = memberService.queryPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "userName", required = false) String userName){
+        PageUtil page = memberService.queryPage(pageNum, pageSize,userName);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -50,12 +52,12 @@ public class BackMemberController {
 
     /**
      * 根据用户名查看会员信息
-     * @param params
      * @return
      */
     @GetMapping("getMemberByParams")
-    public CommonResult getUserByParams(@RequestParam Map<String, Object> params) {
-        MemberEntity member = memberService.getMemberByParams(params);
+    public CommonResult getUserByParams(@RequestParam(value = "userName",required = false) String userName,
+                                        @RequestParam(value = "id",required = false) Long id) {
+        MemberEntity member = memberService.getMemberByParams(userName, id);
         if (member == null) {
             return null;
         }

@@ -24,5 +24,6 @@ public interface FrontPayTypeService {
      * 查询支付方式（不分页）
      */
     @GetMapping("listAll")
-    CommonResult listAll(@RequestParam Map<String, Object> params);
+    CommonResult listAll(@RequestParam(value = "name", required = false) String name,
+                         @RequestParam(value = "enable", required = false) Boolean enable);
 }

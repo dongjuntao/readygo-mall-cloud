@@ -33,7 +33,7 @@ spring:
     timeout: 6000
     database: 0
     lettuce:
-      shutdown-timeout: 100
+      shutdown-timeout: 100000
       pool:
         max-active: 20
         max-wait: -1ms

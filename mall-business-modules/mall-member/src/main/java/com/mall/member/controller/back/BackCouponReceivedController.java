@@ -27,12 +27,13 @@ public class BackCouponReceivedController {
 
     /**
      * 分页查询优惠券领取列表
-     * @param params
      * @return
      */
     @GetMapping("getCouponReceivedList")
-    public CommonResult getCouponReceivedList(@RequestParam Map<String, Object> params) {
-        PageUtil couponReceivedList = couponReceivedService.queryPageWithMemberInfo(params);
+    public CommonResult getCouponReceivedList(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                                              @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                              @RequestParam(value = "couponId", required = false) Long couponId) {
+        PageUtil couponReceivedList = couponReceivedService.queryPageWithMemberInfo(pageNum, pageSize, couponId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), couponReceivedList);
     }
 }

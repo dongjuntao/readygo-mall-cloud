@@ -27,15 +27,16 @@ public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper,
 
     /**
      * 分页查询所有导航
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 导航名称
      * @return
      */
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
-        //导航名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<HomepageNavbarEntity> page = this.page(
-                new PageBuilder<HomepageNavbarEntity>().getPage(params),
+                new PageBuilder<HomepageNavbarEntity>().getPage(pageParams),
                 new QueryWrapper<HomepageNavbarEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
                         .orderByAsc("sort_num")
@@ -45,13 +46,11 @@ public class HomepageNavbarServiceImpl extends ServiceImpl<HomepageNavbarMapper,
 
     /**
      * 根据条件查询所有导航
-     * @param params
+     * @param name 导航名称
      * @return
      */
     @Override
-    public List<HomepageNavbarEntity> getByParams(Map<String, Object> params) {
-        //导航名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
+    public List<HomepageNavbarEntity> getByParams(String name) {
         List<HomepageNavbarEntity> homepageNavbarEntityList = this.list(
                 new QueryWrapper<HomepageNavbarEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)

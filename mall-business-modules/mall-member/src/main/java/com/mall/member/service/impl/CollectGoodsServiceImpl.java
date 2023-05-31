@@ -68,12 +68,11 @@ public class CollectGoodsServiceImpl extends ServiceImpl<CollectGoodsMapper, Col
 
     /**
      * 查询所有的商品收藏
-     * @param params
+     * @param memberId
      * @return
      */
     @Override
-    public List<CollectGoodsEntity> listAll(Map<String, Object> params) {
-        Long memberId = params.get("userId") == null ? null: Long.valueOf((params.get("userId").toString()));
+    public List<CollectGoodsEntity> listAll(Long memberId) {
         QueryWrapper<CollectGoodsEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(memberId != null, "member_id", memberId);
         return this.baseMapper.selectList(queryWrapper);

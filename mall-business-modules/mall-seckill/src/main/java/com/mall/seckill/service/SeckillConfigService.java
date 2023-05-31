@@ -5,6 +5,7 @@ import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +33,9 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
 
     /**
      * 分页查询秒杀配置列表
-     * @param params
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, Integer authStatus);
 
     /**
      * 根据id查询秒杀配置
@@ -75,5 +75,7 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
     List<SeckillConfigEntity> getByParams(Map<String, Object> params);
 
     SeckillConfigEntity getSeckillConfigByParams(Map<String, Object> params);
+
+    String getBatchByCurrentTime(LocalDateTime localDateTime);
 
 }

@@ -15,11 +15,14 @@ import java.util.Map;
  */
 public interface RoleService extends IService<RoleEntity> {
     /**
-     * 根据条件分页查询角色列表
-     * @param params
+     * 分页查询角色列表
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 角色名称
+     * @param createUserId 创建人id
      * @return
      */
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long createUserId);
 
     /**
      * 保存角色信息

@@ -17,7 +17,7 @@ public interface CouponReceivedService extends IService<CouponReceivedEntity> {
 
     int saveCouponReceived(CouponReceivedEntity couponReceived);
 
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, Long memberId, Integer useStatus);
 
     Integer count(Map<String, Object> params);
 
@@ -27,5 +27,5 @@ public interface CouponReceivedService extends IService<CouponReceivedEntity> {
 
     int updateUseStatus(Long receivedCouponId, Integer status);
 
-    PageUtil queryPageWithMemberInfo(Map<String, Object> params);
+    PageUtil queryPageWithMemberInfo(Integer pageNum, Integer pageSize, Long couponId);
 }

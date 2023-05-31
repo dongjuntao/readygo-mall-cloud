@@ -3,6 +3,7 @@ package com.mall.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.FreightTemplateEntity;
 import com.mall.common.base.utils.PageUtil;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -31,17 +32,20 @@ public interface FreightTemplateService extends IService<FreightTemplateEntity> 
 
     /**
      * 分页查询运费模板
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param adminUserId 用户id
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, Long adminUserId);
 
     /**
-     * 根据条件查询所有运费模板
-     * @param params
+     * 根据条件查询所有物流公司
+     * @param name 运费模板名称
+     * @param adminUserId 用户id
      * @return
      */
-    List<FreightTemplateEntity> getByParams(Map<String, Object> params);
+    List<FreightTemplateEntity> getByParams(String name, Long adminUserId);
 
     FreightTemplateEntity getFreightTemplateById(Long id);
 

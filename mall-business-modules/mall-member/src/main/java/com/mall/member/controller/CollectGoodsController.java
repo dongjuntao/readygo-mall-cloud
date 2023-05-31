@@ -71,13 +71,12 @@ public class CollectGoodsController {
 
     /**
      * 查询商品收藏列表
-     * @param params
      * @return
      */
     @GetMapping("listAll")
-    public CommonResult getAllCollectGoods(@RequestParam Map<String, Object> params) {
-        params.put("userId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        List<CollectGoodsEntity> collectGoodsList = collectGoodsService.listAll(params);
+    public CommonResult getAllCollectGoods() {
+        List<CollectGoodsEntity> collectGoodsList = collectGoodsService
+                .listAll(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         if (collectGoodsList.size() == 0) {
             return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), collectGoodsList);
         }

@@ -35,15 +35,16 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
 
     /**
      * 分页查询所有板块
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 板块名称
      * @return
      */
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
-        //导航名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<HomepagePlateEntity> page = this.page(
-                new PageBuilder<HomepagePlateEntity>().getPage(params),
+                new PageBuilder<HomepagePlateEntity>().getPage(pageParams),
                 new QueryWrapper<HomepagePlateEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
         );
@@ -52,13 +53,11 @@ public class HomepagePlateServiceImpl extends ServiceImpl<HomepagePlateMapper, H
 
     /**
      * 根据条件查询所有板块
-     * @param params
+     * @param name 板块名称
      * @return
      */
     @Override
-    public List<HomepagePlateEntity> getByParams(Map<String, Object> params) {
-        //导航名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
+    public List<HomepagePlateEntity> getByParams(String name) {
         List<HomepagePlateEntity> homepagePlateEntityList = this.list(
                 new QueryWrapper<HomepagePlateEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)

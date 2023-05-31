@@ -7,6 +7,7 @@ import com.mall.admin.entity.HomepagePlateEntity;
 import com.mall.admin.entity.PayTypeEntity;
 import com.mall.admin.mapper.PayTypeMapper;
 import com.mall.admin.service.PayTypeService;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -31,15 +32,17 @@ public class PayTypeServiceImpl extends ServiceImpl<PayTypeMapper, PayTypeEntity
 
     /**
      * 分页查询支付方式
-     * @param params
+     * @param pageNum 页码
+     * @param enable 每页数量
+     * @param name 支付方式名称
+     * @param enable 是否启用
      * @return
      */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        Boolean enable = params.get("enable") == null ? null : Boolean.valueOf(String.valueOf(params.get("enable")));
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Boolean enable) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<PayTypeEntity> page = this.page(
-                new PageBuilder<PayTypeEntity>().getPage(params),
+                new PageBuilder<PayTypeEntity>().getPage(pageParams),
                 new QueryWrapper<PayTypeEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
                         .eq(enable != null, "enable", enable)
@@ -49,13 +52,12 @@ public class PayTypeServiceImpl extends ServiceImpl<PayTypeMapper, PayTypeEntity
 
     /**
      * 查询所有支付方式（根据指定条件）
-     * @param params
+     * @param name 支付方式名称
+     * @param enable 是否启用
      * @return
      */
     @Override
-    public List<PayTypeEntity> getPayTypeList(Map<String, Object> params) {
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        Boolean enable = params.get("enable") == null ? false : Boolean.valueOf(String.valueOf(params.get("enable")));
+    public List<PayTypeEntity> getPayTypeList(String name, Boolean enable) {
         QueryWrapper<PayTypeEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(enable != null, "enable", enable);
         queryWrapper.like(StringUtils.isNotBlank(name), "name", name);

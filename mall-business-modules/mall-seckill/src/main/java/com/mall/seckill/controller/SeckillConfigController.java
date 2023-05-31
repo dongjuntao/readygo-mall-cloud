@@ -54,9 +54,12 @@ public class SeckillConfigController {
      * 秒杀配置列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = seckillConfigService.getByPage(params);
-
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name,
+                             @RequestParam(value = "adminUserId",required = false) Long adminUserId,
+                             @RequestParam(value = "authStatus",required = false) Integer authStatus){
+        PageUtil page = seckillConfigService.getByPage(pageNum,pageSize,name,adminUserId,authStatus);
         //根据分页结果查询商家信息，并设置属性【商家名称】
         List list = page.getList();
         if (list.size() == 0) {

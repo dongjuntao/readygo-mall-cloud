@@ -14,11 +14,15 @@ import java.util.Map;
  */
 public interface ShippingInfoService extends IService<ShippingInfoEntity> {
     /**
-     * 分页查询所有用户
-     * @param params
+     * 查询发货信息列表
+     * @param pageNum
+     * @param pageSize
+     * @param name
+     * @param adminUserId
+     * @param mobile
      * @return
      */
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String mobile);
     /**
      * 新增发货信息
      * @param shippingInfoEntity

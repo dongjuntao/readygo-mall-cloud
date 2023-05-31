@@ -16,18 +16,20 @@ import java.util.Map;
 public interface HomepageNavbarService extends IService<HomepageNavbarEntity> {
 
     /**
-     * 分页查询导航栏列表
-     * @param params
+     * 分页查询所有导航
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 导航名称
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name);
 
     /**
-     * 根据条件查询所有导航栏
-     * @param params
+     * 根据条件查询所有导航
+     * @param name 导航名称
      * @return
      */
-    List<HomepageNavbarEntity> getByParams(Map<String, Object> params);
+    List<HomepageNavbarEntity> getByParams(String name);
 
     /**
      * 保存导航

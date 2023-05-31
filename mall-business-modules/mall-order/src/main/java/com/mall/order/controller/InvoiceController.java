@@ -36,13 +36,12 @@ public class InvoiceController {
 
     /**
      * 根据参数查询发票
-     * @param params 发票信息id
      * @return
      */
     @GetMapping("getInvoiceByParams")
-    public CommonResult getCartInvoiceByParams(@RequestParam Map<String, Object> params) {
-        params.put("memberId",CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        InvoiceEntity cartInvoice = invoiceService.getInvoiceByParams(params);
+    public CommonResult getCartInvoiceByParams(@RequestParam(value = "id",required = false) Long id) {
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
+        InvoiceEntity cartInvoice = invoiceService.getInvoiceByParams(id, memberId);
         return CommonResult.success(cartInvoice);
     }
 

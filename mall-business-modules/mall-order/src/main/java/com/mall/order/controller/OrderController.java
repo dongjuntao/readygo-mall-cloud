@@ -4,6 +4,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
+import com.mall.order.constant.OrderTypeConstant;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.service.OrderDetailService;
 import com.mall.order.service.OrderService;
@@ -32,14 +33,20 @@ public class OrderController {
     private OrderService orderService;
 
     /**
-     * 查询订单列表
-     * @param params 查询参数
+     * 分页查询订单
+     * @param pageNum
+     * @param pageSize
+     * @param code 订单号
+     * @param status 订单状态
      * @return
      */
     @GetMapping("getOrderList")
-    public CommonResult getOrderList(@RequestParam Map<String,Object> params) {
-        params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        PageUtil page = orderService.queryPage(params);
+    public CommonResult getOrderList(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                                     @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                                     @RequestParam(value = "code",required = false) String code,
+                                     @RequestParam(value = "status",required = false) String status) {
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
+        PageUtil page = orderService.queryPage(pageNum,pageSize,memberId,code,status);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -64,9 +71,9 @@ public class OrderController {
     public CommonResult getSkuIdAndCount(@RequestParam("code") String code,
                                          @RequestParam("orderType") String orderType) {
         List<OrderSkuCountVO> orderSkuCountList = new ArrayList<>();
-        if ("TRADE".equals(orderType)) {
+        if (OrderTypeConstant.TRADE.equals(orderType)) {
             orderSkuCountList = orderDetailService.getSkuIdAndCountByTradeCode(code);
-        } else if ("ORDER".equals(orderType)) {
+        } else if (OrderTypeConstant.ORDER.equals(orderType)) {
             orderSkuCountList = orderDetailService.getSkuIdAndCountByOrderCode(code);
         }
         return CommonResult.success(orderSkuCountList);
@@ -74,23 +81,22 @@ public class OrderController {
 
     /**
      * 根据参数获取订单信息
-     * @param params 参数
      * @return
      */
     @GetMapping("getOrderByParams")
-    public CommonResult getTradeByParams(@RequestParam Map<String, Object> params) {
-        OrderEntity order = orderService.getOrderByParams(params);
+    public CommonResult getTradeByParams(@RequestParam(value = "code",required = false) String code) {
+        OrderEntity order = orderService.getOrderByParams(code);
         return CommonResult.success(order);
     }
 
     /**
      * 根据参数获取订单信息（包括订单明细）
-     * @param params 参数
+     * @param code 参数
      * @return
      */
     @GetMapping("getOrderAndDetailByParams")
-    public CommonResult getOrderAndDetailByParams(@RequestParam Map<String, Object> params) {
-        OrderEntity order = orderService.getOrderAndDetailByParams(params);
+    public CommonResult getOrderAndDetailByParams(@RequestParam(value = "code") String code) {
+        OrderEntity order = orderService.getOrderAndDetailByParams(code);
         return CommonResult.success(order);
     }
 

@@ -38,9 +38,12 @@ public class CouponController {
      * 所有优惠券列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = couponService.getByPage(params);
-
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "adminUserId", required = false) Long adminUserId,
+                             @RequestParam(value = "authStatus", required = false) Integer authStatus){
+        PageUtil page = couponService.getByPage(pageNum, pageSize,name,adminUserId,authStatus);
         //根据分页结果查询商品信息，并设置属性
         List list = page.getList();
         if (list.size() == 0) {
@@ -151,8 +154,10 @@ public class CouponController {
      * 获取优惠券领取列表
      */
     @GetMapping("getCouponReceivedList")
-    public CommonResult getCouponReceivedList(@RequestParam Map<String, Object> params){
-        CommonResult result = feignBackCouponReceivedService.getCouponReceivedList(params);
+    public CommonResult getCouponReceivedList(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                                              @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                              @RequestParam(value = "couponId", required = false) Long couponId){
+        CommonResult result = feignBackCouponReceivedService.getCouponReceivedList(pageNum, pageSize, couponId);
         PageUtil resultPage = null;
         if (result != null && "200".equals(result.getCode())) {
             resultPage = BeanUtil.copyProperties(result.getData(), PageUtil.class);

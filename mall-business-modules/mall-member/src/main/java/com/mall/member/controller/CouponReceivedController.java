@@ -40,9 +40,12 @@ public class CouponReceivedController {
      * 分页查询我的优惠券
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "useStatus",required = false) Integer useStatus){
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
         List<CouponReceivedVO> couponReceivedVOList = new ArrayList<>();
-        PageUtil page = couponReceivedService.getByPage(params);
+        PageUtil page = couponReceivedService.getByPage(pageNum,pageSize,memberId,useStatus);
         List couponList = page.getList();
         Long[] couponIdArr = new Long[couponList.size()];//获取所以的优惠券id,通过优惠券微服务，查询优惠券相关信息
         for (int i=0; i<couponList.size(); i++) {

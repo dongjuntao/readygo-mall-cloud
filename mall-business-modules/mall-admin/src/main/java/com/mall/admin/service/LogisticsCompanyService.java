@@ -3,6 +3,7 @@ package com.mall.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.admin.entity.LogisticsCompanyEntity;
 import com.mall.common.base.utils.PageUtil;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -31,24 +32,40 @@ public interface LogisticsCompanyService extends IService<LogisticsCompanyEntity
 
     /**
      * 分页查询所有物流公司
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name, String abbreviation, String code);
 
     /**
-     * 分页查询所有物流公司（与express_setting联合查询）
-     * @param params
+     *分页查询所有物流公司（与express_setting联合查询）
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
+     * @param adminUserId 所属商家id
      * @return
      */
-    PageUtil getWithExpressSettingByPage(Map<String, Object> params);
+    PageUtil getWithExpressSettingByPage(Integer pageNum,
+                                         Integer pageSize,
+                                         String name,
+                                         String abbreviation,
+                                         String code,
+                                         Long adminUserId);
 
     /**
      * 根据条件查询所有物流公司
-     * @param params
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
      * @return
      */
-    List<LogisticsCompanyEntity> getByParams(Map<String, Object> params);
+    List<LogisticsCompanyEntity> getByParams(String name, String abbreviation, String code);
 
     /**
      * 删除物流公司

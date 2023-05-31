@@ -15,9 +15,9 @@ import java.util.Map;
  */
 public interface PayTypeService extends IService<PayTypeEntity> {
 
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Boolean enable);
 
-    List<PayTypeEntity> getPayTypeList(Map<String, Object> params);
+    List<PayTypeEntity> getPayTypeList(String name, Boolean enable);
 
     PayTypeEntity getPayTypeById(Long id);
 

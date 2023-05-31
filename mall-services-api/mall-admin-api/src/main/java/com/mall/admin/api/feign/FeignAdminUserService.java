@@ -18,7 +18,9 @@ public interface FeignAdminUserService {
     CommonResult getAdminUserById(@RequestParam long id);
 
     @GetMapping("/getUserByParams")
-    CommonResult getUserByParams(@RequestParam Map<String,Object> params);
+    CommonResult getUserByParams(@RequestParam(value = "userName", required = false) String userName,
+                                 @RequestParam(value = "userType", required = false) Integer userType,
+                                 @RequestParam(value = "id", required = false) Long id);
     /**
      * 所有用户列表（不分页）
      */

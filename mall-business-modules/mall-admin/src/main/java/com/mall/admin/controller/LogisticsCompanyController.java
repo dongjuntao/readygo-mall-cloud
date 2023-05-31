@@ -26,29 +26,57 @@ public class LogisticsCompanyController {
     private LogisticsCompanyService logisticsCompanyService;
 
     /**
-     * 分页查询物流公司列表
+     * 分页查询所有物流公司
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
+     * @return
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = logisticsCompanyService.getByPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "abbreviation", required = false) String abbreviation,
+                             @RequestParam(value = "code", required = false)  String code){
+        PageUtil page = logisticsCompanyService.getByPage(pageNum,pageSize,name,abbreviation,code);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
     /**
-     * 所有物流公司列表（不分页）
+     * 根据条件查询所有物流公司（不分页）
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
+     * @return
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<LogisticsCompanyEntity> logisticsCompanyEntity = logisticsCompanyService.getByParams(params);
+    public CommonResult listAll(@RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "abbreviation", required = false) String abbreviation,
+                                @RequestParam(value = "code", required = false)  String code){
+        List<LogisticsCompanyEntity> logisticsCompanyEntity = logisticsCompanyService.getByParams(name, abbreviation, code);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), logisticsCompanyEntity);
     }
 
     /**
-     * 分页查询物流公司列表（与express_setting联合查询获取enable）
+     *分页查询所有物流公司（与express_setting联合查询）
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
+     * @param adminUserId 所属商家id
+     * @return
      */
     @GetMapping("/listWithExpressSetting")
-    public CommonResult listWithExpressSetting(@RequestParam Map<String, Object> params){
-        PageUtil page = logisticsCompanyService.getWithExpressSettingByPage(params);
+    public CommonResult listWithExpressSetting(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                                               @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                               @RequestParam(value = "name", required = false) String name,
+                                               @RequestParam(value = "abbreviation", required = false) String abbreviation,
+                                               @RequestParam(value = "code", required = false) String code,
+                                               @RequestParam(value = "adminUserId", required = false) Long adminUserId){
+        PageUtil page = logisticsCompanyService.getWithExpressSettingByPage(pageNum, pageSize,name,abbreviation,code,adminUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 

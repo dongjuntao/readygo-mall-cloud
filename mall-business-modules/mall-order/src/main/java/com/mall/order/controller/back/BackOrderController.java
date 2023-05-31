@@ -30,13 +30,14 @@ public class BackOrderController {
 
     /**
      * 查询订单列表
-     * @param params 查询参数
      * @return
      */
     @GetMapping("getOrderList")
-    public CommonResult getOrderList(@RequestParam Map<String,Object> params) {
-        params.put("memberId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        PageUtil page = orderService.queryPage(params);
+    public CommonResult getOrderList(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                                     @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                                     @RequestParam(value = "code",required = false) String code,
+                                     @RequestParam(value = "status",required = false) String status) {
+        PageUtil page = orderService.queryPage(pageNum,pageSize,null,code,status);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -54,23 +55,21 @@ public class BackOrderController {
 
     /**
      * 根据参数获取订单信息
-     * @param params 参数
      * @return
      */
     @GetMapping("getOrderByParams")
-    public CommonResult getTradeByParams(@RequestParam Map<String, Object> params) {
-        OrderEntity order = orderService.getOrderByParams(params);
+    public CommonResult getTradeByParams(@RequestParam(value = "code",required = false) String code) {
+        OrderEntity order = orderService.getOrderByParams(code);
         return CommonResult.success(order);
     }
 
     /**
      * 根据参数获取订单信息（包括订单明细）
-     * @param params 参数
      * @return
      */
     @GetMapping("getOrderAndDetailByParams")
-    public CommonResult getOrderAndDetailByParams(@RequestParam Map<String, Object> params) {
-        OrderEntity order = orderService.getOrderAndDetailByParams(params);
+    public CommonResult getOrderAndDetailByParams(@RequestParam(value = "code") String code) {
+        OrderEntity order = orderService.getOrderAndDetailByParams(code);
         return CommonResult.success(order);
     }
 

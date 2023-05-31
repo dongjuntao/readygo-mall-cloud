@@ -43,17 +43,16 @@ public class AdminUserServiceImpl extends
 
     /**
      * 根据用户名和用户类型查看用户
-     * @param params
+     * @param userName 用户名
+     * @param userType 用户类型  0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜） 1:【店铺管理员】包括【入驻商户】【自营商户】
+     * @param id 用户id
      * @return
      */
     @Override
-    public AdminUserEntity getUserByParams(Map<String, Object> params) {
-        String userName = params.get("userName") == null ? null : params.get("userName").toString();
-        Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
-        Long id = params.get("id") == null ? null: Long.valueOf((params.get("id").toString()));
+    public AdminUserEntity getUserByParams(String userName, Integer userType, Long id) {
         return baseMapper.selectOne(
                 new QueryWrapper<AdminUserEntity>()
-                        .eq(StringUtils.isNotBlank(userName), "user_name", String.valueOf(params.get("userName")))
+                        .eq(StringUtils.isNotBlank(userName), "user_name", userName)
                         .eq(userType != null, "user_type",userType)
                         .ne(id != null, "id",id));//排除id
 
@@ -71,21 +70,20 @@ public class AdminUserServiceImpl extends
 
     /**
      * 分页查询所有用户
-     * @param params
+     * @param userName 用户名
+     * @param userType 用户类型  0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜） 1:【店铺管理员】包括【入驻商户】【自营商户】
+     * @param merchantType 商户（店铺）类型 0:入驻商户 1:自营商户
+     * @param authStatus 审核状态
+     * @param pageNum 页码
+     * @param pageSize 每页数量
      * @return
      */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        //用户名
-        String userName = params.get("userName") == null ? null : params.get("userName").toString();
-        //用户类型  0:【平台管理员】（该类管理员属于平台所有，管理平台相关事宜） 1:【店铺管理员】包括【入驻商户】【自营商户】
-        Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
-        //商户（店铺）类型 0:入驻商户 1:自营商户
-        Integer merchantType = params.get("merchantType") == null ? null : new Integer(params.get("merchantType").toString());
-        //审核状态
-        Integer authStatus = params.get("authStatus") == null ? null : new Integer(params.get("authStatus").toString());
+    public PageUtil queryPage(String userName, Integer userType, Integer merchantType,
+                              Integer authStatus, Integer pageNum, Integer pageSize) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<AdminUserEntity> page = this.page(
-                new PageBuilder<AdminUserEntity>().getPage(params),
+                new PageBuilder<AdminUserEntity>().getPage(pageParams),
                 new QueryWrapper<AdminUserEntity>()
                         .like(StringUtils.isNotBlank(userName), "user_name", userName)
                         .eq(userType != null, "user_type", userType)
@@ -97,17 +95,13 @@ public class AdminUserServiceImpl extends
 
     /**
      * 根据条件查询所有管理员
-     * @param params
+     * @param userType 用户类型
+     * @param authStatus 审核状态
+     * @param merchantType 商户（店铺）类型 0:入驻商户 1:自营商户
      * @return
      */
     @Override
-    public List<AdminUserEntity> queryByParams(Map<String, Object> params) {
-        //用户类型
-        Integer userType = params.get("userType") == null ? null : new Integer(params.get("userType").toString());
-        //审核状态
-        Integer authStatus = params.get("authStatus") == null ? null : new Integer(params.get("authStatus").toString());
-        //商户（店铺）类型 0:入驻商户 1:自营商户
-        Integer merchantType = params.get("merchantType") == null ? null : new Integer(params.get("merchantType").toString());
+    public List<AdminUserEntity> queryByParams(Integer userType, Integer authStatus, Integer merchantType) {
         List<AdminUserEntity> adminUserEntityList = this.list(new QueryWrapper<AdminUserEntity>()
                 .eq(userType != null, "user_type", userType)
                 .eq(merchantType != null, "merchant_type", merchantType)
@@ -138,9 +132,7 @@ public class AdminUserServiceImpl extends
     @Transactional
     public int saveAdmin(AdminUserEntity adminUserEntity) {
         //判断用户名是否重复
-        Map<String,Object> params = new HashMap<>();
-        params.put("userName",adminUserEntity.getUserName());
-        AdminUserEntity oldUser = this.getUserByParams(params);
+        AdminUserEntity oldUser = this.getUserByParams(adminUserEntity.getUserName(), null, null);
         if (oldUser != null){
             return -1;
         }
@@ -171,8 +163,8 @@ public class AdminUserServiceImpl extends
     @Override
     @Transactional
     public int update(AdminUserEntity adminUserEntity) {
-        Map<String, Object> params = new MapUtil().put("userName", adminUserEntity.getUserName()).put("id",adminUserEntity.getId());
-        AdminUserEntity oldUser = this.getUserByParams(params);
+        AdminUserEntity oldUser = this.getUserByParams(adminUserEntity.getUserName(),
+                null, adminUserEntity.getId());
         if (oldUser != null){
             return -1;
         }

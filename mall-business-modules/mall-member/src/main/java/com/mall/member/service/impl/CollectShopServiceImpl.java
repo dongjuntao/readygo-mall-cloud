@@ -60,12 +60,11 @@ public class CollectShopServiceImpl extends ServiceImpl<CollectShopMapper, Colle
 
     /**
      * 查询所有的店铺收藏
-     * @param params
+     * @param memberId
      * @return
      */
     @Override
-    public List<CollectShopEntity> listAll(Map<String, Object> params) {
-        Long memberId = params.get("userId") == null ? null: Long.valueOf((params.get("userId").toString()));
+    public List<CollectShopEntity> listAll(Long memberId) {
         QueryWrapper<CollectShopEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(memberId != null, "member_id", memberId);
         return this.baseMapper.selectList(queryWrapper);

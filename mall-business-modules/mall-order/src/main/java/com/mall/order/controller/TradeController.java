@@ -2,9 +2,9 @@ package com.mall.order.controller;
 
 import com.mall.admin.api.feign.front.FrontPayTypeService;
 import com.mall.common.base.CommonResult;
+import com.mall.order.constant.OrderTypeConstant;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.entity.TradeEntity;
-import com.mall.order.service.OrderService;
 import com.mall.order.service.TradeService;
 import com.mall.order.vo.PayTypeVO;
 import com.mall.order.vo.TradeDetailVO;
@@ -28,9 +28,6 @@ public class TradeController {
     private TradeService tradeService;
 
     @Autowired
-    private OrderService orderService;
-
-    @Autowired
     private FrontPayTypeService frontPayTypeService;
     /**
      * 创建交易（以及订单和子订单）
@@ -45,23 +42,21 @@ public class TradeController {
 
     /**
      * 支付页面交易信息
-     * @param params 参数
      * @return
      */
     @GetMapping("tradePayInfo")
-    public CommonResult tradePayInfo(@RequestParam Map<String, Object> params) {
-        //订单类型 "TRADE", "ORDER"
-        String orderType = params.get("orderType") == null ? null: params.get("orderType").toString();
+    public CommonResult tradePayInfo(@RequestParam(value = "orderType") String orderType,
+                                     @RequestParam(value = "orderCode") String orderCode,
+                                     @RequestParam(value = "code") String code) {
         //如果是交易【从订单提交页支付】
         TradeOrderVO tradeOrderVO = new TradeOrderVO();
-        if ("TRADE".equals(orderType)) {
-            TradeEntity trade = tradeService.getTradeByParams(params);
+        if (OrderTypeConstant.TRADE.equals(orderType)) {
+            TradeEntity trade = tradeService.getTradeByParams(code);
             tradeOrderVO.setTradeOrOrderTime(trade.getTradeTime());
             tradeOrderVO.setFinalPrice(trade.getFinalPrice());
             tradeOrderVO.setOvertime(new Date(trade.getTradeTime().getTime() + (30*60*1000))); //交易过期时间（交易后30分钟内）
-        } else if ("ORDER".equals(orderType)) { //如果是普通订单【从订单列表去支付】
-            TradeEntity tradeDetail = tradeService.getTradeDetailByParams(params);
-            String orderCode = params.get("orderCode") == null ? null: params.get("orderCode").toString();
+        } else if (OrderTypeConstant.ORDER.equals(orderType)) { //如果是普通订单【从订单列表去支付】
+            TradeEntity tradeDetail = tradeService.getTradeDetailByParams(code);
             if (tradeDetail != null) {
                 List<OrderEntity> orderList = tradeDetail.getOrderList();
                 OrderEntity queryOrder = orderList.stream().filter(order -> order.getCode().equals(orderCode)).findFirst().get();
@@ -70,10 +65,7 @@ public class TradeController {
                 tradeOrderVO.setOvertime(new Date(queryOrder.getCreateTime().getTime() + (30*60*1000))); //交易过期时间（交易后30分钟内）
             }
         }
-
-        Map<String, Object> remoteParams = new HashMap<>();
-        remoteParams.put("enable", true);
-        CommonResult result = frontPayTypeService.listAll(remoteParams);
+        CommonResult result = frontPayTypeService.listAll(null, true);
         if (result != null && "200".equals(result.getCode())) {
             List<PayTypeVO> payTypeList = new ArrayList<>();
             List resultList = (List)result.getData();
@@ -92,23 +84,22 @@ public class TradeController {
 
     /**
      * 支付页面交易信息
-     * @param params 参数
+     * @param code 参数
      * @return
      */
     @GetMapping("getTradeByParams")
-    public CommonResult getTradeByParams(@RequestParam Map<String, Object> params) {
-        TradeEntity trade = tradeService.getTradeByParams(params);
+    public CommonResult getTradeByParams(@RequestParam String code) {
+        TradeEntity trade = tradeService.getTradeByParams(code);
         return CommonResult.success(trade);
     }
 
     /**
      * 支付页面交易信息
-     * @param params 参数
      * @return
      */
     @GetMapping("getTradeDetailByParams")
-    public CommonResult getTradeDetailByParams(@RequestParam Map<String, Object> params) {
-        TradeEntity trade = tradeService.getTradeDetailByParams(params);
+    public CommonResult getTradeDetailByParams(@RequestParam String code) {
+        TradeEntity trade = tradeService.getTradeDetailByParams(code);
         return CommonResult.success(trade);
     }
 

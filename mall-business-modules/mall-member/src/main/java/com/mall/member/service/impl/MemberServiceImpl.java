@@ -3,6 +3,7 @@ package com.mall.member.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.member.entity.MemberEntity;
@@ -53,12 +54,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, MemberEntity> i
     }
 
     @Override
-    public MemberEntity getMemberByParams(Map<String, Object> params) {
-        String userName = params.get("userName") == null ? null : params.get("userName").toString();
-        Long id = params.get("id") == null ? null: Long.valueOf((params.get("id").toString()));
+    public MemberEntity getMemberByParams(String userName, Long id) {
         return baseMapper.selectOne(
                 new QueryWrapper<MemberEntity>()
-                        .eq(StringUtils.isNotBlank(userName), "user_name", String.valueOf(params.get("userName")))
+                        .eq(StringUtils.isNotBlank(userName), "user_name", userName)
                         .ne(id != null, "id",id));//排除id
     }
 
@@ -99,15 +98,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, MemberEntity> i
 
     /**
      * 分页查询所有用户
-     * @param params
+     * @param userName 用户名
      * @return
      */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        //用户名
-        String userName = params.get("userName") == null ? null : params.get("userName").toString();
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String userName) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<MemberEntity> page = this.page(
-                new PageBuilder<MemberEntity>().getPage(params),
+                new PageBuilder<MemberEntity>().getPage(pageParams),
                 new QueryWrapper<MemberEntity>()
                         .like(StringUtils.isNotBlank(userName), "user_name", userName)
         );

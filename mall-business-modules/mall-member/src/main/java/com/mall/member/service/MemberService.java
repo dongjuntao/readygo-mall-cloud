@@ -28,10 +28,9 @@ public interface MemberService extends IService<MemberEntity> {
 
     /**
      * 根据用户名查看用户
-     * @param params
      * @return
      */
-    MemberEntity getMemberByParams(Map<String, Object> params);
+    MemberEntity getMemberByParams(String userName, Long id);
     /**
      * 修改会员信息
      * @param memberEntity
@@ -50,10 +49,9 @@ public interface MemberService extends IService<MemberEntity> {
 
     /**
      * 分页查询所有会员
-     * @param params
      * @return
      */
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String userName);
 
     /**
      * 删除用户

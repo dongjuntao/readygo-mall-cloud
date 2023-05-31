@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.base.utils.CurrentUserContextUtil;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.order.entity.OrderDetailEntity;
@@ -51,16 +52,23 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     private OrderInvoiceMapper orderInvoiceMapper;
 
 
+    /**
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param code 订单号
+     * @param status 订单状态
+     * @return
+     */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        Page<OrderEntity> page = (Page<OrderEntity>)new PageBuilder<OrderEntity>().getPage(params);
+    public PageUtil queryPage(Integer pageNum,Integer pageSize, Long memberId, String code,String status) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
+        Page<OrderEntity> page = (Page<OrderEntity>)new PageBuilder<OrderEntity>().getPage(pageParams);
         QueryWrapper<OrderEntity> wrapper = new QueryWrapper<>();
-        //订单号
-        String code = params.get("code") == null ? null : params.get("code").toString();
-        //订单状态
-        String status = params.get("status") == null ? null : params.get("status").toString();
         wrapper.like(StringUtils.isNotBlank(code), "oi.code", code)
-                .eq(StringUtils.isNotBlank(status), "oi.status", status).orderByDesc("create_time");
+                .eq(StringUtils.isNotBlank(status), "oi.status", status)
+                .eq(memberId != null, "member_id", memberId)
+                .orderByDesc("create_time");
         IPage<OrderEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }
@@ -147,16 +155,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     }
 
     @Override
-    public OrderEntity getOrderByParams(Map<String, Object> params) {
-        String code = params.get("code") == null ? null: params.get("code").toString();
+    public OrderEntity getOrderByParams(String code) {
         QueryWrapper<OrderEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(code), "code", code);
         return baseMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public OrderEntity getOrderAndDetailByParams(Map<String, Object> params) {
-        String code = params.get("code") == null ? null: params.get("code").toString();
+    public OrderEntity getOrderAndDetailByParams(String code) {
         OrderEntity orderParams = new OrderEntity();
         orderParams.setCode(code);
         return baseMapper.getOrderAndDetail(orderParams);

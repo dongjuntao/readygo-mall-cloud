@@ -34,7 +34,7 @@ public interface CouponService extends IService<CouponEntity> {
      * @param params
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, Integer authStatus);
 
     CouponEntity getById(Long couponId);
 

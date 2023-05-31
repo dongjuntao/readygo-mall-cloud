@@ -17,5 +17,5 @@ public interface InvoiceService extends IService<InvoiceEntity> {
 
     int deleteInvoice(Long cartBillId);
 
-    InvoiceEntity getInvoiceByParams(Map<String, Object> params);
+    InvoiceEntity getInvoiceByParams(Long id, Long memberId);
 }

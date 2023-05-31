@@ -35,13 +35,12 @@ public class RecipientInfoController {
 
     /**
      * 收货人信息
-     * @param params
      * @return
      */
     @GetMapping("/payInfo")
-    public CommonResult recipientInfo(@RequestParam Map<String, Object> params) {
-        CommonResult recipientInfoResult = feignRecipientInfoService.getRecipientInfoList(params,
-                JSON.toJSONString(CurrentUserContextUtil.getCurrentUserInfo()));
+    public CommonResult recipientInfo() {
+        CommonResult recipientInfoResult = feignRecipientInfoService
+                .getRecipientInfoList(JSON.toJSONString(CurrentUserContextUtil.getCurrentUserInfo()));
         List<RecipientInfoVO> recipientInfoList = new ArrayList<>();
         if (recipientInfoResult != null || "200".equals(recipientInfoResult.getCode())) {
             recipientInfoList = (List)recipientInfoResult.getData();

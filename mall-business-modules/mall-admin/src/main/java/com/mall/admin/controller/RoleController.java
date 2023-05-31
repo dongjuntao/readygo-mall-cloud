@@ -32,9 +32,12 @@ public class RoleController {
      * 角色列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "createUserId", required = false) Long createUserId){
 
-        PageUtil page = roleService.queryPage(params);
+        PageUtil page = roleService.queryPage(pageNum, pageSize, name, createUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 

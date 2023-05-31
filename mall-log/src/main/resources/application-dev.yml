@@ -33,7 +33,7 @@ spring:
     timeout: 6000
     database: 3
     lettuce:
-      shutdown-timeout: 100
+      shutdown-timeout: 100000
       pool:
         max-active: 20
         max-wait: -1ms
@@ -103,7 +103,7 @@ mybatis-plus:
     #数据库相关配置
     db-config:
       #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
-      id-type: AUTO
+      id-type: UUID
       logic-delete-value: -1
       logic-not-delete-value: 0
     banner: false

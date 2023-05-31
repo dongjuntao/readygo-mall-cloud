@@ -28,7 +28,7 @@ public class RecipientInfoServiceImpl extends ServiceImpl<RecipientInfoMapper, R
      * @return
      */
     @Override
-    public List<RecipientInfoEntity> listAll(Map<String, Object> params) {
+    public List<RecipientInfoEntity> listAll() {
         Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId(); //当前登录人id
         QueryWrapper<RecipientInfoEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(memberId != null, "member_id", memberId);

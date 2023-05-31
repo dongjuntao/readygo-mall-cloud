@@ -44,11 +44,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Integer userType = Integer.parseInt(userInfo.split(":")[1]);
         CommonResult result = null;
         if (userType == 0 || userType == 1 || userType == 2 || userType == 3) {
-            result = feignAdminUserService.getUserByParams(new MapUtil().put("userName",userName).put("userType", userType));
+            result = feignAdminUserService.getUserByParams(userName, userType, null);
         }else {
-            result = feignMemberService.getMemberByParams(new MapUtil().put("userName", userName));
+            result = feignMemberService.getMemberByParams(userName, null);
         }
-        System.out.println("loadUserByUsername == 差值="+(System.currentTimeMillis()-start));
         if (result == null || !"200".equals(result.getCode())) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }

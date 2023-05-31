@@ -31,12 +31,11 @@ public class RecipientInfoController {
 
     /**
      * 查询收货信息列表
-     * @param params
      * @return
      */
     @GetMapping("list")
-    public CommonResult getRecipientInfoList(@RequestParam Map<String, Object> params) {
-        List<RecipientInfoEntity> shippingInfoList = recipientInfoService.listAll(params);
+    public CommonResult getRecipientInfoList() {
+        List<RecipientInfoEntity> shippingInfoList = recipientInfoService.listAll();
         //所属地区处理
         if(!CollectionUtils.isEmpty(shippingInfoList)) {
             for (int i=0; i<shippingInfoList.size(); i++){

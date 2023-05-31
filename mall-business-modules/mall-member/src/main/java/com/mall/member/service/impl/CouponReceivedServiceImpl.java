@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.member.entity.CouponReceivedEntity;
@@ -33,11 +34,11 @@ public class CouponReceivedServiceImpl extends ServiceImpl<CouponReceivedMapper,
     }
 
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
-        Page<CouponReceivedEntity> page = (Page<CouponReceivedEntity>)new PageBuilder<CouponReceivedEntity>().getPage(params);
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, Long memberId, Integer useStatus) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
+        Page<CouponReceivedEntity> page =
+                (Page<CouponReceivedEntity>)new PageBuilder<CouponReceivedEntity>().getPage(pageParams);
         QueryWrapper<CouponReceivedEntity> wrapper = new QueryWrapper<>();
-        Long memberId = params.get("memberId") == null ? null: Long.valueOf((params.get("memberId").toString()));
-        Integer useStatus = params.get("useStatus") == null ? null:  Integer.valueOf(params.get("useStatus").toString());
         wrapper.eq(memberId != null,"member_id", memberId);
         wrapper.eq(useStatus != null, "use_status", useStatus);
         wrapper.orderByDesc("create_time");
@@ -89,12 +90,11 @@ public class CouponReceivedServiceImpl extends ServiceImpl<CouponReceivedMapper,
     }
 
     @Override
-    public PageUtil queryPageWithMemberInfo(Map<String, Object> params) {
+    public PageUtil queryPageWithMemberInfo(Integer pageNum, Integer pageSize, Long couponId) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<CouponReceivedEntity> page = (Page<CouponReceivedEntity>)new PageBuilder<CouponReceivedEntity>()
-                .getPage(params);
+                .getPage(pageParams);
         QueryWrapper<CouponReceivedEntity> wrapper = new QueryWrapper<>();
-        //商家id
-        Long couponId = params.get("couponId") == null ? null: Long.valueOf((params.get("couponId").toString()));
         wrapper.eq(couponId != null, "coupon_id", couponId);
         IPage<CouponReceivedEntity> iPage = baseMapper.queryPageWithMemberInfo(page, wrapper);
         return new PageUtil(iPage);

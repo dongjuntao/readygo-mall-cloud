@@ -22,9 +22,9 @@ public interface FeignMemberService {
 
     /**
      * 根据用户名查看用户
-     * @param params
      * @return
      */
     @GetMapping("getMemberByParams")
-    CommonResult getMemberByParams(@RequestParam Map<String, Object> params);
+    CommonResult getMemberByParams(@RequestParam(value = "userName",required = false) String userName,
+                                   @RequestParam(value = "id",required = false) Long id);
 }

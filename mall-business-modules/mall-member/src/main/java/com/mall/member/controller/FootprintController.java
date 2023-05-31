@@ -35,8 +35,10 @@ public class FootprintController {
      * 分页查询会员足迹列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = footprintService.getByPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize){
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
+        PageUtil page = footprintService.getByPage(pageNum,pageSize,memberId);
         //根据分页结果查询商品信息，并设置属性
         List list = page.getList();
         if (list.size() == 0) {
@@ -73,13 +75,13 @@ public class FootprintController {
 
     /**
      * 删除会员足迹信息
-     * @param params
+     * @param goodsId
      * @return
      */
     @DeleteMapping("delete")
-    public CommonResult delete(@RequestParam Map<String, Object> params) {
-        params.put("userId",CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        int num = footprintService.deleteFootprint(params);
+    public CommonResult delete(@RequestParam(value = "goodsId" ,required = false) Long goodsId) {
+        Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
+        int num = footprintService.deleteFootprint(memberId, goodsId);
         return num > 0 ? CommonResult.success() : CommonResult.fail();
     }
 }

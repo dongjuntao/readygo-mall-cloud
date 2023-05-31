@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.base.utils.DateUtil;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
@@ -23,6 +24,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.sql.Time;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -101,12 +104,11 @@ public class SeckillConfigServiceImpl
      * @return
      */
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
-        Page<SeckillConfigEntity> page = (Page<SeckillConfigEntity>)new PageBuilder<SeckillConfigEntity>().getPage(params);
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, Integer authStatus) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
+        Page<SeckillConfigEntity> page =
+                (Page<SeckillConfigEntity>)new PageBuilder<SeckillConfigEntity>().getPage(pageParams);
         QueryWrapper<SeckillConfigEntity> wrapper = new QueryWrapper<>();
-        String name = String.valueOf(params.get("name"));//秒杀商品名称
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
-        Integer authStatus = params.get("authStatus") == null ? null : Integer.valueOf((params.get("authStatus").toString()));
         wrapper
                 .like(StringUtils.isNotBlank(name), "c.name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
@@ -175,5 +177,53 @@ public class SeckillConfigServiceImpl
     @Override
     public SeckillConfigEntity getSeckillConfigByParams(Map<String, Object> params) {
         return baseMapper.getSeckillConfigByParams(params);
+    }
+
+    @Override
+    public String getBatchByCurrentTime(LocalDateTime localDateTime) {
+        int hour = localDateTime.getHour(); //当前小时
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateTimeFormatter.format(localDateTime);
+        String currentBatch = "";
+        switch (hour) {
+            case 0:
+            case 1:
+                currentBatch = date+" 00:00:00" + "," +date+" 02:00:00"; break;
+            case 2:
+            case 3:
+                currentBatch = date+" 02:00:00" + "," +date+" 04:00:00"; break;
+            case 4:
+            case 5:
+                currentBatch = date+" 04:00:00" + "," +date+" 06:00:00"; break;
+            case 6:
+            case 7:
+                currentBatch = date+" 06:00:00" + "," +date+" 08:00:00"; break;
+            case 8:
+            case 9:
+                currentBatch = date+" 08:00:00" + "," +date+" 10:00:00"; break;
+            case 10:
+            case 11:
+                currentBatch = date+" 10:00:00" + "," +date+" 12:00:00"; break;
+            case 12:
+            case 13:
+                currentBatch = date+" 12:00:00" + "," +date+" 14:00:00"; break;
+            case 14:
+            case 15:
+                currentBatch = date+" 14:00:00" + "," +date+" 16:00:00"; break;
+            case 16:
+            case 17:
+                currentBatch = date+" 16:00:00" + "," +date+" 18:00:00"; break;
+            case 18:
+            case 19:
+                currentBatch = date+" 18:00:00" + "," +date+" 20:00:00"; break;
+            case 20:
+            case 21:
+                currentBatch = date+" 20:00:00" + "," +date+" 22:00:00"; break;
+            case 22:
+            case 23:
+                currentBatch = date+" 22:00:00" + "," +date+" 23:59:59"; break;
+            default: currentBatch = null;
+        }
+        return currentBatch;
     }
 }

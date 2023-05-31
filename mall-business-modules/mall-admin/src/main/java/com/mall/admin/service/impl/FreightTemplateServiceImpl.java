@@ -10,6 +10,7 @@ import com.mall.admin.service.FreightDefaultService;
 import com.mall.admin.service.FreightFreeRuleService;
 import com.mall.admin.service.FreightRuleService;
 import com.mall.admin.service.FreightTemplateService;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -138,15 +139,17 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
 
     /**
      * 分页查询运费模板
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param adminUserId 用户id
      * @return
      */
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, Long adminUserId) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum", pageNum).put("pageSize",pageSize);
         Page<FreightTemplateEntity> page = (Page<FreightTemplateEntity>)new PageBuilder<FreightTemplateEntity>()
-                .getPage(params);
+                .getPage(pageParams);
         QueryWrapper<FreightTemplateEntity> wrapper = new QueryWrapper<>();
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         wrapper.eq("admin_user_id",adminUserId);
         IPage<FreightTemplateEntity> iPage = baseMapper.getFreightTemplateEntityByPage(page, wrapper, adminUserId);
         return new PageUtil(iPage);
@@ -213,14 +216,12 @@ public class FreightTemplateServiceImpl extends ServiceImpl<FreightTemplateMappe
 
     /**
      * 根据条件查询所有物流公司
-     * @param params
+     * @param name 运费模板名称
+     * @param adminUserId 用户id
      * @return
      */
     @Override
-    public List<FreightTemplateEntity> getByParams(Map<String, Object> params) {
-        //运费模板名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
+    public List<FreightTemplateEntity> getByParams(String name, Long adminUserId) {
         List<FreightTemplateEntity> freightTemplateEntityList = this.list(
                 new QueryWrapper<FreightTemplateEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name).

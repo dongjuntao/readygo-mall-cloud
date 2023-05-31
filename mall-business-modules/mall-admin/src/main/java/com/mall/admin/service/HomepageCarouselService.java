@@ -15,18 +15,20 @@ import java.util.Map;
 public interface HomepageCarouselService {
 
     /**
-     * 分页查询轮播图列表
-     * @param params
+     * 分页查询所有轮播图
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param name 轮播图名称
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name);
 
     /**
      * 根据条件查询所有轮播图
-     * @param params
+     * @param name 轮播图名称
      * @return
      */
-    List<HomepageCarouselEntity> getByParams(Map<String, Object> params);
+    List<HomepageCarouselEntity> getByParams(String name);
 
     /**
      * 保存轮播图

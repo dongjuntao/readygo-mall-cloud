@@ -31,12 +31,20 @@ public class ShippingInfoController {
 
     /**
      * 查询发货信息列表
-     * @param params
+     * @param pageNum
+     * @param pageSize
+     * @param name
+     * @param adminUserId
+     * @param mobile
      * @return
      */
     @GetMapping("list")
-    public CommonResult getRegionList(@RequestParam Map<String, Object> params) {
-        PageUtil page = shippingInfoService.queryPage(params);
+    public CommonResult getRegionList(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                                      @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                      @RequestParam(value = "name", required = false) String name,
+                                      @RequestParam(value = "adminUserId", required = false) Long adminUserId,
+                                      @RequestParam(value = "mobile", required = false) String mobile) {
+        PageUtil page = shippingInfoService.queryPage(pageNum,pageSize,name,adminUserId,mobile);
         //所属地区处理
         if(page.getList().size() > 0) {
             List<ShippingInfoEntity> shippingInfoEntityList = ((List<ShippingInfoEntity>)page.getList());

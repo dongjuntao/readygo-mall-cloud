@@ -97,12 +97,12 @@ public class MemberController {
 
     /**
      * 根据用户名查看会员信息
-     * @param params
      * @return
      */
     @GetMapping("getMemberByParams")
-    public CommonResult getUserByParams(@RequestParam Map<String, Object> params) {
-        MemberEntity member = memberService.getMemberByParams(params);
+    public CommonResult getUserByParams(@RequestParam(value = "userName",required = false) String userName,
+                                        @RequestParam(value = "id",required = false) Long id) {
+        MemberEntity member = memberService.getMemberByParams(userName, id);
         if (member == null) {
             return null;
         }

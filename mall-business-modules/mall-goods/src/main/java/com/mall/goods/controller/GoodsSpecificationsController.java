@@ -97,9 +97,11 @@ public class GoodsSpecificationsController {
      * 规格列表
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params) {
-        PageUtil pageResult = goodsSpecificationsService.queryPage(params);
-
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "adminUserId", required = false) Long adminUserId) {
+        PageUtil pageResult = goodsSpecificationsService.queryPage(pageNum, pageSize,name, adminUserId);
         //根据分页结果查询商品信息，并设置属性
         List list = pageResult.getList();
         if (list.size() == 0) {

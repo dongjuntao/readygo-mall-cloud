@@ -16,11 +16,14 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
     /**
-     * 分页查询所有订单
-     * @param params
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param code 订单号
+     * @param status 订单状态
      * @return
      */
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum,Integer pageSize, Long memberId, String code,String status);
 
     /**
      * 保存订单（创建订单和子订单）
@@ -38,17 +41,16 @@ public interface OrderService extends IService<OrderEntity> {
 
     /**
      * 获取订单表信息
-     * @param params
      * @return
      */
-    OrderEntity getOrderByParams(Map<String, Object> params);
+    OrderEntity getOrderByParams(String code);
 
     /**
      * 获取订单表信息（包括订单明细）
-     * @param params
+     * @param code
      * @return
      */
-    OrderEntity getOrderAndDetailByParams(Map<String, Object> params);
+    OrderEntity getOrderAndDetailByParams(String code);
 
     /**
      * 修改订单状态

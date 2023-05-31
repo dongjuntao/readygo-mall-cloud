@@ -25,20 +25,28 @@ public class HomepageCarouselController {
     private HomepageCarouselService homepageCarouselService;
 
     /**
-     * 分页查询商城首页轮播图列表
+     * 分页查询所有轮播图
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param name 轮播图名称
+     * @return
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = homepageCarouselService.getByPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name){
+        PageUtil page = homepageCarouselService.getByPage(pageNum, pageSize, name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
     /**
-     * 所有轮播图列表（不分页）
+     * 根据条件查询所有轮播图（不分页）
+     * @param name 轮播图名称
+     * @return
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<HomepageCarouselEntity> homepageCarouselEntityList = homepageCarouselService.getByParams(params);
+    public CommonResult listAll(@RequestParam(value = "name",required = false) String name){
+        List<HomepageCarouselEntity> homepageCarouselEntityList = homepageCarouselService.getByParams(name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), homepageCarouselEntityList);
     }
 

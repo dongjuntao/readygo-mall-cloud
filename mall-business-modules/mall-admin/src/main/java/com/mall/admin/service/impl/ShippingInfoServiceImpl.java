@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.admin.entity.ShippingInfoEntity;
 import com.mall.admin.mapper.ShippingInfoMapper;
 import com.mall.admin.service.ShippingInfoService;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -27,17 +28,21 @@ import java.util.Map;
 public class ShippingInfoServiceImpl extends ServiceImpl<ShippingInfoMapper, ShippingInfoEntity>
         implements ShippingInfoService {
 
+    /**
+     * 查询发货信息列表
+     * @param pageNum
+     * @param pageSize
+     * @param name
+     * @param adminUserId
+     * @param mobile
+     * @return
+     */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String mobile) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<ShippingInfoEntity> page = (Page<ShippingInfoEntity>)new PageBuilder<ShippingInfoEntity>()
-                .getPage(params);
+                .getPage(pageParams);
         QueryWrapper<ShippingInfoEntity> wrapper = new QueryWrapper<>();
-        //发货人姓名
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        //商家id
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
-        //手机号码
-        String mobile = params.get("mobile") == null ? null : params.get("mobile").toString();
         wrapper.like(StringUtils.isNotBlank(name), "si.name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
                 .eq(StringUtils.isNotBlank(mobile), "si.mobile", mobile);

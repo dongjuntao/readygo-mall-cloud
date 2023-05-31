@@ -3,6 +3,7 @@ package com.mall.cart.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.cart.dto.CartGoodsDTO;
 import com.mall.cart.entity.CartEntity;
+import com.mall.cart.vo.CartVO;
 
 import java.util.List;
 import java.util.Map;
@@ -21,11 +22,17 @@ public interface CartService extends IService<CartEntity> {
      */
     int saveCart(Long memberId, Long merchantId, CartGoodsDTO cartGoodsDTO);
 
-    List<CartEntity> listAll(Map<String, Object> params);
+    List<CartEntity> listAll(Long memberId);
 
     CartEntity getCart(Long memberId, Long merchantId);
 
     int deleteBatch(List<Long> ids);
 
     int delete(Long id);
+
+    /**
+     * 获取购物车信息
+     * @return
+     */
+    CartVO getCartInfo(Long memberId);
 }

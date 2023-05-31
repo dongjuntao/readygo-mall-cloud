@@ -10,6 +10,7 @@ import com.mall.admin.service.LogisticsCompanyService;
 import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -62,19 +63,18 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
 
     /**
      * 分页查询所有物流公司
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
      * @return
      */
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
-        //物流公司名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        //物流公司简称
-        String abbreviation = params.get("abbreviation") == null ? null : params.get("abbreviation").toString();
-        //物流公司编码
-        String code = params.get("code") == null ? null : params.get("code").toString();
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name, String abbreviation, String code) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<LogisticsCompanyEntity> page = this.page(
-                new PageBuilder<LogisticsCompanyEntity>().getPage(params),
+                new PageBuilder<LogisticsCompanyEntity>().getPage(pageParams),
                 new QueryWrapper<LogisticsCompanyEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
                         .like(StringUtils.isNotBlank(abbreviation), "abbreviation", abbreviation)
@@ -86,17 +86,13 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
 
     /**
      * 根据条件查询所有物流公司
-     * @param params
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
      * @return
      */
     @Override
-    public List<LogisticsCompanyEntity> getByParams(Map<String, Object> params) {
-        //物流公司名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        //物流公司简称
-        String abbreviation = params.get("abbreviation") == null ? null : params.get("abbreviation").toString();
-        //物流公司编码
-        String code = params.get("code") == null ? null : params.get("code").toString();
+    public List<LogisticsCompanyEntity> getByParams(String name, String abbreviation, String code) {
         List<LogisticsCompanyEntity> logisticsCompanyEntityList = this.list(
                 new QueryWrapper<LogisticsCompanyEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
@@ -153,24 +149,32 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
         return baseMapper.updateById(logisticsCompanyEntity);
     }
 
+    /**
+     *
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 物流公司名称
+     * @param abbreviation 物流公司简称
+     * @param code 物流公司编码
+     * @param adminUserId 所属商家id
+     * @return
+     */
     @Override
-    public PageUtil getWithExpressSettingByPage(Map<String, Object> params) {
+    public PageUtil getWithExpressSettingByPage(Integer pageNum,
+                                                Integer pageSize,
+                                                String name,
+                                                String abbreviation,
+                                                String code,
+                                                Long adminUserId) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<LogisticsCompanyEntity> page = (Page<LogisticsCompanyEntity>)new PageBuilder<LogisticsCompanyEntity>()
-                .getPage(params);
-        //物流公司名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
-        //物流公司简称
-        String abbreviation = params.get("abbreviation") == null ? null : params.get("abbreviation").toString();
-        //物流公司编码
-        String code = params.get("code") == null ? null : params.get("code").toString();
+                .getPage(pageParams);
         QueryWrapper<LogisticsCompanyEntity> wrapper = new QueryWrapper<>();
         wrapper.like(StringUtils.isNotBlank(name), "name", name)
                 .like(StringUtils.isNotBlank(abbreviation), "abbreviation", abbreviation)
                 .like(StringUtils.isNotBlank(code), "code", code)
                 .orderByDesc("enable") //开启的放在前面
                 .orderByAsc("order_num");
-        //所属商家id
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         IPage<LogisticsCompanyEntity> iPage = baseMapper.getWithExpressSettingByPage(page, wrapper, adminUserId);
         return new PageUtil(iPage);
     }

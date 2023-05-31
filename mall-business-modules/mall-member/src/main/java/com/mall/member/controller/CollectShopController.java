@@ -75,9 +75,9 @@ public class CollectShopController {
      * @return
      */
     @GetMapping("listAll")
-    public CommonResult getAllCollectShop(@RequestParam Map<String, Object> params) {
-        params.put("userId", CurrentUserContextUtil.getCurrentUserInfo().getUserId());
-        List<CollectShopEntity> collectShopList = collectShopService.listAll(params);
+    public CommonResult getAllCollectShop() {
+        List<CollectShopEntity> collectShopList = collectShopService
+                .listAll(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         if (collectShopList.size() == 0) {
             return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), collectShopList);
         }

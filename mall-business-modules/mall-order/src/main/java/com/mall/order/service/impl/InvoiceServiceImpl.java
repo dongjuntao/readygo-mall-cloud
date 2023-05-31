@@ -35,9 +35,7 @@ public class InvoiceServiceImpl extends ServiceImpl<InvoiceMapper, InvoiceEntity
     }
 
     @Override
-    public InvoiceEntity getInvoiceByParams(Map<String, Object> params) {
-        Long id = params.get("id") == null ? null: Long.valueOf((params.get("id").toString()));
-        Long memberId = params.get("memberId") == null ? null: Long.valueOf((params.get("memberId").toString()));
+    public InvoiceEntity getInvoiceByParams(Long id, Long memberId) {
         QueryWrapper<InvoiceEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(id != null, "id", id);
         queryWrapper.eq(memberId != null, "member_id", memberId);

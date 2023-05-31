@@ -3,6 +3,7 @@ package com.mall.goods.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.BrandEntity;
@@ -22,11 +23,18 @@ import java.util.Map;
 @Service("brandService")
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, BrandEntity> implements BrandService {
 
+    /**
+     *
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 品牌名称
+     * @return
+     */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        String name = String.valueOf(params.get("name"));//品牌名称
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<BrandEntity> page = this.page(
-                new PageBuilder<BrandEntity>().getPage(params),
+                new PageBuilder<BrandEntity>().getPage(pageParams),
                 new QueryWrapper<BrandEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
         );

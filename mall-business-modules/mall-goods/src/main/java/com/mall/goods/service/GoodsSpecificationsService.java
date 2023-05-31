@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface GoodsSpecificationsService extends IService<GoodsSpecificationsEntity> {
 
-    PageUtil queryPage(Map<String, Object> params);
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId);
 
     GoodsSpecificationsEntity getGoodsSpecificationsAndDetail(Long id);
 

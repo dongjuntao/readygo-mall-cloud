@@ -16,11 +16,13 @@ import java.util.Map;
 public interface FootprintService extends IService<FootprintEntity> {
 
     /**
-     * 分页查询用户足迹
-     * @param params
+     * 获取用户足迹信息【包括商品信息】
+     * @param pageNum
+     * @param pageSize
+     * @param memberId
      * @return
      */
-    PageUtil getByPage(Map<String, Object> params);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, Long memberId);
 
     /**
      * 根据参数查询足迹实体
@@ -28,6 +30,6 @@ public interface FootprintService extends IService<FootprintEntity> {
      */
     FootprintEntity getFootprintByParams(Map<String, Object> params);
 
-    int deleteFootprint(Map<String, Object> params);
+    int deleteFootprint(Long memberId, Long goodsId);
 
 }

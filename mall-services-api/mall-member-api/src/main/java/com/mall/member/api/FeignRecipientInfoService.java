@@ -22,6 +22,5 @@ import java.util.Map;
 public interface FeignRecipientInfoService {
 
     @GetMapping("list")
-    CommonResult getRecipientInfoList(@RequestParam Map<String, Object> params,
-                                      @RequestHeader("currentUserInfo") String currentUserInfo);
+    CommonResult getRecipientInfoList(@RequestHeader("currentUserInfo") String currentUserInfo);
 }

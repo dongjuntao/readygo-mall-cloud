@@ -26,19 +26,27 @@ public class HomepageNavbarController {
 
     /**
      * 分页查询商城首页导航列表
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 导航名称
+     * @return
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = homepageNavbarService.getByPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name){
+        PageUtil page = homepageNavbarService.getByPage(pageNum, pageSize, name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
     /**
-     * 所有导航列表（不分页）
+     * 根据条件查询所有导航 (不分页)
+     * @param name 导航名称
+     * @return
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<HomepageNavbarEntity> homepageNavbarEntityList = homepageNavbarService.getByParams(params);
+    public CommonResult listAll(@RequestParam(value = "name",required = false) String name){
+        List<HomepageNavbarEntity> homepageNavbarEntityList = homepageNavbarService.getByParams(name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), homepageNavbarEntityList);
     }
 

@@ -54,8 +54,10 @@ public class BrandController {
      * 品牌列表（分页）
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = brandService.queryPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name){
+        PageUtil page = brandService.queryPage(pageNum, pageSize, name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 

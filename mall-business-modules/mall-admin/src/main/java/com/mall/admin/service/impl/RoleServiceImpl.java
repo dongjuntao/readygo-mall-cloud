@@ -8,6 +8,7 @@ import com.mall.admin.mapper.RoleMapper;
 import com.mall.admin.service.RoleMenuService;
 import com.mall.admin.service.RoleService;
 import com.mall.admin.service.UserRoleService;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import org.apache.commons.lang.StringUtils;
@@ -38,15 +39,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
 
     /**
      * 分页查询角色列表
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 角色名称
+     * @param createUserId 创建人id
      * @return
      */
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        String name = String.valueOf(params.get("name"));//角色名称
-        Long createUserId = (Long)params.get("createUserId");
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long createUserId) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<RoleEntity> page = this.page(
-                new PageBuilder<RoleEntity>().getPage(params),
+                new PageBuilder<RoleEntity>().getPage(pageParams),
                 new QueryWrapper<RoleEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
                         .eq(createUserId!=null, "create_user_id",createUserId)

@@ -65,7 +65,7 @@ public class HomepageIndexController {
     public CommonResult navbarData() {
         //首页导航栏信息
         Map<String,Object> navbarParamsMap = new HashMap<>();
-        List<HomepageNavbarEntity> homepageNavbarList = homepageNavbarService.getByParams(navbarParamsMap);
+        List<HomepageNavbarEntity> homepageNavbarList = homepageNavbarService.getByParams(null);
         List<Object> dataList = new ArrayList<>();
         //首页导航栏数据组装
         Map<String,Object> navbarMap = new HashMap<>();
@@ -85,7 +85,7 @@ public class HomepageIndexController {
     public CommonResult carouselData() {
         //首页轮播图
         Map<String,Object> carouselParamsMap = new HashMap<>();
-        List<HomepageCarouselEntity> homepageCarouselList = homepageCarouselService.getByParams(carouselParamsMap);
+        List<HomepageCarouselEntity> homepageCarouselList = homepageCarouselService.getByParams(null);
 
         List<Object> dataList = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class HomepageIndexController {
     public CommonResult plateData() {
         //首页板块信息（包括关联的商品信息）
         Map<String,Object> plateParamsMap = new HashMap<>();
-        List<HomepagePlateEntity> homepagePlateList = homepagePlateService.getByParams(plateParamsMap);
+        List<HomepagePlateEntity> homepagePlateList = homepagePlateService.getByParams(null);
         for (int i=0; i<homepagePlateList.size(); i++) {
             List<Object> goodsList = new ArrayList<>();
             Long plateId = homepagePlateList.get(i).getId();

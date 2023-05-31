@@ -40,8 +40,8 @@ public interface CollectGoodsService extends IService<CollectGoodsEntity> {
 
     /**
      * 查询所有收藏商品
-     * @param params
+     * @param memberId
      * @return
      */
-    List<CollectGoodsEntity> listAll(Map<String, Object> params);
+    List<CollectGoodsEntity> listAll(Long memberId);
 }

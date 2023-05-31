@@ -9,6 +9,7 @@ import com.mall.admin.service.HomepageCarouselService;
 import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,16 @@ public class HomepageCarouselServiceImpl extends ServiceImpl<HomepageCarouselMap
 
     /**
      * 分页查询所有轮播图
-     * @param params
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param name 轮播图名称
      * @return
      */
     @Override
-    public PageUtil getByPage(Map<String, Object> params) {
-        //导航名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name) {
+        Map<String, Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         IPage<HomepageCarouselEntity> page = this.page(
-                new PageBuilder<HomepageCarouselEntity>().getPage(params),
+                new PageBuilder<HomepageCarouselEntity>().getPage(pageParams),
                 new QueryWrapper<HomepageCarouselEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)
                         .orderByAsc("sort_num")
@@ -40,13 +42,11 @@ public class HomepageCarouselServiceImpl extends ServiceImpl<HomepageCarouselMap
 
     /**
      * 根据条件查询所有轮播图
-     * @param params
+     * @param name 轮播图名称
      * @return
      */
     @Override
-    public List<HomepageCarouselEntity> getByParams(Map<String, Object> params) {
-        //导航名称
-        String name = params.get("name") == null ? null : params.get("name").toString();
+    public List<HomepageCarouselEntity> getByParams(String name) {
         List<HomepageCarouselEntity> homepageCarouselEntityList = this.list(
                 new QueryWrapper<HomepageCarouselEntity>()
                         .like(StringUtils.isNotBlank(name), "name", name)

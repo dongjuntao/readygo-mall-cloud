@@ -98,9 +98,12 @@ public class GoodsController {
      * 商品列表（分页）
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil pageResult = goodsService.queryPage(params);
-
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name,
+                             @RequestParam(value = "adminUserId",required = false) Long adminUserId,
+                             @RequestParam(value = "categoryIds",required = false) String categoryIds){
+        PageUtil pageResult = goodsService.queryPage(pageNum,pageSize,name,adminUserId,categoryIds);
         //根据分页结果查询商品信息，并设置属性
         List list = pageResult.getList();
         if (list.size() == 0) {
@@ -132,8 +135,8 @@ public class GoodsController {
      * 商品列表（不分页）
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsList(params);
+    public CommonResult listAll(@RequestParam Long adminUserId){
+        List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsList(adminUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), allGoodsEntityList);
     }
 

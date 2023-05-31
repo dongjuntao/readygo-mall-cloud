@@ -27,11 +27,17 @@ public class HomepagePlateController {
     private HomepagePlateService homepagePlateService;
 
     /**
-     * 分页查询商城首页板块列表
+     * 分页查询所有板块
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 板块名称
+     * @return
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = homepagePlateService.getByPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum",required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize",required = false) Integer pageSize,
+                             @RequestParam(value = "name",required = false) String name){
+        PageUtil page = homepagePlateService.getByPage(pageNum, pageSize,name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -39,8 +45,8 @@ public class HomepagePlateController {
      * 所有板块列表（不分页）
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<HomepagePlateEntity> homepagePlateEntityList = homepagePlateService.getByParams(params);
+    public CommonResult listAll( @RequestParam(value = "name",required = false) String name){
+        List<HomepagePlateEntity> homepagePlateEntityList = homepagePlateService.getByParams(name);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), homepagePlateEntityList);
     }
 

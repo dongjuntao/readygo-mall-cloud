@@ -29,8 +29,9 @@ public class FrontPayTypeController {
      * 查询支付方式（不分页）
      */
     @GetMapping("listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<PayTypeEntity> payTypeList = payTypeService.getPayTypeList(params);
+    public CommonResult listAll(@RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "enable", required = false) Boolean enable){
+        List<PayTypeEntity> payTypeList = payTypeService.getPayTypeList(name, enable);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), payTypeList);
     }
 }

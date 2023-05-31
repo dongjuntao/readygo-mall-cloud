@@ -16,10 +16,9 @@ public interface RecipientInfoService extends IService<RecipientInfoEntity> {
 
     /**
      * 查询所有收货信息
-     * @param params
      * @return
      */
-    List<RecipientInfoEntity> listAll(Map<String, Object> params);
+    List<RecipientInfoEntity> listAll();
     /**
      * 新增发货信息
      * @param recipientInfoEntity

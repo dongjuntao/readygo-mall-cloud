@@ -25,20 +25,31 @@ public class FreightTemplateController {
     private FreightTemplateService freightTemplateService;
 
     /**
-     * 分页查询运费模板列表
+     * 分页查询运费模板
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param adminUserId 用户id
+     * @return
      */
     @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = freightTemplateService.getByPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "adminUserId", required = false) Long adminUserId){
+        PageUtil page = freightTemplateService.getByPage(pageNum, pageSize, adminUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
     /**
-     * 查询所有运费模板列表（不分页）
+     * 不分页
+     * 根据条件查询所有物流公司
+     * @param name 运费模板名称
+     * @param adminUserId 用户id
+     * @return
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Map<String, Object> params){
-        List<FreightTemplateEntity> freightTemplateEntityList = freightTemplateService.getByParams(params);
+    public CommonResult listAll(@RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "name", required = false) Long adminUserId){
+        List<FreightTemplateEntity> freightTemplateEntityList = freightTemplateService.getByParams(name, adminUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), freightTemplateEntityList);
     }
     /**

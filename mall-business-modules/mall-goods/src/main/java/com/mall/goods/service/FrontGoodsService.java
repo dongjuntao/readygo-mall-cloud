@@ -17,7 +17,16 @@ public interface FrontGoodsService extends IService<GoodsEntity> {
 
     GoodsEntity getGoodsAndSku(Long id);
 
-    PageUtil queryPage(Map<String, Object> params);
+    /**
+     *
+     * @param pageNum 页码
+     * @param pageSize 每页数量
+     * @param name 商品名称
+     * @param adminUserId 商家id
+     * @param categoryIds 商品分类id集
+     * @return
+     */
+    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String categoryIds);
 
     /**
      * 根据商品id集合，查询商品【包含sku信息】

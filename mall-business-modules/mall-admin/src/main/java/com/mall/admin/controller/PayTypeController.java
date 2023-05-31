@@ -32,8 +32,11 @@ public class PayTypeController {
      * 分页查询支付方式
      */
     @GetMapping("list")
-    public CommonResult list(@RequestParam Map<String, Object> params){
-        PageUtil page = payTypeService.queryPage(params);
+    public CommonResult list(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                             @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "enable", required = false) Boolean enable){
+        PageUtil page = payTypeService.queryPage(pageNum, pageSize, name, enable);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 

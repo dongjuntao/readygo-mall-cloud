@@ -22,5 +22,7 @@ import java.util.Map;
 public interface FeignBackCouponReceivedService {
 
     @GetMapping("getCouponReceivedList")
-    CommonResult getCouponReceivedList(@RequestParam("receivedCouponId") Map<String, Object> params);
+    CommonResult getCouponReceivedList(@RequestParam(value = "pageNum", required = false) Integer pageNum,
+                                       @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                       @RequestParam(value = "couponId", required = false) Long couponId);
 }

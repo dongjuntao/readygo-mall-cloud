@@ -68,7 +68,7 @@ public class OrderAutoCancelConsumer {
 
             String tradeCode =  String.valueOf(message.get("tradeCode"));
             if (!Strings.isEmpty(tradeCode)) {
-                TradeEntity trade = tradeService.getTradeDetailByParams(new MapUtil().put("code", tradeCode));
+                TradeEntity trade = tradeService.getTradeDetailByParams(tradeCode);
                 List<OrderEntity> orderList = trade.getOrderList();
                 if (!CollectionUtils.isEmpty(orderList)) {
                     for (OrderEntity order : orderList) {

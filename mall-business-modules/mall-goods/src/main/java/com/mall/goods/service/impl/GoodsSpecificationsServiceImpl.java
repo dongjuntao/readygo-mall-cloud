@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.GoodsSpecificationsEntity;
@@ -26,12 +27,12 @@ public class GoodsSpecificationsServiceImpl extends ServiceImpl<GoodsSpecificati
         implements GoodsSpecificationsService {
 
     @Override
-    public PageUtil queryPage(Map<String, Object> params) {
-        Page<GoodsSpecificationsEntity> page = (Page<GoodsSpecificationsEntity>)new PageBuilder<GoodsSpecificationsEntity>().getPage(params);
+    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId) {
+        Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
+        Page<GoodsSpecificationsEntity> page =
+                (Page<GoodsSpecificationsEntity>)new PageBuilder<GoodsSpecificationsEntity>().getPage(pageParams);
         QueryWrapper<GoodsSpecificationsEntity> wrapper = new QueryWrapper<>();
-        String name = String.valueOf(params.get("name"));//商品规格名称
         wrapper.like(StringUtils.isNotBlank(name), "name", name);
-        Long adminUserId = params.get("adminUserId") == null ? null: Long.valueOf((params.get("adminUserId").toString()));
         wrapper.eq(adminUserId != null, "admin_user_id", adminUserId);
         IPage<GoodsSpecificationsEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);

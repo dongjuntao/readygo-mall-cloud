@@ -56,8 +56,7 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
     }
 
     @Override
-    public TradeEntity getTradeByParams(Map<String, Object> params) {
-        String code = params.get("code") == null ? null: params.get("code").toString();
+    public TradeEntity getTradeByParams(String code) {
         QueryWrapper<TradeEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(!StringUtils.isEmpty(code), "code", code);
         return baseMapper.selectOne(queryWrapper);
@@ -84,12 +83,10 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
 
     /**
      * 获取交易信息详情（包括订单信息）
-     * @param params
      * @return
      */
     @Override
-    public TradeEntity getTradeDetailByParams(Map<String, Object> params) {
-        String code = params.get("code") == null ? null: params.get("code").toString();
+    public TradeEntity getTradeDetailByParams(String code) {
         return tradeMapper.getTradeDetailByCode(code);
     }
 }

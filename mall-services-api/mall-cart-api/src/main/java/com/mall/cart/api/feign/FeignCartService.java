@@ -21,12 +21,10 @@ public interface FeignCartService {
 
     /**
      * 查询会员购物车信息
-     * @param params
      * @return
      */
     @GetMapping("/list")
-    CommonResult list(@RequestParam Map<String, Object> params,
-                      @RequestHeader("currentUserInfo") String currentUserInfo);
+    CommonResult list(@RequestHeader("currentUserInfo") String currentUserInfo);
 
     /**
      * 删除购物车信息

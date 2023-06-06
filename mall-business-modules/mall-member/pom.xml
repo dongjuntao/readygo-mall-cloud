@@ -109,6 +109,12 @@
       <artifactId>mall-common-rabbitmq</artifactId>
       <version>${common.version}</version>
     </dependency>
+    <!--kafka-->
+    <dependency>
+      <groupId>com.mall.common</groupId>
+      <artifactId>mall-common-kafka</artifactId>
+      <version>${common.version}</version>
+    </dependency>
     <!--mybatis-plus-->
     <dependency>
       <groupId>com.baomidou</groupId>

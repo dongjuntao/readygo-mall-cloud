@@ -67,7 +67,28 @@ spring:
     publisher-returns: true #发送失败回退，对应RabbitTemplate.ReturnCallback接口
     template:
       mandatory: true
-
+  # kafka
+  kafka:
+    bootstrap-servers: 123.60.173.14:9092
+    producer:
+      retries: 3
+      buffer-memory: 33554432  #设置生产者内存缓冲区的大小
+      batch-size: 16384 #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer  #键的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer #值的序列化方式
+      acks: 1  #acks=0:生产者在成功写入消息之前不会等待任何来自服务器的响应 acks=1:只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。acks=all:只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+    consumer:
+      auto-commit-interval: 1S
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      group-id: consumer-group-id
+      client-id: consumer-client-id
+    listener:
+      concurrency: 5
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
 feign:
   client:
     config:

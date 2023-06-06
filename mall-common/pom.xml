@@ -26,6 +26,7 @@
     <module>mall-common-rabbitmq</module>
     <module>mall-common-redis</module>
     <module>mall-common-seata</module>
+    <module>mall-common-kafka</module>
   </modules>
 
   <dependencies>

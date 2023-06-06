@@ -13,6 +13,7 @@ import com.mall.admin.service.HomepagePlateService;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.goods.api.FeignFrontGoodsService;
+import com.mall.goods.api.FeignGoodsService;
 import com.mall.seckill.api.feign.FeignSeckillGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -53,6 +54,8 @@ public class HomepageIndexController {
 
     @Autowired
     private FeignFrontGoodsService feignFrontGoodsService;
+
+    private FeignGoodsService feignGoodsService;
 
     @Autowired
     private FeignSeckillGoodsService feignSeckillGoodsService;
@@ -124,7 +127,7 @@ public class HomepageIndexController {
                     homepagePlateGoodsRelatedService.getHomepagePlateGoodsRelatedList(plateId);
             for (int j=0; j<plateGoodsRelatedList.size(); j++) {
                 Long goodsId = plateGoodsRelatedList.get(j).getGoodsId();
-                CommonResult result = feignFrontGoodsService.getGoodsById(goodsId);
+                CommonResult result = feignGoodsService.getGoodsById(goodsId);
                 if ("200".equals(result.getCode()) && result.getData() != null) {
                     goodsList.add(result.getData());
                 }

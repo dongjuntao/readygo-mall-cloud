@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 09/05/2023 21:41:05
+ Date: 19/06/2023 21:44:13
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `coupon_selected`  (
   `received_coupon_id` bigint(0) NULL DEFAULT NULL COMMENT '领取id',
   `is_del` tinyint(0) NULL DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of coupon_selected
@@ -74,11 +74,14 @@ CREATE TABLE `order_detail`  (
   `after_sales_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '售后状态',
   `comment_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评价状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
+INSERT INTO `order_detail` VALUES (1, 1, 'O1663741467958579200', 'S1663741468096991232', 12, 129, '小米米家胶囊咖啡机家用全自动小型研磨一体迷你胶囊机办公煮咖啡', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659887199958373681662705323526413895xm4.jpg', 349.00, 1, '349', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (2, 2, 'O1663741687295512576', 'S1663741687362621440', 13, 128, '东来也适用于华为P50Pro手机壳P50新款镜头全包防摔p50e国潮p40pro原创p40超薄p30pro创意pro+中国风保护套', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659886962939813931662705689912137118dly1.jpg', 69.00, 1, '69', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (3, 3, 'O1668510880045862912', 'S1668510880393990144', 12, 129, '小米米家胶囊咖啡机家用全自动小型研磨一体迷你胶囊机办公煮咖啡', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659887199958373681662705323526413895xm4.jpg', 349.00, 1, '349', 'NEW', 'NEW');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -109,11 +112,14 @@ CREATE TABLE `order_info`  (
   `recipient_mobile` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人手机号',
   `region_names` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收货地区名称（省、市、区县）如（安徽省 淮南市 寿县）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
+INSERT INTO `order_info` VALUES (1, 'O1663741467958579200', 1, 'T1663741467815972864', 1, 'test', 0, '平台自营商户', 0, 'CANCELLED', NULL, 'ALIPAY', NULL, NULL, 349.00, 0.00, 349.00, '2023-05-31 10:57:31', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (2, 'O1663741687295512576', 2, 'T1663741687232598016', 1, 'test', 3, '平台自营商户', 0, 'CANCELLED', NULL, 'ALIPAY', NULL, NULL, 69.00, 0.00, 69.00, '2023-05-31 10:58:24', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (3, 'O1668510880045862912', 3, 'T1668510879668375552', 1, 'test', 0, '平台自营商户', 0, 'CANCELLED', NULL, 'ALIPAY', NULL, NULL, 349.00, 0.00, 349.00, '2023-06-13 14:49:28', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888881', '上海市 上海市 浦东新区');
 
 -- ----------------------------
 -- Table structure for order_invoice
@@ -130,11 +136,14 @@ CREATE TABLE `order_invoice`  (
   `mobile` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收票人手机号',
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收票人邮箱',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_invoice
 -- ----------------------------
+INSERT INTO `order_invoice` VALUES (1, 1, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (2, 2, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (3, 3, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 
 -- ----------------------------
 -- Table structure for recipient_info_selected
@@ -167,11 +176,14 @@ CREATE TABLE `trade`  (
   `freight` decimal(10, 2) NULL DEFAULT NULL COMMENT '运费',
   `final_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '最终金额（应付金额）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '交易表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '交易表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of trade
 -- ----------------------------
+INSERT INTO `trade` VALUES (1, 'T1663741467815972864', 1, 'test', 'UNPAID', '2023-05-31 10:57:31', 349.00, NULL, 349.00);
+INSERT INTO `trade` VALUES (2, 'T1663741687232598016', 1, 'test', 'UNPAID', '2023-05-31 10:58:24', 69.00, NULL, 69.00);
+INSERT INTO `trade` VALUES (3, 'T1668510879668375552', 1, 'test', 'UNPAID', '2023-06-13 14:49:28', 349.00, NULL, 349.00);
 
 -- ----------------------------
 -- Table structure for undo_log

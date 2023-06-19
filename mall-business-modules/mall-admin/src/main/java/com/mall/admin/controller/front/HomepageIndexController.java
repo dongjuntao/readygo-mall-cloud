@@ -55,6 +55,7 @@ public class HomepageIndexController {
     @Autowired
     private FeignFrontGoodsService feignFrontGoodsService;
 
+    @Autowired
     private FeignGoodsService feignGoodsService;
 
     @Autowired

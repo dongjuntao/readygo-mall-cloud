@@ -3,6 +3,7 @@ package com.mall.goods.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.goods.enums.GoodsStatusEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -48,10 +49,14 @@ public class GoodsEntity implements Serializable {
      * 商品三级分类id
      */
     private Long goodsCategoryIdThird;
+//    /**
+//     * 是否在售
+//     */
+//    private Boolean onSale;
     /**
-     * 是否在售
+     * 商品状态
      */
-    private Boolean onSale;
+    private GoodsStatusEnum goodsStatus;
     /**
      * 运费设置
      */

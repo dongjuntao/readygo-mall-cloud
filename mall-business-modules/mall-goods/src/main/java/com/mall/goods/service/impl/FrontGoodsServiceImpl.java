@@ -46,7 +46,7 @@ public class FrontGoodsServiceImpl extends ServiceImpl<FrontGoodsMapper, GoodsEn
         wrapper
                 .like(StringUtils.isNotBlank(name), "g.name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
-                .eq("on_sale", 1)
+                .eq("goods_status", "'ON_SALE'")
                 .orderByDesc("create_time");
         if (StringUtils.isNotBlank(categoryIds)) {
             String[] categorySplit = categoryIds.split(",");

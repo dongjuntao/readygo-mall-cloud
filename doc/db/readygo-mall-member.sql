@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 09/05/2023 21:40:52
+ Date: 19/06/2023 21:43:53
 */
 
 SET NAMES utf8mb4;
@@ -27,11 +27,12 @@ CREATE TABLE `collect_goods`  (
   `goods_id` bigint(0) NULL DEFAULT NULL COMMENT '商品id',
   `merchant_id` bigint(0) NULL DEFAULT NULL COMMENT '商户id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员商品收藏表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员商品收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of collect_goods
 -- ----------------------------
+INSERT INTO `collect_goods` VALUES (41, 1, 1, 2);
 
 -- ----------------------------
 -- Table structure for collect_shop
@@ -42,13 +43,13 @@ CREATE TABLE `collect_shop`  (
   `member_id` bigint(0) NULL DEFAULT NULL COMMENT '会员id',
   `merchant_id` bigint(0) NULL DEFAULT NULL COMMENT '商家id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of collect_shop
 -- ----------------------------
 INSERT INTO `collect_shop` VALUES (21, 1, 2);
-INSERT INTO `collect_shop` VALUES (23, 1, 4);
+INSERT INTO `collect_shop` VALUES (24, 1, 4);
 
 -- ----------------------------
 -- Table structure for coupon_received
@@ -64,7 +65,7 @@ CREATE TABLE `coupon_received`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '领取时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '我的优惠券' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '我的优惠券' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of coupon_received
@@ -83,29 +84,29 @@ CREATE TABLE `footprint`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '记录创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '记录修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 104 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 211 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of footprint
 -- ----------------------------
-INSERT INTO `footprint` VALUES (78, 3, 2, 2, '2022-09-08 13:01:38', '2022-09-08 14:11:36');
-INSERT INTO `footprint` VALUES (79, 3, 4, 2, '2022-09-08 13:02:38', '2022-09-08 13:06:48');
-INSERT INTO `footprint` VALUES (80, 3, 1, 2, '2022-09-08 13:06:49', '2022-09-08 14:03:29');
-INSERT INTO `footprint` VALUES (89, 1, 10, 4, '2022-11-29 14:57:26', '2023-05-09 16:39:05');
-INSERT INTO `footprint` VALUES (90, 1, 1, 2, '2022-11-29 14:58:12', '2023-05-09 16:39:07');
-INSERT INTO `footprint` VALUES (91, 1, 4, 2, '2022-11-29 15:06:23', '2023-05-09 16:38:44');
-INSERT INTO `footprint` VALUES (92, 1, 6, 2, '2022-11-29 15:08:11', '2023-05-09 16:39:00');
-INSERT INTO `footprint` VALUES (93, 1, 5, 4, '2022-12-02 13:43:34', '2023-05-09 16:38:37');
-INSERT INTO `footprint` VALUES (94, 1, 15, 5, '2022-12-02 14:07:48', '2023-05-09 16:39:47');
-INSERT INTO `footprint` VALUES (95, 1, 14, 5, '2022-12-02 14:15:02', '2023-05-09 16:38:50');
-INSERT INTO `footprint` VALUES (96, 1, 9, 4, '2022-12-02 14:15:25', '2022-12-04 17:12:42');
-INSERT INTO `footprint` VALUES (97, 1, 13, 3, '2022-12-04 22:04:53', '2023-05-09 16:27:36');
-INSERT INTO `footprint` VALUES (98, 1, 8, 2, '2022-12-05 14:05:41', '2023-05-09 16:39:39');
-INSERT INTO `footprint` VALUES (99, 1, 12, 3, '2022-12-19 17:35:11', '2023-05-09 16:39:52');
-INSERT INTO `footprint` VALUES (100, 1, 2, 2, '2023-02-28 15:54:58', '2023-05-09 16:39:51');
-INSERT INTO `footprint` VALUES (101, 1, 7, 4, '2023-05-05 10:44:03', '2023-05-09 16:38:54');
-INSERT INTO `footprint` VALUES (102, 1, 3, 2, '2023-05-05 10:44:04', '2023-05-09 16:23:36');
-INSERT INTO `footprint` VALUES (103, 1, 11, 2, '2023-05-06 16:10:03', '2023-05-08 17:34:37');
+INSERT INTO `footprint` VALUES (146, 2, 4, 2, '2023-05-31 14:13:44', NULL);
+INSERT INTO `footprint` VALUES (147, 2, 12, 3, '2023-05-31 14:13:44', NULL);
+INSERT INTO `footprint` VALUES (148, 2, 3, 2, '2023-05-31 14:13:44', NULL);
+INSERT INTO `footprint` VALUES (196, 1, 15, 5, '2023-06-06 17:01:22', '2023-06-14 20:49:54');
+INSERT INTO `footprint` VALUES (197, 1, 5, 4, '2023-06-06 17:01:28', '2023-06-14 20:49:57');
+INSERT INTO `footprint` VALUES (198, 1, 4, 2, '2023-06-06 17:07:21', '2023-06-14 20:49:53');
+INSERT INTO `footprint` VALUES (199, 1, 3, 2, '2023-06-13 14:48:53', '2023-06-14 20:49:56');
+INSERT INTO `footprint` VALUES (200, 1, 10, 4, '2023-06-13 14:48:54', '2023-06-14 20:49:55');
+INSERT INTO `footprint` VALUES (201, 1, 1, 2, '2023-06-13 14:48:56', '2023-06-14 20:49:56');
+INSERT INTO `footprint` VALUES (202, 1, 12, 3, '2023-06-13 14:49:21', '2023-06-14 20:49:55');
+INSERT INTO `footprint` VALUES (203, 1, 8, 2, '2023-06-13 15:59:10', '2023-06-14 20:50:29');
+INSERT INTO `footprint` VALUES (204, 1, 14, 5, '2023-06-13 15:59:12', '2023-06-14 20:49:55');
+INSERT INTO `footprint` VALUES (205, 1, 13, 3, '2023-06-13 16:39:06', '2023-06-14 20:49:52');
+INSERT INTO `footprint` VALUES (206, 1, 11, 2, '2023-06-13 16:39:08', '2023-06-14 20:49:48');
+INSERT INTO `footprint` VALUES (207, 1, 7, 4, '2023-06-13 16:39:11', '2023-06-14 20:49:50');
+INSERT INTO `footprint` VALUES (208, 1, 2, 2, '2023-06-13 16:39:13', '2023-06-14 20:49:54');
+INSERT INTO `footprint` VALUES (209, 1, 6, 2, '2023-06-13 16:39:18', '2023-06-14 20:49:56');
+INSERT INTO `footprint` VALUES (210, 9, 8, 2, '2023-06-14 20:50:00', NULL);
 
 -- ----------------------------
 -- Table structure for member
@@ -156,7 +157,7 @@ CREATE TABLE `recipient_info`  (
 -- ----------------------------
 INSERT INTO `recipient_info` VALUES (2, 1, '赵梅', '淝河乡崔园', '18866666666', '1024,1044,1049', '家', 0, '2022-04-18 17:46:09', NULL);
 INSERT INTO `recipient_info` VALUES (6, 1, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '813,852,855', '政府机构', 0, '2022-05-28 14:41:25', NULL);
-INSERT INTO `recipient_info` VALUES (7, 1, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '795,796,807', '家', 1, '2022-07-07 17:03:05', NULL);
+INSERT INTO `recipient_info` VALUES (7, 1, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888881', '795,796,807', '家', 1, '2022-07-07 17:03:05', NULL);
 
 -- ----------------------------
 -- Table structure for undo_log

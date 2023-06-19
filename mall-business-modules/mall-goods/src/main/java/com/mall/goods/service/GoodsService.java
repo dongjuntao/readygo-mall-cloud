@@ -15,11 +15,20 @@ import java.util.Map;
  */
 public interface GoodsService extends IService<GoodsEntity> {
 
-    PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String categoryIds);
+    PageUtil queryPage(Integer pageNum,
+                       Integer pageSize,
+                       String name,
+                       Long adminUserId,
+                       String categoryIds,
+                       String goodsStatus);
 
     GoodsEntity getGoodsAndSku(Long id);
 
-    int updateOnSale(Long goodsId, Boolean onSale);
+    int applyOnSale(Long goodsId);
+
+    int offShelf(Long goodsId);
+
+    int audit(Long goodsId,boolean isAudit);
 
     List<GoodsEntity> getAllGoodsList(Long adminUserId);
 

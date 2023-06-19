@@ -10,7 +10,7 @@
         <result column="goods_category_id_first" property="goodsCategoryIdFirst" jdbcType="BIGINT"/>
         <result column="goods_category_id_second" property="goodsCategoryIdSecond" jdbcType="BIGINT"/>
         <result column="goods_category_id_third" property="goodsCategoryIdThird" jdbcType="BIGINT"/>
-        <result column="on_sale" property="onSale" jdbcType="TINYINT"/>
+        <result column="goods_status" property="goodsStatus" jdbcType="VARCHAR"/>
         <result column="freight_setting" property="freightSetting" jdbcType="INTEGER"/>
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
@@ -88,7 +88,7 @@
                g.goods_category_id_first,
                g.goods_category_id_second,
                g.goods_category_id_third,
-               g.on_sale,
+               g.goods_status,
                g.freight_setting,
                g.code,
                g.brand_id,
@@ -130,7 +130,7 @@
                g.goods_category_id_first,
                g.goods_category_id_second,
                g.goods_category_id_third,
-               g.on_sale,
+               g.goods_status,
                g.freight_setting,
                g.code,
                g.brand_id,
@@ -158,7 +158,7 @@
                gs.extend_value
         FROM goods g
         LEFT JOIN goods_sku gs ON g.id = gs.goods_id
-        WHERE g.id=#{id} and g.on_sale = 1
+        WHERE g.id=#{id} and g.goods_status = 'ON_SALE'
     </select>
 
     <!--查询商品ids集合查询商品信息和sku-->
@@ -170,7 +170,7 @@
                g.goods_category_id_first,
                g.goods_category_id_second,
                g.goods_category_id_third,
-               g.on_sale,
+               g.goods_status,
                g.freight_setting,
                g.code,
                g.brand_id,
@@ -198,7 +198,7 @@
                gs.extend_value
         FROM goods g
         LEFT JOIN goods_sku gs ON g.id = gs.goods_id
-        WHERE g.on_sale=1 and g.id in
+        WHERE g.goods_status='ON_SALE' and g.id in
         <foreach collection="goodsIds" index="index" item="id" separator="," close=")" open="(">
             #{id}
         </foreach>

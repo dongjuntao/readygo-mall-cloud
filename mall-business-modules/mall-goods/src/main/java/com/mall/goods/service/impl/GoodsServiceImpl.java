@@ -8,6 +8,7 @@ import com.mall.common.base.utils.MapUtil;
 import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.GoodsEntity;
+import com.mall.goods.enums.GoodsStatusEnum;
 import com.mall.goods.mapper.GoodsMapper;
 import com.mall.goods.service.GoodsService;
 import org.apache.commons.lang.StringUtils;
@@ -27,13 +28,19 @@ import java.util.Map;
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> implements GoodsService {
 
     @Override
-    public PageUtil queryPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String categoryIds) {
+    public PageUtil queryPage(Integer pageNum,
+                              Integer pageSize,
+                              String name,
+                              Long adminUserId,
+                              String categoryIds,
+                              String goodsStatus) {
         Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<GoodsEntity> page = (Page<GoodsEntity>)new PageBuilder<GoodsEntity>().getPage(pageParams);
         QueryWrapper<GoodsEntity> wrapper = new QueryWrapper<>();
         wrapper
                 .like(StringUtils.isNotBlank(name), "g.name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
+                .eq(StringUtils.isNotBlank(goodsStatus), "goods_status", goodsStatus)
                 .orderByDesc("create_time");
         if (StringUtils.isNotBlank(categoryIds)) {
             String[] categorySplit = categoryIds.split(",");
@@ -55,13 +62,32 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     }
 
     /**
-     * 上架 / 下架
-     * @param onSale
+     * 申请上架
      */
     @Override
-    public int updateOnSale(Long goodsId, Boolean onSale) {
+    public int applyOnSale(Long goodsId) {
         GoodsEntity goodsEntity = baseMapper.selectById(goodsId);
-        goodsEntity.setOnSale(onSale);
+        goodsEntity.setGoodsStatus(GoodsStatusEnum.AUDIT);
+        return baseMapper.updateById(goodsEntity);
+    }
+
+    @Override
+    public int offShelf(Long goodsId) {
+        GoodsEntity goodsEntity = baseMapper.selectById(goodsId);
+        goodsEntity.setGoodsStatus(GoodsStatusEnum.NOT_ON_SALE);
+        return baseMapper.updateById(goodsEntity);
+    }
+
+    /**
+     * 上架审核
+     * @param goodsId
+     * @param isAudit
+     * @return
+     */
+    @Override
+    public int audit(Long goodsId, boolean isAudit) {
+        GoodsEntity goodsEntity = baseMapper.selectById(goodsId);
+        goodsEntity.setGoodsStatus(isAudit ? GoodsStatusEnum.ON_SALE : GoodsStatusEnum.AUDIT_FAILED);
         return baseMapper.updateById(goodsEntity);
     }
 

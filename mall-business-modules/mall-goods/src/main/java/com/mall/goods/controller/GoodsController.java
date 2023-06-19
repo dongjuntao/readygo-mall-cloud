@@ -5,6 +5,7 @@ import com.mall.common.base.CommonResult;
 import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.entity.*;
+import com.mall.goods.enums.GoodsStatusEnum;
 import com.mall.goods.service.GoodsService;
 import com.mall.goods.service.GoodsSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class GoodsController {
     public CommonResult save(@RequestBody GoodsEntity goodsEntity) {
         //保存商品
         goodsEntity.setCreateTime(new Date());
+        //新创建状态
+        goodsEntity.setGoodsStatus(GoodsStatusEnum.NEW_CREATED);
         goodsService.saveOrUpdate(goodsEntity);
         List<GoodsSkuEntity> goodsSkuList = goodsEntity.getGoodsSkuList();
         if (goodsSkuList != null && goodsSkuList.size()>0) {
@@ -102,8 +105,9 @@ public class GoodsController {
                              @RequestParam(value = "pageSize",required = false) Integer pageSize,
                              @RequestParam(value = "name",required = false) String name,
                              @RequestParam(value = "adminUserId",required = false) Long adminUserId,
-                             @RequestParam(value = "categoryIds",required = false) String categoryIds){
-        PageUtil pageResult = goodsService.queryPage(pageNum,pageSize,name,adminUserId,categoryIds);
+                             @RequestParam(value = "categoryIds",required = false) String categoryIds,
+                             @RequestParam(value = "goodsStatus",required = false) String goodsStatus){
+        PageUtil pageResult = goodsService.queryPage(pageNum,pageSize,name,adminUserId,categoryIds, goodsStatus);
         //根据分页结果查询商品信息，并设置属性
         List list = pageResult.getList();
         if (list.size() == 0) {
@@ -167,12 +171,27 @@ public class GoodsController {
     }
 
     /**
-     * 上架 / 下架
+     * 申请上架
      */
-    @PutMapping("updateOnSale")
-    public CommonResult updateOnSale(@RequestParam("goodsId") Long goodsId,
-                                     @RequestParam("onSale") Boolean onSale){
-        return goodsService.updateOnSale(goodsId, onSale) > 0 ? CommonResult.success() : CommonResult.fail();
+    @PutMapping("applyOnSale")
+    public CommonResult applyOnSale(@RequestParam("goodsId") Long goodsId){
+        return goodsService.applyOnSale(goodsId) > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 上架审核
+     */
+    @PutMapping("audit")
+    public CommonResult audit(@RequestParam("goodsId") Long goodsId, boolean isAudit){
+        return goodsService.audit(goodsId, isAudit) > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 下架
+     */
+    @PutMapping("offShelf")
+    public CommonResult offShelf(@RequestParam("goodsId") Long goodsId){
+        return goodsService.offShelf(goodsId) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
     /**

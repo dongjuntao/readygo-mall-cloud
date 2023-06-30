@@ -15,13 +15,9 @@ import java.util.Map;
  */
 public interface ESGoodsService {
 
-    void saveBatch(List<ESGoods> esGoodsList);
-
-    void save(ESGoods esGoods);
-
-    void update(ESGoods esGoods);
-
-    Page<ESGoods> list(Map<String, Object> params);
-
-    void delete(Long id);
+    Page<ESGoods> list(Integer pageNum,
+                       Integer pageSize,
+                       Integer sortType,
+                       String searchValue,
+                       String categories);
 }

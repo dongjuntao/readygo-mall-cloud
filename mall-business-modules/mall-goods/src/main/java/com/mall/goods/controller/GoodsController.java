@@ -10,6 +10,7 @@ import com.mall.goods.service.GoodsService;
 import com.mall.goods.service.GoodsSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -45,15 +46,19 @@ public class GoodsController {
         goodsEntity.setCreateTime(new Date());
         //新创建状态
         goodsEntity.setGoodsStatus(GoodsStatusEnum.NEW_CREATED);
-        goodsService.saveOrUpdate(goodsEntity);
+        Integer totalStock = 0;//总库存
         List<GoodsSkuEntity> goodsSkuList = goodsEntity.getGoodsSkuList();
         if (goodsSkuList != null && goodsSkuList.size()>0) {
-            goodsSkuList.forEach(goodsSku->{
+            for (GoodsSkuEntity goodsSku : goodsSkuList) {
                 goodsSku.setGoodsId(goodsEntity.getId());//设置sku的商品id
-            });
+            }
             //新增商品sku
             goodsSkuService.saveBatch(goodsSkuList);
+            totalStock = goodsSkuList.stream().mapToInt(sku->sku.getStock()).sum();
         }
+        goodsEntity.setTotalStock(totalStock);
+        goodsEntity.setTotalSales(0);
+        goodsService.saveOrUpdate(goodsEntity);
         return CommonResult.success();
     }
 
@@ -78,12 +83,14 @@ public class GoodsController {
                 //删除旧的商品sku信息
                 goodsSkuService.deleteBatch(skuIdList);
             }
-            skuList.forEach(sku->{sku.setGoodsId(goodsEntity.getId());});
+            skuList.stream().forEach(sku->{sku.setGoodsId(goodsEntity.getId());});
             //保存商品sku
             goodsSkuService.saveBatch(skuList);
         }
+        Integer totalStock = skuList.stream().mapToInt(sku->sku.getStock()).sum();
         //保存商品
         goodsEntity.setUpdateTime(new Date());
+        goodsEntity.setTotalStock(totalStock);//总库存
         goodsService.saveOrUpdate(goodsEntity);
         return CommonResult.success();
     }
@@ -94,6 +101,12 @@ public class GoodsController {
     @GetMapping("getGoodsById")
     public CommonResult info(@RequestParam("id") Long id){
         GoodsEntity goodsEntity = goodsService.getGoodsAndSku(id);
+        List<GoodsSkuEntity> skuList = goodsEntity.getGoodsSkuList();
+        Optional<GoodsSkuEntity> sku =
+                skuList.stream().filter(Objects::nonNull).min(Comparator.comparing(GoodsSkuEntity::getSellingPrice));//最小值
+        if (sku.isPresent()) {
+            goodsEntity.setMinPrice(sku.get().getSellingPrice());
+        }
         return CommonResult.success(goodsEntity);
     }
 

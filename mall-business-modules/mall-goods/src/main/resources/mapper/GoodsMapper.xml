@@ -24,6 +24,8 @@
         <result column="recommend" property="recommend" jdbcType="VARCHAR"/>
         <result column="weight" property="weight" jdbcType="DECIMAL"/>
         <result column="volume" property="volume" jdbcType="DECIMAL"/>
+        <result column="total_sales" property="totalSales" jdbcType="INTEGER"/>
+        <result column="total_stock" property="totalStock" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -38,6 +40,7 @@
         <result column="stock" property="stock" jdbcType="INTEGER"/>
         <result column="enable" property="enable" jdbcType="TINYINT"/>
         <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="sales" property="sales" jdbcType="INTEGER"/>
         <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
         <result column="extend_value" property="extendValue" jdbcType="VARCHAR"/>
     </resultMap>
@@ -50,17 +53,8 @@
         <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
         <collection property="goodsSkuList"
                     ofType="com.mall.goods.entity.GoodsSkuEntity"
-                    column="id">
-            <id column="sku_id" property="id" jdbcType="BIGINT"/><!--避免和主表主键相同，故起别名-->
-            <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
-            <result column="sku_code" property="code" jdbcType="VARCHAR"/>
-            <result column="original_price" property="originalPrice" jdbcType="DECIMAL"/>
-            <result column="selling_price" property="sellingPrice" jdbcType="DECIMAL"/>
-            <result column="stock" property="stock" jdbcType="INTEGER"/>
-            <result column="enable" property="enable" jdbcType="TINYINT"/>
-            <result column="image" property="image" jdbcType="VARCHAR"/>
-            <result column="extend_attr" property="extendAttr" jdbcType="VARCHAR"/>
-            <result column="extend_value" property="extendValue" jdbcType="VARCHAR"/>
+                    column="id"
+                    select="selectSku">
         </collection>
     </resultMap>
 
@@ -102,23 +96,63 @@
                g.recommend,
                g.weight,
                g.volume,
+               g.total_sales,
+               g.total_stock,
                g.create_time,
                g.update_time,
-               gs.id AS sku_id,
-               gs.goods_id,
-               gs.code sku_code,
-               gs.original_price,
-               gs.selling_price,
-               gs.stock,
-               gs.enable,
-               gs.image,
-               gs.extend_attr,
-               gs.extend_value,
                b.name AS brand_name
         FROM goods g
-        LEFT JOIN goods_sku gs ON gs.goods_id=g.id
         LEFT JOIN brand b ON g.brand_id=b.id
         ${ew.customSqlSegment}
+    </select>
+
+    <!--查询所有-->
+    <select id="getAllGoodsWithDetail" resultMap="goodsMap">
+        SELECT g.id,
+               g.name,
+               g.keyword,
+               g.admin_user_id,
+               g.goods_category_id_first,
+               g.goods_category_id_second,
+               g.goods_category_id_third,
+               g.goods_status,
+               g.freight_setting,
+               g.code,
+               g.brand_id,
+               g.unit,
+               g.description,
+               g.images,
+               g.info_detail,
+               g.specification_type,
+               g.params,
+               g.points,
+               g.recommend,
+               g.weight,
+               g.volume,
+               g.total_sales,
+               g.total_stock,
+               g.create_time,
+               g.update_time,
+               b.name AS brand_name
+        FROM goods g
+        LEFT JOIN brand b ON g.brand_id=b.id
+    </select>
+
+    <select id="selectSku" resultMap="baseGoodsSkuMap">
+            select
+               id AS sku_id,
+               goods_id,
+               code AS sku_code,
+               original_price,
+               selling_price,
+               stock,
+               enable,
+               image,
+               sales,
+               extend_attr,
+               extend_value
+            from goods_sku
+            where goods_id = #{id}
     </select>
 
     <!--查询单个商品和sku-->
@@ -144,6 +178,8 @@
                g.recommend,
                g.weight,
                g.volume,
+               g.total_sales,
+               g.total_stock,
                g.create_time,
                g.update_time,
                gs.id AS sku_id,
@@ -157,8 +193,7 @@
                gs.extend_attr,
                gs.extend_value
         FROM goods g
-                 LEFT JOIN goods_sku gs
-                           ON g.id = gs.goods_id
+        LEFT JOIN goods_sku gs ON g.id = gs.goods_id
         WHERE g.id=#{id}
     </select>
 
@@ -185,6 +220,8 @@
                g.recommend,
                g.weight,
                g.volume,
+               g.total_sales,
+               g.total_stock,
                g.create_time,
                g.update_time,
                gs.id AS sku_id,
@@ -198,53 +235,11 @@
                gs.extend_attr,
                gs.extend_value
         FROM goods g
-                 LEFT JOIN goods_sku gs
-                           ON g.id = gs.goods_id
+        LEFT JOIN goods_sku gs ON g.id = gs.goods_id
         WHERE g.id in
         <foreach collection="goodsIds" index="index" item="id" separator="," close=")" open="(">
             #{id}
         </foreach>
-    </select>
-
-    <!--查询所有-->
-    <select id="getAllGoodsWithDetail" resultMap="goodsMap">
-        SELECT g.id,
-               g.name,
-               g.keyword,
-               g.admin_user_id,
-               g.goods_category_id_first,
-               g.goods_category_id_second,
-               g.goods_category_id_third,
-               g.goods_status,
-               g.freight_setting,
-               g.code,
-               g.brand_id,
-               g.unit,
-               g.description,
-               g.images,
-               g.info_detail,
-               g.specification_type,
-               g.params,
-               g.points,
-               g.recommend,
-               g.weight,
-               g.volume,
-               g.create_time,
-               g.update_time,
-               gs.id AS sku_id,
-               gs.goods_id,
-               gs.code sku_code,
-               gs.original_price,
-               gs.selling_price,
-               gs.stock,
-               gs.enable,
-               gs.image,
-               gs.extend_attr,
-               gs.extend_value,
-               b.name AS brand_name
-        FROM goods g
-        LEFT JOIN goods_sku gs ON gs.goods_id=g.id
-        LEFT JOIN brand b ON g.brand_id=b.id
     </select>
 
 </mapper>

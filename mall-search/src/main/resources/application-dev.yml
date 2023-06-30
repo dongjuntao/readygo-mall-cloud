@@ -12,8 +12,30 @@ spring:
   elasticsearch:
     rest:
       uris: http://123.60.173.14:9200
-
-
+  #rabbit mq
+  rabbitmq:
+    host: 49.234.85.17
+    username: rabbitAdmin
+    password: rabbit@123
+    virtual-host: /
+    port: 5672
+    listener:
+      direct:
+        acknowledge-mode: manual #NONE（默认）：自动；AUTO：根据情况确认；MANUAL：手动确认
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 5000
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true #开启重发
+          max-attempts: 3 #重试次数
+          initial-interval: 5000 #重试间隔(ms)
+    publisher-confirm-type: correlated #开启发送者confirm机制,对应RabbitTemplate.ConfirmCallback接口
+    publisher-returns: true #发送失败回退，对应RabbitTemplate.ReturnCallback接口
+    template:
+      mandatory: true
 feign:
   client:
     config:

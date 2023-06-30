@@ -52,6 +52,10 @@ public class GoodsSkuEntity implements Serializable {
      */
     private String image;
     /**
+     * sku单品销量
+     */
+    private Integer sales;
+    /**
      * 商品sku扩展属性
      */
     private String extendAttr;

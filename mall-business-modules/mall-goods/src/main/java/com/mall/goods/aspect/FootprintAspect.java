@@ -40,15 +40,6 @@ import java.util.UUID;
 public class FootprintAspect {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    @Autowired
-    private FeignRabbitMQSendLogService feignRabbitMQSendLogService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     KafkaTemplate kafkaTemplate;
 
     /**

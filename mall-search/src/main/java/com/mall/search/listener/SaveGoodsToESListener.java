@@ -1,29 +1,31 @@
-package com.mall.cart.consumer;
+package com.mall.search.listener;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mall.cart.constant.RedisKeyConstant;
 import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.RabbitConstant;
-import com.mall.common.seata.util.RedisUtil;
+import com.mall.goods.api.FeignGoodsService;
 import com.mall.log.api.dto.RabbitMQReceivedLogDTO;
 import com.mall.log.api.feign.FeignRabbitMQReceivedLogService;
+import com.mall.search.entity.ESGoods;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
  * @Author DongJunTao
- * @Description 购物车 redis 双删
- * @Date 2022/5/26 19:26
+ * @Description 商品上架审核通过后 监听商品数据 保存到ES
+ * @Date 2023/6/20 19:39
  * @Version 1.0
  */
 @Component
-public class CartDoubleDeleteConsumer {
+public class SaveGoodsToESListener {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -31,15 +33,20 @@ public class CartDoubleDeleteConsumer {
     @Autowired
     private FeignRabbitMQReceivedLogService feignRabbitMQReceivedLogService;
 
+    @Autowired
+    private FeignGoodsService feignGoodsService;
+
+    @Autowired
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+
     /**
-     * 延时双删
-     * @param message
+     * 监听，保存商品到ES
      */
-    @RabbitListener(queues = RabbitConstant.CART_DOUBLE_DELETE_DEAD_QUEUE)
-    public void process(Map<String, Object> message, Channel channel, Message mqMessage) {
+    @RabbitListener(queues = RabbitConstant.SAVE_GOODS_TO_ES_QUEUE)
+    public void saveGoodsToES(Map<String, Object> message, Channel channel, Message mqMessage) {
         RabbitMQReceivedLogDTO rabbitMQReceivedLogDTO = new RabbitMQReceivedLogDTO();
         try {
-            //保证待消费的消息
+            //保存待消费的消息
             String exchange = mqMessage.getMessageProperties().getReceivedExchange();
             String routingKey = mqMessage.getMessageProperties().getReceivedRoutingKey();
             String consumerQueue  = mqMessage.getMessageProperties().getConsumerQueue();
@@ -53,8 +60,15 @@ public class CartDoubleDeleteConsumer {
             rabbitMQReceivedLogDTO.setReceivedContent(JSONUtil.toJsonStr(returnMessage));
             feignRabbitMQReceivedLogService.save(rabbitMQReceivedLogDTO);
 
-            //延迟二次删除
-            RedisUtil.hDel(RedisKeyConstant.CART_KEY, String.valueOf(message.get("memberId")));
+            //查询商品信息，保存到ES中
+            Long goodsId =  Long.parseLong(message.get("goodsId").toString());
+            CommonResult result = feignGoodsService.getGoodsById(goodsId);
+            if (result != null && "200".equals(result.getCode())) {
+                ESGoods esGoods = BeanUtil.mapToBean((Map<?, ?>) result.getData(), ESGoods.class, true);
+                if (esGoods != null) {
+                    elasticsearchRestTemplate.save(esGoods);
+                }
+            }
 
             //确认
             channel.basicAck(mqMessage.getMessageProperties().getDeliveryTag(), false);
@@ -72,8 +86,7 @@ public class CartDoubleDeleteConsumer {
                 } else {
                     channel.basicReject(mqMessage.getMessageProperties().getDeliveryTag(), false);
                 }
-            } catch (Exception e2) {}
+            }catch (Exception e2) {}
         }
     }
-
 }

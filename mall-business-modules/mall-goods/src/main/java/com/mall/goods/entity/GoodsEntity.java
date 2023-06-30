@@ -49,10 +49,6 @@ public class GoodsEntity implements Serializable {
      * 商品三级分类id
      */
     private Long goodsCategoryIdThird;
-//    /**
-//     * 是否在售
-//     */
-//    private Boolean onSale;
     /**
      * 商品状态
      */
@@ -110,6 +106,14 @@ public class GoodsEntity implements Serializable {
      */
     private BigDecimal volume;
     /**
+     * 总销量（包括sku单品的所有销量之和）
+     */
+    private Integer totalSales;
+    /**
+     * 总库存（包括sku单品的所有库存之和）
+     */
+    private Integer totalStock;
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -132,4 +136,9 @@ public class GoodsEntity implements Serializable {
      */
     @TableField(exist = false)
     private String brandName;
+    /**
+     * 最低售价（最小的sku价格）
+     */
+    @TableField(exist = false)
+    private BigDecimal minPrice;
 }

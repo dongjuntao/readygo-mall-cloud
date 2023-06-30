@@ -38,46 +38,25 @@ import java.util.Map;
 public class ESGoodsController {
 
     @Autowired
-    private FeignGoodsService feignGoodsService;
-
-    @Autowired
     private ESGoodsService esGoodsService;
 
     /**
-     * 商品信息全量保存到 elasticsearch
+     * 从ES中查询商品信息
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param sortType 排序方式【0:综合 1:新品 2:销量 3:单价（降序） 4:单价（升序）】
+     * @param searchValue
+     * @param categories
+     * @return
      */
-    @PostMapping("/insertAll")
-    public void insertAll() {
-        CommonResult commonResult = feignGoodsService.allGoodsWithDetail();
-        if (commonResult != null && "200".equals(commonResult.getCode())) {
-            List goodsList = (List)commonResult.getData();
-            List<ESGoods> newGoodsList = new ArrayList<>();
-            if (!CollectionUtils.isEmpty(goodsList)) {
-                for (int i=0; i<goodsList.size(); i++) {
-                    Map<String, Object> map = (Map<String,Object>) goodsList.get(i);
-                    ESGoods newEsGoods = BeanUtil.mapToBean(map, ESGoods.class, true);
-                    newGoodsList.add(newEsGoods);
-                }
-            }
-            esGoodsService.saveBatch(newGoodsList);
-        }
-    }
-
-    @GetMapping("/list")
-    public CommonResult list(@RequestParam Map<String, Object> params) {
-        Page<ESGoods> page = esGoodsService.list(params);
+    @GetMapping("search")
+    public CommonResult search(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                             @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                             @RequestParam(value = "sortType",required = false) Integer sortType,
+                             @RequestParam(value = "searchValue",required = false) String searchValue,
+                             @RequestParam(value = "categories",required = false) String categories) {
+        Page<ESGoods> page = esGoodsService.list(pageNum,pageSize,sortType,searchValue,categories);
         return CommonResult.success(page);
     }
 
-    @PutMapping("/update")
-    public CommonResult update(ESGoods esGoods) {
-        esGoodsService.update(esGoods);
-        return CommonResult.success();
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public CommonResult delete(@PathVariable("id") Long id) {
-        esGoodsService.delete(id);
-        return CommonResult.success();
-    }
 }

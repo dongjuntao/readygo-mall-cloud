@@ -66,11 +66,16 @@
             <version>0.2.0-RC2</version>
             <scope>runtime</scope>
         </dependency>
-
         <!-- ES 核心包 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <!--rabbit mq-->
+        <dependency>
+            <groupId>com.mall.common</groupId>
+            <artifactId>mall-common-rabbitmq</artifactId>
+            <version>${common.version}</version>
         </dependency>
     </dependencies>
 

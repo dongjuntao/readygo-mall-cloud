@@ -1,20 +1,10 @@
-package com.mall.member.consumer;
+package com.mall.member.listener;
 
 import cn.hutool.json.JSONUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mall.common.base.CommonResult;
 import com.mall.common.base.constant.KafkaConstant;
-import com.mall.common.base.constant.RabbitConstant;
-import com.mall.log.api.dto.RabbitMQReceivedLogDTO;
-import com.mall.log.api.feign.FeignRabbitMQReceivedLogService;
 import com.mall.member.entity.FootprintEntity;
 import com.mall.member.service.FootprintService;
-import com.rabbitmq.client.Channel;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.*;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -30,7 +20,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @Component
-public class FootprintConsumer {
+public class FootprintListener {
 
     @Autowired
     private FootprintService footprintService;

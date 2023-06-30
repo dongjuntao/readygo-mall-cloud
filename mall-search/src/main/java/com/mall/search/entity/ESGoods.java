@@ -2,6 +2,8 @@ package com.mall.search.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.mall.search.constant.IndexNameConstant;
+import com.mall.search.enums.GoodsStatusEnum;
 import lombok.Data;
 import org.apache.ibatis.javassist.bytecode.analysis.Analyzer;
 import org.elasticsearch.index.analysis.Analysis;
@@ -24,7 +26,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
-@Document(indexName = "ready")
+@Document(indexName = IndexNameConstant.ES_GOODS_SKU)
 public class ESGoods implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,37 +41,37 @@ public class ESGoods implements Serializable {
     /**
      * 关键字
      */
-    @Field(type = FieldType.Keyword, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Keyword)
     private String keyword;
     /**
      * 商户id
      */
-    @Field(type = FieldType.Long, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Long)
     private Long adminUserId;
     /**
      * 商品一级分类id
      */
-    @Field(type = FieldType.Long, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Long)
     private Long goodsCategoryIdFirst;
     /**
      * 商品二级分类id
      */
-    @Field(type = FieldType.Long, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Long)
     private Long goodsCategoryIdSecond;
     /**
      * 商品三级分类id
      */
-    @Field(type = FieldType.Long, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Long)
     private Long goodsCategoryIdThird;
     /**
-     * 是否在售
+     * 商品状态
      */
-    @Field(type = FieldType.Boolean, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private Boolean onSale;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private GoodsStatusEnum goodsStatus;
     /**
      * 运费设置
      */
-    @Field(type = FieldType.Integer, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Integer)
     private Integer freightSetting;
     /**
      * 商品编码
@@ -79,7 +81,7 @@ public class ESGoods implements Serializable {
     /**
      * 所属品牌id
      */
-    @Field(type = FieldType.Long, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Long)
     private Long brandId;
     /**
      * 商品单位
@@ -104,7 +106,7 @@ public class ESGoods implements Serializable {
     /**
      * 商品规格类型（0：单规格， 1：多规格）
      */
-    @Field(type = FieldType.Integer, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Integer)
     private Integer specificationType;
     /**
      * 商品参数
@@ -114,7 +116,7 @@ public class ESGoods implements Serializable {
     /**
      * 商品赠送积分
      */
-    @Field(type = FieldType.Integer, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Integer)
     private Integer points;
     /**
      * 商品推荐
@@ -132,19 +134,29 @@ public class ESGoods implements Serializable {
     @Field(type = FieldType.Auto, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
     private BigDecimal volume;
     /**
+     * 总销量（包括sku单品的所有销量之和）
+     */
+    @Field(type = FieldType.Integer)
+    private Integer totalSales;
+    /**
+     * 总库存（包括sku单品的所有库存之和）
+     */
+    @Field(type = FieldType.Integer)
+    private Integer totalStock;
+    /**
      * 创建时间
      */
-    @Field(type = FieldType.Date, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Date)
     private Date createTime;
     /**
      * 更新时间
      */
-    @Field(type = FieldType.Date, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Date)
     private Date updateTime;
     /**
      * sku列表
      */
-    @Field(type = FieldType.Nested, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
+    @Field(type = FieldType.Nested)
     private List<ESGoodsSku> goodsSkuList;
     /**
      * 所属商户名称
@@ -156,4 +168,9 @@ public class ESGoods implements Serializable {
      */
     @Field(type = FieldType.Text, analyzer = "ik_max_word",searchAnalyzer = "ik_smart")
     private String brandName;
+    /**
+     * 最低售价（最小的sku价格）
+     */
+    @Field(type = FieldType.Auto)
+    private BigDecimal minPrice;
 }

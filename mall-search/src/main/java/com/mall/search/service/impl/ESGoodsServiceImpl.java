@@ -42,54 +42,59 @@ public class ESGoodsServiceImpl implements ESGoodsService {
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     @Override
-    public void saveBatch(List<ESGoods> esGoodsList) {
-        elasticsearchRestTemplate.save(esGoodsList);
-    }
-
-    @Override
-    public void save(ESGoods esGoods) {
-        elasticsearchRestTemplate.save(esGoods);
-    }
-
-    @Override
-    public void update(ESGoods esGoods) {
-        elasticsearchRestTemplate.save(esGoods);
-    }
-
-    @Override
-    public Page<ESGoods> list(Map<String, Object> params) {
-        Integer pageNum = params.get("pageNum") == null ? null: Integer.valueOf(params.get("pageNum").toString());
-        Integer pageSize = params.get("pageSize") == null ? null: Integer.valueOf(params.get("pageSize").toString());
-        Integer sortType = params.get("sortType") == null ? null: Integer.valueOf(params.get("sortType").toString());//排序类型
-        String keyword = params.get("keyword") == null ? null: params.get("keyword").toString();//搜索关键字
-
+    public Page<ESGoods> list(Integer pageNum,
+                              Integer pageSize,
+                              Integer sortType,
+                              String searchValue,
+                              String categories) {
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         //分页
         Pageable pageable = PageRequest.of(pageNum-1, pageSize);
         queryBuilder.withPageable(pageable);
+
         //排序
         if (sortType == null) {
             //按相关度
             queryBuilder.withSort(SortBuilders.scoreSort().order(SortOrder.DESC));
         } else if (sortType == 0) { //综合
-            queryBuilder.withSort(SortBuilders.fieldSort("sale").order(SortOrder.DESC));
-            queryBuilder.withSort(SortBuilders.fieldSort("price").order(SortOrder.DESC));
+            queryBuilder.withSort(SortBuilders.fieldSort("totalSales").order(SortOrder.DESC));
+            queryBuilder.withSort(SortBuilders.fieldSort("minPrice").order(SortOrder.ASC));
             queryBuilder.withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC));
+            queryBuilder.withSort(SortBuilders.scoreSort().order(SortOrder.DESC));
         } else if (sortType == 1) { //商品新旧
             queryBuilder.withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC));
         } else if (sortType == 2) { //销量
-            queryBuilder.withSort(SortBuilders.fieldSort("sale").order(SortOrder.DESC));
-        } else if (sortType == 3) { //单价
-            queryBuilder.withSort(SortBuilders.fieldSort("price").order(SortOrder.DESC));
+            queryBuilder.withSort(SortBuilders.fieldSort("totalSales").order(SortOrder.DESC));
+        } else if (sortType == 3) { //单价（降序）
+            queryBuilder.withSort(SortBuilders.fieldSort("minPrice").order(SortOrder.DESC));
+        } else if (sortType == 4) { //单价（升序）
+            queryBuilder.withSort(SortBuilders.fieldSort("minPrice").order(SortOrder.ASC));
         }
+
         //查询关键字
-        if (!StringUtils.isEmpty(keyword)) {
+        if (!StringUtils.isEmpty(searchValue)) {
             //构造类型查询条件
             BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
             BoolQueryBuilder shouldBoolQueryBuilder = QueryBuilders.boolQuery();
-            shouldBoolQueryBuilder.should(QueryBuilders.matchPhraseQuery("name", keyword));
-            shouldBoolQueryBuilder.should(QueryBuilders.matchPhraseQuery("description", keyword));
+            shouldBoolQueryBuilder.should(QueryBuilders.matchQuery("name", searchValue));
+            shouldBoolQueryBuilder.should(QueryBuilders.matchQuery("description", searchValue));
             boolQueryBuilder.must(shouldBoolQueryBuilder);
+            queryBuilder.withQuery(boolQueryBuilder);
+        }
+        //商品分类
+        if (!StringUtils.isEmpty(categories)) {
+            String[] categoryArr = categories.split(",");
+            BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+            if (categoryArr.length == 1) { //只有一级分类
+                boolQueryBuilder.must(QueryBuilders.termQuery("goodsCategoryIdFirst", categoryArr[0]));
+            } else if (categoryArr.length == 2) { //只有二级分类
+                boolQueryBuilder.must(QueryBuilders.termQuery("goodsCategoryIdFirst", categoryArr[0]));
+                boolQueryBuilder.must(QueryBuilders.termQuery("goodsCategoryIdSecond", categoryArr[1]));
+            } else if (categoryArr.length == 3) { //有三级分类
+                boolQueryBuilder.must(QueryBuilders.termQuery("goodsCategoryIdFirst", categoryArr[0]));
+                boolQueryBuilder.must(QueryBuilders.termQuery("goodsCategoryIdSecond", categoryArr[1]));
+                boolQueryBuilder.must(QueryBuilders.termQuery("goodsCategoryIdThird", categoryArr[2]));
+            }
             queryBuilder.withQuery(boolQueryBuilder);
         }
         NativeSearchQuery query = queryBuilder.build();
@@ -102,8 +107,4 @@ public class ESGoodsServiceImpl implements ESGoodsService {
         return new PageImpl<>(searchList,pageable,searchHits.getTotalHits());
     }
 
-    @Override
-    public void delete(Long id) {
-        elasticsearchRestTemplate.delete(String.valueOf(id), ESGoods.class);
-    }
 }

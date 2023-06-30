@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 19/06/2023 21:44:42
+ Date: 30/06/2023 16:03:32
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `xxl_job_group`  (
 -- ----------------------------
 -- Records of xxl_job_group
 -- ----------------------------
-INSERT INTO `xxl_job_group` VALUES (1, 'xxl-job-executor-sample', '示例执行器', 0, NULL, '2023-06-19 16:49:22');
+INSERT INTO `xxl_job_group` VALUES (1, 'xxl-job-executor-sample', '示例执行器', 0, NULL, '2023-06-30 16:03:22');
 INSERT INTO `xxl_job_group` VALUES (2, 'mall-goods-executor', '商品服务执行器', 1, 'http://127.0.0.1:9903', '2023-05-09 21:24:56');
 INSERT INTO `xxl_job_group` VALUES (3, 'mall-member-executor', '会员服务执行器', 1, 'http://127.0.0.1:9904', '2023-05-09 21:25:18');
 
@@ -75,7 +75,7 @@ CREATE TABLE `xxl_job_info`  (
 -- ----------------------------
 INSERT INTO `xxl_job_info` VALUES (1, 1, '测试任务1', '2018-11-03 22:21:31', '2023-03-03 17:09:28', 'XXL', '', 'CRON', '* * * * * ?', 'DO_NOTHING', 'FIRST', 'demoJobHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2018-11-03 22:21:31', '', 0, 0, 0);
 INSERT INTO `xxl_job_info` VALUES (2, 2, '测试任务1', '2023-03-06 16:07:08', '2023-03-14 14:10:23', '董俊涛', '', 'CRON', '*/5 * * * * ?', 'DO_NOTHING', 'FIRST', 'myJobHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2023-03-06 16:07:08', '', 0, 0, 0);
-INSERT INTO `xxl_job_info` VALUES (3, 3, '领取的优惠券到期自动刷新状态', '2023-05-09 17:08:00', '2023-05-09 21:39:34', '董俊涛', '', 'CRON', '0 0 0 * * ?', 'DO_NOTHING', 'FIRST', 'autoRefreshReceivedCouponUseStatusHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2023-05-09 17:08:00', '', 1, 1686931200000, 1687190400000);
+INSERT INTO `xxl_job_info` VALUES (3, 3, '领取的优惠券到期自动刷新状态', '2023-05-09 17:08:00', '2023-05-09 21:39:34', '董俊涛', '', 'CRON', '0 0 0 * * ?', 'DO_NOTHING', 'FIRST', 'autoRefreshReceivedCouponUseStatusHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2023-05-09 17:08:00', '', 1, 1688054400000, 1688140800000);
 
 -- ----------------------------
 -- Table structure for xxl_job_lock
@@ -135,7 +135,7 @@ CREATE TABLE `xxl_job_log_report`  (
   `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `i_trigger_day`(`trigger_day`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xxl_job_log_report
@@ -236,6 +236,16 @@ INSERT INTO `xxl_job_log_report` VALUES (93, '2023-06-16 00:00:00', 0, 0, 0, NUL
 INSERT INTO `xxl_job_log_report` VALUES (94, '2023-06-19 00:00:00', 0, 0, 0, NULL);
 INSERT INTO `xxl_job_log_report` VALUES (95, '2023-06-18 00:00:00', 0, 0, 0, NULL);
 INSERT INTO `xxl_job_log_report` VALUES (96, '2023-06-17 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (97, '2023-06-20 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (98, '2023-06-21 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (99, '2023-06-25 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (100, '2023-06-24 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (101, '2023-06-23 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (102, '2023-06-26 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (103, '2023-06-28 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (104, '2023-06-27 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (105, '2023-06-29 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (106, '2023-06-30 00:00:00', 0, 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for xxl_job_logglue

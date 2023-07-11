@@ -8,6 +8,7 @@ import com.mall.goods.entity.*;
 import com.mall.goods.enums.GoodsStatusEnum;
 import com.mall.goods.service.GoodsService;
 import com.mall.goods.service.GoodsSkuService;
+import com.mall.goods.vo.GoodsCountByCategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -48,17 +49,15 @@ public class GoodsController {
         goodsEntity.setGoodsStatus(GoodsStatusEnum.NEW_CREATED);
         Integer totalStock = 0;//总库存
         List<GoodsSkuEntity> goodsSkuList = goodsEntity.getGoodsSkuList();
-        if (goodsSkuList != null && goodsSkuList.size()>0) {
-            for (GoodsSkuEntity goodsSku : goodsSkuList) {
-                goodsSku.setGoodsId(goodsEntity.getId());//设置sku的商品id
-            }
-            //新增商品sku
-            goodsSkuService.saveBatch(goodsSkuList);
-            totalStock = goodsSkuList.stream().mapToInt(sku->sku.getStock()).sum();
-        }
+        totalStock = goodsSkuList.stream().mapToInt(sku->sku.getStock()).sum();
         goodsEntity.setTotalStock(totalStock);
         goodsEntity.setTotalSales(0);
         goodsService.saveOrUpdate(goodsEntity);
+        for (GoodsSkuEntity goodsSku : goodsSkuList) {
+            goodsSku.setGoodsId(goodsEntity.getId());//设置sku的商品id
+        }
+        //新增商品sku
+        goodsSkuService.saveBatch(goodsSkuList);
         return CommonResult.success();
     }
 
@@ -215,4 +214,27 @@ public class GoodsController {
         List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsWithDetail();
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), allGoodsEntityList);
     }
+
+    /**
+     * 商品数量统计
+     * @return
+     */
+    @GetMapping("count")
+    public CommonResult count(@RequestParam(value = "goodsStatus", required = false) String goodsStatus,
+                              @RequestParam(value = "adminUserId", required = false) Long adminUserId) {
+        int count = goodsService.count(goodsStatus, adminUserId);
+        return CommonResult.success(count);
+    }
+
+    /**
+     * 商品数量统计
+     * @return
+     */
+    @GetMapping("getGoodsCountByCategory")
+    public CommonResult getGoodsCountByCategory(@RequestParam(value = "adminUserId",required = false) Long adminUserId) {
+        List<GoodsCountByCategoryVO> goodsCountByCategory = goodsService.getGoodsCountByCategory(adminUserId);
+        return CommonResult.success(goodsCountByCategory);
+    }
+
+
 }

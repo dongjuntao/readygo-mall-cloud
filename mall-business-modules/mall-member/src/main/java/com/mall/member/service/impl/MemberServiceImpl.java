@@ -130,4 +130,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, MemberEntity> i
     public MemberEntity getMemberById(long id) {
         return this.getById(id);
     }
+
+    @Override
+    public int count() {
+        QueryWrapper<MemberEntity> queryWrapper = new QueryWrapper<>();
+        return baseMapper.selectCount(queryWrapper);
+    }
 }

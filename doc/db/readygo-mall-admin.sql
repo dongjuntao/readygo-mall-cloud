@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/06/2023 16:02:03
+ Date: 11/07/2023 22:14:05
 */
 
 SET NAMES utf8mb4;
@@ -47,9 +47,9 @@ CREATE TABLE `admin_user`  (
 -- Records of admin_user
 -- ----------------------------
 INSERT INTO `admin_user` VALUES (1, '平台管理员', 'admin', '$2a$10$vALaBjrdGCSRGiydjVdSz.GRowDEq2RvA2YbvwHTeZ8eeoHBpEeyG', NULL, NULL, '15999999999', '15999999999@163.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2021-12-28 11:06:18', NULL);
-INSERT INTO `admin_user` VALUES (2, '测试商户', 'merchant', '$2a$10$m.TIT1l27T5rvq1yox0PFeetgT9xmBM7asvNQR1Zzzi6jdimlw04y', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/16631228201779431161.jpg', '45671234', '15888888888', '15888888888@163.com', 1, 1, '好的，通过', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1664871305230934489chenguan.jpg', 1, 0, '464,490,496', '航头镇鹤沙航城', '2022-01-19 13:33:47', '2022-10-04 16:15:12');
-INSERT INTO `admin_user` VALUES (3, '平台自营商户', 'merchant3', '$2a$10$rdCYU8936nw89RwGlPg9xOEjiD7UmgZYFLk69aMk/oXlDW82amMq2', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1665465880331683643微信图片_20221011132413.jpg', '278377721', '15912189902', '15912189902@163.com', 1, 1, NULL, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1665465611744207970readygo.png', 1, 1, '1,2,7', '永乐花园25栋102', '2022-01-19 16:16:52', '2022-10-11 13:24:44');
-INSERT INTO `admin_user` VALUES (4, '测试商户', 'merchant2', '$2a$10$CqdVD1G3c3.mJ3NwVKCQFO8VxW7UnGyUja7Ida8ytn7Dt1Jzh4vPa', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/16631228732711267772.jpg', '21432432424', '15888888888', '15888888888@163.com', 1, 1, '好的，通过', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1663122894469142964readygo.png', 1, 0, '37,38,40', '航头镇鹤沙航城', '2022-01-19 13:33:47', '2022-10-04 16:39:53');
+INSERT INTO `admin_user` VALUES (2, '测试商户1', 'merchant', '$2a$10$m.TIT1l27T5rvq1yox0PFeetgT9xmBM7asvNQR1Zzzi6jdimlw04y', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/16631228201779431161.jpg', '45671234', '15888888888', '15888888888@163.com', 1, 1, '好的，通过', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1664871305230934489chenguan.jpg', 1, 0, '464,490,496', '航头镇鹤沙航城', '2022-01-19 13:33:47', '2022-10-04 16:15:12');
+INSERT INTO `admin_user` VALUES (3, '平台自营商户1', 'merchant3', '$2a$10$rdCYU8936nw89RwGlPg9xOEjiD7UmgZYFLk69aMk/oXlDW82amMq2', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1665465880331683643微信图片_20221011132413.jpg', '278377721', '15912189902', '15912189902@163.com', 1, 1, NULL, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1665465611744207970readygo.png', 1, 1, '1,2,7', '永乐花园25栋102', '2022-01-19 16:16:52', '2022-10-11 13:24:44');
+INSERT INTO `admin_user` VALUES (4, '测试商户2', 'merchant2', '$2a$10$CqdVD1G3c3.mJ3NwVKCQFO8VxW7UnGyUja7Ida8ytn7Dt1Jzh4vPa', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/16631228732711267772.jpg', '21432432424', '15888888888', '15888888888@163.com', 1, 1, '好的，通过', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/1663122894469142964readygo.png', 1, 0, '37,38,40', '航头镇鹤沙航城', '2022-01-19 13:33:47', '2022-10-04 16:39:53');
 INSERT INTO `admin_user` VALUES (5, '平台自营商户2', 'merchant4', '$2a$10$JGpP/pUN/u3Gca3R3g17merLa0Uo1RjcPNcfji41RnjgSsJQLfGlO', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/avatar/1665465895149474287微信图片_20221011132419.jpg', '1829882211', '15519887763', '15519887763@163.com', 1, 1, NULL, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/admin/qualificationMaterials/16654657935699071052.png', 1, 1, '795,796,807', '鹤永路600弄', '2022-01-19 16:16:52', '2022-10-11 13:25:03');
 
 -- ----------------------------

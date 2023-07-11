@@ -64,4 +64,10 @@ public interface MemberService extends IService<MemberEntity> {
      * @return
      */
     MemberEntity getMemberById(long id);
+
+    /**
+     * 会员数量统计
+     * @return
+     */
+    int count();
 }

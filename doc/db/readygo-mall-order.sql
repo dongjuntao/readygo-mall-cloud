@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/06/2023 16:03:09
+ Date: 11/07/2023 22:16:12
 */
 
 SET NAMES utf8mb4;
@@ -82,6 +82,11 @@ CREATE TABLE `order_detail`  (
 INSERT INTO `order_detail` VALUES (1, 1, 'O1663741467958579200', 'S1663741468096991232', 12, 129, '小米米家胶囊咖啡机家用全自动小型研磨一体迷你胶囊机办公煮咖啡', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659887199958373681662705323526413895xm4.jpg', 349.00, 1, '349', 'NEW', 'NEW');
 INSERT INTO `order_detail` VALUES (2, 2, 'O1663741687295512576', 'S1663741687362621440', 13, 128, '东来也适用于华为P50Pro手机壳P50新款镜头全包防摔p50e国潮p40pro原创p40超薄p30pro创意pro+中国风保护套', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659886962939813931662705689912137118dly1.jpg', 69.00, 1, '69', 'NEW', 'NEW');
 INSERT INTO `order_detail` VALUES (3, 3, 'O1668510880045862912', 'S1668510880393990144', 12, 129, '小米米家胶囊咖啡机家用全自动小型研磨一体迷你胶囊机办公煮咖啡', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659887199958373681662705323526413895xm4.jpg', 349.00, 1, '349', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (4, 4, 'O1678767238368333824', 'S1678767238536105984', 1, 117, '【首降250元！指定时间点疯抢五折！】Xiaomi 12S Pro游戏徕卡拍照骁龙8+小米12spro官方旗舰店红米小米手机', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652599892005820252Qzc-AnSXiWhJKiZIejeadQ.jpg', 2699.00, 1, '2699', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (5, 5, 'O1678767768238952448', 'S1678767768381558784', 18, 138, '特步女鞋板鞋2023新款夏季运动休闲鞋官方正品低帮百搭平底小', NULL, 89.00, 1, '89', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (6, 6, 'O1678768724431212544', 'S1678768724544458752', 16, 136, '巴拉巴柆女童春装卫衣儿童洋气女孩春秋长袖碎花蝴蝶蕾丝边上衣', NULL, 39.90, 1, '39.9', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (7, 7, 'O1678769064111116288', 'S1678769064211779584', 13, 128, '东来也适用于华为P50Pro手机壳P50新款镜头全包防摔p50e国潮p40pro原创p40超薄p30pro创意pro+中国风保护套', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659886962939813931662705689912137118dly1.jpg', 69.00, 1, '69', 'NEW', 'NEW');
+INSERT INTO `order_detail` VALUES (8, 8, 'O1678769120922963968', 'S1678769121023627264', 2, 113, '当天发【24期免息】Mate 40E手机TD M40 5G官方旗舰店正品新款官网pro直降p50系列鸿蒙nova9 华5g为Huawei', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1652599971761640690Qzc-AnSXiWhJKiZIejeadQ.jpg', 3999.00, 1, '3999', 'NEW', 'NEW');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -117,9 +122,14 @@ CREATE TABLE `order_info`  (
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES (1, 'O1663741467958579200', 1, 'T1663741467815972864', 1, 'test', 0, '平台自营商户', 0, 'CANCELLED', NULL, 'ALIPAY', NULL, NULL, 349.00, 0.00, 349.00, '2023-05-31 10:57:31', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
-INSERT INTO `order_info` VALUES (2, 'O1663741687295512576', 2, 'T1663741687232598016', 1, 'test', 3, '平台自营商户', 0, 'CANCELLED', NULL, 'ALIPAY', NULL, NULL, 69.00, 0.00, 69.00, '2023-05-31 10:58:24', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
-INSERT INTO `order_info` VALUES (3, 'O1668510880045862912', 3, 'T1668510879668375552', 1, 'test', 0, '平台自营商户', 0, 'CANCELLED', NULL, 'ALIPAY', NULL, NULL, 349.00, 0.00, 349.00, '2023-06-13 14:49:28', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888881', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (1, 'O1663741467958579200', 1, 'T1663741467815972864', 1, 'test', 0, '平台自营商户', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 349.00, 0.00, 349.00, '2023-02-27 10:57:31', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (2, 'O1663741687295512576', 2, 'T1663741687232598016', 1, 'test', 3, '平台自营商户', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 69.00, 0.00, 69.00, '2023-03-31 10:58:24', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888888', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (3, 'O1668510880045862912', 3, 'T1668510879668375552', 1, 'test', 0, '平台自营商户', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 349.00, 0.00, 349.00, '2023-04-13 14:49:28', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888881', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (4, 'O1678767238368333824', 4, 'T1678767238158618624', 1, 'test', 0, '测试商户1', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 2699.00, 0.00, 2699.00, '2023-05-11 22:04:34', NULL, '董俊涛', '航头镇鹤沙航城东茗苑', '18888888881', '上海市 上海市 浦东新区');
+INSERT INTO `order_info` VALUES (5, 'O1678767768238952448', 5, 'T1678767768125706240', 1, 'test', 0, '测试商户2', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 89.00, 0.00, 89.00, '2023-05-11 22:06:41', NULL, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '江苏省 苏州市 相城区');
+INSERT INTO `order_info` VALUES (6, 'O1678768724431212544', 6, 'T1678768724322160640', 1, 'test', 0, '测试商户1', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 39.90, 0.00, 39.90, '2023-06-11 22:10:29', NULL, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '江苏省 苏州市 相城区');
+INSERT INTO `order_info` VALUES (7, 'O1678769064111116288', 7, 'T1678769063976898560', 1, 'test', 0, '平台自营商户1', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 69.00, 0.00, 69.00, '2023-07-11 22:11:50', NULL, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '江苏省 苏州市 相城区');
+INSERT INTO `order_info` VALUES (8, 'O1678769120922963968', 8, 'T1678769120788746240', 1, 'test', 0, '测试商户1', 0, 'FINISHED', NULL, 'ALIPAY', NULL, NULL, 3999.00, 0.00, 3999.00, '2023-07-11 22:12:03', NULL, '黄凯', '南湖办公大楼315室(南湖东路30号)', '15888888888', '江苏省 苏州市 相城区');
 
 -- ----------------------------
 -- Table structure for order_invoice
@@ -144,6 +154,11 @@ CREATE TABLE `order_invoice`  (
 INSERT INTO `order_invoice` VALUES (1, 1, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 INSERT INTO `order_invoice` VALUES (2, 2, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 INSERT INTO `order_invoice` VALUES (3, 3, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (4, 4, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (5, 5, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (6, 6, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (7, 7, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
+INSERT INTO `order_invoice` VALUES (8, 8, '1', '1', '董俊涛', '333555667000111223', 1, '15720009928', '15720009928@163.com');
 
 -- ----------------------------
 -- Table structure for recipient_info_selected
@@ -159,7 +174,7 @@ CREATE TABLE `recipient_info_selected`  (
 -- ----------------------------
 -- Records of recipient_info_selected
 -- ----------------------------
-INSERT INTO `recipient_info_selected` VALUES (3, 1, 7);
+INSERT INTO `recipient_info_selected` VALUES (3, 1, 6);
 
 -- ----------------------------
 -- Table structure for trade
@@ -184,6 +199,11 @@ CREATE TABLE `trade`  (
 INSERT INTO `trade` VALUES (1, 'T1663741467815972864', 1, 'test', 'UNPAID', '2023-05-31 10:57:31', 349.00, NULL, 349.00);
 INSERT INTO `trade` VALUES (2, 'T1663741687232598016', 1, 'test', 'UNPAID', '2023-05-31 10:58:24', 69.00, NULL, 69.00);
 INSERT INTO `trade` VALUES (3, 'T1668510879668375552', 1, 'test', 'UNPAID', '2023-06-13 14:49:28', 349.00, NULL, 349.00);
+INSERT INTO `trade` VALUES (4, 'T1678767238158618624', 1, 'test', 'UNPAID', '2023-07-11 22:04:34', 2699.00, NULL, 2699.00);
+INSERT INTO `trade` VALUES (5, 'T1678767768125706240', 1, 'test', 'UNPAID', '2023-07-11 22:06:41', 89.00, NULL, 89.00);
+INSERT INTO `trade` VALUES (6, 'T1678768724322160640', 1, 'test', 'UNPAID', '2023-07-11 22:10:29', 39.90, NULL, 39.90);
+INSERT INTO `trade` VALUES (7, 'T1678769063976898560', 1, 'test', 'UNPAID', '2023-07-11 22:11:50', 69.00, NULL, 69.00);
+INSERT INTO `trade` VALUES (8, 'T1678769120788746240', 1, 'test', 'UNPAID', '2023-07-11 22:12:03', 3999.00, NULL, 3999.00);
 
 -- ----------------------------
 -- Table structure for undo_log

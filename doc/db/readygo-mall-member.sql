@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/06/2023 16:02:50
+ Date: 11/07/2023 22:15:57
 */
 
 SET NAMES utf8mb4;
@@ -84,7 +84,7 @@ CREATE TABLE `footprint`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '记录创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '记录修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 213 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 219 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of footprint
@@ -93,19 +93,25 @@ INSERT INTO `footprint` VALUES (146, 2, 4, 2, '2023-05-31 14:13:44', NULL);
 INSERT INTO `footprint` VALUES (147, 2, 12, 3, '2023-05-31 14:13:44', NULL);
 INSERT INTO `footprint` VALUES (148, 2, 3, 2, '2023-05-31 14:13:44', NULL);
 INSERT INTO `footprint` VALUES (197, 1, 5, 4, '2023-06-06 17:01:28', '2023-06-14 20:49:57');
-INSERT INTO `footprint` VALUES (198, 1, 4, 2, '2023-06-06 17:07:21', '2023-06-14 20:49:53');
+INSERT INTO `footprint` VALUES (198, 1, 4, 2, '2023-06-06 17:07:21', '2023-07-11 14:06:20');
 INSERT INTO `footprint` VALUES (199, 1, 3, 2, '2023-06-13 14:48:53', '2023-06-14 20:49:56');
 INSERT INTO `footprint` VALUES (200, 1, 10, 4, '2023-06-13 14:48:54', '2023-06-14 20:49:55');
 INSERT INTO `footprint` VALUES (202, 1, 12, 3, '2023-06-13 14:49:21', '2023-06-14 20:49:55');
-INSERT INTO `footprint` VALUES (203, 1, 8, 2, '2023-06-13 15:59:10', '2023-06-14 20:50:29');
+INSERT INTO `footprint` VALUES (203, 1, 8, 2, '2023-06-13 15:59:10', '2023-07-07 17:01:39');
 INSERT INTO `footprint` VALUES (204, 1, 14, 5, '2023-06-13 15:59:12', '2023-06-14 20:49:55');
 INSERT INTO `footprint` VALUES (206, 1, 11, 2, '2023-06-13 16:39:08', '2023-06-14 20:49:48');
 INSERT INTO `footprint` VALUES (207, 1, 7, 4, '2023-06-13 16:39:11', '2023-06-14 20:49:50');
-INSERT INTO `footprint` VALUES (208, 1, 2, 2, '2023-06-13 16:39:13', '2023-06-29 13:29:44');
+INSERT INTO `footprint` VALUES (208, 1, 2, 2, '2023-06-13 16:39:13', '2023-07-11 22:12:01');
 INSERT INTO `footprint` VALUES (209, 1, 6, 2, '2023-06-13 16:39:18', '2023-06-14 20:49:56');
 INSERT INTO `footprint` VALUES (210, 9, 8, 2, '2023-06-14 20:50:00', NULL);
 INSERT INTO `footprint` VALUES (211, 9, 67, 2, '2023-06-21 14:08:05', '2023-06-21 14:08:08');
 INSERT INTO `footprint` VALUES (212, 9, 16, 2, '2023-06-25 16:07:11', NULL);
+INSERT INTO `footprint` VALUES (213, 1, 17, 2, '2023-07-07 17:01:02', '2023-07-07 17:01:33');
+INSERT INTO `footprint` VALUES (214, 1, 16, 2, '2023-07-07 17:01:37', '2023-07-11 22:10:25');
+INSERT INTO `footprint` VALUES (215, 1, 15, 5, '2023-07-07 17:01:47', '2023-07-07 17:06:53');
+INSERT INTO `footprint` VALUES (216, 1, 1, 2, '2023-07-07 17:07:20', '2023-07-11 22:04:32');
+INSERT INTO `footprint` VALUES (217, 1, 18, 4, '2023-07-11 22:04:49', '2023-07-11 22:06:22');
+INSERT INTO `footprint` VALUES (218, 1, 13, 3, '2023-07-11 22:11:44', '2023-07-11 22:11:47');
 
 -- ----------------------------
 -- Table structure for member

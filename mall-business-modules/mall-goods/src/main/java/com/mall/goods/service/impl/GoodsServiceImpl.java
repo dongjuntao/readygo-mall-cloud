@@ -11,6 +11,7 @@ import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.enums.GoodsStatusEnum;
 import com.mall.goods.mapper.GoodsMapper;
 import com.mall.goods.service.GoodsService;
+import com.mall.goods.vo.GoodsCountByCategoryVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -112,5 +113,28 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, GoodsEntity> impl
     @Override
     public List<GoodsEntity> getAllGoodsWithDetail() {
         return baseMapper.getAllGoodsWithDetail();
+    }
+
+    /**
+     * 商品数量统计
+     * @param goodsStatus
+     * @param adminUserId
+     * @return
+     */
+    @Override
+    public int count(String goodsStatus, Long adminUserId) {
+        QueryWrapper<GoodsEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(!StringUtils.isEmpty(goodsStatus), "goods_status", goodsStatus);
+        queryWrapper.eq(adminUserId != null, "admin_user_id", adminUserId);
+        return baseMapper.selectCount(queryWrapper);
+    }
+
+    /**
+     * 根据商品分类统计数量
+     * @return
+     */
+    @Override
+    public List<GoodsCountByCategoryVO> getGoodsCountByCategory(Long adminUserId) {
+        return baseMapper.getGoodsCountByCategory(adminUserId);
     }
 }

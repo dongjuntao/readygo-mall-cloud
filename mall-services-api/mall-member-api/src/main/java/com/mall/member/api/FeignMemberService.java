@@ -27,4 +27,7 @@ public interface FeignMemberService {
     @GetMapping("getMemberByParams")
     CommonResult getMemberByParams(@RequestParam(value = "userName",required = false) String userName,
                                    @RequestParam(value = "id",required = false) Long id);
+
+    @GetMapping("count")
+    CommonResult count();
 }

@@ -41,4 +41,19 @@ public interface FeignGoodsService {
     @GetMapping("/allGoodsWithDetail")
     CommonResult allGoodsWithDetail();
 
+    /**
+     * 根据参数获取订单信息（包括订单明细）
+     * @return
+     */
+    @GetMapping("count")
+    CommonResult count(@RequestParam(value = "goodsStatus", required = false) String goodsStatus,
+                       @RequestParam(value = "adminUserId", required = false) Long adminUserId);
+
+    /**
+     * 商品数量统计
+     * @return
+     */
+    @GetMapping("getGoodsCountByCategory")
+    CommonResult getGoodsCountByCategory(@RequestParam(value = "adminUserId",required = false) Long adminUserId);
+
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 30/06/2023 16:02:31
+ Date: 11/07/2023 22:15:24
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `brand`  (
   `enable` tinyint(0) NULL DEFAULT NULL COMMENT '是否启用',
   `order_num` int(0) NULL DEFAULT NULL COMMENT '排序字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of brand
@@ -44,6 +44,10 @@ INSERT INTO `brand` VALUES (5, 'TCL', 'TCL', 'https://dongjuntao-1303976517.cos.
 INSERT INTO `brand` VALUES (6, '海尔', '海尔', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1662359150973474382haier.jpg', '2022-09-05 14:25:53', NULL, 1, 0);
 INSERT INTO `brand` VALUES (7, '格力', '格力', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1662643329122287981geli.jpg', '2022-09-08 21:22:12', NULL, 1, 0);
 INSERT INTO `brand` VALUES (8, '东来也', '手机壳', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1662705533278393873dly.jpg', '2022-09-09 14:38:55', NULL, 1, 0);
+INSERT INTO `brand` VALUES (9, '三只松鼠', '三只松鼠是中国第一家定位于纯互联网食品品牌的企业，其主营业务覆盖了坚果、肉脯、果干、膨化等全品类休闲零食。三只松鼠股份有限公司成立于2012年2月16日，公司总部在安徽芜湖，是中国销售规模前列的食品电商企业。', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1688717845550298953936995159_1935490058_88_88.jpg', '2023-07-07 16:18:39', NULL, 1, 0);
+INSERT INTO `brand` VALUES (10, '巴拉巴拉', '巴拉巴拉（Balabala）是中国森马集团于2002年创建的童装品牌。', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1688718388553497504balabala.png', '2023-07-07 16:26:53', NULL, 1, 0);
+INSERT INTO `brand` VALUES (11, '冷酸灵', '\"冷酸灵\"是国民口腔护理品牌，以缓解牙齿敏感状况、增强牙齿对冷热酸甜的耐受力等多种功效著称。', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1688719924421916544lsl.png', '2023-07-07 16:52:37', NULL, 1, 0);
+INSERT INTO `brand` VALUES (12, '特步', '特步集团是一家专业从事运动鞋、服装及配饰的设计、研发、制造、营销的多品牌、国际化体育用品企业。', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/brand/logo/images/1689083248754113526tblog.jpg', '2023-07-11 21:47:32', NULL, 1, 0);
 
 -- ----------------------------
 -- Table structure for goods
@@ -76,7 +80,7 @@ CREATE TABLE `goods`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of goods
@@ -96,6 +100,9 @@ INSERT INTO `goods` VALUES (12, '小米米家胶囊咖啡机家用全自动小�
 INSERT INTO `goods` VALUES (13, '东来也适用于华为P50Pro手机壳P50新款镜头全包防摔p50e国潮p40pro原创p40超薄p30pro创意pro+中国风保护套', '东来也', 3, 8, 10, 50, 'ON_SALE', 1, '202209091441', 8, '个', '东来也适用于华为P50Pro手机壳P50新款镜头全包防摔p50e国潮p40pro原创p40超薄p30pro创意pro+中国风保护套', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705689912137118dly1.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705692937188314dly2.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705696592693839dly3.jpg', '', 0, '[]', 0, '推荐商品,热卖商品', NULL, NULL, 0, NULL, '2022-09-09 14:42:24', '2022-10-17 14:38:19');
 INSERT INTO `goods` VALUES (14, '小米/Redmi电竞显示器 G24广色域165Hz高刷1ms响应游戏电脑显示屏', '小米', 5, 15, 17, 69, 'ON_SALE', 1, '202209091445', 1, '台', '小米/Redmi电竞显示器 G24广色域165Hz高刷1ms响应游戏电脑显示屏', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705971168131757xm1.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705975396637815xm2.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705978588453347xm3.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662705983158678135xm4.jpg', '', 0, '[]', 0, '推荐商品', NULL, NULL, 0, NULL, '2022-09-09 14:47:01', '2022-10-17 14:04:47');
 INSERT INTO `goods` VALUES (15, '小米便携鼠标2无线静音鼠标办公便携家用鼠标金属滑鼠企业logo', '小米', 5, 15, 18, 74, 'ON_SALE', 1, '202209091450', 1, '个', '小米便携鼠标2无线静音鼠标办公便携家用鼠标金属滑鼠企业logo', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662706258126462289xm1.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662706262353353637xm2.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662706266176251097xm3.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1662706269596574214xm4.jpg', '', 1, '[]', 0, '热卖商品', NULL, NULL, 0, NULL, '2022-09-09 14:52:25', '2022-10-16 13:52:44');
+INSERT INTO `goods` VALUES (16, '巴拉巴柆女童春装卫衣儿童洋气女孩春秋长袖碎花蝴蝶蕾丝边上衣', '卫衣', 2, 94, 95, 109, 'ON_SALE', 1, 'blbl20230707', 10, '件', '春秋长袖碎花蝴蝶蕾丝边上衣', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1688718609764462604wy2.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1688718618914419629wy3.jpg', '<p>女孩卫衣</p>', 0, '[]', 5, '最新商品,推荐商品', NULL, NULL, 0, 1000, '2023-07-07 16:32:06', '2023-07-07 16:49:01');
+INSERT INTO `goods` VALUES (17, '220g冷酸灵冰柠劲爽抗敏感牙膏170g清洁口气清新成人不含氟家庭装', '冷酸灵，牙膏', 2, 123, 129, 150, 'ON_SALE', 1, 'lsl20230707', 11, '只', '220g冷酸灵冰柠劲爽抗敏感牙膏170g清洁口气清新成人不含氟家庭装', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1688720321826511285lsl1.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1688720327935888160lsl2.jpg,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1688720331343550791lsl3.jpg', '', 0, '[]', 2, '特价商品,热卖商品', NULL, NULL, 0, 500, '2023-07-07 17:00:44', NULL);
+INSERT INTO `goods` VALUES (18, '特步女鞋板鞋2023新款夏季运动休闲鞋官方正品低帮百搭平底小', '特步', 4, 164, 168, 173, 'ON_SALE', 1, 'tb20230711', 12, '双', '新款夏季运动休闲鞋官方正品低帮百搭平底小白鞋', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1689083834825757999tb1.png,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1689083838660290438tb2.png,https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/images/1689083841698497597tb3.png', '<p>特步，飞一般的感觉</p>', 0, '[]', 0, '推荐商品', NULL, NULL, 0, 200, '2023-07-11 21:58:41', NULL);
 
 -- ----------------------------
 -- Table structure for goods_category
@@ -527,7 +534,7 @@ CREATE TABLE `goods_sku`  (
   `extend_attr` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品sku扩展属性',
   `extend_value` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品sku扩展属性值',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 136 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 139 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of goods_sku
@@ -563,6 +570,9 @@ INSERT INTO `goods_sku` VALUES (132, 9, '202209091422', 5999.00, 5999.00, 2000, 
 INSERT INTO `goods_sku` VALUES (133, 8, '202209082143', 3199.00, 2899.00, 600, 1, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659888332878630641662644613548832606geli1.jpg', NULL, NULL, NULL);
 INSERT INTO `goods_sku` VALUES (134, 7, '202209051439', 3699.00, 2799.00, 500, 1, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16659888579589558411662360409444240981000.jpg', NULL, '[{\"id\":3,\"name\":\"颜色\",\"specificationsDetailList\":[{\"id\":14,\"value\":\"红色\"}]}]', '[{\"id\":14,\"value\":\"红色\"}]');
 INSERT INTO `goods_sku` VALUES (135, 6, '202209042132', 5999.00, 5799.00, 1000, 1, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/16622983905231978505S992rU4qs1662257189187.png', NULL, NULL, NULL);
+INSERT INTO `goods_sku` VALUES (136, 16, 'wy20230707', 59.90, 39.90, 1000, 1, NULL, NULL, NULL, NULL);
+INSERT INTO `goods_sku` VALUES (137, 17, 'lsl202307071', 17.90, 10.90, 500, 1, 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/goods/sku/images/1688720413363796272lsl1.jpg', NULL, NULL, NULL);
+INSERT INTO `goods_sku` VALUES (138, 18, 'tb2023071101', 99.00, 89.00, 200, 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for goods_specifications

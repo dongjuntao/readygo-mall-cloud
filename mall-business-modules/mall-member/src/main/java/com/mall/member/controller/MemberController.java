@@ -138,4 +138,14 @@ public class MemberController {
         }
         return CommonResult.success();
     }
+
+    /**
+     * 会员数量统计
+     * @return
+     */
+    @GetMapping("count")
+    public CommonResult count() {
+        int count = memberService.count();
+        return CommonResult.success(count);
+    }
 }

@@ -242,4 +242,15 @@
         </foreach>
     </select>
 
+    <!--根据商品分类统计商品数量，取前五名-->
+    <select id="getGoodsCountByCategory" resultType="com.mall.goods.vo.GoodsCountByCategoryVO">
+        SELECT count(g.id) `count`, gc.name categoryName
+        FROM goods g
+        LEFT JOIN goods_category gc ON g.goods_category_id_third=gc.id
+        <where>
+            <if test="adminUserId != null">AND g.admin_user_id = #{adminUserId}</if>
+        </where>
+        GROUP BY gc.name
+        ORDER BY `count` desc limit 5;
+    </select>
 </mapper>

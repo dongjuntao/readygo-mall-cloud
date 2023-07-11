@@ -20,4 +20,56 @@
         where oi.code = #{code}
     </select>
 
+    <select id="count" resultType="int">
+        select count(od.id) from order_detail od
+        left join order_info oi on od.order_id=oi.id
+        <where>
+            <if test="startTime != null">
+                and oi.create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and oi.create_time &lt;= #{endTime}
+            </if>
+            <if test="status != null and status != ''">
+                and oi.status = #{status}
+            </if>
+            <if test="merchantId != null">
+                and oi.merchant_id = #{merchantId}
+            </if>
+        </where>
+    </select>
+
+    <!--销售额-->
+    <select id="salesVolume" resultType="java.math.BigDecimal">
+        select IFNULL(sum(od.goods_selling_price),0) from order_detail od
+        left join order_info oi on od.order_id=oi.id
+        <where>
+            <if test="startTime != null">
+                and oi.create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and oi.create_time &lt;= #{endTime}
+            </if>
+            <if test="status != null and status != ''">
+                and oi.status = #{status}
+            </if>
+            <if test="merchantId != null">
+                and oi.merchant_id = #{merchantId}
+            </if>
+        </where>
+    </select>
+
+    <!--近六个月的订单量-->
+    <select id="getRecentSixMonthOrderCount" resultType="com.mall.order.vo.RecentSixMonthOrderCountVO">
+        select date_format(oi.create_time, '%Y-%m') AS yearMonth, count(od.id) as `count` from order_detail od
+        left join order_info oi on od.order_id=oi.id
+        <where>
+            oi.status = 'FINISHED'
+            <if test="merchantId != null">
+                and oi.merchant_id = #{merchantId}
+            </if>
+        </where>
+        group by yearMonth
+        order by yearMonth
+    </select>
 </mapper>

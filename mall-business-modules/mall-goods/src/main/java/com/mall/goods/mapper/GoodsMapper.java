@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mall.goods.entity.GoodsEntity;
 import com.mall.goods.entity.GoodsSpecificationsEntity;
+import com.mall.goods.vo.GoodsCountByCategoryVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,4 +38,6 @@ public interface GoodsMapper extends BaseMapper<GoodsEntity> {
     List<GoodsEntity> getByGoodsIds(@Param("goodsIds") Long[] goodsIds);
 
     List<GoodsEntity> getAllGoodsWithDetail();
+
+    List<GoodsCountByCategoryVO> getGoodsCountByCategory(@Param("adminUserId") Long adminUserId);
 }

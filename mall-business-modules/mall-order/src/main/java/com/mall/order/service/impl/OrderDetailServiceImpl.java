@@ -8,12 +8,15 @@ import com.mall.order.enums.AfterSalesStatusEnum;
 import com.mall.order.mapper.OrderDetailMapper;
 import com.mall.order.service.OrderDetailService;
 import com.mall.order.vo.OrderSkuCountVO;
+import com.mall.order.vo.RecentSixMonthOrderCountVO;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,5 +70,38 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
             }
             this.updateBatchById(orderDetailList);
         }
+    }
+
+    /**
+     * 订单数量
+     * @param startTime
+     * @param endTime
+     * @param status
+     * @return
+     */
+    @Override
+    public int count(String startTime, String endTime, String status, Long merchantId) {
+        return baseMapper.count(startTime, endTime, status, merchantId);
+    }
+
+    /**
+     * 销售额
+     * @param startTime
+     * @param endTime
+     * @param status
+     * @return
+     */
+    @Override
+    public BigDecimal salesVolume(String startTime, String endTime, String status, Long merchantId) {
+        return baseMapper.salesVolume(startTime, endTime, status, merchantId);
+    }
+
+    /**
+     * 近六个月的订单量
+     * @return
+     */
+    @Override
+    public List<RecentSixMonthOrderCountVO> getRecentSixMonthOrderCount(Long merchantId) {
+        return baseMapper.getRecentSixMonthOrderCount(merchantId);
     }
 }

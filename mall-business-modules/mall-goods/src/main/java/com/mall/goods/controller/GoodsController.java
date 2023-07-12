@@ -151,7 +151,7 @@ public class GoodsController {
      * 商品列表（不分页）
      */
     @GetMapping("/listAll")
-    public CommonResult listAll(@RequestParam Long adminUserId){
+    public CommonResult listAll(@RequestParam(value = "adminUserId",required = false) Long adminUserId){
         List<GoodsEntity> allGoodsEntityList = goodsService.getAllGoodsList(adminUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), allGoodsEntityList);
     }

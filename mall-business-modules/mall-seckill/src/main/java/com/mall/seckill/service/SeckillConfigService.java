@@ -35,7 +35,7 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
      * 分页查询秒杀配置列表
      * @return
      */
-    PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, Integer authStatus);
+    PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String authStatus);
 
     /**
      * 根据id查询秒杀配置
@@ -51,12 +51,18 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
     void deleteBatch(Long[] seckillConfigIds);
 
     /**
-     * 修改秒杀配置状态
-     * @param seckillConfigId 秒杀配置id
-     * @param status 状态
+     * 秒杀申请
+     * @param seckillConfigId
      * @return
      */
-    int updateStatus(Long seckillConfigId, Boolean status);
+    int apply(Long seckillConfigId);
+
+    /**
+     * 取消秒杀
+     * @param seckillConfigId
+     * @return
+     */
+    int cancel(Long seckillConfigId);
 
     /**
      * 秒杀配置审核
@@ -65,7 +71,7 @@ public interface SeckillConfigService extends IService<SeckillConfigEntity> {
      * @param authOpinion
      * @return
      */
-    int auth(Long seckillConfigId, Integer authStatus, String authOpinion);
+    int auth(Long seckillConfigId, String authStatus, String authOpinion);
 
     /**
      * 通过参数查询秒杀配置列表

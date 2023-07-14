@@ -3,9 +3,11 @@ package com.mall.seckill.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mall.seckill.enums.AuthStatusEnum;
 import com.mall.seckill.vo.GoodsSkuVO;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +20,16 @@ import java.util.List;
  */
 @Data
 @TableName("seckill_config")
-public class SeckillConfigEntity {
+public class SeckillConfigEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @TableId
     private Long id;
+    /**
+     * 秒杀配置名称
+     */
+    private String name;
     /**
      * 商品id
      */
@@ -53,11 +61,11 @@ public class SeckillConfigEntity {
     /**
      * 状态（0：禁用；1：启用）
      */
-    private Boolean status;
+//    private Boolean status;
     /**
-     * 审核状态（0：待审核，1：审核通过，2：审核拒绝）
+     * @see AuthStatusEnum
      */
-    private Integer authStatus;
+    private AuthStatusEnum authStatus;
     /**
      * 审核意见
      */

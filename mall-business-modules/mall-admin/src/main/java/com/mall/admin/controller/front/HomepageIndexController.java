@@ -191,17 +191,19 @@ public class HomepageIndexController {
         JSONArray jsonSeckillGoods = JSON.parseArray(JSON.toJSONString(seckillGoodsResult.getData()));
         List<Long> goodsIds = new ArrayList<>();
         jsonSeckillGoods.stream().forEach(array->goodsIds.add(JSON.parseObject(JSON.toJSONString(array)).getLong("goodsId")));
+        JSONArray jsonGoods = new JSONArray();
         //远程获取商品信息
-        CommonResult goodsResult = feignFrontGoodsService.listByIds(goodsIds.stream().toArray(Long[]::new));
-        JSONArray jsonGoods = JSON.parseArray(JSON.toJSONString(goodsResult.getData()));
-        for (int i=0; i<jsonGoods.size(); i++) {
-            for (int j=0; j<jsonSeckillGoods.size(); j++) {
-                if (jsonGoods.getJSONObject(i).getLong("id").equals(jsonSeckillGoods.getJSONObject(j).getLong("goodsId"))) {
-                    jsonGoods.getJSONObject(i).put("seckillGoodsInfo", jsonSeckillGoods.getJSONObject(j));
+        if (goodsIds.size() > 0) {
+            CommonResult goodsResult = feignFrontGoodsService.listByIds(goodsIds.stream().toArray(Long[]::new));
+            jsonGoods = JSON.parseArray(JSON.toJSONString(goodsResult.getData()));
+            for (int i=0; i<jsonGoods.size(); i++) {
+                for (int j=0; j<jsonSeckillGoods.size(); j++) {
+                    if (jsonGoods.getJSONObject(i).getLong("id").equals(jsonSeckillGoods.getJSONObject(j).getLong("goodsId"))) {
+                        jsonGoods.getJSONObject(i).put("seckillGoodsInfo", jsonSeckillGoods.getJSONObject(j));
+                    }
                 }
             }
         }
-
         List<Object> dataList = new ArrayList<>();
         //秒杀数据组装
         Map<String,Object> seckillMap = new HashMap<>();

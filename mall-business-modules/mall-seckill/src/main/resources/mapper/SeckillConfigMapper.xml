@@ -4,6 +4,7 @@
     <!--秒杀配置表-->
     <resultMap id="seckillConfigMap" type="com.mall.seckill.entity.SeckillConfigEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
         <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT"/>
         <result column="seckill_start_date" property="seckillStartDate" javaType="java.util.Date" jdbcType="DATE"/>
@@ -11,15 +12,12 @@
         <result column="seckill_start_time" property="seckillStartTime" javaType="java.sql.Time" jdbcType="TIME"/>
         <result column="seckill_end_time" property="seckillEndTime" javaType="java.sql.Time" jdbcType="TIME"/>
         <result column="per_limit" property="perLimit" jdbcType="INTEGER"/>
-        <result column="status" property="status" jdbcType="TINYINT"/>
-        <result column="auth_status" property="authStatus" jdbcType="INTEGER"/>
+        <result column="auth_status" property="authStatus" jdbcType="VARCHAR" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         <result column="auth_opinion" property="authOpinion" jdbcType="VARCHAR"/>
         <result column="create_by" property="createBy" jdbcType="BIGINT"/>
         <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
         <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-<!--        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>-->
-<!--        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>-->
         <collection property="seckillGoodsSkuList" ofType="com.mall.seckill.entity.SeckillGoodsSkuEntity">
             <id column="s_id" property="id" jdbcType="BIGINT"></id>
             <result column="seckill_config_id" property="seckillConfigId" jdbcType="BIGINT"/>
@@ -34,13 +32,13 @@
         SELECT
             sc.id,
             sc.goods_id,
+            sc.name,
             sc.admin_user_id,
             sc.seckill_start_date,
             sc.seckill_end_date,
             sc.seckill_start_time,
             sc.seckill_end_time,
             sc.per_limit,
-            sc.status,
             sc.auth_status,
             sc.auth_opinion,
             sc.create_by,
@@ -53,8 +51,8 @@
 
     <select id="getById" resultMap="seckillConfigMap">
         SELECT
-            sc.id,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
-            sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.status,sc.auth_status,
+            sc.id,sc.name,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
+            sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.auth_status,
             sc.auth_opinion,sc.create_by,sc.update_by,sc.create_time,sc.update_time,
             sgs.id s_id, sgs.seckill_config_id, sgs.goods_sku_id, sgs.seckill_price, sgs.seckill_stock
         FROM seckill_config sc
@@ -64,27 +62,27 @@
 
     <select id="getByParams" parameterType="map" resultMap="seckillConfigMap">
         SELECT
-            sc.id,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
-            sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.status,sc.auth_status,
+            sc.id,sc.name,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
+            sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.auth_status,
             sc.auth_opinion,sc.create_by,sc.update_by,sc.create_time,sc.update_time,
             sgs.id s_id, sgs.seckill_config_id, sgs.goods_sku_id, sgs.seckill_price, sgs.seckill_stock
         FROM seckill_config sc
         LEFT JOIN seckill_goods_sku sgs ON sgs.seckill_config_id=sc.id
         <where>
+            sc.auth_status = 'AUDIT_SUCCESS'
             <if test="seckillDate != null">
-                seckill_start_date &lt;= #{seckillDate} and seckill_end_date &gt;= #{seckillDate}
+                and seckill_start_date &lt;= #{seckillDate} and seckill_end_date &gt;= #{seckillDate}
             </if>
             <if test="seckillStartTime != null">and seckill_start_time = #{seckillStartTime}</if>
             <if test="seckillEndTime != null">and seckill_end_time = #{seckillEndTime}</if>
-            and status = 1 and auth_status = 1
         </where>
         order by sgs.id asc
     </select>
 
     <select id="getSeckillConfigByParams" parameterType="map" resultMap="seckillConfigMap">
         SELECT
-        sc.id,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
-        sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.status,sc.auth_status,
+        sc.id,sc.name,sc.goods_id,sc.admin_user_id,sc.seckill_start_date,sc.seckill_end_date,
+        sc.seckill_start_time,sc.seckill_end_time,sc.per_limit,sc.auth_status,
         sc.auth_opinion,sc.create_by,sc.update_by,sc.create_time,sc.update_time,
         sgs.id s_id, sgs.seckill_config_id, sgs.goods_sku_id, sgs.seckill_price, sgs.seckill_stock
         FROM seckill_config sc
@@ -96,7 +94,6 @@
             <if test="seckillStartTime != null">and seckill_start_time = #{seckillStartTime}</if>
             <if test="seckillEndTime != null">and seckill_end_time = #{seckillEndTime}</if>
             <if test="goodsId != null">and goods_id = #{goodsId}</if>
-            and status = 1 and auth_status = 1
         </where>
         order by sgs.id asc
     </select>

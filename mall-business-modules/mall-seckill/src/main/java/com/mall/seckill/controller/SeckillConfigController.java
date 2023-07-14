@@ -10,6 +10,7 @@ import com.mall.common.base.utils.PageUtil;
 import com.mall.goods.api.FeignGoodsService;
 import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.entity.SeckillGoodsSkuEntity;
+import com.mall.seckill.enums.AuthStatusEnum;
 import com.mall.seckill.service.SeckillConfigService;
 import com.mall.seckill.service.SeckillGoodsSkuService;
 import com.mall.seckill.vo.GoodsSkuVO;
@@ -58,7 +59,7 @@ public class SeckillConfigController {
                              @RequestParam(value = "pageSize",required = false) Integer pageSize,
                              @RequestParam(value = "name",required = false) String name,
                              @RequestParam(value = "adminUserId",required = false) Long adminUserId,
-                             @RequestParam(value = "authStatus",required = false) Integer authStatus){
+                             @RequestParam(value = "authStatus",required = false) String authStatus){
         PageUtil page = seckillConfigService.getByPage(pageNum,pageSize,name,adminUserId,authStatus);
         //根据分页结果查询商家信息，并设置属性【商家名称】
         List list = page.getList();
@@ -87,21 +88,6 @@ public class SeckillConfigController {
             }
         }
 
-        //远程调用goods服务，获取商品信息
-        CommonResult goodsResult = feignGoodsService.listByIds(goodsIds);
-        if (goodsResult != null && "200".equals(goodsResult.getCode())) {
-            List resultList = (List) goodsResult.getData();
-            for (int i=0;i<list.size();i++) {
-                for(int j=0; j<resultList.size(); j++) {
-                    Map<String,Object> map = (Map)resultList.get(j);
-                    if (((SeckillConfigEntity)list.get(i)).getGoodsId().toString().equals(map.get("id").toString())) {
-                        ((SeckillConfigEntity) list.get(i)).setGoodsName(map.get("name").toString());
-                        break;//一旦找到，退出当前循环，减少循环次数
-                    }
-                }
-            }
-        }
-
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -112,7 +98,7 @@ public class SeckillConfigController {
      */
     @PostMapping("save")
     public CommonResult saveSeckillConfig(@RequestBody SeckillConfigEntity seckillConfigEntity) throws ParseException {
-        seckillConfigEntity.setAuthStatus(0);
+        seckillConfigEntity.setAuthStatus(AuthStatusEnum.NEW_CREATED);
         seckillConfigEntity.setCreateTime(new Date());
         String startAndEndTime = seckillConfigEntity.getStartAndEndTime();
         if (!StringUtil.isNullOrEmpty(startAndEndTime)) {
@@ -192,15 +178,19 @@ public class SeckillConfigController {
     }
 
     /**
-     * 修改秒杀配置状态
-     * @param seckillConfigId 秒杀配置id
-     * @param status 状态
-     * @return
+     * 秒杀申请
      */
-    @PutMapping("updateStatus")
-    public CommonResult updateStatus(@RequestParam("seckillConfigId") Long seckillConfigId,
-                                     @RequestParam("status") Boolean status) {
-        return seckillConfigService.updateStatus(seckillConfigId, status) > 0 ? CommonResult.success() : CommonResult.fail();
+    @PutMapping("apply")
+    public CommonResult apply(@RequestParam("seckillConfigId") Long seckillConfigId){
+        return seckillConfigService.apply(seckillConfigId) > 0 ? CommonResult.success() : CommonResult.fail();
+    }
+
+    /**
+     * 取消秒杀活动
+     */
+    @PutMapping("cancel")
+    public CommonResult cancel(@RequestParam("seckillConfigId") Long seckillConfigId){
+        return seckillConfigService.cancel(seckillConfigId) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 
     /**
@@ -212,7 +202,7 @@ public class SeckillConfigController {
      */
     @PutMapping("auth")
     public CommonResult auth(@RequestParam("seckillConfigId") Long seckillConfigId,
-                             @RequestParam("authStatus") Integer authStatus,
+                             @RequestParam("authStatus") String authStatus,
                              @RequestParam("authOpinion") String authOpinion) {
         return seckillConfigService.auth(seckillConfigId, authStatus, authOpinion) > 0 ? CommonResult.success() : CommonResult.fail();
     }

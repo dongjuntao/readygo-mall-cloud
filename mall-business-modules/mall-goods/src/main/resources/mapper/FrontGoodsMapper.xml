@@ -198,10 +198,15 @@
                gs.extend_value
         FROM goods g
         LEFT JOIN goods_sku gs ON g.id = gs.goods_id
-        WHERE g.goods_status='ON_SALE' and g.id in
-        <foreach collection="goodsIds" index="index" item="id" separator="," close=")" open="(">
-            #{id}
-        </foreach>
+        <where>
+            g.goods_status='ON_SALE'
+            <if test="goodsIds != null and goodsIds.length>0">
+                and g.id in
+                <foreach collection="goodsIds" index="index" item="id" separator="," close=")" open="(">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
     </select>
 
 </mapper>

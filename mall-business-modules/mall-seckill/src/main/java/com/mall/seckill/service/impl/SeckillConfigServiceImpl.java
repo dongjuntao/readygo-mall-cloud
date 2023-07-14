@@ -10,12 +10,14 @@ import com.mall.common.base.utils.PageBuilder;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.seckill.entity.SeckillConfigEntity;
 import com.mall.seckill.entity.SeckillGoodsSkuEntity;
+import com.mall.seckill.enums.AuthStatusEnum;
 import com.mall.seckill.mapper.SeckillConfigMapper;
 import com.mall.seckill.mapper.SeckillGoodsSkuMapper;
 import com.mall.seckill.service.SeckillConfigService;
 import com.mall.seckill.service.SeckillGoodsSkuService;
 import com.mall.seckill.vo.GoodsSkuVO;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,19 +102,17 @@ public class SeckillConfigServiceImpl
 
     /**
      * 分页查询秒杀配置列表
-     * @param params
-     * @return
      */
     @Override
-    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, Integer authStatus) {
+    public PageUtil getByPage(Integer pageNum, Integer pageSize, String name, Long adminUserId, String authStatus) {
         Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<SeckillConfigEntity> page =
                 (Page<SeckillConfigEntity>)new PageBuilder<SeckillConfigEntity>().getPage(pageParams);
         QueryWrapper<SeckillConfigEntity> wrapper = new QueryWrapper<>();
         wrapper
-                .like(StringUtils.isNotBlank(name), "c.name", name)
+                .like(StringUtils.isNotBlank(name), "name", name)
                 .eq(adminUserId != null, "admin_user_id", adminUserId)
-                .eq(authStatus != null, "auth_status", authStatus);
+                .eq(!Strings.isEmpty(authStatus), "auth_status", authStatus);
         IPage<SeckillConfigEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
     }
@@ -132,18 +132,25 @@ public class SeckillConfigServiceImpl
     }
 
     @Override
-    public int updateStatus(Long seckillConfigId, Boolean status) {
-        SeckillConfigEntity seckillConfigEntity = this.getById(seckillConfigId);
-        if (seckillConfigEntity == null) {
-            return -1;
-        }
-        seckillConfigEntity.setStatus(status);
-        return baseMapper.updateById(seckillConfigEntity);
+    public SeckillConfigEntity getById(Long seckillConfigId) {
+        return baseMapper.getById(seckillConfigId);
+    }
+
+    /**
+     * 申请上架
+     */
+    @Override
+    public int apply(Long seckillConfigId) {
+        SeckillConfigEntity seckillConfig = baseMapper.selectById(seckillConfigId);
+        seckillConfig.setAuthStatus(AuthStatusEnum.AUDIT);
+        return baseMapper.updateById(seckillConfig);
     }
 
     @Override
-    public SeckillConfigEntity getById(Long seckillConfigId) {
-        return baseMapper.getById(seckillConfigId);
+    public int cancel(Long seckillConfigId) {
+        SeckillConfigEntity seckillConfig = baseMapper.selectById(seckillConfigId);
+        seckillConfig.setAuthStatus(AuthStatusEnum.CANCELED);
+        return baseMapper.updateById(seckillConfig);
     }
 
     /**
@@ -154,12 +161,12 @@ public class SeckillConfigServiceImpl
      * @return
      */
     @Override
-    public int auth(Long seckillConfigId, Integer authStatus, String authOpinion) {
+    public int auth(Long seckillConfigId, String authStatus, String authOpinion) {
         SeckillConfigEntity seckillConfigEntity = this.getById(seckillConfigId);
         if (seckillConfigEntity == null) {
             return -1;
         }
-        seckillConfigEntity.setAuthStatus(authStatus);
+        seckillConfigEntity.setAuthStatus(AuthStatusEnum.valueOf(authStatus));
         seckillConfigEntity.setAuthOpinion(authOpinion);
         return baseMapper.updateById(seckillConfigEntity);
     }

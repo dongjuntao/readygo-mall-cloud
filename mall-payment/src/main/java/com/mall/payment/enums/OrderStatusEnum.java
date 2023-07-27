@@ -1,4 +1,4 @@
-package com.mall.order.enums;
+package com.mall.payment.enums;
 
 /**
  * @Author DongJunTao
@@ -10,7 +10,6 @@ package com.mall.order.enums;
 public enum OrderStatusEnum {
     UNPAID("待付款"),
     UNDELIVERED("待发货（已付款）"),
-    PARTIAL_DELIVERED("部分发货"),
     DELIVERED("待收货（已发货）"),
     FINISHED("已完成"),
     CANCELLED("已取消");

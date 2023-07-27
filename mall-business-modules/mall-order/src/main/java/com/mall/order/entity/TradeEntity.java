@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.mall.order.enums.TradeStatusEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -40,12 +39,6 @@ public class TradeEntity {
      * 会员名称（买家名称）
      */
     private String memberName;
-
-    /**
-     * 付款状态
-     * @see TradeStatusEnum
-     */
-    private TradeStatusEnum payStatus;
 
     /**
      * 交易时间

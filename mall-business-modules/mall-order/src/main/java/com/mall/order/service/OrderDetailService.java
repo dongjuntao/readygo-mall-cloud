@@ -3,6 +3,7 @@ package com.mall.order.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.order.entity.OrderDetailEntity;
 import com.mall.order.enums.AfterSalesStatusEnum;
+import com.mall.order.enums.SubOrderStatusEnum;
 import com.mall.order.vo.OrderSkuCountVO;
 import com.mall.order.vo.RecentSixMonthOrderCountVO;
 import org.apache.ibatis.annotations.Param;
@@ -26,6 +27,10 @@ public interface OrderDetailService extends IService<OrderDetailEntity> {
     void updateAfterSalesStatus(Long orderDetailId, AfterSalesStatusEnum afterSalesStatus);
 
     void updateAfterSalesStatusByOrderId(Long orderId, AfterSalesStatusEnum afterSalesStatus);
+
+    void updateSubStatusByOrderId(Long orderId, SubOrderStatusEnum subOrderStatusEnum);
+
+    void updateSubStatus(Long orderDetailId, SubOrderStatusEnum subOrderStatusEnum);
 
     /**
      * 订单数量查询

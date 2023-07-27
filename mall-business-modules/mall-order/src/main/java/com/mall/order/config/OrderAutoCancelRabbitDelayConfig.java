@@ -32,7 +32,7 @@ public class OrderAutoCancelRabbitDelayConfig {
     @Bean
     public Queue delayQueue() {
         Map<String, Object> map = new HashMap<>();
-        // 设置1秒过期时间
+        // 设置30分钟过期时间
         map.put("x-message-ttl", RabbitConstant.ORDER_AUTO_CANCEL_DELAY_TIME);
         map.put("x-dead-letter-exchange", RabbitConstant.ORDER_AUTO_CANCEL_DEAD_EXCHANGE);
         map.put("x-dead-letter-routing-key", RabbitConstant.ORDER_AUTO_CANCEL_DEAD_KEY);

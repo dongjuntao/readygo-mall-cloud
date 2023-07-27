@@ -46,7 +46,7 @@ public class TradeController {
      */
     @GetMapping("tradePayInfo")
     public CommonResult tradePayInfo(@RequestParam(value = "orderType") String orderType,
-                                     @RequestParam(value = "orderCode") String orderCode,
+                                     @RequestParam(value = "orderCode",required = false) String orderCode,
                                      @RequestParam(value = "code") String code) {
         //如果是交易【从订单提交页支付】
         TradeOrderVO tradeOrderVO = new TradeOrderVO();
@@ -108,9 +108,9 @@ public class TradeController {
      * @param code 交易号
      * @return
      */
-    @PostMapping("updateTradeStatus")
+    @PostMapping("updateOrderStatus")
     public CommonResult updateTradeStatus(@RequestParam("code") String code,
-                                          @RequestParam("tradeStatus") String tradeStatus) {
-        return tradeService.updateTradeStatus(code, tradeStatus) > 0 ? CommonResult.success() : CommonResult.fail();
+                                          @RequestParam("orderStatus") String orderStatus) {
+        return tradeService.updateOrderStatus(code, orderStatus) > 0 ? CommonResult.success() : CommonResult.fail();
     }
 }

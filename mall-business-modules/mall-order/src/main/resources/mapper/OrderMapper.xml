@@ -12,9 +12,9 @@
         <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
         <result column="source" property="source" jdbcType="INTEGER"/>
-        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         <result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR"/>
-        <result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+        <result column="pay_type" property="payType" jdbcType="VARCHAR" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
         <result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
@@ -24,6 +24,9 @@
         <result column="recipient_detail_address" property="recipientDetailAddress" jdbcType="VARCHAR"/>
         <result column="recipient_mobile" property="recipientMobile" jdbcType="VARCHAR"/>
         <result column="region_names" property="regionNames" jdbcType="VARCHAR"/>
+        <result column="is_split" property="isSplit" jdbcType="TINYINT"/>
+        <result column="tracking_number" property="trackingNumber" jdbcType="VARCHAR"/>
+        <result column="logistics_company" property="logisticsCompany" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <collection property="orderDetailList" ofType="com.mall.order.entity.OrderDetailEntity">
@@ -38,8 +41,11 @@
             <result column="goods_selling_price" property="goodsSellingPrice" jdbcType="DECIMAL"/>
             <result column="goods_count" property="goodsCount" jdbcType="INTEGER"/>
             <result column="goods_sub_total" property="goodsSubTotal" jdbcType="DECIMAL"/>
-            <result column="after_sales_status" property="afterSalesStatus" jdbcType="VARCHAR"/>
-            <result column="comment_status" property="commentStatus" jdbcType="VARCHAR"/>
+            <result column="after_sales_status" property="afterSalesStatus" jdbcType="VARCHAR" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+            <result column="comment_status" property="commentStatus" jdbcType="VARCHAR" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+            <result column="sub_logistics_company" property="subLogisticsCompany" jdbcType="VARCHAR"/>
+            <result column="sub_tracking_number" property="subTrackingNumber" jdbcType="VARCHAR"/>
+            <result column="sub_status" property="subStatus" jdbcType="VARCHAR" />
         </collection>
     </resultMap>
 
@@ -68,6 +74,9 @@
                oi.recipient_detail_address,
                oi.recipient_mobile,
                oi.region_names,
+               oi.is_split,
+               oi.tracking_number,
+               oi.logistics_company,
                od.id detail_id,
                od.order_id,
                od.order_code,
@@ -80,7 +89,10 @@
                od.goods_count,
                od.goods_sub_total,
                od.after_sales_status,
-               od.comment_status
+               od.comment_status,
+               od.sub_tracking_number,
+               od.sub_logistics_company,
+               od.sub_status
         from order_info oi
         left join order_detail od on oi.id = od.order_id
         ${ew.customSqlSegment}
@@ -112,6 +124,9 @@
                oi.recipient_detail_address,
                oi.recipient_mobile,
                oi.region_names,
+               oi.is_split,
+               oi.tracking_number,
+               oi.logistics_company,
                od.id detail_id,
                od.order_id,
                od.order_code,
@@ -124,7 +139,10 @@
                od.goods_count,
                od.goods_sub_total,
                od.after_sales_status,
-               od.comment_status
+               od.comment_status,
+               od.sub_tracking_number,
+               od.sub_logistics_company,
+               od.sub_status
         from order_info oi
             left join order_detail od on oi.id = od.order_id
         <where>

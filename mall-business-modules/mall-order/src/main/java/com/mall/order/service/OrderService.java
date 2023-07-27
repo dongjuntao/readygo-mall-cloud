@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.entity.TradeEntity;
+import com.mall.order.vo.OrderShipmentParamsVO;
 import com.mall.order.vo.TradeDetailVO;
 
 import java.util.Map;
@@ -71,4 +72,9 @@ public interface OrderService extends IService<OrderEntity> {
      * @param code 订单号
      */
     void deleteOrder(String code);
+
+    /**
+     * 商品发货
+     */
+    void shipment(OrderShipmentParamsVO orderShipmentParams);
 }

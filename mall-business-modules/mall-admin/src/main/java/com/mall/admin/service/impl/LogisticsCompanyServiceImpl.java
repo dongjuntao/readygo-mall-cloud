@@ -92,15 +92,8 @@ public class LogisticsCompanyServiceImpl extends ServiceImpl<LogisticsCompanyMap
      * @return
      */
     @Override
-    public List<LogisticsCompanyEntity> getByParams(String name, String abbreviation, String code) {
-        List<LogisticsCompanyEntity> logisticsCompanyEntityList = this.list(
-                new QueryWrapper<LogisticsCompanyEntity>()
-                        .like(StringUtils.isNotBlank(name), "name", name)
-                        .like(StringUtils.isNotBlank(abbreviation), "abbreviation", abbreviation)
-                        .like(StringUtils.isNotBlank(code), "code", code)
-                        .orderByAsc("order_num")
-        );
-        return logisticsCompanyEntityList;
+    public List<LogisticsCompanyEntity> getByParams(String name, String abbreviation, String code, Boolean enable, Long adminUserId) {
+        return baseMapper.getAllWithExpressSetting(name, abbreviation, code, enable, adminUserId);
     }
 
     /**

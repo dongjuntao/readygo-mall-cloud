@@ -7,6 +7,9 @@ import com.mall.member.api.FeignCouponReceivedService;
 import com.mall.order.api.feign.FeignCouponSelectedService;
 import com.mall.order.api.feign.FeignOrderService;
 import com.mall.order.api.feign.FeignTradeService;
+import com.mall.payment.enums.CodePrefixEnum;
+import com.mall.payment.enums.OrderStatusEnum;
+import com.mall.payment.enums.OrderTypeEnum;
 import com.mall.payment.service.AlipayService;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -73,12 +76,12 @@ public class AplPaySuccessAspect {
                 String outTradeNo = paramsMap.get("out_trade_no");//商户端订单号
                 //修改订单状态（T开头，表示交易号，包含多个商铺订单一起支付，O开头表示订单号，单个商铺支付）
                 CommonResult orderResult = null;
-                if (outTradeNo.startsWith("T")) {
-                    feignTradeService.updateTradeStatus(outTradeNo, "PAID");
-                    orderResult = feignOrderService.getSkuIdAndCount(outTradeNo, "TRADE");
-                } else if (outTradeNo.startsWith("O")) {
-                    feignOrderService.updateOrderStatus(outTradeNo, "PAID");
-                    orderResult = feignOrderService.getSkuIdAndCount(outTradeNo, "ORDER");
+                if (outTradeNo.startsWith(CodePrefixEnum.T.name())) {
+                    feignTradeService.updateOrderStatus(outTradeNo, OrderStatusEnum.UNDELIVERED.name());
+                    orderResult = feignOrderService.getSkuIdAndCount(outTradeNo, OrderTypeEnum.TRADE.name());
+                } else if (outTradeNo.startsWith(CodePrefixEnum.O.name())) {
+                    feignOrderService.updateOrderStatus(outTradeNo, OrderStatusEnum.UNDELIVERED.name());
+                    orderResult = feignOrderService.getSkuIdAndCount(outTradeNo, OrderTypeEnum.ORDER.name());
                 }
                 ArrayList<Map<String,Object>> reduceStockMapList = new ArrayList<>();
                 if (orderResult != null && "200".equals(orderResult.getCode())) {

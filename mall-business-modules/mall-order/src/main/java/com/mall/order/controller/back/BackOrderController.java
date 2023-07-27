@@ -7,6 +7,7 @@ import com.mall.common.base.utils.PageUtil;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.service.OrderDetailService;
 import com.mall.order.service.OrderService;
+import com.mall.order.vo.OrderShipmentParamsVO;
 import com.mall.order.vo.OrderSkuCountVO;
 import com.mall.order.vo.RecentSixMonthOrderCountVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class BackOrderController {
      */
     @PutMapping("cancelOrder")
     public CommonResult cancelOrder(@RequestParam("code") String code,
-                                          @RequestParam("cancelReason") String cancelReason) {
+                                    @RequestParam("cancelReason") String cancelReason) {
         orderService.cancelOrder(code, cancelReason);
         return CommonResult.success();
     }
@@ -136,6 +137,17 @@ public class BackOrderController {
     public CommonResult recentSixMonthOrderCountList(@RequestParam(value = "merchantId", required = false) Long merchantId) {
         List<RecentSixMonthOrderCountVO> recentSixMonthOrderCountList = orderDetailService.getRecentSixMonthOrderCount(merchantId);
         return CommonResult.success(recentSixMonthOrderCountList);
+    }
+
+    /**
+     * 订单发货
+     * @param orderShipmentParams
+     * @return
+     */
+    @PutMapping("shipment")
+    public CommonResult shipment(@RequestBody OrderShipmentParamsVO orderShipmentParams) {
+        orderService.shipment(orderShipmentParams);
+        return CommonResult.success();
     }
 
 }

@@ -7,15 +7,14 @@ package com.mall.order.enums;
  * @Version 1.0
  */
 
-public enum OrderStatusEnum {
+public enum SubOrderStatusEnum {
     UNPAID("待付款"),
     UNDELIVERED("待发货（已付款）"),
-    PARTIAL_DELIVERED("部分发货"),
     DELIVERED("待收货（已发货）"),
     FINISHED("已完成"),
     CANCELLED("已取消");
 
-    OrderStatusEnum(String description) {
+    SubOrderStatusEnum(String description) {
         this.description = description;
     }
 

@@ -26,9 +26,9 @@ public interface FeignTradeService {
      * @param code 交易号
      * @return
      */
-    @PostMapping("updateTradeStatus")
-    CommonResult updateTradeStatus(@RequestParam("code") String code,
-                                   @RequestParam("tradeStatus") String tradeStatus);
+    @PostMapping("updateOrderStatus")
+    CommonResult updateOrderStatus(@RequestParam("code") String code,
+                                   @RequestParam("orderStatus") String orderStatus);
 
     @GetMapping("getTradeByParams")
     CommonResult getTradeByParams(@RequestParam Map<String, Object> params);

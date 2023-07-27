@@ -17,4 +17,26 @@
                 AND es.admin_user_id = #{adminUserId}
             ${ew.customSqlSegment}
     </select>
+
+    <!--查询物流公司及是否启用-->
+    <select id="getAllWithExpressSetting" resultType="com.mall.admin.entity.LogisticsCompanyEntity">
+        SELECT lc.id,
+               lc.name,
+               lc.abbreviation,
+               lc.code,
+               lc.url,
+               es.enable,
+               es.is_default
+        FROM logistics_company lc
+        LEFT JOIN express_setting es ON lc.id=es.logistics_company_id
+        <where>
+            <if test="abbreviation != null and abbreviation != ''">and lc.abbreviation=#{abbreviation}</if>
+            <if test="name != null and name != ''">and lc.name=#{name}</if>
+            <if test="code != null and code != ''">and lc.code=#{code}</if>
+            <if test="enable">and es.enable=1</if>
+            <if test="adminUserId != null">and es.admin_user_id=#{adminUserId}</if>
+        </where>
+    </select>
+
+
 </mapper>

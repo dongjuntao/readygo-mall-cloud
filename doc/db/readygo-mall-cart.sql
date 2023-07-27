@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/07/2023 14:42:13
+ Date: 27/07/2023 22:32:47
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `cart`  (
   `member_id` bigint(0) NULL DEFAULT NULL COMMENT '会员id',
   `merchant_id` bigint(0) NULL DEFAULT NULL COMMENT '商户id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 389 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 390 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart
@@ -45,7 +45,7 @@ CREATE TABLE `cart_goods`  (
   `checked` tinyint(1) NULL DEFAULT NULL COMMENT '是否已被选中',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '加入时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 496 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 498 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cart_goods

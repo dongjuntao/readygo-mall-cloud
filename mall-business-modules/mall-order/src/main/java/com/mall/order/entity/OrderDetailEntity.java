@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.mall.order.enums.AfterSalesStatusEnum;
 import com.mall.order.enums.CommentStatusEnum;
+import com.mall.order.enums.OrderStatusEnum;
+import com.mall.order.enums.SubOrderStatusEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -25,17 +27,27 @@ public class OrderDetailEntity {
     private Long id;
 
     private Long orderId;
-
     /**
      * 父订单号
      */
     private String orderCode;
-
     /**
      * 子订单号
      */
     private String subCode;
-
+    /**
+     * 子订单状态
+     * @see com.mall.order.enums.SubOrderStatusEnum
+     */
+    private SubOrderStatusEnum subStatus;
+    /**
+     * 子订单物流单号（拆分订单时，可根据子物流单号跟踪物流信息）
+     */
+    private String subTrackingNumber;
+    /**
+     * 子订单物流公司
+     */
+    private String subLogisticsCompany;
     /**
      * 商品id
      */

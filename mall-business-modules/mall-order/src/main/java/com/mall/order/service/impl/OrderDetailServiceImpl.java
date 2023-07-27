@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.order.entity.OrderDetailEntity;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.enums.AfterSalesStatusEnum;
+import com.mall.order.enums.SubOrderStatusEnum;
 import com.mall.order.mapper.OrderDetailMapper;
 import com.mall.order.service.OrderDetailService;
 import com.mall.order.vo.OrderSkuCountVO;
@@ -69,6 +70,35 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
                 orderDetail.setAfterSalesStatus(afterSalesStatus);
             }
             this.updateBatchById(orderDetailList);
+        }
+    }
+
+    /**
+     * 根据订单id，批量修改子订单状态
+     * @param orderId
+     * @param subOrderStatusEnum
+     */
+    @Override
+    public void updateSubStatusByOrderId(Long orderId, SubOrderStatusEnum subOrderStatusEnum) {
+        QueryWrapper<OrderDetailEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(orderId != null, "order_id", orderId);
+        List<OrderDetailEntity> orderDetailList = baseMapper.selectList(queryWrapper);
+        if (!CollectionUtils.isEmpty(orderDetailList)) {
+            for (OrderDetailEntity orderDetail : orderDetailList) {
+                orderDetail.setSubStatus(subOrderStatusEnum);
+            }
+            this.updateBatchById(orderDetailList);
+        }
+    }
+
+    @Override
+    public void updateSubStatus(Long orderDetailId, SubOrderStatusEnum subOrderStatusEnum) {
+        QueryWrapper<OrderDetailEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(orderDetailId != null, "id", orderDetailId);
+        OrderDetailEntity orderDetail = baseMapper.selectOne(queryWrapper);
+        if (orderDetail != null) {
+            orderDetail.setSubStatus(subOrderStatusEnum);
+            baseMapper.updateById(orderDetail);
         }
     }
 

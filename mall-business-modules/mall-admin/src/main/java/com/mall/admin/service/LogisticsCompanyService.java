@@ -65,7 +65,7 @@ public interface LogisticsCompanyService extends IService<LogisticsCompanyEntity
      * @param code 物流公司编码
      * @return
      */
-    List<LogisticsCompanyEntity> getByParams(String name, String abbreviation, String code);
+    List<LogisticsCompanyEntity> getByParams(String name, String abbreviation, String code, Boolean enable, Long adminUserId);
 
     /**
      * 删除物流公司

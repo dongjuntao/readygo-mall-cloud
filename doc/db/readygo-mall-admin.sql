@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/07/2023 14:42:01
+ Date: 27/07/2023 22:32:35
 */
 
 SET NAMES utf8mb4;
@@ -63,7 +63,7 @@ CREATE TABLE `express_setting`  (
   `enable` tinyint(0) NULL DEFAULT NULL COMMENT '是否开启',
   `is_default` tinyint(0) NULL DEFAULT NULL COMMENT '是否默认',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of express_setting
@@ -71,7 +71,16 @@ CREATE TABLE `express_setting`  (
 INSERT INTO `express_setting` VALUES (1, 2, 2, 1, 1);
 INSERT INTO `express_setting` VALUES (2, 2, 6, 1, 0);
 INSERT INTO `express_setting` VALUES (3, 2, 8, 1, 0);
-INSERT INTO `express_setting` VALUES (4, 2, 9, 1, 0);
+INSERT INTO `express_setting` VALUES (5, 2, 1, 1, 0);
+INSERT INTO `express_setting` VALUES (6, 4, 2, 1, 1);
+INSERT INTO `express_setting` VALUES (7, 4, 4, 1, 0);
+INSERT INTO `express_setting` VALUES (8, 4, 7, 1, 0);
+INSERT INTO `express_setting` VALUES (9, 3, 2, 1, 1);
+INSERT INTO `express_setting` VALUES (10, 3, 7, 1, 0);
+INSERT INTO `express_setting` VALUES (11, 3, 9, 1, 0);
+INSERT INTO `express_setting` VALUES (12, 5, 3, 1, 1);
+INSERT INTO `express_setting` VALUES (13, 5, 5, 1, 0);
+INSERT INTO `express_setting` VALUES (14, 5, 7, 1, 0);
 
 -- ----------------------------
 -- Table structure for freight_default
@@ -450,7 +459,7 @@ CREATE TABLE `pay_type`  (
 -- Records of pay_type
 -- ----------------------------
 INSERT INTO `pay_type` VALUES (1, '支付宝支付', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/pay/logo/images/1655991927797301187alipay.png', 'ALI_PAY', '使用支付宝扫码支付', 1, '2022-06-19 16:02:04');
-INSERT INTO `pay_type` VALUES (2, '微信支付', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/pay/logo/images/1655992098775458323wechat.png', 'WECHAT_PAY', '使用微信扫码支付', 1, '2022-06-19 16:24:42');
+INSERT INTO `pay_type` VALUES (2, '微信支付', 'https://dongjuntao-1303976517.cos.ap-shanghai.myqcloud.com/pay/logo/images/1655992098775458323wechat.png', 'WECHAT_PAY', '使用微信扫码支付', 0, '2022-06-19 16:24:42');
 
 -- ----------------------------
 -- Table structure for region

@@ -54,8 +54,11 @@ public class LogisticsCompanyController {
     @GetMapping("/listAll")
     public CommonResult listAll(@RequestParam(value = "name", required = false) String name,
                                 @RequestParam(value = "abbreviation", required = false) String abbreviation,
-                                @RequestParam(value = "code", required = false)  String code){
-        List<LogisticsCompanyEntity> logisticsCompanyEntity = logisticsCompanyService.getByParams(name, abbreviation, code);
+                                @RequestParam(value = "code", required = false)  String code,
+                                @RequestParam(value = "enable",required = false) Boolean enable,
+                                @RequestParam(value = "adminUserId",required = false) Long adminUserId){
+        List<LogisticsCompanyEntity> logisticsCompanyEntity = logisticsCompanyService
+                .getByParams(name, abbreviation, code, enable, adminUserId);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), logisticsCompanyEntity);
     }
 

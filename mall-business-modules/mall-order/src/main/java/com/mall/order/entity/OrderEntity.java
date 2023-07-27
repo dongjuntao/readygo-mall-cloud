@@ -132,6 +132,19 @@ public class OrderEntity {
     private String regionNames;
 
     /**
+     * 是否拆分发货
+     */
+    private Boolean isSplit;
+    /**
+     * 物流单号（未拆分订单时，可根据物流单号跟踪物流信息）
+     */
+    private String trackingNumber;
+    /**
+     * 物流公司
+     */
+    private String logisticsCompany;
+
+    /**
      * 下单时间
      */
     private Date createTime;

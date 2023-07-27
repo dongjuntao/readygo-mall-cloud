@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.order.entity.TradeEntity;
 import com.mall.order.enums.CodePrefixEnum;
-import com.mall.order.enums.OrderStatusEnum;
-import com.mall.order.enums.TradeStatusEnum;
 import com.mall.order.mapper.TradeMapper;
 import com.mall.order.service.OrderService;
 import com.mall.order.service.TradeService;
@@ -47,7 +45,6 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
         tradeEntity.setMemberId(CurrentUserContextUtil.getCurrentUserInfo().getUserId());
         tradeEntity.setMemberName(CurrentUserContextUtil.getCurrentUserInfo().getUserName());
         tradeEntity.setTradeTime(new Date());
-        tradeEntity.setPayStatus(TradeStatusEnum.UNPAID);
         tradeMapper.insert(tradeEntity);
         //保存订单信息
         orderService.saveOrder(tradeEntity, tradeDetailVO);
@@ -68,14 +65,11 @@ public class TradeServiceImpl extends ServiceImpl<TradeMapper, TradeEntity> impl
      */
     @Override
     @Transactional
-    public int updateTradeStatus(String code, String tradeStatus) {
+    public int updateOrderStatus(String code, String tradeStatus) {
         QueryWrapper<TradeEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(!StringUtils.isEmpty(code), "code", code);
         TradeEntity trade = baseMapper.selectOne(queryWrapper);
         if (trade != null) {
-            //修改交易付款状态
-            trade.setPayStatus(TradeStatusEnum.valueOf(tradeStatus));
-            baseMapper.updateById(trade);
             orderService.updateOrderStatusByTrade(trade.getId(), tradeStatus);
         }
         return 1;

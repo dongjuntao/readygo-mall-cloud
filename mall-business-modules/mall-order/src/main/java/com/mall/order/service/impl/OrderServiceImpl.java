@@ -28,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author DongJunTao
@@ -65,8 +62,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<OrderEntity> page = (Page<OrderEntity>)new PageBuilder<OrderEntity>().getPage(pageParams);
         QueryWrapper<OrderEntity> wrapper = new QueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(code), "oi.code", code)
-                .eq(StringUtils.isNotBlank(status), "oi.status", status)
+        wrapper.like(!StringUtils.isEmpty(code), "oi.code", code)
+                .eq(!StringUtils.isEmpty(status), "oi.status", status)
                 .eq(memberId != null, "member_id", memberId)
                 .orderByDesc("create_time");
         IPage<OrderEntity> iPage = baseMapper.queryPage(page, wrapper);
@@ -120,6 +117,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                 orderDetailEntity.setGoodsSubTotal(payGoodsVO.getSubTotal());
                 orderDetailEntity.setAfterSalesStatus(AfterSalesStatusEnum.NEW);//默认新订单，不能申请售后
                 orderDetailEntity.setCommentStatus(CommentStatusEnum.NEW); //默认新订单，不能评价
+                orderDetailEntity.setSubStatus(SubOrderStatusEnum.UNPAID);
                 orderDetailList.add(orderDetailEntity);
             });
             //订单详细信息入库
@@ -143,7 +141,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         List<OrderEntity> newOrderList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(orderList)) {
             for (OrderEntity order : orderList) {
-                if ("PAID".equals(orderStatus)) {
+                if (OrderStatusEnum.DELIVERED.name().equals(orderStatus)) {
+                    orderDetailService.updateSubStatusByOrderId(order.getId(), SubOrderStatusEnum.DELIVERED);
                     //修改售后状态为 未申请，表示可以申请售后
                     orderDetailService.updateAfterSalesStatusByOrderId(order.getId(), AfterSalesStatusEnum.NOT_APPLIED);
                 }
@@ -184,6 +183,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                 order.setPayTime(new Date());//支付时间
                 orderDetailService.updateAfterSalesStatusByOrderId(order.getId(), AfterSalesStatusEnum.NOT_APPLIED);
             }
+            order.setUpdateTime(new Date());
             orderMapper.updateById(order);
         }
     }
@@ -218,5 +218,75 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         //删除订单明细表数据
         QueryWrapper<OrderDetailEntity> orderDetailEntityQueryWrapper = new QueryWrapper<>();
         orderDetailEntityQueryWrapper.eq(StringUtils.isNotBlank(code), "order_code", code);
+    }
+
+    /**
+     * 商品发货
+     * @param orderShipmentParams
+     */
+    @Override
+    @Transactional
+    public void shipment(OrderShipmentParamsVO orderShipmentParams) {
+        OrderEntity order = this.getById(orderShipmentParams.getOrderId());
+        if (order != null && orderShipmentParams.getIsSplit()) { //拆分订单发货
+            //先判断是否全部发货（有可能部分发货）
+            if (!CollectionUtils.isEmpty(orderShipmentParams.getSubLogisticsInfoList())) {
+                boolean allShipment = true;
+                QueryWrapper<OrderDetailEntity> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("order_id", order.getId());
+                List<OrderDetailEntity> orderDetailList = orderDetailService.list(queryWrapper);
+                for (SubLogisticsInfoVO subLogistics: orderShipmentParams.getSubLogisticsInfoList()) {
+                    if (StringUtils.isEmpty(subLogistics.getSubLogisticsCompany())
+                            || StringUtils.isEmpty(subLogistics.getSubTrackingNumber())) {
+                        allShipment = false; //未全部发货
+                    }
+                    if (!CollectionUtils.isEmpty(orderDetailList)) {
+                        for (OrderDetailEntity orderDetail : orderDetailList) {
+                            //已经发货的
+                            if (SubOrderStatusEnum.DELIVERED.equals(orderDetail.getSubStatus())) {
+                                continue;
+                            }
+                            if (Objects.equals(orderDetail.getId(), subLogistics.getOrderDetailId())) {
+                                if (!StringUtils.isEmpty(subLogistics.getSubLogisticsCompany())
+                                        && !StringUtils.isEmpty(subLogistics.getSubTrackingNumber())) {
+                                    orderDetail.setSubLogisticsCompany(subLogistics.getSubLogisticsCompany());
+                                    orderDetail.setSubTrackingNumber(subLogistics.getSubTrackingNumber());
+                                    orderDetail.setSubStatus(SubOrderStatusEnum.DELIVERED);
+                                }
+                            }
+                        }
+                        orderDetailService.updateBatchById(orderDetailList); //批量更新子订单信息
+                    }
+                }
+                if (allShipment) {
+                    order.setStatus(OrderStatusEnum.DELIVERED); //已发货
+                } else {
+                    order.setStatus(OrderStatusEnum.PARTIAL_DELIVERED); //部分发货
+                }
+                order.setUpdateTime(new Date());
+                order.setIsSplit(orderShipmentParams.getIsSplit());
+                this.updateById(order); //更新父订单信息
+            }
+        } else if (order != null && !orderShipmentParams.getIsSplit()) { //一起发货
+            if (order != null) {
+                order.setLogisticsCompany(orderShipmentParams.getLogisticsCompany());
+                order.setTrackingNumber(orderShipmentParams.getTrackingNumber());
+                order.setStatus(OrderStatusEnum.DELIVERED);//已发货
+                order.setUpdateTime(new Date());
+                order.setIsSplit(orderShipmentParams.getIsSplit());
+                this.updateById(order); //更新父订单信息
+                QueryWrapper<OrderDetailEntity> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("order_id", order.getId());
+                List<OrderDetailEntity> orderDetailList = orderDetailService.list(queryWrapper);
+                if (!CollectionUtils.isEmpty(orderDetailList)) {
+                    for (OrderDetailEntity orderDetail : orderDetailList) {
+                        orderDetail.setSubLogisticsCompany(orderShipmentParams.getLogisticsCompany());
+                        orderDetail.setSubTrackingNumber(orderShipmentParams.getTrackingNumber());
+                        orderDetail.setSubStatus(SubOrderStatusEnum.DELIVERED); //已返货
+                    }
+                    orderDetailService.updateBatchById(orderDetailList); //批量更新子订单信息
+                }
+            }
+        }
     }
 }

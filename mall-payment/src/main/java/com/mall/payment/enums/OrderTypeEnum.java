@@ -1,24 +1,22 @@
-package com.mall.order.enums;
+package com.mall.payment.enums;
 
 /**
  * @Author DongJunTao
- * @Description 交易状态
- * @Date 2022/6/18 21:43
+ * @Description
+ * @Date 2023/7/17 16:09
  * @Version 1.0
  */
-public enum TradeStatusEnum {
+public enum OrderTypeEnum {
 
     /**
-     * 交易状态
+     * 前缀信息
      */
-    UNPAID("待付款"),
-    PAID("已付款"),
-    CANCEL("已取消"),
-    FINISHED("已完成");
+    TRADE("交易类型"),
+    ORDER("订单类型");
 
     private String description;
 
-    TradeStatusEnum(String description) {
+    OrderTypeEnum(String description) {
         this.description = description;
     }
 

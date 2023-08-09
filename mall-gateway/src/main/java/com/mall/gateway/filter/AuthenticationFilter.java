@@ -53,6 +53,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                     Map<String, Object> currentUserInfoMap = new HashMap<>();
                     currentUserInfoMap.put("userId", String.valueOf(claims.get("userId")));
                     currentUserInfoMap.put("userName", String.valueOf(claims.get("userName")));
+                    currentUserInfoMap.put("userType", String.valueOf(claims.get("userType")));
                     Consumer<HttpHeaders> httpHeaders = httpHeader -> {
                         httpHeader.set("currentUserInfo", JSONObject.toJSONString(currentUserInfoMap));
                     };
@@ -94,6 +95,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                 Map<String, Object> currentUserInfoMap = new HashMap<>();
                 currentUserInfoMap.put("userId", String.valueOf(claims.get("userId")));
                 currentUserInfoMap.put("userName", String.valueOf(claims.get("userName")));
+                currentUserInfoMap.put("userType", String.valueOf(claims.get("userType")));
                 Consumer<HttpHeaders> httpHeaders = httpHeader -> {
                     httpHeader.set("currentUserInfo", JSONObject.toJSONString(currentUserInfoMap));
                 };

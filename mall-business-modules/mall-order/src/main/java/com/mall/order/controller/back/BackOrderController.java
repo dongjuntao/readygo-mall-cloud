@@ -44,7 +44,11 @@ public class BackOrderController {
                                      @RequestParam(value = "pageSize",required = false) Integer pageSize,
                                      @RequestParam(value = "code",required = false) String code,
                                      @RequestParam(value = "status",required = false) String status) {
-        PageUtil page = orderService.queryPage(pageNum,pageSize,null,code,status);
+        Long merchantId = null;
+        if (CurrentUserContextUtil.getCurrentUserInfo().getUserType() != 0){
+            merchantId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
+        }
+        PageUtil page = orderService.queryPage(pageNum,pageSize,null,merchantId,code,status);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 

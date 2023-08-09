@@ -50,6 +50,7 @@ public class FrontGoodsController {
         if ("200".equals(result.getCode()) && result.getData() != null) {
             Map<String,Object> resultMap = (Map<String, Object>)result.getData();
             goodsEntity.setMerchantName(String.valueOf(resultMap.get("name"))); //商户名称
+            goodsEntity.setMerchantId(Long.valueOf(resultMap.get("id").toString()));
         }
         //查看是否参与了秒杀，如果有，需要填入秒杀信息
 //        feignSeckillConfigService.getById()

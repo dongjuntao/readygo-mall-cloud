@@ -70,7 +70,7 @@ alipay:
   charset: utf-8
   format: json
 #  notify-url: http://dongjuntao.vaiwan.com/mall-payment/alipay/notify
-  notify-url: http://rwbi6f.natappfree.cc/mall-payment/alipay/notify
+  notify-url: http://ayh592.natappfree.cc/mall-payment/alipay/notify
   return-url:
   log-path:
 

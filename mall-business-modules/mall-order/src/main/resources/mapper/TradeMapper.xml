@@ -8,7 +8,6 @@
         <result column="code" property="code" jdbcType="VARCHAR"/>
         <result column="member_id" property="memberId" jdbcType="BIGINT"/>
         <result column="member_name" property="memberName" jdbcType="VARCHAR"/>
-        <result column="pay_status" property="payStatus" jdbcType="VARCHAR"/>
         <result column="trade_time" property="tradeTime" jdbcType="VARCHAR"/>
         <result column="total_price" property="totalPrice" jdbcType="VARCHAR"/>
         <result column="freight" property="freight" jdbcType="VARCHAR"/>
@@ -47,7 +46,6 @@
             t.code,
             t.member_id,
             t.member_name,
-            t.pay_status,
             t.trade_time,
             t.total_price,
             t.freight,

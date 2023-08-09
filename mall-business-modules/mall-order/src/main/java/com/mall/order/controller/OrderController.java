@@ -46,7 +46,7 @@ public class OrderController {
                                      @RequestParam(value = "code",required = false) String code,
                                      @RequestParam(value = "status",required = false) String status) {
         Long memberId = CurrentUserContextUtil.getCurrentUserInfo().getUserId();
-        PageUtil page = orderService.queryPage(pageNum,pageSize,memberId,code,status);
+        PageUtil page = orderService.queryPage(pageNum,pageSize,memberId,null,code,status);
         return CommonResult.success(ResultCodeEnum.SUCCESS.getCode(),ResultCodeEnum.SUCCESS.getMessage(), page);
     }
 
@@ -108,7 +108,7 @@ public class OrderController {
      */
     @PutMapping("cancelOrder")
     public CommonResult cancelOrder(@RequestParam("code") String code,
-                                          @RequestParam("cancelReason") String cancelReason) {
+                                    @RequestParam("cancelReason") String cancelReason) {
         orderService.cancelOrder(code, cancelReason);
         return CommonResult.success();
     }
@@ -121,6 +121,27 @@ public class OrderController {
     @DeleteMapping("deleteOrder")
     public CommonResult deleteOrder(@RequestParam("code") String code) {
         orderService.deleteOrder(code);
+        return CommonResult.success();
+    }
+
+
+    /**
+     *  确认收货，父子订单也都确认收货
+     * @param code 订单编号，确认收货
+     */
+    @PutMapping("confirmReceiptAll")
+    public CommonResult confirmReceiptAll(@RequestParam("code") String code) {
+        orderService.confirmReceiptAll(code);
+        return CommonResult.success();
+    }
+
+    /**
+     * 确认收货（子订单）
+     * @param subCode 子订单编号
+     */
+    @PutMapping("confirmReceipt")
+    public CommonResult confirmReceipt(@RequestParam("subCode") String subCode) {
+        orderService.confirmReceipt(subCode);
         return CommonResult.success();
     }
 }

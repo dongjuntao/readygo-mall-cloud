@@ -13,6 +13,7 @@ import com.mall.order.entity.OrderEntity;
 import com.mall.order.entity.OrderInvoiceEntity;
 import com.mall.order.entity.TradeEntity;
 import com.mall.order.enums.*;
+import com.mall.order.mapper.OrderDetailMapper;
 import com.mall.order.mapper.OrderInvoiceMapper;
 import com.mall.order.mapper.OrderMapper;
 import com.mall.order.service.OrderDetailService;
@@ -43,6 +44,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
     private OrderMapper orderMapper;
 
     @Autowired
+    private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
     private OrderDetailService orderDetailService;
 
     @Autowired
@@ -58,13 +62,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
      * @return
      */
     @Override
-    public PageUtil queryPage(Integer pageNum,Integer pageSize, Long memberId, String code,String status) {
+    public PageUtil queryPage(Integer pageNum,Integer pageSize, Long memberId, Long merchantId, String code,String status) {
         Map<String,Object> pageParams = new MapUtil().put("pageNum",pageNum).put("pageSize",pageSize);
         Page<OrderEntity> page = (Page<OrderEntity>)new PageBuilder<OrderEntity>().getPage(pageParams);
         QueryWrapper<OrderEntity> wrapper = new QueryWrapper<>();
         wrapper.like(!StringUtils.isEmpty(code), "oi.code", code)
                 .eq(!StringUtils.isEmpty(status), "oi.status", status)
                 .eq(memberId != null, "member_id", memberId)
+                .eq(merchantId != null, "merchant_id", merchantId)
                 .orderByDesc("create_time");
         IPage<OrderEntity> iPage = baseMapper.queryPage(page, wrapper);
         return new PageUtil(iPage);
@@ -141,11 +146,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         List<OrderEntity> newOrderList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(orderList)) {
             for (OrderEntity order : orderList) {
-                if (OrderStatusEnum.DELIVERED.name().equals(orderStatus)) {
-                    orderDetailService.updateSubStatusByOrderId(order.getId(), SubOrderStatusEnum.DELIVERED);
-                    //修改售后状态为 未申请，表示可以申请售后
-                    orderDetailService.updateAfterSalesStatusByOrderId(order.getId(), AfterSalesStatusEnum.NOT_APPLIED);
+                if (OrderStatusEnum.UNDELIVERED.name().equals(orderStatus)) {
+                    order.setPayTime(new Date());
                 }
+                orderDetailService.updateSubStatusByOrderId(order.getId(), SubOrderStatusEnum.valueOf(orderStatus));
                 order.setStatus(OrderStatusEnum.valueOf(orderStatus));
                 newOrderList.add(order);
             }
@@ -179,9 +183,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         OrderEntity order = orderMapper.selectOne(orderQueryWrapper);
         if (order != null) {
             order.setStatus(OrderStatusEnum.valueOf(orderStatus));
-            if ("PAID".equals(orderStatus)) {
+            if (OrderStatusEnum.UNDELIVERED.equals(OrderStatusEnum.valueOf(orderStatus))) {
                 order.setPayTime(new Date());//支付时间
-                orderDetailService.updateAfterSalesStatusByOrderId(order.getId(), AfterSalesStatusEnum.NOT_APPLIED);
             }
             order.setUpdateTime(new Date());
             orderMapper.updateById(order);
@@ -195,13 +198,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
      */
     @Override
     public void cancelOrder(String code, String cancelReason) {
-        QueryWrapper<OrderEntity> orderQueryWrapper = new QueryWrapper<>();
-        orderQueryWrapper.eq(StringUtils.isNotBlank(code), "code", code);
-        OrderEntity order = orderMapper.selectOne(orderQueryWrapper);
+        OrderEntity order = getOrderAndDetailByParams(code);
         if (order != null) {
+            //父订单修改状态
             order.setCancelReason(cancelReason);
             order.setStatus(OrderStatusEnum.CANCELLED);
             orderMapper.updateById(order);
+            //子订单修改状态
+            List<OrderDetailEntity> orderDetailList = order.getOrderDetailList();
+            if (!CollectionUtils.isEmpty(orderDetailList)) {
+                for (OrderDetailEntity orderDetail : orderDetailList) {
+                    orderDetail.setSubStatus(SubOrderStatusEnum.CANCELLED);
+                }
+                orderDetailService.updateBatchById(orderDetailList);
+            }
         }
     }
 
@@ -218,6 +228,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
         //删除订单明细表数据
         QueryWrapper<OrderDetailEntity> orderDetailEntityQueryWrapper = new QueryWrapper<>();
         orderDetailEntityQueryWrapper.eq(StringUtils.isNotBlank(code), "order_code", code);
+        orderDetailMapper.delete(orderDetailEntityQueryWrapper);
     }
 
     /**
@@ -287,6 +298,61 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                     orderDetailService.updateBatchById(orderDetailList); //批量更新子订单信息
                 }
             }
+        }
+    }
+
+    /**
+     * 确认收货，父子订单也都确认收货
+     * @param code 订单编号，确认收货
+     */
+    @Override
+    @Transactional
+    public void confirmReceiptAll(String code) {
+        OrderEntity orderParams = new OrderEntity();
+        orderParams.setCode(code);
+        OrderEntity order = orderMapper.getOrderAndDetail(orderParams);
+        if (order != null) {
+            //修改父订单状态
+            order.setStatus(OrderStatusEnum.FINISHED);
+            orderMapper.updateById(order);
+            //修改子订单状态
+            List<OrderDetailEntity> orderDetailList = order.getOrderDetailList();
+            if (!CollectionUtils.isEmpty(orderDetailList)) {
+                for (OrderDetailEntity orderDetail : orderDetailList) {
+                    orderDetail.setSubStatus(SubOrderStatusEnum.FINISHED);
+                    orderDetail.setCommentStatus(CommentStatusEnum.NOT_COMMENTED);
+                    orderDetail.setAfterSalesStatus(AfterSalesStatusEnum.NOT_APPLIED);
+                }
+                orderDetailService.updateBatchById(orderDetailList);
+            }
+        }
+    }
+
+    /**
+     * 确认收货（子订单）
+     * @param subCode 子订单编号
+     */
+    @Override
+    public void confirmReceipt(String subCode) {
+        QueryWrapper<OrderDetailEntity> orderDetailQueryWrapper = new QueryWrapper<>();
+        orderDetailQueryWrapper.eq(!StringUtils.isEmpty(subCode), "sub_code", subCode);
+        OrderDetailEntity orderDetail = orderDetailMapper.selectOne(orderDetailQueryWrapper);
+        if (orderDetail != null) {
+            orderDetail.setSubStatus(SubOrderStatusEnum.FINISHED);
+            orderDetail.setCommentStatus(CommentStatusEnum.NOT_COMMENTED);
+            orderDetail.setAfterSalesStatus(AfterSalesStatusEnum.NOT_APPLIED);
+            orderDetailMapper.updateById(orderDetail);
+            //处理该子订单的父订单状态（父订单下所有子订单都收货时，父订单改为已收货）
+            QueryWrapper<OrderDetailEntity> orderDetailListQueryWrapper = new QueryWrapper<>();
+            orderDetailListQueryWrapper.eq("order_id", orderDetail.getOrderId());
+            List<OrderDetailEntity> orderDetailEntityList = orderDetailService.list(orderDetailListQueryWrapper);
+            long count = orderDetailEntityList.stream().filter(od -> od.getSubStatus().equals(SubOrderStatusEnum.DELIVERED)).count();
+            if (count == 0) {
+                OrderEntity orderEntity = getById(orderDetail.getOrderId());
+                orderEntity.setStatus(OrderStatusEnum.FINISHED);
+                this.updateById(orderEntity);
+            }
+
         }
     }
 }

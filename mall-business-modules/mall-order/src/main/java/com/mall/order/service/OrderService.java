@@ -24,7 +24,7 @@ public interface OrderService extends IService<OrderEntity> {
      * @param status 订单状态
      * @return
      */
-    PageUtil queryPage(Integer pageNum,Integer pageSize, Long memberId, String code,String status);
+    PageUtil queryPage(Integer pageNum,Integer pageSize, Long memberId,Long merchantId, String code,String status);
 
     /**
      * 保存订单（创建订单和子订单）
@@ -77,4 +77,16 @@ public interface OrderService extends IService<OrderEntity> {
      * 商品发货
      */
     void shipment(OrderShipmentParamsVO orderShipmentParams);
+
+    /**
+     *  确认收货，父子订单也都确认收货
+     * @param code 订单编号，确认收货
+     */
+    void confirmReceiptAll(String code);
+
+    /**
+     * 确认收货（子订单）
+     * @param subCode 子订单编号
+     */
+    void confirmReceipt(String subCode);
 }

@@ -127,6 +127,11 @@ public class GoodsEntity implements Serializable {
     @TableField(exist = false)
     private List<GoodsSkuEntity> goodsSkuList;
     /**
+     * 所属商户id
+     */
+    @TableField(exist = false)
+    private Long merchantId;
+    /**
      * 所属商户名称
      */
     @TableField(exist = false)

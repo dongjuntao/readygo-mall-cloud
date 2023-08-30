@@ -123,6 +123,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                 orderDetailEntity.setAfterSalesStatus(AfterSalesStatusEnum.NEW);//默认新订单，不能申请售后
                 orderDetailEntity.setCommentStatus(CommentStatusEnum.NEW); //默认新订单，不能评价
                 orderDetailEntity.setSubStatus(SubOrderStatusEnum.UNPAID);
+                orderDetailEntity.setCreateTime(new Date());
                 orderDetailList.add(orderDetailEntity);
             });
             //订单详细信息入库
@@ -322,6 +323,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
                     orderDetail.setSubStatus(SubOrderStatusEnum.FINISHED);
                     orderDetail.setCommentStatus(CommentStatusEnum.NOT_COMMENTED);
                     orderDetail.setAfterSalesStatus(AfterSalesStatusEnum.NOT_APPLIED);
+                    orderDetail.setReceivingTime(new Date());
                 }
                 orderDetailService.updateBatchById(orderDetailList);
             }
@@ -341,6 +343,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
             orderDetail.setSubStatus(SubOrderStatusEnum.FINISHED);
             orderDetail.setCommentStatus(CommentStatusEnum.NOT_COMMENTED);
             orderDetail.setAfterSalesStatus(AfterSalesStatusEnum.NOT_APPLIED);
+            orderDetail.setReceivingTime(new Date());
             orderDetailMapper.updateById(orderDetail);
             //处理该子订单的父订单状态（父订单下所有子订单都收货时，父订单改为已收货）
             QueryWrapper<OrderDetailEntity> orderDetailListQueryWrapper = new QueryWrapper<>();

@@ -49,4 +49,6 @@ public interface OrderDetailService extends IService<OrderDetailEntity> {
      * @return
      */
     List<RecentSixMonthOrderCountVO> getRecentSixMonthOrderCount(Long merchantId);
+
+    OrderDetailEntity getOrderDetailByParams(String subCode);
 }

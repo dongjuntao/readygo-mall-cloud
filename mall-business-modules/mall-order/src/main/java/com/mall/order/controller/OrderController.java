@@ -5,6 +5,7 @@ import com.mall.common.base.enums.ResultCodeEnum;
 import com.mall.common.base.utils.CurrentUserContextUtil;
 import com.mall.common.base.utils.PageUtil;
 import com.mall.order.constant.OrderTypeConstant;
+import com.mall.order.entity.OrderDetailEntity;
 import com.mall.order.entity.OrderEntity;
 import com.mall.order.service.OrderDetailService;
 import com.mall.order.service.OrderService;
@@ -124,6 +125,16 @@ public class OrderController {
         return CommonResult.success();
     }
 
+    /**
+     * 根据子订单subCode获取子订单信息
+     * @param subCode
+     * @return
+     */
+    @GetMapping("getOrderDetailByParams")
+    public CommonResult getOrderDetailByParams(@RequestParam(value = "subCode") String subCode) {
+        OrderDetailEntity orderDetail = orderDetailService.getOrderDetailByParams(subCode);
+        return CommonResult.success(orderDetail);
+    }
 
     /**
      *  确认收货，父子订单也都确认收货

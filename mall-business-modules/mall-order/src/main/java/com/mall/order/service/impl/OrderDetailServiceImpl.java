@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -133,5 +134,12 @@ public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, Order
     @Override
     public List<RecentSixMonthOrderCountVO> getRecentSixMonthOrderCount(Long merchantId) {
         return baseMapper.getRecentSixMonthOrderCount(merchantId);
+    }
+
+    @Override
+    public OrderDetailEntity getOrderDetailByParams(String subCode) {
+        QueryWrapper<OrderDetailEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(!StringUtils.isEmpty(subCode), "sub_code", subCode);
+        return baseMapper.selectOne(queryWrapper);
     }
 }

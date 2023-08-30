@@ -12,6 +12,7 @@ import com.mall.order.enums.SubOrderStatusEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @Author DongJunTao
@@ -90,5 +91,15 @@ public class OrderDetailEntity {
      * @see com.mall.order.enums.CommentStatusEnum
      */
     private CommentStatusEnum commentStatus;
+
+    /**
+     * 子订单创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 确认收货时间
+     */
+    private Date receivingTime;
 
 }

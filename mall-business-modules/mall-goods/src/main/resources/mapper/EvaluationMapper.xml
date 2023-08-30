@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.goods.mapper.EvaluationMapper">
+    <!--商品表-->
+    <resultMap id="baseEvaluationMap" type="com.mall.goods.entity.EvaluationEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="sku_id" property="skuId" jdbcType="BIGINT"/>
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
+        <result column="logistics_evaluation_level" property="logisticsEvaluationLevel" jdbcType="INTEGER"/>
+        <result column="service_evaluation_level" property="serviceEvaluationLevel" jdbcType="INTEGER"/>
+        <result column="description_evaluation_level" property="descriptionEvaluationLevel" jdbcType="INTEGER"/>
+        <result column="goods_evaluation_level" property="goodsEvaluationLevel" jdbcType="INTEGER"/>
+        <result column="evaluate_content" property="evaluateContent" jdbcType="VARCHAR"/>
+        <result column="answer_content" property="answerContent" jdbcType="VARCHAR"/>
+        <result column="images" property="images" jdbcType="LONGVARCHAR"/>
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="sub_order_code" property="subOrderCode" jdbcType="VARCHAR"/>
+        <result column="evaluate_time" property="evaluateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="answer_time" property="answerTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <!--分页查询商品列表-->
+    <select id="queryPage" resultMap="baseEvaluationMap">
+        SELECT id,
+               member_id,
+               goods_id,
+               sku_id,
+               merchant_id,
+               logistics_evaluation_level,
+               service_evaluation_level,
+               description_evaluation_level,
+               goods_evaluation_level,
+               evaluate_content,
+               answer_content,
+               images,
+               order_code,
+               sub_order_code,
+               evaluate_time,
+               answer_time
+        FROM evaluation
+            ${ew.customSqlSegment}
+    </select>
+
+
+</mapper>

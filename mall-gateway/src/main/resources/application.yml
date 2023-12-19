@@ -9,7 +9,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 49.234.85.17:8848 #nacos服务注册
+        server-addr: cn-gd-sz.starryfrp.com:22006 #nacos服务注册
     gateway:
       discovery:
         locator:
@@ -100,7 +100,7 @@ logging:
 elk:
   kafka:
     appender:
-      servers: '123.60.173.14:9092'
+      servers: 'cn-gd-sz.starryfrp.com:37822'
       topic: readygo-mall-logs
 
 #白名单

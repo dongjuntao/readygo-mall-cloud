@@ -3,7 +3,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 49.234.85.17:8848 #配置nacos地址
+        server-addr: cn-gd-sz.starryfrp.com:22006 #配置nacos地址
   management:
     endpoints:
       web:
@@ -11,14 +11,14 @@ spring:
           include: '*'
   elasticsearch:
     rest:
-      uris: http://123.60.173.14:9200
+      uris: cn-gd-sz.starryfrp.com:15340
   #rabbit mq
   rabbitmq:
-    host: 49.234.85.17
+    host: cn-gd-sz.starryfrp.com
     username: rabbitAdmin
     password: rabbit@123
     virtual-host: /
-    port: 5672
+    port: 22630
     listener:
       direct:
         acknowledge-mode: manual #NONE（默认）：自动；AUTO：根据情况确认；MANUAL：手动确认
@@ -65,7 +65,7 @@ ribbon:
 elk:
   kafka:
     appender:
-      servers: '123.60.173.14:9092'
+      servers: 'cn-gd-sz.starryfrp.com:37822'
       topic: readygo-mall-logs
 
 xxl:

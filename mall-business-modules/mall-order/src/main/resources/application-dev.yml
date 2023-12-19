@@ -2,7 +2,7 @@ spring:
   #####数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://49.234.85.17:3306/readygo-mall-order?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://cn-gd-sz.starryfrp.com:58712/readygo-mall-order?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: DJTReadyGO19930312!@#$legion
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,7 +19,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 49.234.85.17:8848 #配置nacos地址
+        server-addr: cn-gd-sz.starryfrp.com:22006 #配置nacos地址
   management:
     endpoints:
       web:
@@ -27,8 +27,8 @@ spring:
           include: '*'
   #####redis配置
   redis:
-    host: 49.234.85.17
-    port: 6379
+    host: cn-gd-sz.starryfrp.com
+    port: 2851
     password: DJTReadyGO19930312!@#$legion
     timeout: 6000
     database: 6
@@ -51,11 +51,11 @@ spring:
 #          period: 20
   #rabbit mq
   rabbitmq:
-    host: 49.234.85.17
+    host: cn-gd-sz.starryfrp.com
     username: rabbitAdmin
     password: rabbit@123
     virtual-host: /
-    port: 5672
+    port: 22630
     listener:
       direct:
         acknowledge-mode: manual #NONE（默认）：自动；AUTO：根据情况确认；MANUAL：手动确认
@@ -121,7 +121,7 @@ mybatis-plus:
 seata:
   enabled: true
   application-id: mall-order
-  tx-service-group: default_tx_group
+  tx-service-group: my-seata-tx-group
   # 是否自动开启数据源代理
   enable-auto-data-source-proxy: true
   # 数据源代理模式，使用AT模式
@@ -129,9 +129,9 @@ seata:
   service:
     # 事务群组
     vgroupMapping:
-      default_tx_group: default  # default 的值为集群的名字，在配置 seata service 的时候指定的
+      my-seata-tx-group: seata-server  # default 的值为集群的名字，在配置 seata service 的时候指定的
     grouplist:
-      default: 49.234.85.17:8091
+      default: cn-gd-sz.starryfrp.com:46496
     enable-degrade: false
     # 全局事务开关
     disable-global-transaction: false
@@ -139,25 +139,26 @@ seata:
   config:
     type: nacos
     nacos:
-      namespace: "a361e8e8-d854-465a-ba3c-4119bf32e078"
-      server-addr: "49.234.85.17:8848"
-      group: "nacos-seata"
-      username: "nacos"
-      password: "nacos"
-      data-id: "nacos-config.properties"
-  # 注册中心，需要和 seata server 保持一致
-  registry:
-    type: nacos
-    nacos:
-      application: seata-server
+      namespace: "e1bb85c5-fba3-4b50-856e-42368d5efb7f"
+      server-addr: "http://cn-gd-sz.starryfrp.com:22006"
       group: "SEATA_GROUP"
-      namespace: "a361e8e8-d854-465a-ba3c-4119bf32e078"
       username: "nacos"
       password: "nacos"
-      server-addr: "49.234.85.17:8848"
+      data-id: "seata-nacos-config.properties"
+  # 注册中心，需要和 seata server 保持一致
+  #  registry:
+  #    type: nacos
+  #    nacos:
+  #      application: seata-server
+  #      group: "SEATA_GROUP"
+  #      namespace: "e1bb85c5-fba3-4b50-856e-42368d5efb7f"
+  #      username: "nacos"
+  #      password: "nacos"
+  #      server-addr: "http://cn-gd-sz.starryfrp.com:22006"
+  #      cluster: seata-server
 
 elk:
   kafka:
     appender:
-      servers: '123.60.173.14:9092'
+      servers: 'cn-gd-sz.starryfrp.com:37822'
       topic: readygo-mall-logs

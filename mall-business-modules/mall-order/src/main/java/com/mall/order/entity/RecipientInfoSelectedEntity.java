@@ -1,6 +1,7 @@
 package com.mall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ import lombok.Data;
 @TableName("recipient_info_selected")
 public class RecipientInfoSelectedEntity {
 
-    @TableField
+    @TableId
     private Long id;
     /**
      * 会员id

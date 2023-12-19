@@ -3,7 +3,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 49.234.85.17:8848 #配置nacos地址
+        server-addr: cn-gd-sz.starryfrp.com:22006 #配置nacos地址
   management:
     endpoints:
       web:
@@ -39,5 +39,5 @@ ribbon:
 elk:
   kafka:
     appender:
-      servers: '123.60.173.14:9092'
+      servers: 'cn-gd-sz.starryfrp.com:37822'
       topic: readygo-mall-logs

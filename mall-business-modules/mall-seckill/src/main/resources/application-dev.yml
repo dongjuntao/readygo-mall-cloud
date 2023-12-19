@@ -2,7 +2,7 @@ spring:
   #####数据源配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://49.234.85.17:3306/readygo-mall-seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://cn-gd-sz.starryfrp.com:58712/readygo-mall-seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: DJTReadyGO19930312!@#$legion
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,7 +19,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 49.234.85.17:8848 #配置nacos地址
+        server-addr: cn-gd-sz.starryfrp.com:22006 #配置nacos地址
   management:
     endpoints:
       web:
@@ -27,8 +27,8 @@ spring:
           include: '*'
   #####redis配置
   redis:
-    host: 49.234.85.17
-    port: 6379
+    host: cn-gd-sz.starryfrp.com
+    port: 2851
     password: DJTReadyGO19930312!@#$legion
     timeout: 6000
     database: 4
@@ -97,7 +97,7 @@ mybatis-plus:
 elk:
   kafka:
     appender:
-      servers: '123.60.173.14:9092'
+      servers: 'cn-gd-sz.starryfrp.com:37822'
       topic: readygo-mall-logs
 
 xxl:
